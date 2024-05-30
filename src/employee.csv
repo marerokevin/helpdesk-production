@@ -1,0 +1,428 @@
+10,admin01,admin01,Administrator,Administration,j.nemedez@glory.com.ph,admin
+11,nathan,nthan,Nathan Nemedez,Administration,j.nemedez@glory.com.ph,admin
+12,GP-11-306,GP-11-306,"NEMEDEZ, NATHAN",Administration,j.nemedez@glory.com.ph,admin
+13,GP-12-356,GP-12-356,"RAMIREZ, FRANCISCO",Administration,f.ramirez@glory.com.ph,admin
+14,GP-17-535,GP-17-535,"ABITO, MARSON",PPIC,,employee
+15,GP-18-622,GP-18-622,"ABLAZA, JOHN LESTER",PPIC,vmi@glory.com.ph,employee
+16,GP-18-576,GP-18-576,"ABUENI, LEONARDO",PPIC,l.abueni@glory.com.ph,employee
+17,509,509,Admin Staff,Administration,,employee
+18,GP-17-503,GP-17-503,"AGAHAN, JOHN RONNEL",Purchasing,j.agahan@glory.com.ph,employee
+19,GP-17-536,GP-17-536,"AGUILAR, JOHN SIMON",Production 2,,employee
+20,GP-21-706,GP-21-706,"AJES, JACQUELINE HOSANNA",Administration,j.ajes@glory.com.ph,employee
+21,GP-11-291,GP-11-291,"ALBAYDA, RIC JR.",Parts Production,,employee
+22,GP-19-654,GP-19-654,"ALBOROTE, CINDY",Production 1,,employee
+23,GP-19-655,GP-19-655,"ALBOROTO, CHARLYN",Production 1,,employee
+24,GP-19-656,GP-19-656,"ALBUEN, JOHNREY",QC,,employee
+25,GP-06-190,GP-06-190,"ALCANTARA, FILIPINA",Quality Control,f.alcantara@glory.com.ph,employee
+26,GP-16-460,GP-16-460,"ALCASODA, FLORALYN",PPIC,f.alcasoda@glory.com.ph,employee
+27,GP-15-437,GP-15-437,"ALEGA, ROSE ANN",Administration,hr_training@glory.com.ph,employee
+28,GP-18-579,GP-18-579,"ALEJANDRO, RYAN BOY",QC,,employee
+29,GP-16-482,GP-16-482,"ALIC, NIETELYN",Production 1,,employee
+30,GP-13-361,GP-13-361,"ALINIO, SHIELA",Quality Control,s.alinio@glory.com.ph,employee
+31,GP-12-335,GP-12-335,"ALISANGCO, RONEL",Production 1,r.alisangco@glory.com.ph,employee
+32,GP-18-623,GP-18-623,"ALISCAD, EDLYN",Production 2,,employee
+33,GP-18-608,GP-18-608,"ALMENDRAS, VILMA",PPIC,v.almendras@glory.com.ph,employee
+34,GP-16-461,GP-16-461,"ALONZO, JOHN LORD",Administration,hr_compensation@glory.com.ph,employee
+35,GP-19-657,GP-19-657,"ALVARAN, DAISY",QC,,employee
+36,GP-12-322,GP-12-322,"ALVAREZ, EMIL",Purchasing,e.alvarez@glory.com.ph,employee
+37,GP-15-442,GP-15-442,"ALVAREZ, KRIZEL MICAH ANNE",Quality Assurance,m.alvarez@glory.com.ph,employee
+38,GP-19-681,GP-19-681,"ANDRES, ARCEL",Quality Assurance,pco@glory.com.ph,employee
+39,CG-1476,CG-1476,"Ano, Lilian",Quality Assurance,,employee
+40,GP-17-504,GP-17-504,"APURO, ANGEL",Production 1,,employee
+41,GP-11-287,GP-11-287,"AQUINO, ROSALYN",QC,,employee
+42,GP-15-443,GP-15-443,"ARAZA, JENEVIEVE ANNE",QC,,employee
+43,CG-1664,CG-1664,"ARCILLANA, MARY ROSE",PPIC,impexstaff@glory.com.ph,employee
+44,GP-15-422,GP-15-422,"ARDIENTE, MICHAEL",Purchasing,m.ardiente@glory.com.ph,employee
+45,GP-10-243,GP-10-243,"ARGUELLES, LILYBETH",Quality Control,,employee
+46,GP-20-692,GP-20-692,"ARICAYOS, JOHN MARTIN",QC,,employee
+47,GP-08-232,GP-08-232,"ARIVE, MELLY JENNA",Accounting,mj.potente@glory.com.ph,employee
+48,GP-08-214,GP-08-214,"ARMILLO, REY",Production 2,r.armillo@glory.com.ph,employee
+49,GP-18-624,GP-18-624,"AROMA, JAYSON",Parts Production,,employee
+50,GP-18-649,GP-18-649,"ASTILLERO, MARK HARRIS ",Parts Production,,employee
+51,GP-08-215,GP-08-215,"ASUELO, OSCAR JR.",Production Support,o.asuelo@glory.com.ph,employee
+52,GP-17-537,GP-17-537,"ASUNCION, DENISE LI ANNIE",PPIC,d.asuncion@glory.com.ph,employee
+53,GP-17-505,GP-17-505,"AYDALLA, MARICEL",PPIC,m.aydalla@glory.com.ph,employee
+54,GP-16-463,GP-16-463,"BAGON, MELANIE",Production 2,,employee
+55,GP-10-250,GP-10-250,"BALDESIMO, DESERIE",Production 1,d.baldesimo@glory.com.ph,employee
+56,GP-17-540,GP-17-540,"BALDONADO, LEIGEE",Production 1,,employee
+57,GP-18-626,GP-18-626,"BAONG, JAZZYDEE",QC,,employee
+58,GP-20-694,GP-20-694,"BARASI, JENIROSE",Production 1,,employee
+59,GP-17-541,GP-17-541,"BARRON, SHERILYN",Prodsupport,psstaff2@glory.com.ph,employee
+60,GP-21-707,GP-21-707,"BAUTISTA, JASON",Purchasing ,purchasing.staff10@glory.com.ph,employee
+61,GP-10-245,GP-10-245,"BAUTISTA, RELYN",Production 1,r.bautista@glory.com.ph,employee
+62,GP-11-294,GP-11-294,"BECIOS, RIZA",Parts Production,,employee
+63,GP-18-580,GP-18-580,"BELARMINO, CRIS JOHN",Parts Production,,employee
+64,GP-02-141,GP-02-141,"BELTRAN, MELVIN",Parts Production,m.beltran@glory.com.ph,employee
+65,GP-18-627,GP-18-627,"BENAVENTE, ALVIN",Parts Inspection,a.benavente@glory.com.ph,employee
+66,GP-17-508,GP-17-508,"BENCITO, ROLDAN",Production 2,,employee
+67,GP-20-687,GP-20-687,"BERINGUELA, FRANCIS DIVINO NINO",Administration,f.beringuela@glory.com.ph,employee
+68,GP-18-581,GP-18-581,"BERMAS, ROAN MAE",Production Technology,r.bermas@glory.com.ph,employee
+69,GP-10-246,GP-10-246,"BERNAL, FERNALIZA",Production 1,f.bernal@glory.com.ph,employee
+70,GP-18-628,GP-18-628,"BERNARDO, MARVIN",PPIC,m.bernardo@glory.com.ph,employee
+71,GP-19-661,GP-19-661,"BOLUSO, LAILA",Parts Inspection,,employee
+72,GP-19-678,GP-19-678,"BORNASAL, RUSITHA AUDREY",Administration,hr@glory.com.ph,employee
+73,GP-07-205,GP-07-205,"BRILLANTES, KRISLYN",Production 2,prod2sectionstaff1@glory.com.ph,employee
+74,GP-12-329,GP-12-329,"BUCAYAN, JEANY LYNN",Production 2,j.bucayan@glory.com.ph,employee
+75,GP-14-404,GP-14-404,"BUYAO, ROMAL",Production Technology,r.buyao@glory.com.ph,employee
+76,GPI-22-726,GPI-22-726,CABANGUNAY ROBERT,Production 1,,employee
+77,GP-15-446,GP-15-446,"CABUCO, PHILLIP",Parts Production,,employee
+78,GP-12-340,GP-12-340,"CABUYAO, ARIS",Production 2,,employee
+79,GP-14-390,GP-14-390,"CADOCOY, ANALYN",Parts Production,a.cadocoy@glory.com.ph,employee
+80,GP-15-426,GP-15-426,"CALDERON, NAOMI",PPIC,n.calderon@glory.com.ph,employee
+81,GP-19-662,GP-19-662,"CALLEJA, BENJIE",Parts Production,,employee
+82,GP-18-629,GP-18-629,"CAMANTE, REY",Production 2,prod2partsprep@glory.com.ph,employee
+83,GP-13-367,GP-13-367,"CANTO, MARISSA",Production 1,m.canto@glory.com.ph,employee
+84,GP-16-484,GP-16-484,"CAPITLE, BEVERLY",Production 2,,employee
+85,GP-16-462,GP-16-462,"CASAL, NECITAS LYN",Parts Production,,employee
+86,GP-18-630,GP-18-630,"CASALME, GLENDA",Production 2,,employee
+87,GP-12-342,GP-12-342,"CASILAC, AIRES JOY",Parts Production,,employee
+88,GP-16-480,GP-16-480,"CASTRO, RANELYN",Production Technology,r.castro@glory.com.ph,employee
+89,GP-10-248,GP-10-248,"CASTULI, SHEILA",Purchasing,s.castuli@glory.com.ph,employee
+90,CG-0370,CG-0370,"CERA, LEIRA",PPIC,impexstaff2@glory.com.ph,employee
+91,GP-11-283,GP-11-283,"CINCO, MERRY BETH",Production 2,m.cinco@glory.com.ph,employee
+92,GP-01-116,GP-01-116,"CIUDAD, NOLSAN",Quality Control,n.ciudad@glory.com.ph,employee
+93,GP-17-509,GP-17-509,"COLOCADO, JACQUELYN",Parts Production,,employee
+94,GP-13-372,GP-13-372,"COMIA, JOEY",Parts Inspection,j.comia@glory.com.ph,employee
+95,GP-12-343,GP-12-343,"CORNEJO, WENNA ROSE",Production 1,w.cornejo@glory.com.ph,employee
+96,GP-17-529,GP-17-529,"CORPUZ, JACINTO JR.",PPIC,,employee
+97,GP-01-132,GP-01-132,"CORTEZ, CHONA",PPIC,c.cortez@glory.com.ph,employee
+98,GP-17-545,GP-17-545,"CRUZ, CATHERINE",Production 1,,employee
+99,GP-17-510,GP-17-510,"CRUZ, NORIZA",Parts Inspection,,employee
+100,GP-17-511,GP-17-511,"CUBOL, ERIC",Parts Production,,employee
+101,GP-13-365,GP-13-365,"CUDIAMAT, PRECIOUS MAE",Production Support,supplies@glory.com.ph,employee
+102,GP-17-546,GP-17-546,"CUETO, JULIAN",Production 2,,employee
+103,GP-00-109,GP-00-109,"CULLA, ELMA",Production 2,e.culla@glory.com.ph,employee
+104,GP-12-345,GP-12-345,"CUSTODIO, HAYDEE",Production 2,h.custodio@glory.com.ph,employee
+105,GP-16-465,GP-16-465,"DAOAYEN, DANIEL",Parts Production,,employee
+106,GP-16-487,GP-16-487,"DE GUZMAN, ANGELINE",Parts Production,,employee
+107,GP-19-663,GP-19-663,"DE LA CRUZ JR., LEONARDO",Production 2,,employee
+108,GP-14-406,GP-14-406,"DE MESA, MYR JOY",PPIC,m.demesa@glory.com.ph,employee
+109,GP-18-584,GP-18-584,"DE PAZ, BENILYN",Production 2,,employee
+110,GP-10-251,GP-10-251,"DE ROXAS, JACQUELYN",Production 2,rbgescrow@glory.com.ph,employee
+111,GP-18-633,GP-18-633,"DEALAGDON JR., FEDERICO",Production 2,packaging@glory.com.ph,employee
+112,GP-18-632,GP-18-632,"DEL MUNDO, IVY",Parts Inspection,pistaff4@glory.com.ph,employee
+113,CG-1646,CG-1646,"DELA CRUZ, JAYMAR",Quality Assurance,qa.staff1@glory.com.ph,employee
+114,GP-12-358,GP-12-358,"DELA CRUZ, JUVILYN",Production 2,glr@glory.com.ph,employee
+115,GP-17-544,GP-17-544,"DELA CUESTA, GRETHSELL",Production 2,,employee
+116,GP-16-466,GP-16-466,"DELA TORRE, HAZEL ANN",Production 2,h.delatorre@glory.com.ph,employee
+117,GP-17-548,GP-17-548,"DELA VEGA, MARY JANE",PPIC,prstaff1@glory.com.ph,employee
+118,GP-12-324,GP-12-324,"DELGADO, MARY ANN",QC,m.delgado@glory.com.ph,employee
+119,GP-12-330,GP-12-330,"DELGADO, RUBEN JR.",Production 2,prod2partsprep@glory.com.ph,employee
+120,CG-1315,CG-1315,"Delmo, Les Claudine",Quality Assurance,,employee
+121,CG-1315,CG-1315,"Delmo, Les Claudine",Quality Assurance,qa.staff4@glory.com.ph,employee
+122,GP-19-685,GP-19-685,"DELOS REYES, NIFRAN",Direct Operation Kaizen,dokstaff@glory.com.ph,employee
+123,GP-22-759,GP-22-759,DELOS SANTOS NATHANIEL,Parts Inspection,,employee
+124,GP-01-125,GP-01-125,"DESACULA, GENNY",Purchasing,g.desacula@glory.com.ph,employee
+125,GP-12-346,GP-12-346,"DESEO, CHERRYLYN",Production 2,c.deseo@glory.com.ph,employee
+126,GP-06-178,GP-06-178,"DIDAL, BOBBY",Quality Control,b.didal@glory.com.ph,employee
+127,GP-15-448,GP-15-448,"DOBLON, CERILA",QC,,employee
+128,GP-02-145,GP-02-145,"DOMINGO, BRENISA",Parts Inspection,b.domingo@glory.com.ph,employee
+129,GP-17-551,GP-17-551,"DOMINGO, PAMELA",Parts Production,,employee
+130,GP-18-634,GP-18-634,"DUE, RAYMOND",PPIC,r.due@glory.com.ph,employee
+131,GP-01-130,GP-01-130,"DULATRE, RHEA LIZA",Purchasing,r.dulatre@glory.com.ph,employee
+132,GP-17-523,GP-17-523,"DULCE, RINALYN",Administration,r.dulce@glory.com.ph,employee
+133,CG-1147,CG-1147,DUNGCA RANATO S.,Purchasing ,purchasingstaff08@glory.com.ph,employee
+134,GP-17-552,GP-17-552,"DURANGO, JOCELYN",Parts Production,,employee
+135,GP-17-553,GP-17-553,"EBALLAR, JAKE HANZEL",Parts Production,,employee
+136,GP-18-585,GP-18-585,"EISMA, FHIL JHON",Parts Production,,employee
+137,user,user,Employee test,Administration,j.nemedez@glory.com.ph,employee
+138,GP-21-714,GP-21-714,ERIES CABRERA,PPIC,e.cabrera@glory.com.ph,employee
+139,GP-18-614,GP-18-614,"ESCAMILLAS, TRICY ANN",Administration,t.escamillas@glory.com.ph,employee
+140,GP-18-586,GP-18-586,"ESCANDOR, MARY ANN",QC,,employee
+141,GP-17-512,GP-17-512,"ESCULTURA, JESSA",Japan Trainee,j.escultura@glory.com.ph,employee
+142,GP-17-513,GP-17-513,"ESPINO, JOSYL",QC,,employee
+143,GP-12-351,GP-12-351,"EVANGELISTA, EVA",Production 1,e.lanquino@glory.com.ph,employee
+144,CG-1622,CG-1622,"FADO, ANDREA",Purchasing ,purchasing.staff1@glory.com.ph,employee
+145,GP-18-610,GP-18-610,"FAGUTAN, ERNALD",PPIC,impexprocessor@glory.com.ph,employee
+146,GP-18-587,GP-18-587,"FERRER, DIANA",Production 2,,employee
+147,GP-17-514,GP-17-514,"FERROS, ADA",QC,,employee
+148,GP-12-347,GP-12-347,"FLORINDO, ERIC",PPIC,e.florindo@glory.com.ph,employee
+149,GP-18-611,GP-18-611,"Francisco, Lozano",Direct Operation Kaizen,dokstaff@glory.com.ph,employee
+150,GP-21-710,GP-21-710,FUMIYA KOJIMA,Japanese,f.kojima@glory.com.ph,employee
+151,GP-14-383,GP-14-383,"GABATO, IAN ROY",Purchasing,i.gabato@glory.com.ph,employee
+152,GP-17-509,GP-17-509,"GABATO, JACQUELYN",Parts Production,,employee
+153,GP-18-621,GP-18-621,"GABOT, GHADA JANE",Parts Production,,employee
+154,GP-11-313,GP-11-313,"GALANG, CRISTOPHER",Parts Production,,employee
+155,GP-16-467,GP-16-467,"GARCIA, MA. JESUSA",Parts Production,,employee
+156,GP-17-501,GP-17-501,"GARCIA, MARK JOSEPH",PPIC,m.garcia@glory.com.ph,employee
+157,GP-15-429,GP-15-429,"GAWARAN, ANTONIETA",PPIC,a.gawaran@glory.com.ph,employee
+158,GP-21-713,GP-21-713,"GAYAS, JANE MARGARETTE",Accounting,j.gayas@glory.com.ph,employee
+159,GP-14-384,GP-14-384,"GENISE, MICHAEL",Parts Inspection,m.genise@glory.com.ph,employee
+160,GP-15-431,GP-15-431,"GENISE, MYDEL",Parts Inspection,m.incognito@glory.com.ph,employee
+161,GP-21-712,GP-21-712,Gerald Ben Ermita,Quality Assurance,so@glory.com.ph,employee
+162,GP-20-695,GP-20-695,"GERPACIO, RICHARD",PPIC,,employee
+163,GP-18-589,GP-18-589,"GOCELA, MAE PAZ",QC,,employee
+164,GP-10-247,GP-10-247,"GONZALES, DIGNA",Prodsupport,d.gonzales@glory.com.ph,employee
+165,GP-14-418,GP-14-418,"GONZALES, MYRA FLOR",Accounting,m.villanueva@glory.com.ph,employee
+166,GP-18-588,GP-18-588,"GREPO, ADRIAN KELVIN",Production 2,,employee
+167,GP-17-526,GP-17-526,"GRUEZO, AVELINO JR.",Parts Production,,employee
+168,GP-17-555,GP-17-555,"GUELAS, ROBERTO",QC,,employee
+169,GP-19-664,GP-19-664,"GUEVARRA, KEVIN",PPIC,,employee
+170,GP-06-188,GP-06-188,"GUTIB, ALEX",Administration,,employee
+171,GP-17-515,GP-17-515,"HALLIG, KEVIN",Parts Production,,employee
+172,GP-16-468,GP-16-468,"HERBOSANA, KRISTALYN",Production 1,,employee
+173,GP-13-373,GP-13-373,"HERNANDEZ, FELINA",Production 1,f.hernandez@glory.com.ph,employee
+174,GP-16-479,GP-16-479,"HERRERA, EDMAR",Parts Production,h.herrera@glory.com.ph,employee
+175,GP-07-209,GP-07-209,"HERRERA, HERMANO",Direct Operation Kaizen,,employee
+176,GP-13-374,GP-13-374,"IGAYA, JAYSAR",Production 1,,employee
+177,GP-12-350,GP-12-350,"ILAO, MARVIN",Production 2,m.ilao@glory.com.ph,employee
+178,GP-16-488,GP-16-488,"JACOBO, IAN JAY",Production 2,,employee
+179,GP-16-469,GP-16-469,"JAURIGUE, JINKY ROSE",Production 2,,employee
+180,GP-22-720,GP-22-720,Jayson Torres,Quality Assurance,so@glory.com.ph,employee
+181,GP-20-702,GP-20-702,"JORDAN, CARMELA",Quality Assurance,c.jordan@glory.com.ph,employee
+182,GP-14-408,GP-14-408,"JOSE, ARIS",Production 1,a.jose@glory.com.ph,employee
+183,GP-23-760,GP-23-760,"JOYA, RENAN",Quality Assurance,pco@glory.com.ph,employee
+184,GP-18-635,GP-18-635,"JOYA, REYNAN KARL",Parts Production,,employee
+185,KATARINA CUEVAS,GL-1041,KATARINA CUEVAS,Parts Production,moulding.staff2@glory.com.ph,employee
+186,GP-19-680,GP-19-680,"KOMORI, MAIKO ",Purchasing,m.komori@glory.com.ph,employee
+187,GP-19-665,GP-19-665,"LABANZA, LUCHE",Parts Inspection,l.labanza@glory.com.ph,employee
+188,GP-11-299,GP-11-299,"LAFORTEZA, MARIO A",PPIC,m.laforteza@glory.com.ph,employee
+189,CG-1710,CG-1710,"LAMBERTO, JOHN REY",Quality Assurance,,employee
+190,CG-1710,CG-1710,"Lamberto, John Rey",Quality Assurance,qa.staff@glory.com.ph,employee
+191,GP-19-666,GP-19-666,"LAMOSA, JENNELYN",Production 1,,employee
+192,GP-07-199,GP-07-199,"LAPAN, JONALD JOHN",Purchasing,j.lapan@glory.com.ph,employee
+193,GP-22-715,GP-22-715,"Lapurga, Jennielaine",Quality Assurance,j.lapurga@glory.com.ph,employee
+194,GP-12-327,GP-12-327,"LAZAGA, MELVIN",PPIC,m.lazaga@glory.com.ph,employee
+195,GP-12-349,GP-12-349,"LEGASPI, JENNIFER",Production 1,,employee
+196,GP-11-285,GP-11-285,"LEGASPINA, LORAINE",Purchasing,l.legaspina@glory.com.ph,employee
+197,GP-15-421,GP-15-421,"LERIT, MARICRIS",Parts Production,m.lerit@glory.com.ph,employee
+198,GP-18-590,GP-18-590,"LIBRIA, ERNALIZA",QC,,employee
+199,GP-17-556,GP-17-556,"LIMOSNERO, CRISTINE JOY",Production 1,,employee
+200,GP-18-591,GP-18-591,"LINEZO, RENELYN",Production 1,,employee
+201,GP-17-557,GP-17-557,"LLACONA, JONEL",Parts Inspection,,employee
+202,GP-17-558,GP-17-558,"LLAGAS, ERIKA JOY",Production 2,,employee
+203,GP-16-489,GP-16-489,"LLAMERA, MICHELLE",Japan Trainee,,employee
+204,GP-22-716,GP-22-716,"LOYOLA, ACE",PPIC,,employee
+205,GP-18-611,GP-18-611,"LOZANO, FRANCISCO JR.",Direct Operation Kaizen,,employee
+206,GP-19-667,GP-19-667,"LUDOVICE, MARY ANN",Production 1,,employee
+207,GP-10-257,GP-10-257,"LUIG, LEIVIC",Production 2,rbgfinalinsp@glory.com.ph,employee
+208,GP-17-559,GP-17-559,"LUISTRO, MARIA SABINA",Production 1,,employee
+209,GP-18-637,GP-18-637,"MACALINDONG, KRISTINE BEA",Production 1,,employee
+210,GP-19-668,GP-19-668,"MACARANAS, EDNA",QC,,employee
+211,GP-06-174,GP-06-174,"MACOB, IVAN DANIEL",PPIC,i.macob@glory.com.ph,employee
+212,GP-07-206,GP-07-206,"MACOB, MARIA CARMEN",Accounting,c.macob@glory.com.ph,employee
+213,GP-17-560,GP-17-560,"MAGANIS, JONEL",Production 1,,employee
+214,GP-22-728,GP-22-728,"MAGBUO, MARISSA",Parts Inspection,pi.staff@glory.com.ph,employee
+215,GP-18-594,GP-18-594,"MAGLAQUI, DWENDELYN",Production 1,,employee
+216,GP-07-202,GP-07-202,"MAGPATOC, CARLITO",Production Technology,c.magpatoc@glory.com.ph,employee
+217,GP-13-375,GP-13-375,"MAGPATOC, JUDY",Japan Trainee,,employee
+218,GP-14-389,GP-14-389,"MAGUDDAYAO, LAUTERIO",Parts Production,,employee
+219,GP-22-717,GP-22-717,"MAIGUE, JONNALYN",PPIC,j.maigue@glory.com.ph,employee
+220,GP-18-638,GP-18-638,"MALIGSA, LEAFLOR",PPIC,prstaff8@glory.com.ph,employee
+221,GP-11-303,GP-11-303,"MALUBAY, MICHELLE",Parts Production,m.malubay@glory.com.ph,employee
+222,GP-18-592,GP-18-592,"MANALO, GINALYN",QC,,employee
+223,GP-13-362,GP-13-362,"MANALO, IRENE",QC,,employee
+224,GP-12-352,GP-12-352,"MANALO, ORLANDO",PPIC,o.manalo@glory.com.ph,employee
+225,GP-16-490,GP-16-490,"MANALO, ROSEMARIE JINKY",Parts Inspection,j.manalo@glory.com.ph,employee
+226,GP-18-639,GP-18-639,"MANALON, CHERRY ROSE",Parts Inspection,pi.auditor02@glory.com.ph,employee
+227,GP-16-470,GP-16-470,"MANANGU, ANDY",QC,,employee
+228,GP-20-696,GP-20-696,"MANAOIS, ABIGAIL",Production 1,,employee
+229,CG-0262,CG-0262,"MANLAPAZ, ADELFA",Administration,,employee
+230,GP-02-151,GP-02-151,"MANLAPAZ, LIEZEL",QC,,employee
+231,GP-07-209,GP-07-209,Manny Herrera,Direct Operation Kaizen,h.herrera@glory.com.ph,employee
+232,GP-17-561,GP-17-561,"MANUEL, ROMAY",Production 2,,employee
+233,GP-18-640,GP-18-640,"MARASIGAN, PRECING",Production 1,,employee
+234,GP-14-417,GP-14-417,"MARCELO, CATHERINE",Parts Inspection,c.marcelo@glory.com.ph,employee
+235,GP-19-683,GP-19-683,"MARCILLA, LENLYN",Administration,healthbenefits@glory.com.ph,employee
+236,GP-19-670,GP-19-670,"MATALOG, MARINA",Production 1,,employee
+237,GP-16-492,GP-16-492,"MATEO, JANINE",Administration,admin_gs@glory.com.ph,employee
+238,maxim,maxim,MAXIM,Administration,maxim@glory.com.ph,employee
+239,GP-18-595,GP-18-595,"MENDEZ, MARLYN",PPIC,m.mendez@glory.com.ph,employee
+240,GP-14-409,GP-14-409,"MENDOZA, ANJELICA",Production Technology,a.mendoza@glory.com.ph,employee
+241,GP-18-616,GP-18-616,"MENDOZA, CHARISSE",Administration,recruitment@glory.com.ph,employee
+242,GP-13-376,GP-13-376,"MENDOZA, CRISPIN",QC,,employee
+243,GP-00-098,GP-00-098,"MENDOZA, ELARDE",PPIC,crating@glory.com.ph,employee
+244,GP-18-599,GP-18-599,"MENDOZA, MARY ROSE",QC,,employee
+245,GP-15-435,GP-15-435,"MENORCA, ROGINA",Japan Trainee,,employee
+246,GP-18-612,GP-18-612,"MERCADO, JAYPEE",Direct Operation Kaizen,,employee
+247,GP-17-562,GP-17-562,"MERINO, LENILYN",Production 1,,employee
+248,GP-14-382,GP-14-382,"MIGUEL, RAMINA",Parts Inspection,r.miguel@glory.com.ph,employee
+249,GP-17-563,GP-17-563,"MIONES, MELANIE",Production 2,,employee
+250,GP-19-671,GP-19-671,"MIRANDILLA, JERICK",Production 2,,employee
+251,GP-20-697,GP-20-697,"MISSION, JOMMEL",QC,,employee
+252,GP-16-471,GP-16-471,"MOGOL, RENALYN",Parts Inspection,r.mogol@glory.com.ph,employee
+253,GP-12-323,GP-12-323,"MOISES, JOANNA MARIE",Quality Control,j.moises@glory.com.ph,employee
+254,GP-22-757,GP-22-757,MOJICA JANE,Parts Inspection,,employee
+255,GP-07-210,GP-07-210,"MOJICA, JONAR",Production 1,j.mojica@glory.com.ph,employee
+256,GP-11-304,GP-11-304,"MOJICA, RICHARD",Parts Production,r.mojica@glory.com.ph,employee
+257,GP-22-739,GP-22-739,MON JAYSON,Parts Inspection,,employee
+258,GP-07-196,GP-07-196,"MONTANO, MARICEL",Accounting,m.montano@glory.com.ph,employee
+259,GP-16-472,GP-16-472,"MONTERDE, SUSAN",PPIC,s.monterde@glory.com.ph,employee
+260,GP-16-493,GP-16-493,"MORENO, LEO",QC,,employee
+261,GP-18-596,GP-18-596,"MUGAS, JOHN ERIC",PPIC,prstaff13@glory.com.ph,employee
+262,GP-16-473,GP-16-473,"NACOR JR., LORIE",PPIC,l.nacor@glory.com.ph,employee
+263,GP-08-220,GP-08-220,"NARANJO, JOEL",Purchasing,j.naranjo@glory.com.ph,employee
+264,GP-08-216,GP-08-216,"NAUNGAYAN, WENNIE",Production 2,w.naungayan@glory.com.ph,employee
+265,GP-14-393,GP-14-393,"NAZARENO, BERNADETTE",PPIC,b.endaya@glory.com.ph,employee
+266,nippi,nippi,NIPPI,Administration,nippi@glory.com.ph,employee
+267,nippi,nippi,NIPPI,Administration,nippi@glory.com.ph,employee
+268,GP-16-494,GP-16-494,"NOCON, RYAN NIEL",Parts Production,,employee
+269,GP-11-297,GP-11-297,"OBANA, RECELL",Parts Production,moulding.staff@glory.com.ph,employee
+270,GP-17-517,GP-17-517,"OCAMPO, RONA MHAY",QC,,employee
+271,GP-20-698,GP-20-698,"OCSIN, DANNY",Production 2,,employee
+272,GP-08-222,GP-08-222,"ODASCO, JESPER",Parts Inspection,j.odasco@glory.com.ph,employee
+273,GP-15-449,GP-15-449,"ODVIAR, MELODY",Parts Inspection,m.odviar@glory.com.ph,employee
+274,GP-13-377,GP-13-377,"OGATIS, JEZEL",Japan Trainee,,employee
+275,GP-11-308,GP-11-308,"OLAES, IRENE",Japan Trainee,,employee
+276,GP-18-641,GP-18-641,"OLGINA, RAVEN",Quality Assurance,r.olgina@glory.com.ph,employee
+277,GP-15-450,GP-15-450,"OLIVAREZ, MARICAR",Japan Trainee,,employee
+278,GP-18-597,GP-18-597,"ONIAS, JOSEPH",QC,,employee
+279,GP-17-518,GP-17-518,"ONSANA, LUCITO JR.",Production 2,,employee
+280,GP-18-598,GP-18-598,"ORACION, JAMESON",Production 1,,employee
+281,GP-12-354,GP-12-354,"ORDONEZ, LIZA",Parts Inspection,pistaff1@glory.com.ph,employee
+282,GP-10-260,GP-10-260,"OSOYOS, SHIELO JOY",Parts Production,s.osoyos@glory.com.ph,employee
+283,GP-11-278,GP-11-278,"PACUAN, MARY JANE",PPIC,mj.pacuan@glory.com.ph,employee
+284,GP-17-550,GP-17-550,"PAGATPAT, ANNALYN",Prodsupport,a.pagatpat@glory.com.ph,employee
+285,GP-14-388,GP-14-388,"PAGULAYAN, JOHN MORONI",Parts Inspection,j.pagulayan@glory.com.ph,employee
+286,CG-1488,CG-1488,"Pahimnayan, Elmalyn",Quality Assurance,,employee
+287,CG-1488,CG-1488,"PAHIMNAYAN, ELMALYN",Quality Assurance,qa.staff@glory.com.ph,employee
+288,GP-18-643,GP-18-643,"PALMA, JORLAN",Parts Production,,employee
+289,GP-97-064,GP-97-064,"PALOMERAS, LUISA",PPIC,l.palomeras@glory.com.ph,employee
+290,GP-20-699,GP-20-699,"PARAS, ARNIE",Production 2,,employee
+291,GP-22-738,GP-22-738,"PAREJA, JOY CHRISTIAN",Accounting,j.pareja@glory.com.ph,employee
+292,GP-17-500,GP-17-500,"PARI-AN, BUTCH",Parts Production,,employee
+293,GP-16-495,GP-16-495,"PAROHINOG, ARMEDA",Production 1,,employee
+294,GP-19-672,GP-19-672,"PAUNI, PRINCESS",PPIC,p.pauni@glory.com.ph,employee
+295,GP-16-474,GP-16-474,"PEDROSA, CARLO",Parts Production,,employee
+296,GP-11-282,GP-11-282,"Peleno, Cecile",QC,,employee
+297,GP-02-142,GP-02-142,"PELINA, DANA",Production 1,d.pelina@glory.com.ph,employee
+298,GP-19-673,GP-19-673,"PERRERAS, ANDY WILLIAM",Production 2,,employee
+299,GP-14-385,GP-14-385,"PIMENTEL, IZYL",Japan Trainee,,employee
+300,GP-17-564,GP-17-564,"PLATA, DECHRISTINE",PPIC,d.plata@glory.com.ph,employee
+301,powerlane,powerlane,POWERLANE,Administration,powerlane@glory.com.ph,employee
+302,powerlane,powerlane,POWERLANE,Administration,powerlane@glory.com.ph,employee
+303,512,512,PPD Staff,Parts Production,,employee
+304,513,513,PPIC Staff,PPIC,,employee
+305,516,516,Prod1 Staff,Production 1,,employee
+306,515,515,Prodtech Staff,Production Technology,,employee
+307,GP-20-688,GP-20-688,"PRUDENTE, ALYSSA JENINE",Administration,nurse@glory.com.ph,employee
+308,519,519,QA Staff,Quality Assurance,,employee
+309,GP-16-496,GP-16-496,"QUARTEROS, RONNIE",Production 1,,employee
+310,GP-08-224,GP-08-224,"Quilantang, Joy",Production 1,j.quilantang@glory.com.ph,employee
+311,GP-18-600,GP-18-600,"RAGANIT, ARNOLD",Purchasing,a.raganit@glory.com.ph,employee
+312,GP-19-684,GP-19-684,"RAGEL, CHRISTIAN",Purchasing,c.ragel@glory.com.ph,employee
+313,GP-18-644,GP-18-644,"RAMIREZ, REYMOND",Parts Production,,employee
+314,GP-12-344,GP-12-344,"RAMOS, CHAREYNA",Production 2,c.ramos@glory.com.ph,employee
+315,GP-18-645,GP-18-645,"RAMOS, RONACAR",Production 1,,employee
+316,GP-18-601,GP-18-601,"REGUINDIN, FLORENCE",Parts Production,,employee
+317,GP-11-286,GP-11-286,"RESURECCION, MARGIE",Production 1,m.resureccion@glory.com.ph,employee
+318,GP-08-225,GP-08-225,"RIVAMONTE, JONALYN",Production 2,j.rivamonte@glory.com.ph,employee
+319,GP-17-565,GP-17-565,"RIZA, ROSECHELLE",Production 1,,employee
+320,GP-12-357,GP-12-357,"ROBAS, JAYPEE",Parts Production,,employee
+321,GP-15-437,GP-15-437,"ROBILON, ROSE ANN",Administration,hr_training@glory.com.ph,employee
+322,GP-14-403,GP-14-403,"ROBLEDO, DONALYN",Production 2,,employee
+323,GP-16-475,GP-16-475,"ROGADOR, GENIE",Production 2,,employee
+324,GP-10-262,GP-10-262,"ROJAS, NOEMI",Production 2,n.rojas@glory.com.ph,employee
+325,GP-06-181,GP-06-181,"ROLLE, RYAN",Parts Production,r.rolle@glory.com.ph,employee
+326,GP-13-366,GP-13-366,"ROQUE, KAREN",Production 2,prod2sectionstaff1@glory.com.ph,employee
+327,GP-20-700,GP-20-700,"SABACAN, JEREVIE",Production 1,,employee
+328,GP-16-476,GP-16-476,"SABEJON, JINELYN",Prodsupport,prod.suppliesstaff1@glory.com.ph,employee
+329,CG-1697,CG-1697,"SAGULLO, RONALYN",Purchasing ,purchasing.staff2@glory.com.ph,employee
+330,GP-17-566,GP-17-566,"SALGADO, GLEN",Parts Production,,employee
+331,GP-18-646,GP-18-646,"SALIVA, JUSTINE JOYCE",Prodsupport,auditraining@glory.com.ph,employee
+332,GP-18-602,GP-18-602,"SALVADOR, ANGELICA",Production 1,,employee
+333,GP-17-567,GP-17-567,"SALVADOR, RICKY",Production 1,,employee
+334,GP-11-309,GP-11-309,"SAMSON, SONNY",Parts Production,s.samson@glory.com.ph,employee
+335,GP-15-430,GP-15-430,"SAN LORENZO, LALAINE",Japan Trainee,,employee
+336,GP-18-603,GP-18-603,"SAN MIGUEL, JOVEN",Parts Production,,employee
+337,GP-22-736,GP-22-736,"SANGALANG, ELAINE",Administration,e.sangalang@glory.com.ph,employee
+338,GP-19-679,GP-19-679,"SANTIAGO, KLARENCE",PPIC,k.santiago@glory.com.ph,employee
+339,GP-22-719,GP-22-719,"SANTIAGO, RODIL",PPIC,r.santiago@glory.com.ph,employee
+340,GP-11-292,GP-11-292,"SANTOS, RAUL",Parts Production,,employee
+341,GP-17-519,GP-17-519,"SARABIA, JUNNEL JOSEPH",PPIC,impexprocessor@glory.com.ph,employee
+342,GP-18-647,GP-18-647,"SARMIENTO, ANNAVI KATRINA",QC,,employee
+343,GP-17-568,GP-17-568,"SARMIENTO, JENELYN",Production 1,,employee
+344,GP-07-204,GP-07-204,"SARTE, EMYRIA",Production 2,e.sarte@glory.com.ph,employee
+345,GP-17-520,GP-17-520,"SENCIL, CRISTELYN",Production 2,,employee
+346,GP-02-146,GP-02-146,"SERVIDA, JACQUELINE",Purchasing,j.servida@glory.com.ph,employee
+347,GP-19-674,GP-19-674,"SINSAY, ELSIE",Production 2,,employee
+348,GP-19-674,GP-19-674,"SINSAY, ELSIE",Production 2,,employee
+349,GP-22-740,GP-22-740,"SOLOMON, BOBBY JOHN",System Kaizen,,employee
+350,GP-17-569,GP-17-569,"SOSA, MARIA ERVA",Production 1,,employee
+351,1011,1011,Staff,Parts Inspection,,employee
+352,GP-20-701,GP-20-701,"TAGLE, JOHN YORI ",Prodsupport,a.asuelo@glory.com.ph,employee
+353,GP-97-058,GP-97-058,"TAHIMIC, MARISSA",Japan Trainee,,employee
+354,GP-18-650,GP-18-650,"TALLER, JHOEZALYN",Production 2,,employee
+355,GP-18-650,GP-18-650,"TALLER, JHOEZALYN",Production 2,,employee
+356,GP-12-359,GP-12-359,"TAMAYO, JULIUS CEZAR",PPIC,j.tamayo@glory.com.ph,employee
+357,GP-12-359,GP-12-359,"TAMAYO, JULIUS CEZAR",PPIC,j.tamayo@glory.com.ph,employee
+358,GP-18-609,GP-18-609,"TAMIO, ALLELIE MAE",PPIC,a.tamio@glory.com.ph,employee
+359,GP-18-609,GP-18-609,"TAMIO, ALLELIE MAE",PPIC,a.tamio@glory.com.ph,employee
+360,GP-15-454,GP-15-454,"TATING, RICHARD",Parts Inspection,pistaff3@glory.com.ph,employee
+361,GP-14-415,GP-14-415,"TAYCO, MA. NOVY",Japan Trainee,,employee
+362,GP-14-415,GP-14-415,"TAYCO, MA. NOVY",Japan Trainee,,employee
+363,GP-11-312,GP-11-312,"TICONG, ANGELO",Parts Production,a.ticong@glory.com.ph,employee
+364,GP-16-477,GP-16-477,"TOCALDO, JIZELLE HARIETH",Prodsupport,,employee
+365,GP-16-477,GP-16-477,"TOCALDO, JIZELLE HARIETH",Prodsupport,,employee
+366,GP-15-438,GP-15-438,"TOLENTINO, EDWIN",Production 2,e.tolentino@glory.com.ph,employee
+367,GP-17-570,GP-17-570,"TOMAS, WILMA",QC,,employee
+368,GP-17-570,GP-17-570,"TOMAS, WILMA",QC,,employee
+369,GP-08-228,GP-08-228,"TONDENG, MARILYN",Production 1,m.tondeng@glory.com.ph,employee
+370,GP-08-228,GP-08-228,"TONDENG, MARILYN",Production 1,m.tondeng@glory.com.ph,employee
+371,GP-18-604,GP-18-604,"TONGA, CAMILLE",Purchasing,c.tonga@glory.com.ph,employee
+372,GP-18-604,GP-18-604,"TONGA, CAMILLE",Purchasing,c.tonga@glory.com.ph,employee
+373,GP-21-709,GP-21-709,"TORRES, ABEGAIL",PPIC,a.torres@glory.com.ph,employee
+374,,,"TORRES, JAYSON",Quality Assurance,,employee
+375,"TORRES, ÑINO",GP-18-613,"TORRES, ÑINO",Parts Inspection,n.torres@glory.com.ph,employee
+376,GP-19-675,GP-19-675,"UMALI, LOUIE",QC,,employee
+377,GP-11-289,GP-11-289,"UMALI, MARGIE",Production 2,,employee
+378,GP-99-069,GP-99-069,"UMALI, NESTOR",PPIC,crating2@glory.com.ph,employee
+379,GP-14-416,GP-14-416,"UMALI, PAMELA",Japan Trainee,,employee
+380,GP-17-521,GP-17-521,"VARGAS, JASUNE",Production 1,technician_staff3@glory.com.ph,employee
+381,GP-17-521,GP-17-521,"VARGAS, JASUNE",Production 1,technician_staff3@glory.com.ph,employee
+382,GP-18-578,GP-18-578,"VARGAS, MARY GRACE",QC,,employee
+383,GP-18-578,GP-18-578,"VARGAS, MARY GRACE",QC,,employee
+384,GP-18-605,GP-18-605,"VENTIGAN, JOHN JEFFREY",Production 2,,employee
+385,GP-05-167,GP-05-167,"VIDAL JR., REYNALDO",Production 2,r.vidal@glory.com.ph,employee
+386,GP-18-606,GP-18-606,"VILLANROQUE, NEMFA",Purchasing,n.villanroque@glory.com.ph,employee
+387,GP-18-606,GP-18-606,"VILLANROQUE, NEMFA",Purchasing,n.villanroque@glory.com.ph,employee
+388,GP-19-676,GP-19-676,"VILLANUEVA, DENVER",QC,,employee
+389,GP-19-676,GP-19-676,"VILLANUEVA, DENVER",QC,,employee
+390,GP-17-522,GP-17-522,"VILLARAZA, JESHAYDEL",Parts Inspection,pistaff2@glory.com.ph,employee
+391,GP-17-522,GP-17-522,"VILLARAZA, JESHAYDEL",Parts Inspection,pistaff2@glory.com.ph,employee
+392,GP-06-193,GP-06-193,"VILLASANTA, MICHAEL",Production 1,m.villasanta@glory.com.ph,employee
+393,GP-05-163,GP-05-163,"VILLEGAS, GABRIEL",Administration,,employee
+394,GP-16-497,GP-16-497,"VIRAY, RESTY",Production 1,,employee
+395,GP-10-244,GP-10-244,"YACON, DESERIE",PPIC,d.ayos@glory.com.ph,employee
+396,GP-10-268,GP-10-268,"YALUNG, IDHONNAH",PPIC,i.yalung@glory.com.ph,employee
+397,GP-22-718,GP-22-718,Antonio Negrite Jr,Administration,a.negrite@glory.com.ph,fem
+398,CG-1872,CG-1872,BABISEL DACILLO,Administration,f.ramirez@glory.com.ph,fem
+399,CG-0690,CG-0690,CHRISTIAN DIONISIO,Administration,,fem
+400,CG-0676,CG-0676,EDVIR LUMAGUI,Administration,fem.staff@glory.com.ph,fem
+401,CG-1805,CG-1805,Felipe Plojo,Administration,f.ramirez@glory.com,fem
+402,fem,fem,Francisco Ramirez,Administration,f.ramirez@glory.com.ph,fem
+403,GP-22-756,GP-22-756,FRANK B. APIL,Administration,f.apil@glory.com.ph,fem
+404,CG-1420,CG-1420,Jenmark Rondero,Administration,f.ramirez@glory.com.ph,fem
+405,GP-11-301,GP-11-301,"MAGAT, ROEL",Administration,r.magat@glory.com.ph,fem
+406,CG-0827,CG-0827,Mark Lawrence Lopez,Administration,f.ramirez@glory.com,fem
+407,GP-17-516,GP-17-516,"NATUEL, JONATHAN JR.",Administration,fem1@glory.com.ph,fem
+408,GP-22-730,GP-22-730,"PARMA, RALPH GABRIEL",Administration,,fem
+409,CG-0712,CG-0712,RALPH GABRIEL PARMA,Administration,f.ramirez@glory.com.ph,fem
+410,GP-16-478,GP-16-478,"SIERRA, JOHN CARLO",Administration,jc.sierra@glory.com.ph,fem
+411,GP-97-059,GP-97-059,"BAUTISTA, ELMER",Direct Operation Kaizen,e.bautista@glory.com.ph,head
+412,GP-12-321,GP-12-321,Benjie Paras,Parts Inspection,b.paras@glory.com.ph,head
+413,GP-06-185,GP-06-185,"BERI, GERINA",Accounting,g.beri@glory.com.ph,head
+414,GP-10-273,GP-10-273,"CALALO, GEMMA",Administration,g.anda@glory.com.ph,head
+415,GP-11-277,GP-11-277,"CATIGAN, NOLIESON",Production Technology,n.catigan@glory.com.ph,head
+416,GP-21-708,GP-21-708,"FUKUNAGA, SHIGEYUKI ",Japanese,s.fukunaga@glory.com.ph,head
+417,GP-14-381,GP-14-381,"GELLE, NERIO",Purchasing,n.gelle@glory.com.ph,head
+418,lem,lem,Lemuel Semillano,Production 1,l.semillano@glory.com.ph,head
+419,GP-97-055,GP-97-055,"LISBOA, DINA",Production 2,d.lisboa@glory.com.ph,head
+420,GP-14-397,GP-14-397,"LONTOC, ARLENE",Quality Assurance,a.delapaz@glory.com.ph,head
+421,GP-11-305,GP-11-305,"MONZON, RIO",Administration,r.monzon@glory.com.ph,head
+422,admin,admin,Nathan Nemedez,Administration,j.nemedez@glory.com.ph,head
+423,GP-19-653,GP-19-653,"OZAWA, TOMOYUKI ",Japanese,t.ozawa@glory.com.ph,head
+424,GP-98-079,GP-98-079,"PINPIN, CHERRY",Production Support,c.pinpin@glory.com.ph,head
+425,GP-94-005,GP-94-005,"REYES, RAYMOND",Quality Assurance,r.reyes@glory.com.ph,head
+426,GP-11-310,GP-11-310,"SAPALASAN, ELOISA",Parts Production,e.sapalasan@glory.com.ph,head
+427,GP-03-158,GP-03-158,"SEMILLANO, LYZIEL",Purchasing,l.sanchez@glory.com.ph,head
+428,GP-10-271,GP-10-271,"SHERMAYNE, COSA",System Kaizen,s.pepito@glory.com.ph,head
+429,GP-10-269,5022011,Sheryll Ramirez,PPIC,s.ramirez@glory.com.ph,head
+430,GP-20-691,GP-20-691,"TOKU, AKIRA ",Japanese,a.toku@glory.com.ph,head
+431,GP-01-115,GP-01-115,"Wilma, Logrono",Quality Control,w.logrono@glory.com.ph,head
+432,CG-1374,CG-1374,Aileen D. Domo,Administration,mis.staff@glory.com.ph,mis
+433,GP-22-722,GP-22-722,Cedrick James M. Orozo,Administration,mis.dev@glory.com.ph,mis
+434,GP-22-729,GP-22-729,Kevin Roy Marero,Administration,mis.support@glory.com.ph,mis
+435,mis,m1s,Nathan Nemedez,Administration,j.nemedez@glory.com.ph,mis
+436,CG-1732,CG-1732,"SANDIGAN, JOHN SPENCER",Administration,mis.techsupport@glory.com.ph,mis
+437,GP-17-571,GP-17-571,"VIVO, FELMHAR",Administration,mis@glory.com.ph,mis

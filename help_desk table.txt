@@ -1,0 +1,79 @@
+id
+date_filled
+status
+ticket_no
+request_to
+request_category
+request_details
+reqfrom_date
+reqfinish_date
+approving_head
+approving_head_date
+approving_admin
+approving_admin_date
+approved_finish_date
+actual_finish_date
+confirm_finish_date
+rating_delivery
+rating_quality
+rating_final
+technical_remarks
+requestor_remakrs
+month
+year
+attachment
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            // $itemcode=$row['itemcode'];
+            
+            if (!empty($requestto && $category ))
+             //if($itemname!="" OR $descrp!="" OR $usein!="")
+             {
+                $sql="INSERT INTO request(date_filled,status,ticket_no,requestor) 
+               VALUES(' $datenow','Open','$jo_no','$user_name',)"; 
+                $results = mysqli_query($con,$sql);
+   
+                ?>
+
+
+
+                   <?php
+                   echo "<script>alert('Save') </script>";
+                   echo "<script> location.href='allrequest.php'; </script>";
+                   //exit;
+                   
+                  
+                   ?>
+
+
+
+                <?php
+
+            } 
+
+            else{
+                
+                 echo "<script>alert('Please complete fields.') </script>";
+ 
+                // allert message!
+            }
+        }
+                ?>
+                
+                  
