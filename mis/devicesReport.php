@@ -1,21 +1,22 @@
 <?php
-    require '../dompdf/vendor/autoload.php';
+require '../dompdf/vendor/autoload.php';
 
-    use Dompdf\Dompdf;
-    $date = new DateTime(); 
-    $date = $date->format('F d, Y');
-    session_start();
+use Dompdf\Dompdf;
 
-
-    $user_dept = $_SESSION['department'];
+$date = new DateTime();
+$date = $date->format('F d, Y');
+session_start();
 
 
-    if(!isset($_SESSION['connected'])){
-      header("location: ../index.php");
-    }
-include ("../includes/connect.php");
+$user_dept = $_SESSION['department'];
 
-    $html ='<!DOCTYPE html>
+
+if (!isset($_SESSION['connected'])) {
+    header("location: ../index.php");
+}
+include("../includes/connect.php");
+
+$html = '<!DOCTYPE html>
     <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -97,12 +98,12 @@ include ("../includes/connect.php");
 
             </tr>
             <tr>
-                <td class="first"><span class="label">For the month of '.$_SESSION['selectedMonth'].' '.$_SESSION['selectedYear'].' </span><span style="align-text: right"></span></td>
+                <td class="first"><span class="label">For the month of ' . $_SESSION['selectedMonth'] . ' ' . $_SESSION['selectedYear'] . ' </span><span style="align-text: right"></span></td>
                 
 
             </tr>
             <tr>
-            <td class="first"><span class="label">Department: </span><span class="label" style="align-text: right">'.$_SESSION['department'].'</span></td>
+            <td class="first"><span class="label">Department: </span><span class="label" style="align-text: right">' . $_SESSION['department'] . '</span></td>
             
 
         </tr>
@@ -128,48 +129,48 @@ include ("../includes/connect.php");
             </tr>
             ';
 
-            $date = new DateTime(); 
-            $month = $_SESSION['selectedMonth'];
-            $year = $_SESSION['selectedYear'];
-  $a=1;
+$date = new DateTime();
+$month = $_SESSION['selectedMonth'];
+$year = $_SESSION['selectedYear'];
+$a = 1;
 
-  $sql="SELECT removabledevices.department,removabledevices.brand, removabledevices.size, removabledevices.color, removabledevices.type, removabledevices.controlNumber ,scan.action, scan.performedBy, scan.Date, scan.month, scan.year, scan.proof FROM removabledevices LEFT JOIN scan  ON removabledevices.controlNumber = scan.controlNumber AND scan.year = '$year' WHERE removabledevices.department = '$user_dept'  AND (scan.year = '$year' OR scan.year IS NULL) AND (scan.month = '$month' OR scan.month IS NULL);";
-  $result = mysqli_query($con,$sql);
+$sql = "SELECT removabledevices.department,removabledevices.brand, removabledevices.size, removabledevices.color, removabledevices.type, removabledevices.controlNumber ,scan.action, scan.performedBy, scan.Date, scan.month, scan.year, scan.proof FROM removabledevices LEFT JOIN scan  ON removabledevices.controlNumber = scan.controlNumber AND scan.year = '$year' WHERE removabledevices.department = '$user_dept'  AND (scan.year = '$year' OR scan.year IS NULL) AND (scan.month = '$month' OR scan.month IS NULL);";
+$result = mysqli_query($con, $sql);
 
-  while($row=mysqli_fetch_assoc($result)){
-                $controlNumber = $row['controlNumber'];
-                $brand = $row['brand'];
+while ($row = mysqli_fetch_assoc($result)) {
+    $controlNumber = $row['controlNumber'];
+    $brand = $row['brand'];
 
-                $size = $row['size'];
-                $color = $row['color'];
+    $size = $row['size'];
+    $color = $row['color'];
 
-                $type = $row['type'];
-                $action = $row['action'];
-                $performedBy = $row['performedBy'];
-     
-          $html.='  <tr>
-           <td>'.$a.'</td>
-           <td>'.$controlNumber.'</td>
+    $type = $row['type'];
+    $action = $row['action'];
+    $performedBy = $row['performedBy'];
 
-           <td>'.$brand.'</td>
-           <td>'.$size.'</td>
-           <td>'.$color.'</td>
-           <td>'.$type.'</td>
-           <td>'.$action.'</td>
-           <td>'.$performedBy.'</td>
+    $html .= '  <tr>
+           <td>' . $a . '</td>
+           <td>' . $controlNumber . '</td>
+
+           <td>' . $brand . '</td>
+           <td>' . $size . '</td>
+           <td>' . $color . '</td>
+           <td>' . $type . '</td>
+           <td>' . $action . '</td>
+           <td>' . $performedBy . '</td>
 
 
 
             </tr>';
-            $a++;
-            }
-            
-            
-        
-      
-        
-       $html.=' </table>';
-$html.='<h4><span class="label">II: List of Computer</span><span style="align-text: right"></span></h4>
+    $a++;
+}
+
+
+
+
+
+$html .= ' </table>';
+$html .= '<h4><span class="label">II: List of Computer</span><span style="align-text: right"></span></h4>
 <table id="deviceReportTable" >
 
 <tr>
@@ -186,47 +187,47 @@ $html.='<h4><span class="label">II: List of Computer</span><span style="align-te
     </tr>
     ';
 
-    $date = new DateTime(); 
-    $month = $_SESSION['selectedMonth'];
-    $year = $_SESSION['selectedYear'];
-$a=1;
+$date = new DateTime();
+$month = $_SESSION['selectedMonth'];
+$year = $_SESSION['selectedYear'];
+$a = 1;
 
-$sql="SELECT * FROM `devices` WHERE `department` = '$user_dept' AND `type` != 'Tablet'";
-$result = mysqli_query($con,$sql);
+$sql = "SELECT * FROM `devices` WHERE `department` = '$user_dept' AND `type` != 'Tablet'";
+$result = mysqli_query($con, $sql);
 
-while($row=mysqli_fetch_assoc($result)){
-        $pctag = $row['pctag'];
-        $assetTag = $row['assetTag'];
-        $user = $row['user'];
-        $type = $row['type'];
-        $deactivated = $row['deactivated'];
-        if($deactivated==true){
-            $deactivated = "Inactive";
-        }else{
-          $deactivated = "Active";  
-        }
-  $html.='  <tr>
-   <td>'.$a.'</td>
-   <td>'.$pctag.'</td>
-   <td>'.$assetTag.'</td>
-   <td>'.$user.'</td>
-   <td>'.$type.'</td>
-   <td>'.$deactivated.'</td>
+while ($row = mysqli_fetch_assoc($result)) {
+    $pctag = $row['pctag'];
+    $assetTag = $row['assetTag'];
+    $user = $row['user'];
+    $type = $row['type'];
+    $deactivated = $row['deactivated'];
+    if ($deactivated == true) {
+        $deactivated = "Inactive";
+    } else {
+        $deactivated = "Active";
+    }
+    $html .= '  <tr>
+   <td>' . $a . '</td>
+   <td>' . $pctag . '</td>
+   <td>' . $assetTag . '</td>
+   <td>' . $user . '</td>
+   <td>' . $type . '</td>
+   <td>' . $deactivated . '</td>
    </tr>';
     $a++;
-    }
-    
-    
+}
 
 
 
-$html.=' </table>';
-       
-        $html.='<table style="bottom: 75px; position: absolute;">
+
+
+$html .= ' </table>';
+
+$html .= '<table style="bottom: 75px; position: absolute;">
 <tr>
 <th class="first"><span class="label">Prepared by: </span></th>
 <th class="first"><span class="label">Noted by Dept Head: </span></th>
-<th class="first"><span class="label">Checked by MIS: </span></th>
+<th class="first"><span class="label">Checked by ICT: </span></th>
 
 </tr>
 <br>
@@ -234,7 +235,7 @@ $html.=' </table>';
 <br>
 
 <tr>
-<th class="first"><span class="label">'.$_SESSION['name'].'</span></th>
+<th class="first"><span class="label">' . $_SESSION['name'] . '</span></th>
 <th class="first"><span class="label"></span></th>
 <th class="first"><span class="label"></span></th>
 
@@ -243,12 +244,10 @@ $html.=' </table>';
 
         
     </body>
-    </html>';   
-    $dompdf = new Dompdf();
+    </html>';
+$dompdf = new Dompdf();
 
 $dompdf->loadHtml($html);
 $dompdf->setPaper('A4', 'portrait');
 $dompdf->render();
 $dompdf->stream('PMS Report.pdf', ['Attachment' => 0]);
-?>
-

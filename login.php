@@ -58,8 +58,10 @@ if (isset($_POST['submit'])) {
           header("location:fem");
         } else if ($level == 'head') {
           header("location:department-head");
-        } else if ($level == 'admin') {
+        } else if ($level == 'admin' && $leaderof == 'mis') {
           header("location:department-admin");
+        } else if ($level == 'admin' && $leaderof == 'fem') {
+          header("location:fem-admin");
         }
       } else {
         echo '<script>alert("Login Failed! Wrong password")</script>';
@@ -85,7 +87,7 @@ if (isset($_POST['submit'])) {
 
 
       if ($password == $userpass) {
-        header("location:http://192.168.5.243/srs/login.php?user=$username&pass=$userpass");
+        header("location:http://192.168.60.47/srs/login.php?user=$username&pass=$userpass");
       } else {
         echo '<script>alert("Login Failed! Wrong password")</script>';
       }
@@ -113,7 +115,7 @@ if (isset($_POST['submit'])) {
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FEM MIS Helpdesk</title>
+  <title>Helpdesk</title>
 
   <!-- font awesome -->
   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" /> -->
@@ -172,8 +174,9 @@ if (isset($_POST['submit'])) {
 
 </head>
 
-<body class="static">
+<!-- <body class="static  bg-[#d0d7eff2] dark:bg-gray-900"> -->
 
+<body class="static">
   <!-- nav -->
   <?php require_once 'nav_login.php'; ?>
 
@@ -185,7 +188,7 @@ if (isset($_POST['submit'])) {
     <div class="m-auto container px-6 py-4 h-full">
       <div class="flex justify-center items-center flex-wrap h-full g-6 text-gray-800">
         <div class="sm:p-20 w-1/2 md:w-8/12 lg:w-6/12 sm:mb-12 md:mb-0">
-          <img src="resources/img/heldesk 3d - Copy.png" class="w-full logo-container" alt="Login image" />
+          <img src="resources/img/heldesk 3d.png" class="w-full logo-container" alt="Login image" />
         </div>
         <div class="sm:p-28 w-full md:w-8/12 lg:w-6/12 mb-12 md:mb-0">
 
@@ -204,16 +207,16 @@ if (isset($_POST['submit'])) {
             <div class="mb-6">
               <input type="password" name="password" class="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" placeholder="Password" />
             </div>
-            <div class="text-white mb-6 flex gap-4">
+            <div class="mb-6 flex gap-4">
 
 
-              <div class=" gap-4 p-2 flex w-full items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
+              <div class=" text-white gap-4 p-2 flex w-full items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
                 <input checked id="bordered-radio-1" type="radio" value="femmis" name="section" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                <label for="bordered-radio-1" class="w-full py-4 ms-2 text-sm font-medium ">FEM / MIS</label>
+                <label for="bordered-radio-1" class="w-full py-4 ms-2 text-sm font-medium ">FEM / ICT</label>
               </div>
-              <div class=" gap-4 p-2 flex w-full items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
+              <div class=" text-white gap-4 p-2 flex w-full items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
                 <input id="bordered-radio-2" type="radio" value="systemkaizen" name="section" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                <label for="bordered-radio-2" class="w-full py-4 ms-2 text-sm font-medium ">System Kaizen</label>
+                <label for="bordered-radio-2" class="w-full py-4 ms-2 text-sm font-medium ">System Request</label>
               </div>
 
             </div>
@@ -266,7 +269,7 @@ if (isset($_POST['submit'])) {
 
           <!-- <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" /> -->
           <!-- <span class="block text-sm text-gray-500 text-center dark:text-gray-400">  <a href="https://flowbite.com/" class="hover:underline">Designed By</a> Cedrick James - MIS Section</span> -->
-          <span class="block text-sm  text-center text-white"> <a href="https://flowbite.com/" class="hover:underline">Designed By</a> Cedrick James - MIS Section</span>
+          <span class="block text-sm  text-center text-white"> <a href="https://flowbite.com/" class="hover:underline">Designed By</a> Cedrick James - ICT Department</span>
 
       </div>
       </footer>
@@ -276,53 +279,6 @@ if (isset($_POST['submit'])) {
     </div>
 
   </section>
-
-
-  
-
-<!-- Main modal -->
-<div id="information" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full p-4 mb-4 ">
-    <div class="relative p-4 w-full max-w-2xl max-h-full">
-        <!-- Modal content -->
-        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-            <!-- Modal header -->
-            <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                   Attention to all Helpdesk's Users!
-                </h3>
-                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="default-modal">
-                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                    </svg>
-                    <span class="sr-only">Close modal</span>
-                </button>
-            </div>
-            <!-- Modal body -->
-            <div class="p-4 md:p-5 space-y-4">
-                <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                We would like to inform you that we are conducting a scheduled system update for our Helpdesk System. During this maintenance period, the system will be temporarily unavailable.
-                </p>
-                <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                Please note that you will not be able to access the Helpdesk System during the update process. We apologize for any inconvenience this may cause and appreciate your patience and understanding.
-                </p>
-                <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                We will notify you as soon as the maintenance is complete and the system is back online.
-                </p>
-                <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                Thank you for your cooperation.
-                </p>
-                <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                Sincerely,
-                </p>
-                <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-              ICT Department
-                </p>
-            </div>
-            <!-- Modal footer -->
-           
-        </div>
-    </div>
-</div>
 
 
 
@@ -340,42 +296,6 @@ if (isset($_POST['submit'])) {
 
   <!-- darkmode script -->
   <script>
-
-
-
-    // set the modal menu element
-const $targetEl = document.getElementById('information');
-
-// options with default values
-const options = {
-    placement: 'bottom-right',
-    backdrop: 'static',
-    backdropClasses:
-        'bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40',
-    closable: true,
-    onHide: () => {
-        console.log('modal is hidden');
-    },
-    onShow: () => {
-        console.log('modal is shown');
-    },
-    onToggle: () => {
-        console.log('modal has been toggled');
-    },
-};
-
-// instance options object
-const instanceOptions = {
-  id: 'modalEl',
-  override: true
-};
-
-
-const modal = new Modal($targetEl, options, instanceOptions);
-
-
-modal.toggle();
-
     // const gallery = document.getElementById('gallery');
     // const slider = document.getElementById('slider');
     // const prevButton = document.getElementById('prevButton');

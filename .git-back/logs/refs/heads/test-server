@@ -1,0 +1,5 @@
+0000000000000000000000000000000000000000 ceedcc55e2413e8be8dc78489325d68277d633d1 marerokevin <marerokevin@gmail.com> 1716597334 +0800	branch: Created from HEAD
+ceedcc55e2413e8be8dc78489325d68277d633d1 181b062a2b1d769d7bcb6b9f50d2d2146d784ceb marerokevin <marerokevin@gmail.com> 1716774313 +0800	commit: remove unecessary sh*t
+181b062a2b1d769d7bcb6b9f50d2d2146d784ceb 5e04a5b07a53073bcffdb5c455fed430e61947c3 marerokevin <marerokevin@gmail.com> 1716957391 +0800	commit: Change JO to Request
+5e04a5b07a53073bcffdb5c455fed430e61947c3 64350c146213f190b673eb37b7bee9d71a19a138 marerokevin <marerokevin@gmail.com> 1717042130 +0800	commit: change Jo details to ts/jo details
+64350c146213f190b673eb37b7bee9d71a19a138 1f4f241644ed9ef87de2510f566894da52eefa10 marerokevin <marerokevin@gmail.com> 1717043454 +0800	commit: remove closing ticket by requestor

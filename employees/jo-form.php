@@ -145,9 +145,9 @@ if (isset($_POST['submit'])) {
 
     if (!empty($requestto && $category)) {
         $email1 = $_SESSION['email'];
-        $sql = "insert into request (date_filled,status2,requestorUsername,requestor,email,department,request_to, request_category,request_details,computerName,reqstart_date ,reqfinish_date, telephone, approving_head,accept_termsandconddition,month,year,attachment) 
-                    values('$datenow','head','$username','$user_name','$email1','$user_dept','$requestto','$category','$request','$computerName','$start','$end','$telephone','$headname','$terms','$month','$year','$dest_path')";
-                $results = mysqli_query($con,$sql);
+        $sql = "insert into request (date_filled,status2,requestorUsername,requestor,email,department,request_type, request_to, request_category,request_details,computerName,reqstart_date ,reqfinish_date, telephone, approving_head,accept_termsandconddition,month,year,attachment) 
+                    values('$datenow','head','$username','$user_name','$email1','$user_dept','Job Order','$requestto','$category','$request','$computerName','$start','$end','$telephone','$headname','$terms','$month','$year','$dest_path')";
+        $results = mysqli_query($con, $sql);
         if ($results) {
 
             $sql2 = "Select * FROM `sender`";

@@ -1,17 +1,18 @@
 <?php
-    require '../dompdf/vendor/autoload.php';
+require '../dompdf/vendor/autoload.php';
 
-    use Dompdf\Dompdf;
-    $date = new DateTime(); 
-    $date = $date->format('F d, Y');
-    session_start();
+use Dompdf\Dompdf;
 
-    if(!isset($_SESSION['connected'])){
-      header("location: ../index.php");
-    }
-include ("../includes/connect.php");
+$date = new DateTime();
+$date = $date->format('F d, Y');
+session_start();
 
-    $html ='<!DOCTYPE html>
+if (!isset($_SESSION['connected'])) {
+    header("location: ../index.php");
+}
+include("../includes/connect.php");
+
+$html = '<!DOCTYPE html>
     <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -83,15 +84,15 @@ padding-top: 0px;
       
         <table>
         <tr>
-                <td class="first"><span class="label">MIS Preventive Maintenance Service</span><span style="align-text: right"></span></td>
-                <td class="first" style="text-align: right"><span class="label">Date: '.$date.'</span><span style="align-text: right"></span></td>
+                <td class="first"><span class="label">ICT Preventive Maintenance Service</span><span style="align-text: right"></span></td>
+                <td class="first" style="text-align: right"><span class="label">Date: ' . $date . '</span><span style="align-text: right"></span></td>
           
                
            
 
             </tr>
             <tr>
-                <td class="first"><span class="label">For the month of '.$_SESSION['selectedMonth'].' '.$_SESSION['selectedYear'].' </span><span style="align-text: right"> </span></td>
+                <td class="first"><span class="label">For the month of ' . $_SESSION['selectedMonth'] . ' ' . $_SESSION['selectedYear'] . ' </span><span style="align-text: right"> </span></td>
                 
 
             </tr>
@@ -116,23 +117,23 @@ padding-top: 0px;
  
             </tr>
             ';
-            $date = new DateTime(); 
-            $month = $_SESSION['selectedMonth'];
-            $year = $_SESSION['selectedYear'];
+$date = new DateTime();
+$month = $_SESSION['selectedMonth'];
+$year = $_SESSION['selectedYear'];
 
-            $sql="select `$month` from `pmsschedule` ";
-            $monthResult = mysqli_query($con,$sql);
+$sql = "select `$month` from `pmsschedule` ";
+$monthResult = mysqli_query($con, $sql);
 
-            
-            while($row=mysqli_fetch_assoc($monthResult)){
-            $scheduledDepartment =  $row[$month];
-            }
 
-            $departments = explode(" and ", $scheduledDepartment);
-            
-            if (count($departments) == 1) {
-              $DepartmentOnly = $departments[0];
-              $sql="SELECT devices.*, pmsaction.deviceName, pmsaction.action, pmsaction.performedBy, pmsaction.Date, pmsaction.month, pmsaction.year, pmsaction.comments, pmsaction.approvedBy
+while ($row = mysqli_fetch_assoc($monthResult)) {
+    $scheduledDepartment =  $row[$month];
+}
+
+$departments = explode(" and ", $scheduledDepartment);
+
+if (count($departments) == 1) {
+    $DepartmentOnly = $departments[0];
+    $sql = "SELECT devices.*, pmsaction.deviceName, pmsaction.action, pmsaction.performedBy, pmsaction.Date, pmsaction.month, pmsaction.year, pmsaction.comments, pmsaction.approvedBy
               FROM devices
               LEFT JOIN pmsaction
                   ON devices.computerName = pmsaction.deviceName AND pmsaction.year = '$year'
@@ -140,65 +141,62 @@ padding-top: 0px;
                   AND devices.type != 'Tablet' AND devices.deactivated = 0
                   AND (pmsaction.year = '$year' OR pmsaction.year IS NULL)
                   AND (pmsaction.month = '$month' OR pmsaction.month IS NULL);";
-              $result = mysqli_query($con,$sql);
+    $result = mysqli_query($con, $sql);
+} else if (count($departments) > 1) {
+    $department1 = $departments[0];
+    $department2 = $departments[1];
 
-            } else if (count($departments) > 1) {
-              $department1 = $departments[0];
-              $department2 = $departments[1];
-
-              $sql="SELECT  devices.*, pmsaction.deviceName, pmsaction.action, pmsaction.performedBy, pmsaction.Date, pmsaction.month, pmsaction.year, pmsaction.comments, pmsaction.approvedBy FROM devices LEFT JOIN pmsaction ON devices.computerName = pmsaction.deviceName AND pmsaction.year = '$year' WHERE (devices.department = '$department1' OR devices.department = '$department2') AND devices.type != 'Tablet' AND devices.deactivated = 0 AND (pmsaction.year = '$year' OR pmsaction.year IS NULL)
+    $sql = "SELECT  devices.*, pmsaction.deviceName, pmsaction.action, pmsaction.performedBy, pmsaction.Date, pmsaction.month, pmsaction.year, pmsaction.comments, pmsaction.approvedBy FROM devices LEFT JOIN pmsaction ON devices.computerName = pmsaction.deviceName AND pmsaction.year = '$year' WHERE (devices.department = '$department1' OR devices.department = '$department2') AND devices.type != 'Tablet' AND devices.deactivated = 0 AND (pmsaction.year = '$year' OR pmsaction.year IS NULL)
               AND (pmsaction.month = '$month' OR pmsaction.month IS NULL);";
-              $result = mysqli_query($con,$sql);
+    $result = mysqli_query($con, $sql);
+}
 
-            } 
 
 
-           
-            $increment = 1;
-            while($row=mysqli_fetch_assoc($result)){
-                $department = $row['department'];
-                $computerName = $row['computerName'];
+$increment = 1;
+while ($row = mysqli_fetch_assoc($result)) {
+    $department = $row['department'];
+    $computerName = $row['computerName'];
 
-                $user = $row['user'];
-                $type = $row['type'];
+    $user = $row['user'];
+    $type = $row['type'];
 
-                $Date = $row['Date'];
-                $action = $row['action'];
-                $perfomedBy = $row['performedBy'];
-                $comments = $row['comments'];
-                $approval = $row['approvedBy'];
+    $Date = $row['Date'];
+    $action = $row['action'];
+    $perfomedBy = $row['performedBy'];
+    $comments = $row['comments'];
+    $approval = $row['approvedBy'];
 
-                if($Date == ""){
-                    $status = "Pending";
-                }
-                else{
-                    $status = "Done";
-                }
-          $html.='  <tr>
-           <td>'.$increment.'</td>
-           <td>'.$computerName.'</td>
+    if ($Date == "") {
+        $status = "Pending";
+    } else {
+        $status = "Done";
+    }
+    $html .= '  <tr>
+           <td>' . $increment . '</td>
+           <td>' . $computerName . '</td>
 
-           <td>'.$status.'</td>
-           <td>'.$department.'</td>
-           <td>'.$user.'</td>
-           <td>'.$type.'</td>
-           <td>'.$Date.'</td>
-           <td style="max-width: 100px; margin-right: 20px;">'.$action.'</td>
-           <td>&nbsp; &nbsp; &nbsp;'.$perfomedBy.'</td>
-           <td>'.$comments.'</td>
-           <td>'.$approval.'</td>
+           <td>' . $status . '</td>
+           <td>' . $department . '</td>
+           <td>' . $user . '</td>
+           <td>' . $type . '</td>
+           <td>' . $Date . '</td>
+           <td style="max-width: 100px; margin-right: 20px;">' . $action . '</td>
+           <td>&nbsp; &nbsp; &nbsp;' . $perfomedBy . '</td>
+           <td>' . $comments . '</td>
+           <td>' . $approval . '</td>
 
 
             </tr>';
-            $increment++;
-            }
-            
-            
-        
-      
-        
-       $html.=' </table>';
-        $html.='<table style="bottom: 75px; position: absolute;">
+    $increment++;
+}
+
+
+
+
+
+$html .= ' </table>';
+$html .= '<table style="bottom: 75px; position: absolute;">
 <tr>
 <td class="first" style="text-align: center"><span class="label">Prepared by: </span></td>
 <td class="second"> <span class="child"></span></td>
@@ -219,7 +217,7 @@ padding-top: 0px;
 
 
 <tr>
-<td class="first" style="text-align: center"><span class="label">'.$_SESSION['name'].'</span></td>
+<td class="first" style="text-align: center"><span class="label">' . $_SESSION['name'] . '</span></td>
 <td class="second"> <span class="child"></span></td>
 <td class="third" style="text-align: center"><span class="label">Jonathan Nemedez</span></td>
 
@@ -229,12 +227,10 @@ padding-top: 0px;
 
         
     </body>
-    </html>';   
-    $dompdf = new Dompdf();
+    </html>';
+$dompdf = new Dompdf();
 
 $dompdf->loadHtml($html);
 $dompdf->setPaper('A4', 'landscape');
 $dompdf->render();
 $dompdf->stream('PMS Report.pdf', ['Attachment' => 0]);
-?>
-

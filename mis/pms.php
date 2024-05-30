@@ -108,7 +108,7 @@ if(isset($_POST['addPMSAction'])){
         }    
 
       $subject ='Preventive Maintenance Schedule';
-      $message = 'Hi '.$user.',<br> <br> MIS has completed the Preventive Maintenance for your computer. Please approve and check the details by signing in into our Helpdesk. <br> <br> Click this '.$link.' to signin, go to "PMS", select month of '.$month.' and year '.$selectedYear.'. <br> Choose your device or search your name and click "Approve". You can also leave a comment if you want. <br> <br> Thank you! <br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
+      $message = 'Hi '.$user.',<br> <br> ICT has completed the Preventive Maintenance for your computer. Please approve and check the details by signing in into our Helpdesk. <br> <br> Click this '.$link.' to signin, go to "PMS", select month of '.$month.' and year '.$selectedYear.'. <br> Choose your device or search your name and click "Approve". You can also leave a comment if you want. <br> <br> Thank you! <br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
       
 
        require '../vendor/autoload.php';
@@ -176,7 +176,7 @@ if(isset($_POST['addPMSAction'])){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FEM MIS Helpdesk</title>
+    <title>Helpdesk</title>
     <link rel="shortcut icon" href="../resources/img/helpdesk.png">
     
     <!-- font awesome -->

@@ -1,7 +1,7 @@
 <?php
 
-session_start();
-include ("includes/connect.php");
+// session_start();
+// include ("includes/connect.php");
 
 if(isset( $_SESSION['connected'])){
 

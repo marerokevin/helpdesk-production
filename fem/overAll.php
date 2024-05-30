@@ -74,7 +74,7 @@ $username=$_SESSION['username'];
                        data-joidprint="<?php $date = new DateTime($row['date_filled']); $date = $date->format('ym');  echo $date.'-'.$row['id']; ?>" 
                        data-joid="<?php echo $row['id']; ?>" 
                        data-datefiled="<?php $date = new DateTime($row['date_filled']); $date = $date->format('F d, Y');echo $date;?>" 
-                       data-section="<?php if($row['request_to'] === "fem"){  echo "FEM";} else if($row['request_to'] === "mis"){ echo "MIS";  }?> " 
+                       data-section="<?php if($row['request_to'] === "fem"){  echo "FEM";} else if($row['request_to'] === "mis"){ echo "ICT";  }?> " 
                        data-category="<?php echo $row['request_category']; ?>" 
                        data-telephone="<?php echo $row['telephone']; ?>" 
                        data-attachment="<?php echo $row['attachment']; ?>"  

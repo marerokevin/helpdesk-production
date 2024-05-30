@@ -1,7 +1,7 @@
 
 
 <?php
-   include ("includes/connect.php");
+#   include ("includes/connect.php");
 $sql2 = "SELECT `link` FROM `setting`";
 $result2 = mysqli_query($con, $sql2);
 $link = "";

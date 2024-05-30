@@ -50,14 +50,17 @@
 }
 .select2 {
     width: 100% !important;
-    height: 100% !important;
+    /* height: 100% !important; */
 }
 .selection{
     width: 100% !important;
     height: 100% !important;
     display: block;
+    
 }
 .select2-selection{
+    padding: 0.625rem;
+
     width: 100% !important;
     height: 90% !important;
 }
