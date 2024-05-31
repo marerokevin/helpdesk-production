@@ -584,8 +584,7 @@ if (isset($_POST['cancelJO'])) {
 
 
 
-                <div class="hidden m-auto flex flex-col w-2/4">
-
+                <div class="m-auto flex flex-col w-2/4">
 
                     <div class="mt-0 grid grid-cols-1 gap-4 sm:grid-cols-1 lg:grid-cols-1 xl:grid-cols-1 ">
 
@@ -763,7 +762,7 @@ if (isset($_POST['cancelJO'])) {
                                                                                                                                                                                                                                                                 }
                                                                                                                                                                                                                                                             }
                                                                                                                                                                                                                                                                     ?>
-                                                        <!-- <img style="    max-width: 150%; width:150%; height: 150%;" src="../resources/img/parol.gif" class="h-full w-full text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"> -->
+                                                        <img style="    max-width: 150%; width:150%; height: 150%;" src="../resources/img/parol.gif" class="h-full w-full text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
 
                                                         <img style="    max-width: 150%; width:150%; height: 150%;" src="../resources/img/star.png" class="h-full w-full text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
 
