@@ -124,9 +124,7 @@ if (isset($_POST['print'])) {
 }
 
 
-if (!isset($_SESSION['connected'])) {
-    header("location: ../index.php");
-}
+
 
 
 $sqllink = "SELECT `link` FROM `setting`";
