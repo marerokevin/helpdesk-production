@@ -43,6 +43,7 @@ include("../includes/connect.php");
 
 
 $misusername =  $_SESSION['username'];
+$misname =  $_SESSION['name'];
 
 
 
@@ -123,10 +124,6 @@ if (isset($_POST['print'])) {
 
 }
 
-
-if (!isset($_SESSION['connected'])) {
-    header("location: ../index.php");
-}
 
 
 $sqllink = "SELECT `link` FROM `setting`";
@@ -300,7 +297,7 @@ if (isset($_POST['approveRequest'])) {
         $requestorApprovalLink = $link . '/ticketApproval.php?id=' . $requestID . '&requestor=true';
         if ($request_type == "Technical Support") {
             $subject = 'Ticket Closed';
-            $message = 'Hi ' . $requestor . ',<br> <br> Your ticket request with TS Number ' . $completejoid . ' has been closed. Please check the details below or by signing in into our Helpdesk. <br> Click this ' . $link . ' to sign in. <br><br>Request Type: ' . $request_type . '<br> Request Details: ' . $detailsOfRequest . '<br> Assigned Personnel: ' . $r_personnelsName . '<br> Ticket Category: ' . $ticket_category . '<br> Ticket Filer: ' . $user_name . '<br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
+            $message = 'Hi ' . $requestor . ',<br> <br> Your ticket request with TS Number ' . $completejoid . ' has been closed. Please check the details below or by signing in into our Helpdesk. <br> Click this ' . $link . ' to sign in. <br><br>Request Type: ' . $request_type . '<br> Request Details: ' . $detailsOfRequest . '<br> Assigned Personnel: ' . $r_personnelsName . '<br> Ticket Category: ' . $ticket_category . '<br> Ticket Filer: ' . $user_name . '<br><br><br> If you agree with the closure of this ticket, please click the link below to confirm: <br> Click <a href="' . $requestorApprovalLink . '">this</a>  to confirm. This is a generated email. Please do not reply. <br><br> Helpdesk';
 
             if ($recommendation != "") {
                 $subjectA = 'Ticket Closed  - Recommendation Provided';
@@ -787,6 +784,36 @@ if (isset($_POST['cancelJO'])) {
                                 <ul class="flex flex-nowrap -mb-px text-sm font-medium text-center text-gray-500 dark:text-gray-400" id="tabExample" role="tablist" style="white-space: nowrap;">
                                     <li role="presentation">
                                         <div class="p__uwg" style="width: 106px; margin-right: 0px;">
+                                            <button id="filledTicketTab" onclick="filledTicket()" type="button" role="tab" aria-controls="filledTickets" class="_1QoxDw o4TrkA CA2Rbg Di_DSA cwOZMg zQlusQ uRvRjQ POMxOg _lWDfA" aria-selected="false">
+                                                <div class="_1cZINw">
+                                                    <div style="overflow:inherit" class="_qiHHw Ut_ecQ kHy45A">
+                                                        <span class=" sr-only">Notifications</span>
+                                                        <?php
+                                                        $sql1 = "SELECT COUNT(id) as 'pending' FROM request WHERE  `status2` ='admin' and `ticket_filer` = '$misname'";
+                                                        $result = mysqli_query($con, $sql1);
+                                                        while ($count = mysqli_fetch_assoc($result)) {
+
+                                                            if ($count["pending"] > 0) {
+                                                        ?>
+                                                                <div class=" absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-border-white"> <?php $sql1 = "SELECT COUNT(id) as 'pending' FROM request WHERE  `status2` ='admin' and `ticket_filer` = '$misname'";
+                                                                                                                                                                                                                                                            $result = mysqli_query($con, $sql1);
+                                                                                                                                                                                                                                                            while ($count = mysqli_fetch_assoc($result)) {
+                                                                                                                                                                                                                                                                echo $count["pending"];
+                                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                            ?></div><?php
+                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                                    ?>
+                                                        <img src="../resources/img/list.png" class="h-full w-full text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+
+                                                    </div>
+                                                </div>
+                                                <p class="_5NHXTA _2xcaIA ZSdr0w CCfw7w GHIRjw">Filled Ticket</p>
+                                            </button>
+                                        </div>
+                                    </li>
+                                    <li role="presentation">
+                                        <div class="p__uwg" style="width: 106px; margin-right: 0px;">
                                             <button id="headApprovalTab" onclick="goToHead()" type="button" role="tab" aria-controls="headApproval" class="_1QoxDw o4TrkA CA2Rbg Di_DSA cwOZMg zQlusQ uRvRjQ POMxOg _lWDfA" aria-selected="false">
                                                 <div class="_1cZINw">
                                                     <div style="overflow:inherit" class="_qiHHw Ut_ecQ kHy45A">
@@ -886,7 +913,7 @@ if (isset($_POST['cancelJO'])) {
                                     </li>
                                 </ul>
                             </div>
-                            <div class="rzHaWQ theme light dark:bg-gray-700" id="diamond" style="transform: translateX(55px) translateY(2px) rotate(135deg);"></div>
+                            <div class="rzHaWQ theme light dark:bg-gray-700" id="diamond" style="transform: translateX(160px) translateY(2px) rotate(135deg);"></div>
                         </div>
                     </div>
                 </div>
@@ -917,6 +944,114 @@ if (isset($_POST['cancelJO'])) {
 
 
         <div id="myTabContent" class="mt-10">
+
+            <div class="hidden p-4 rounded-lg  bg-gray-50 dark:bg-gray-200" id="filledTicket" role="tabpanel" aria-labelledby="profile-tab">
+                <section class="mt-10">
+                    <table id="filledTickets" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th data-priority="3">Request Number</th>
+                                <th data-priority="4">Action</th>
+                                <th data-priority="1">Details</th>
+                                <th data-priority="2">Requestor</th>
+                                <th data-priority="5">Date Filled</th>
+                                <th data-priority="6">Category</th>
+                                <th data-priority="7">Assigned to</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+
+                            $sqlHoli = "SELECT holidaysDate FROM holidays";
+                            $resultHoli = mysqli_query($con, $sqlHoli);
+                            $holidays = array();
+                            $days;
+                            while ($row = mysqli_fetch_assoc($resultHoli)) {
+                                $holidays[] = $row['holidaysDate'];
+                            }
+                            // print_r($holidays);
+
+                            $end_date = new DateTime();
+                            $end_date = $end_date->format('Y-m-d');
+                            $a = 1;
+                            $sql = "SELECT * FROM `request`
+                        WHERE `status2` ='admin'
+                        AND `ticket_filer` = '$misname'
+                        ORDER BY id ASC;";
+                            $result = mysqli_query($con, $sql);
+
+                            while ($row = mysqli_fetch_assoc($result)) {
+
+                                if ($row['request_type'] == "Technical Support") {
+                                    $reqtype = "Ticket Request";
+                                } else {
+                                    $reqtype = "Job Order";
+                                }
+
+                                $date = new DateTime($row['date_filled']);
+                                $date = $date->format('ym');
+                                if ($row['ticket_category'] != NULL) {
+                                    $joid = 'TS-' . $date . '-' . $row['id'];
+                                } else {
+                                    $joid =  'JO-' . $date . '-' . $row['id'];
+                                }
+                            ?>
+
+                                <tr>
+                                    <td>
+                                        <?php
+
+                                        echo $joid;
+
+                                        ?>
+
+                                    <td>
+                                        <!-- <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Select</a> -->
+                                        <button type="button" id="viewdetails" onclick="modalShow(this)" data-reqtype="<?php echo $reqtype; ?>" data-action1="<?php echo $row['action1'] ?>" data-action2="<?php echo $row['action2'] ?>" data-action3="<?php echo $row['action3'] ?>" data-action1date="<?php echo $row['action1Date'] ?>" data-action2date="<?php echo $row['action2Date'] ?>" data-action3date="<?php echo $row['action3Date'] ?>" data-telephone="<?php echo $row['telephone']; ?>" data-attachment="<?php echo $row['attachment']; ?>" data-action="<?php echo $row['action']; ?>" data-joidprint="<?php echo $joid; ?>" data-headremarks="<?php echo $row['head_remarks']; ?>" data-adminremarks="<?php echo $row['admin_remarks']; ?>" data-headdate="<?php echo $row['head_approval_date']; ?>" data-admindate="<?php echo $row['admin_approved_date']; ?>" data-joid="<?php echo $row['id']; ?>" data-requestoremail="<?php echo $row['email']; ?>" data-department="<?php echo $row['department'] ?>" data-requestor="<?php echo $row['requestor']; ?>" data-status="<?php echo $row['status2'] ?>" data-assignedpersonnel="<?php echo $row['assignedPersonnelName'] ?> " data-datefiled="<?php $date = new DateTime($row['date_filled']);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    $date = $date->format('F d, Y');
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    echo $date; ?>" data-section="<?php if ($row['request_to'] == "fem") {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        echo "FEM";
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    } else if ($row['request_to'] == "mis") {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        echo "ICT";
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    } ?>" data-category="<?php echo $row['request_category']; ?>" data-comname="<?php echo $row['computerName']; ?>" data-start="<?php echo $row['reqstart_date']; ?>" data-end="<?php echo $row['reqfinish_date']; ?>" data-details="<?php echo $row['request_details']; ?>" data-numberOfDays="<?php echo $count; ?>" data-requestype="<?php echo $row['request_type']; ?>" class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
+                                            View more
+                                        </button>
+                                    </td>
+
+                                    <td class="text-sm  text-[#c00000] font-semibold font-sans px-6 py-4 whitespace-nowrap truncate max-w-xs">
+                                        <?php echo $row['request_details']; ?>
+                                    </td>
+
+
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        <?php echo $row['requestor']; ?>
+                                    </td>
+                                    <!-- to view pdf -->
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        <?php
+                                        $date = new DateTime($row['date_filled']);
+                                        $date = $date->format('F d, Y');
+                                        echo $date; ?>
+                                    </td>
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        <?php echo $row['request_category']; ?>
+                                    </td>
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        <?php echo $row['assignedPersonnelName']; ?>
+                                    </td>
+
+
+                                </tr>
+                            <?php
+
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+
+                </section>
+            </div>
+
             <div class="hidden p-4 rounded-lg  bg-gray-50 dark:bg-gray-200" id="headApproval" role="tabpanel" aria-labelledby="profile-tab">
                 <section class="mt-10">
                     <table id="employeeTable" class="display" style="width:100%">
@@ -2398,6 +2533,11 @@ if (isset($_POST['cancelJO'])) {
 
         }
         const tabElements = [{
+                id: 'filledTicket',
+                triggerEl: document.querySelector('#filledTicketTab'),
+                targetEl: document.querySelector('#filledTicket')
+            },
+            {
                 id: 'headApproval1',
                 triggerEl: document.querySelector('#headApprovalTab'),
                 targetEl: document.querySelector('#headApproval')
@@ -2429,14 +2569,23 @@ if (isset($_POST['cancelJO'])) {
 
         tabs.show('headApproval1');
 
+        function filledTicket() {
+            const myElement = document.querySelector('#diamond');
+            $("#buttonDiv").addClass("hidden");
+            document.getElementById("action").disabled = true;
+            $("#ratingstar").addClass("hidden");
+            const currentTransform = myElement.style.transform = 'translateX(50px) translateY(2px) rotate(135deg)';
 
+            $("#recommendationDiv").addClass("hidden");
+
+        }
 
         function goToOverall() {
             const myElement = document.querySelector('#diamond');
             $("#buttonDiv").addClass("hidden");
             document.getElementById("action").disabled = true;
             $("#ratingstar").addClass("hidden");
-            const currentTransform = myElement.style.transform = 'translateX(160px) translateY(2px) rotate(135deg)';
+            const currentTransform = myElement.style.transform = 'translateX(270px) translateY(2px) rotate(135deg)';
 
             $("#recommendationDiv").addClass("hidden");
 
@@ -2460,7 +2609,7 @@ if (isset($_POST['cancelJO'])) {
             // $("#ratingstar").removeClass("hidden");
             $("#recommendationDiv").removeClass("hidden");
 
-            const currentTransform = myElement.style.transform = 'translateX(280px) translateY(2px) rotate(135deg)';
+            const currentTransform = myElement.style.transform = 'translateX(380px) translateY(2px) rotate(135deg)';
 
 
 
@@ -2472,7 +2621,7 @@ if (isset($_POST['cancelJO'])) {
             $("#ratingstar").addClass("hidden");
 
             $("#buttonDiv").removeClass("hidden");
-            const currentTransform = myElement.style.transform = 'translateX(50px) translateY(2px) rotate(135deg)';
+            const currentTransform = myElement.style.transform = 'translateX(160px) translateY(2px) rotate(135deg)';
             $("#recommendationDiv").addClass("hidden");
 
 

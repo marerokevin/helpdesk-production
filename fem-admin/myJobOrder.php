@@ -372,14 +372,14 @@ if (isset($_POST['cancelJO'])) {
         <div class="justify-center text-center flex items-start h-auto bg-gradient-to-r from-blue-900 to-teal-500 rounded-xl ">
             <div class="text-center py-2 m-auto lg:text-center w-full">
 
-                <div class="m-auto flex flex-col w-2/4  h-12">
+                <div class="hidden m-auto flex flex-col w-2/4  h-12">
                     <h2 class="text-xl font-bold tracking-tight text-gray-100 sm:text-xl">Total numbers of pending Job Order
                     </h2>
 
                 </div>
 
 
-                <div class="m-auto flex flex-col w-2/4">
+                <div class="hidden m-auto flex flex-col w-2/4">
 
                     <div class="mt-0 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 ">
 
