@@ -132,9 +132,9 @@ if (isset($_POST['print'])) {
 }
 
 
-if (!isset($_SESSION['connected'])) {
-    header("location: ../index.php");
-}
+// if (!isset($_SESSION['connected'])) {
+//     header("location: ../index.php");
+// }
 
 $user_dept = $_SESSION['department'];
 $user_level = $_SESSION['level'];
