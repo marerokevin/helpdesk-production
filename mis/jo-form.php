@@ -71,13 +71,11 @@ if (isset($_POST['submit'])) {
 
     $requestto = $_POST['femmis'];
     $category = $_POST['category'];
-    $request = convertToSentenceCase($_POST['request']);
     $terms = $_POST['terms'];
+    $request = $_POST['request'];
     $request = str_replace("'", "&apos;", $request);
     $request = str_replace('"', '&quot;', $request);
-    // $start= $_POST['start'];
-    // $end = $_POST['finish'];
-    // $telephone = $_POST['telephone'];
+
 
     if ($_POST['femmis'] === "mis") {
         $headname = $_POST['immediateHeadSelect'];
