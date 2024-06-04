@@ -10,8 +10,8 @@ ini_set("session.gc_maxlifetime", $timeout);
 ini_set("session.cookie_lifetime", $timeout);
 
 $s_name = session_name();
-$url1 = $_SERVER['REQUEST_URI'];
-header("Refresh: 500; URL=$url1");
+// $url1 = $_SERVER['REQUEST_URI'];
+// header("Refresh: 500; URL=$url1");
 
 if (isset($_COOKIE[$s_name])) {
 
