@@ -15,7 +15,7 @@ $link=$list["link"];
 
 <html>
   <head>
-    <meta http-equiv="refresh" content="0;url=<?php echo $link;?>/login.php" />
+    <meta http-equiv="refresh" content="0;url=<?php echo $link;?>login.php" />
     <title></title>
   </head>
  <body>
