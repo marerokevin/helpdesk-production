@@ -84,7 +84,7 @@ if ($reqtype == "ALL") {
                     <th colspan="3">Requirements</th>
                     <th rowspan="2">ICT Date Approval</th>
                     <th rowspan="2">Date Responded</th>
-                    <th rowspan="2">Response Rate</th>
+                    <th rowspan="2">Response Rate (Hours)</th>
                     <th rowspan="2">Remarks</th>
                     <th rowspan="2">Date Finished</th>
                     <th rowspan="2">Accomplishment Rate</th>

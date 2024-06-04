@@ -153,6 +153,8 @@ if (isset($_POST['UpdateEmail'])) {
 if (isset($_POST['addAction'])) {
     $requestID = $_POST['joid2'];
     $action = $_POST['action'];
+    $action = str_replace("'", "&apos;", $action);
+    $action = str_replace('"', '&quot;', $action);
     $date = new DateTime();
     $date = $date->format('F d, Y');
     $datetime = date('Y-m-d H:i:s', time());
@@ -263,16 +265,18 @@ if (isset($_POST['approveRequest'])) {
     $completejoid = $_POST['completejoid'];
 
     $action = $_POST['action'];
+    $action = str_replace("'", "&apos;", $action);
+    $action = str_replace('"', '&quot;', $action);
     $requestor = $_POST['requestor'];
     $requestorEmail = $_POST['requestoremail'];
     $recommendation = $_POST['recommendation'];
+    $recommendation = str_replace("'", "&apos;", $recommendation);
+    $recommendation = str_replace('"', '&quot;', $recommendation);
 
 
     $date = date("Y-m-d");
     $datetime = date('Y-m-d H:i:s', time());
     $username = $_SESSION['name'];
-    $action = str_replace("'", "&apos;", $action);
-    $recommendation = str_replace("'", "&apos;", $recommendation);
 
     $sql = "UPDATE `request` SET `status2`='Done', `late`='$late',`actual_finish_date`='$date',`action`='$action', `first_responded_date` = 
             CASE WHEN `first_responded_date` IS NULL THEN '$datetime' ELSE `first_responded_date` END, `completed_date` = '$datetime', `recommendation`='$recommendation' WHERE `id` = '$requestID'";
@@ -296,6 +300,7 @@ if (isset($_POST['approveRequest'])) {
 
         $requestorApprovalLink = $link . '/ticketApproval.php?id=' . $requestID . '&requestor=true';
         if ($request_type == "Technical Support") {
+            $request_type == "Technical Support";
             $subject = 'Ticket Closed';
             $message = 'Hi ' . $requestor . ',<br> <br> Your ticket request with TS Number ' . $completejoid . ' has been closed. Please check the details below or by signing in into our Helpdesk. <br> Click this ' . $link . ' to sign in. <br><br>Request Type: ' . $request_type . '<br> Request Details: ' . $detailsOfRequest . '<br> Assigned Personnel: ' . $r_personnelsName . '<br> Ticket Category: ' . $ticket_category . '<br> Ticket Filer: ' . $user_name . '<br><br><br> If you agree with the closure of this ticket, please click the link below to confirm: <br> Click <a href="' . $requestorApprovalLink . '">this</a>  to confirm. This is a generated email. Please do not reply. <br><br> Helpdesk';
 
@@ -307,6 +312,7 @@ if (isset($_POST['approveRequest'])) {
                 $messageA = 'Hi Admin,<br> <br>  A ticket request with TS Number ' . $completejoid . ' has been closed. Please check the details below or by signing in into our Helpdesk.  <br> Click this ' . $link . ' to sign in. <br><br>Request Type: ' . $request_type . '<br> Request Details: ' . $detailsOfRequest . '<br> Assigned Personnel: ' . $r_personnelsName . '<br> Ticket Category: ' . $ticket_category . '<br> Ticket Filer: ' . $user_name . '<br><br><br> This is a generated email. Please do not reply. <br><br>  Helpdesk';
             }
         } else {
+            $request_type == "Job Order";
             $subject = 'Completed Job Order';
             $message = 'Hi ' . $requestor . ',<br> <br> ICT has completed one of your job order requests. Please check the details below or by signing in into our Helpdesk. <br> Click this ' . $link . ' to sign in. <br><br>Request Type: ' . $request_type . '<br> Request Details: ' . $detailsOfRequest . '<br> Assigned Personnel: ' . $r_personnelsName . '<br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
 
@@ -1062,8 +1068,11 @@ if (isset($_POST['cancelJO'])) {
                                 <th data-priority="1">Details</th>
                                 <th data-priority="2">Requestor</th>
                                 <th data-priority="5">Date Approved</th>
-                                <th data-priority="6">Category</th>
-                                <th data-priority="7">Deadline</th>
+                                <th data-priority="6">Time Remaining</th>
+                                <th data-priority="7">Category</th>
+                                <th data-priority="8">Level</th>
+
+                                <th data-priority="9">Deadline</th>
 
 
                                 <!-- <th>Days Late</th> -->
@@ -1106,10 +1115,12 @@ if (isset($_POST['cancelJO'])) {
                             $end_date = new DateTime();
                             $end_date = $end_date->format('Y-m-d');
                             $a = 1;
-                            $sql = "SELECT * FROM `request`
-                        WHERE `status2` ='inprogress'
-                        AND `assignedPersonnel` = '$misusername'
-                        ORDER BY id ASC;";
+                            $sql = "SELECT request.*, categories.level, categories.hours
+                            FROM request
+                            LEFT JOIN categories ON request.request_category = categories.c_name
+                            WHERE request.status2 = 'inprogress'
+                            AND request.assignedPersonnel = '$misusername'
+                            ORDER BY request.id ASC;";
                             $result = mysqli_query($con, $sql);
 
 
@@ -1187,7 +1198,9 @@ if (isset($_POST['cancelJO'])) {
                                 }
                             ?>
 
-                                <tr <?php if ($count == $days) {
+                                <tr <?php
+
+                                    if ($count == $days) {
                                         echo "$count style='background-color: #ef4444'";
                                     } else if ($count == $dayminus) {
                                         echo "style='background-color: #ffd78f'";
@@ -1240,9 +1253,129 @@ if (isset($_POST['cancelJO'])) {
                                             echo "style='color: white'";
                                         } ?> class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                         <?php
-                                        $date = new DateTime($row['admin_approved_date']);
-                                        $date = $date->format('F d, Y');
-                                        echo $date; ?>
+                                        if($row['ict_approval_date'] == NULL){
+                                            $date = new DateTime($row['admin_approved_date']);
+                                            $date = $date->format('F d, Y');
+                                            echo $date; 
+                                        }
+                                        else{
+                                            $date = new DateTime($row['ict_approval_date']);
+                                            $date = $date->format('F d, Y h:i');
+                                            echo $date; 
+                                        }
+                                       ?>
+
+                                    </td>
+
+                                    <td <?php
+                                        // TIME REMAINIIIIIIIIIIINNNNNNNNNNGGGGGGGGGGGG
+                                        // echo "asdasd", $row['ict_approval_date'];
+
+
+                                        $ict_approval_date = $row['ict_approval_date'];
+                                        // $time_responded = $row['first_responded_date'];
+                                        $time_responded = new DateTime();
+                                        $time_responded->format("Y-m-d H:i:s");
+                                        // echo  $time_responded;
+
+                                        $ictApprovalDate1 = new DateTime($row['ict_approval_date']);
+                                        // $dateResponded2 = new DateTime($row['first_responded_date']);
+                                        $dateResponded2 = new DateTime();
+                                        $dateResponded2->format("Y-m-d H:i:s");
+                                        $ictApprovalDate1->setTime($ictApprovalDate1->format('H'), 0, 0);
+                                        $dateResponded2->setTime($dateResponded2->format('H'), 0, 0);
+
+                                        $ictApprovalDate3 = new DateTime($row['ict_approval_date']);
+                                        $dateResponded4 = new DateTime($row['first_responded_date']);
+
+                                        // Define holidays array
+                                        $sqlHoli = "SELECT holidaysDate FROM holidays";
+                                        $resultHoli = mysqli_query($con, $sqlHoli);
+                                        $holidays = array();
+                                        while ($rowH = mysqli_fetch_assoc($resultHoli)) {
+                                            $holidays[] = $rowH['holidaysDate'];
+                                        }
+
+
+
+                                        $interval = $ictApprovalDate1->diff($dateResponded2);
+                                        $hours = $interval->days * 8 + $interval->h;
+
+                                        $start = clone $ictApprovalDate1;
+                                        $end = clone $dateResponded2;
+                                        $interval_days = new DateInterval('P1D');
+                                        $period = new DatePeriod($start, $interval_days, $end);
+                                        // echo $hours, " ";
+
+
+
+                                        foreach ($period as $day) {
+                                            if ($day->format('N') >= 6 || in_array($day->format('Y-m-d'), $holidays)) {
+
+                                                $hours -= 8; // Subtract 24 hours for each weekend day or holiday
+                                                // echo $hours, " ";
+                                            }
+                                        }
+                                        $hours1 = $end->format('H');
+
+                                        // if($hours1 <=11 ){
+                                        // $finalHours = $hours - 15;
+                                        // echo $hours;
+
+
+                                        // }
+                                        // else if($hours1 ==12 ){
+                                        // $finalHours = $hours - 16;
+
+
+                                        // echo $hours;
+                                        // }
+                                        // else if($hours1 >12 ){
+                                        $finalHours = $hours;
+                                        $minutes1 = $ictApprovalDate3->format('i');
+                                        $minutes1_decimal = $minutes1 / 60;
+
+                                        $minutes2 = $dateResponded4->format('i');
+                                        $minutes2_decimal = $minutes2 / 60;
+
+
+                                        // echo $finalHours;
+
+                                        // echo $minutes1_decimal;
+
+                                        // echo $minutes2_decimal;
+
+
+                                        $finalHours = ($finalHours - $minutes1_decimal) + $minutes2_decimal;
+                                        // }
+
+
+
+                                        if ($time_responded == "" || $time_responded == null) {
+                                            $remainingTime = "";
+                                        } else {
+                                            $remainingTime = number_format($finalHours, 2, '.', ',');
+                                        }
+
+
+
+
+
+                                        if ($count >= $days) {
+                                            echo "style='color: white'";
+                                        } ?> class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        <?php
+                                        
+                                         $remainingTime =  $row['hours'] - $remainingTime;
+
+                                        $hours = floor($remainingTime); // Get the integer part (hours)
+$minutes_decimal = ($remainingTime - $hours) * 60; // Convert the decimal part to minutes
+$minutes = round($minutes_decimal); // Round the minutes
+
+// Output the result
+echo $hours . " hours, " . $minutes . " minutes";
+
+                                        ?>
                                     </td>
                                     <td <?php if ($count >= $days) {
                                             echo "style='color: white'";
@@ -1252,11 +1385,21 @@ if (isset($_POST['cancelJO'])) {
                                     <td <?php if ($count >= $days) {
                                             echo "style='color: white'";
                                         } ?> class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                         <?php 
+                                        if( $row['hours'] != NULL){
+                                            echo $row['level'], "(", $row['hours'], " hours)";
+                                        }
+                                         ?>
+                                    </td>
+                                    <td <?php if ($count >= $days) {
+                                            echo "style='color: white'";
+                                        } ?> class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                         <!-- <?php echo $row['expectedFinishDate']; ?>  -->
                                         <?php
                                         $date = new DateTime($row['expectedFinishDate']);
                                         $date = $date->format('F d, Y');
-                                        echo $date; ?>
+                                        echo $date;
+                                        ?>
                                     </td>
 
                                     <!-- <td > <?php echo $count; ?></td> -->
@@ -1267,6 +1410,8 @@ if (isset($_POST['cancelJO'])) {
                                 } else if ($row['request_to'] == "mis") {
                                     echo "ICT";
                                 }
+
+
                 ?> 
               </td> -->
 

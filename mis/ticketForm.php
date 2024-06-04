@@ -90,13 +90,21 @@ if (isset($_POST['submitTicket'])) {
         $r_personnelsName = NULL;
     }
     $detailsOfRequest = $_POST['detailsOfRequest'];
+    $detailsOfRequest = str_replace("'", "&apos;", $detailsOfRequest);
+    $detailsOfRequest = str_replace('"', '&quot;', $detailsOfRequest);
+
     $datenow = date("Y-m-d");
+
     $ticket_category =  $_POST['r_categories'];
     $onthespot_ticket = "";
     if (isset($_POST['on_the_spot'])) {
         $onthespot_ticket = $_POST['on_the_spot'];
         $action = $_POST['requestAction'];
+        $action = str_replace("'", "&apos;", $action);
+        $action = str_replace('"', '&quot;', $action);
         $recommendation = $_POST['recommendation'];
+        $recommendation = str_replace("'", "&apos;", $recommendation);
+        $recommendation = str_replace('"', '&quot;', $recommendation);
         $status = "Done";
         $_SESSION['status'] = $status;
         $_SESSION['finalAction'] = $_POST['requestAction'];
@@ -203,7 +211,7 @@ if (isset($_POST['submitTicket'])) {
                 // Attach PDF to the email
                 $mail->addStringAttachment($pdfContent, 'Helpdesk Report.pdf', 'base64', 'application/pdf');
                 $mail->Subject = $subject;
-                $mail->Body    = 'Hi ' . $requestor . ',<br> <br>   Your ticket request has been closed. Please find the details below: <br><br> Ticket No.: ' . $ticketNumber . '<br> Requestor: ' . $requestor . '<br> Requestor Email: ' . $requestorEmail . '<br> Requestor Department: ' . $requestorDepartment . '<br> Request Details: ' . $detailsOfRequest . '<br> Assigned Personnel: ' . $r_personnelsName . '<br> Ticket Category: ' . $_SESSION['categories'] . '<br> Ticket Filer: ' . $user_name . '<br><br> If you agree with the closure of this ticket, please click the link below to confirm: <br> Click <a href="' . $requestorApprovalLink . '">this</a>  to confirm. <br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
+                $mail->Body    = 'Hi ' . $requestor . ',<br> <br>   Your ticket request has been closed. Please find the details below: <br><br> Ticket No.: ' . $ticketNumber . '<br> Requestor: ' . $requestor . '<br> Requestor Email: ' . $requestorEmail . '<br> Requestor Department: ' . $requestorDepartment . '<br> Request Details: ' . $detailsOfRequest . '<br> Assigned Personnel: ' . $r_personnelsName . '<br> Action: ' . $action . '<br> Recommendation: ' . $recommendation . '<br> Ticket Category: ' . $_SESSION['categories'] . '<br> Ticket Filer: ' . $user_name . '<br><br> If you agree with the closure of this ticket, please click the link below to confirm: <br> Click <a href="' . $requestorApprovalLink . '">this</a>  to confirm. <br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
 
                 $mail->send();
 
@@ -244,7 +252,7 @@ if (isset($_POST['submitTicket'])) {
                 // Attach PDF to the email
                 $mail2->addStringAttachment($pdfContent, 'Helpdesk Report.pdf', 'base64', 'application/pdf');
                 $mail2->Subject = $subject;
-                $mail2->Body    = 'Hi Admin,<br> <br>   A ticket request has been closed. Please find the details below: <br><br> Ticket No.: ' . $ticketNumber . '<br> Requestor: ' . $requestor . '<br> Requestor Email: ' . $requestorEmail . '<br> Requestor Department: ' . $requestorDepartment . '<br> Request Details: ' . $detailsOfRequest . '<br> Assigned Personnel: ' . $r_personnelsName . '<br> Action: ' . $action . '<br> Ticket Category: ' . $_SESSION['categories'] . '<br> Ticket Filer: ' . $user_name . '<br><br>  This is a generated email. Please do not reply. <br><br> Helpdesk';
+                $mail2->Body    = 'Hi Admin,<br> <br>   A ticket request has been closed. Please find the details below: <br><br> Ticket No.: ' . $ticketNumber . '<br> Requestor: ' . $requestor . '<br> Requestor Email: ' . $requestorEmail . '<br> Requestor Department: ' . $requestorDepartment . '<br> Request Details: ' . $detailsOfRequest . '<br> Assigned Personnel: ' . $r_personnelsName . '<br> Action: ' . $action . '<br>  Recommendation: ' . $recommendation . '<br> Ticket Category: ' . $_SESSION['categories'] . '<br> Ticket Filer: ' . $user_name . '<br><br>  This is a generated email. Please do not reply. <br><br> Helpdesk';
 
                 $mail2->send();
             } else {
