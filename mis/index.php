@@ -810,7 +810,7 @@ if (isset($_POST['cancelJO'])) {
                                                                                                                                                                                                                                                                 }
                                                                                                                                                                                                                                                             }
                                                                                                                                                                                                                                                                     ?>
-                                                        <img src="../resources/img/list.png" class="h-full w-full text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                        <img src="../resources/img/ticket.png" class="h-full w-full text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
 
                                                     </div>
                                                 </div>
