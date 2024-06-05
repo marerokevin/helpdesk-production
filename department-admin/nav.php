@@ -82,14 +82,16 @@ if (isset($_POST['pdfReport'])) {
 <?php
 
 }
+
 if (isset($_POST['excelReport'])) {
   $_SESSION['month'] = $_POST['month'];
   $_SESSION['year'] = $_POST['year'];
   $_SESSION['request_type'] = $_POST['request_type'];
-  header('Location: ../summary_report_xls.php?request_type=' . $_SESSION['request_type'] . '&month=' . $_SESSION['month'] . '&year=' . $_SESSION['year']);
-
-  echo "<script>$('#generateReportModal').modal('hide');</script>";
-  exit;
+?>
+  <script type="text/javascript">
+    window.open('../summary_report_xls.php?request_type=<?php echo  $_SESSION['request_type']; ?>&month=<?php echo $_SESSION['month']; ?>&year=<?php echo $_SESSION['year']; ?>', '_blank');
+  </script>
+<?php
 }
 ?>
 
