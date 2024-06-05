@@ -1010,7 +1010,7 @@ if (isset($_POST['cancelJO'])) {
                                         echo $joid;
 
                                         ?>
-
+                                    </td>
                                     <td>
                                         <!-- <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Select</a> -->
                                         <button type="button" id="viewdetails" onclick="modalShow(this)" data-reqtype="<?php echo $reqtype; ?>" data-action1="<?php echo $row['action1'] ?>" data-action2="<?php echo $row['action2'] ?>" data-action3="<?php echo $row['action3'] ?>" data-action1date="<?php echo $row['action1Date'] ?>" data-action2date="<?php echo $row['action2Date'] ?>" data-action3date="<?php echo $row['action3Date'] ?>" data-telephone="<?php echo $row['telephone']; ?>" data-attachment="<?php echo $row['attachment']; ?>" data-action="<?php echo $row['action']; ?>" data-joidprint="<?php echo $joid; ?>" data-headremarks="<?php echo $row['head_remarks']; ?>" data-adminremarks="<?php echo $row['admin_remarks']; ?>" data-headdate="<?php echo $row['head_approval_date']; ?>" data-admindate="<?php echo $row['admin_approved_date']; ?>" data-joid="<?php echo $row['id']; ?>" data-requestoremail="<?php echo $row['email']; ?>" data-department="<?php echo $row['department'] ?>" data-requestor="<?php echo $row['requestor']; ?>" data-status="<?php echo $row['status2'] ?>" data-assignedpersonnel="<?php echo $row['assignedPersonnelName'] ?> " data-datefiled="<?php $date = new DateTime($row['date_filled']);
@@ -1253,17 +1253,16 @@ if (isset($_POST['cancelJO'])) {
                                             echo "style='color: white'";
                                         } ?> class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                         <?php
-                                        if($row['ict_approval_date'] == NULL){
+                                        if ($row['ict_approval_date'] == NULL) {
                                             $date = new DateTime($row['admin_approved_date']);
                                             $date = $date->format('F d, Y');
-                                            echo $date; 
-                                        }
-                                        else{
+                                            echo $date;
+                                        } else {
                                             $date = new DateTime($row['ict_approval_date']);
                                             $date = $date->format('F d, Y h:i');
-                                            echo $date; 
+                                            echo $date;
                                         }
-                                       ?>
+                                        ?>
 
                                     </td>
 
@@ -1365,15 +1364,15 @@ if (isset($_POST['cancelJO'])) {
                                             echo "style='color: white'";
                                         } ?> class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                         <?php
-                                        
-                                         $remainingTime =  $row['hours'] - $remainingTime;
+
+                                        $remainingTime =  $row['hours'] - $remainingTime;
 
                                         $hours = floor($remainingTime); // Get the integer part (hours)
-$minutes_decimal = ($remainingTime - $hours) * 60; // Convert the decimal part to minutes
-$minutes = round($minutes_decimal); // Round the minutes
+                                        $minutes_decimal = ($remainingTime - $hours) * 60; // Convert the decimal part to minutes
+                                        $minutes = round($minutes_decimal); // Round the minutes
 
-// Output the result
-echo $hours . " hours, " . $minutes . " minutes";
+                                        // Output the result
+                                        echo $hours . " hours, " . $minutes . " minutes";
 
                                         ?>
                                     </td>
@@ -1385,11 +1384,11 @@ echo $hours . " hours, " . $minutes . " minutes";
                                     <td <?php if ($count >= $days) {
                                             echo "style='color: white'";
                                         } ?> class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                         <?php 
-                                        if( $row['hours'] != NULL){
+                                        <?php
+                                        if ($row['hours'] != NULL) {
                                             echo $row['level'], "(", $row['hours'], " hours)";
                                         }
-                                         ?>
+                                        ?>
                                     </td>
                                     <td <?php if ($count >= $days) {
                                             echo "style='color: white'";
