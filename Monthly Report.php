@@ -45,6 +45,12 @@ $previousMonthNumber = str_pad($previousMonthNumber, 2, '0', STR_PAD_LEFT);
 if ($section == "admin") {
     $section = $_SESSION['adminsection'];
 }
+if ($section == "mis"){
+$headname = "Jonathan Nemedez";
+}
+else{
+    $headname = "Rio Monzon";
+}
 $firstdate = date('d', strtotime("first day of $year-$month"));
 $lastDateOfMonth = date('d', strtotime("last day of $year-$month"));
 
@@ -365,7 +371,7 @@ $html .= '
        <tr>
        <td class="first" style="text-align: center"><span class="label">' . $_SESSION['name'] . '</span></td>
        <td class="second"> <span class="child"></span></td>
-       <td class="third" style="text-align: center"><span class="label">Jonathan Nemedez</span></td>
+       <td class="third" style="text-align: center"><span class="label">'.$headname.'</span></td>
        
        
        </tr>
