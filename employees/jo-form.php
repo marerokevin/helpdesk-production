@@ -82,7 +82,7 @@ if (isset($_POST['submit'])) {
 
             // sanitize file-name
             //   $newFileName = md5(time() . $fileName) . '.' . $fileExtension;
-            $newFileName = $jono . '.' . $fileName . '.' . $fileExtension;
+            $newFileName = $jono . '.' . $fileName;
 
             // check if file has one of the following extensions
             $allowedfileExtensions = array('jpg', 'gif', 'png', 'zip', 'txt', 'xls', 'doc', 'pdf', 'csv', 'xlsx', 'docx');
