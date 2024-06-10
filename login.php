@@ -149,7 +149,10 @@ if (isset($_POST['submit'])) {
 
   <style>
     body {
-      background: linear-gradient(270deg, #00c4cc, #7d2ae8);
+      background: url('resources/img/Bg pinoy.png'), linear-gradient(270deg, #00c4cc, #7d2ae8);
+    background-size: contain;
+    background-position: center;
+    background-repeat: repeat;
     }
 
     .logo-container {
