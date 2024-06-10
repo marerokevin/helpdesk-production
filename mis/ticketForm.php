@@ -94,9 +94,20 @@ if (isset($_POST['submitTicket'])) {
     $detailsOfRequest = str_replace('"', '&quot;', $detailsOfRequest);
 
     $datenow = date("Y-m-d");
+    $datetime = date('Y-m-d H:i:s', time());
 
     $ticket_category =  $_POST['r_categories'];
     $onthespot_ticket = "";
+    $_SESSION['requestor'] = $_POST['r_name'];
+    $_SESSION['pdepartment'] = $_POST['r_department'];
+    $_SESSION['dateFiled'] = $datenow;
+    $_SESSION['onthespot_ticket'] =  $onthespot_ticket;
+    $_SESSION['categories'] = $_POST['r_categories'];
+    $_SESSION['details'] =  $_POST['detailsOfRequest'];
+    $_SESSION['assignedPersonnel'] = $_POST['r_personnelsName'];
+    $_SESSION['section'] = 'ICT';
+    $_SESSION['requestType'] = 'Technical Support';
+    $_SESSION['ticket_category'] = $_POST['r_categories'];
     if (isset($_POST['on_the_spot'])) {
         $onthespot_ticket = $_POST['on_the_spot'];
         $action = $_POST['requestAction'];
@@ -110,30 +121,18 @@ if (isset($_POST['submitTicket'])) {
         $_SESSION['finalAction'] = $_POST['requestAction'];
         $_SESSION['recommendation'] = $_POST['recommendation'];
         $_SESSION['dateFinished'] = $datenow;
+        $sql = mysqli_query($con, "INSERT INTO request (date_filled, status2, requestor, requestorUsername, email, department, request_type, request_to, request_category, request_details, assignedPersonnel, assignedPersonnelName, action, recommendation, onthespot_ticket, ticket_category, category_level, ticket_filer, actual_finish_date, admin_approved_date, ict_approval_date, first_responded_date, completed_date)
+        VALUES ('$datenow', '$status', '$requestor','$requestorIdnumber', '$requestorEmail', '$requestorDepartment', 'Technical Support', 'mis', '$ticket_category','$detailsOfRequest', '$r_personnels', '$r_personnelsName', '$action', '$recommendation', '$onthespot_ticket', '$ticket_category', '$r_cat_level', '$user_name', '$datenow', '$datenow', '$datetime', '$datetime', '$datetime')");
     } else {
         $onthespot_ticket = 0;
         $action = NULL;
         $recommendation = NULL;
         $status = "admin";
         $_SESSION['status'] = 'For Approval';
+        $sql = mysqli_query($con, "INSERT INTO request (date_filled, status2, requestor, requestorUsername, email, department, request_type, request_to, request_category, request_details, assignedPersonnel, assignedPersonnelName, action, recommendation, onthespot_ticket, ticket_category, category_level, ticket_filer)
+        VALUES ('$datenow', '$status', '$requestor','$requestorIdnumber', '$requestorEmail', '$requestorDepartment', 'Technical Support', 'mis', '$ticket_category','$detailsOfRequest', '$r_personnels', '$r_personnelsName', '$action', '$recommendation', '$onthespot_ticket', '$ticket_category', '$r_cat_level', '$user_name')");
     }
 
-    $_SESSION['requestor'] = $_POST['r_name'];
-    $_SESSION['pdepartment'] = $_POST['r_department'];
-    $_SESSION['dateFiled'] = $datenow;
-    $_SESSION['onthespot_ticket'] =  $onthespot_ticket;
-    $_SESSION['categories'] = $_POST['r_categories'];
-    $_SESSION['details'] =  $_POST['detailsOfRequest'];
-    $_SESSION['assignedPersonnel'] = $_POST['r_personnelsName'];
-    $_SESSION['section'] = 'ICT';
-    $_SESSION['requestType'] = 'Technical Support';
-    $_SESSION['ticket_category'] = $_POST['r_categories'];
-
-
-
-
-    $sql = mysqli_query($con, "INSERT INTO request (date_filled, status2, requestor, requestorUsername, email, department, request_type, request_to, request_category, request_details, assignedPersonnel, assignedPersonnelName, action, recommendation, onthespot_ticket, ticket_category, category_level, ticket_filer)
-            VALUES ('$datenow', '$status', '$requestor','$requestorIdnumber', '$requestorEmail', '$requestorDepartment', 'Technical Support', 'mis', '$ticket_category','$detailsOfRequest', '$r_personnels', '$r_personnelsName', '$action', '$recommendation', '$onthespot_ticket', '$ticket_category', '$r_cat_level', '$user_name')");
 
 
 
