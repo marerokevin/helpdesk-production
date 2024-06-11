@@ -227,7 +227,16 @@ if (isset($_POST['print'])) {
         }
         $_SESSION['assignedPersonnel'] =  $personnelName;
     } else {
-        $personnelName = $_POST['passignedPersonnel'];
+
+        $sql1 = "Select * FROM `user` WHERE `username` = '$assigned'";
+        $result = mysqli_query($con, $sql1);
+        while ($list = mysqli_fetch_assoc($result)) {
+            $personnelEmail = $list["email"];
+            $personnelName = $list["name"];
+        }
+
+
+        // $personnelName = $_POST['passignedPersonnel'];
         $_SESSION['assignedPersonnel'] = $_POST['passignedPersonnel'];
     }
 
