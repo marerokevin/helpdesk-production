@@ -62,7 +62,7 @@ if (isset($_SESSION['connected'])) {
 
 
     $level = $_SESSION['level'];
-    $leaderof = $_SESSION['leaderof'] ;
+    $leaderof = $_SESSION['leaderof'];
     if ($level == 'user') {
         header("location:../employees");
     } else if ($level == 'mis') {
@@ -71,7 +71,7 @@ if (isset($_SESSION['connected'])) {
         header("location:../fem");
     } else if ($level == 'head') {
         header("location:../department-head");
-    }else if ($leaderof == 'fem') {
+    } else if ($leaderof == 'fem') {
         header("location:../fem-admin");
     }
 }
@@ -822,10 +822,10 @@ Copy
                                                         $result = mysqli_query($con, $sql1);
                                                         while ($count = mysqli_fetch_assoc($result)) {
 
-                                                            if ($count["pending"] >=0) {
+                                                            if ($count["pending"] >= 0) {
                                                         ?>
                                                                 <div class=" absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-gray-900">
-                                                                     <?php
+                                                                    <?php
                                                                     if ($_SESSION['leaderof'] == "fem") {
                                                                         $sql1 = "SELECT COUNT(id) as 'pending' FROM request WHERE `status2` ='admin' AND `request_to` ='fem'";
                                                                         $result = mysqli_query($con, $sql1);
@@ -868,25 +868,25 @@ Copy
                                                             if ($count["pending"] > 0) {
                                                         ?>
                                                                 <div class=" absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-gray-900"> <?php
-                                                                if ($_SESSION['leaderof'] == "fem") {
-                                                                    $sql1 = "SELECT COUNT(id) as 'pending' FROM request WHERE `status2` ='admin' AND `request_to` ='fem'";
-                                                                    $result = mysqli_query($con, $sql1);
-                                                                } else if ($_SESSION['leaderof'] == "mis") {
-                                                                    $sql1 = "SELECT COUNT(id) as 'pending' FROM request WHERE `status2` ='admin' AND `request_to` ='mis'";
-                                                                    $result = mysqli_query($con, $sql1);
-                                                                } else {
-                                                                    $sql1 = "SELECT COUNT(id) as 'pending' FROM request WHERE `status2` ='admin'";
-                                                                    $result = mysqli_query($con, $sql1);
-                                                                }
+                                                                                                                                                                                                                                                        if ($_SESSION['leaderof'] == "fem") {
+                                                                                                                                                                                                                                                            $sql1 = "SELECT COUNT(id) as 'pending' FROM request WHERE `status2` ='admin' AND `request_to` ='fem'";
+                                                                                                                                                                                                                                                            $result = mysqli_query($con, $sql1);
+                                                                                                                                                                                                                                                        } else if ($_SESSION['leaderof'] == "mis") {
+                                                                                                                                                                                                                                                            $sql1 = "SELECT COUNT(id) as 'pending' FROM request WHERE `status2` ='admin' AND `request_to` ='mis'";
+                                                                                                                                                                                                                                                            $result = mysqli_query($con, $sql1);
+                                                                                                                                                                                                                                                        } else {
+                                                                                                                                                                                                                                                            $sql1 = "SELECT COUNT(id) as 'pending' FROM request WHERE `status2` ='admin'";
+                                                                                                                                                                                                                                                            $result = mysqli_query($con, $sql1);
+                                                                                                                                                                                                                                                        }
 
 
-                                                                while ($count = mysqli_fetch_assoc($result)) {
-                                                                    echo $count["pending"];
-                                                                }
-                                                                ?></div><?php
-                                                                    }
-                                                                }
-                                                                        ?>
+                                                                                                                                                                                                                                                        while ($count = mysqli_fetch_assoc($result)) {
+                                                                                                                                                                                                                                                            echo $count["pending"];
+                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                        ?></div><?php
+                                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                                ?>
                                                         <img src="../resources/img/list.png" class="h-full w-full text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
 
                                                     </div>
