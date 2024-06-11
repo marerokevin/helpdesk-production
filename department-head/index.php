@@ -31,15 +31,17 @@ if (isset($_SESSION['connected'])) {
 
 
     $level = $_SESSION['level'];
-
+    $leaderof = $_SESSION['leaderof'];
     if ($level == 'user') {
         header("location:../employees");
     } else if ($level == 'mis') {
         header("location:../mis");
     } else if ($level == 'fem') {
         header("location:../fem");
-    } else if ($level == 'admin') {
-        header("location:../department-admin");
+    } else if ($level == 'admin' && $leaderof == 'mis') {
+        header("location:department-admin");
+    } else if ($level == 'admin' && $leaderof == 'fem') {
+        header("location:fem-admin");
     }
 }
 if (!isset($_SESSION['connected'])) {
@@ -277,7 +279,8 @@ if (isset($_POST['approveRequest'])) {
                 $leaderName = $list["name"];
 
                 $subject4 = 'Job order request';
-                $message4 = 'Hi ' . $leaderName . ',<br> <br>   Mr/Ms. ' . $requestor . ' filed a job order with JO number JO-' . $completejoid . ' . Please check the details below or by signing in into our Helpdesk.  <br> Click this ' . $link . ' to sign in. <br><br>Request Type: ' . $request_type . '<br> Request Category: ' . $request_category . '<br>Request Details: ' . $detailsOfRequest . '<br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
+                $request_type =   'Job Order';
+                $message4 = 'Hi ' . $leaderName . ',<br> <br>   Mr/Ms. ' . $requestor . ' filed a job order with JO number ' . $completejoid . ' . Please check the details below or by signing in into our Helpdesk.  <br> Click this ' . $link . ' to sign in. <br><br>Request Type: ' . $request_type . '<br> Request Category: ' . $request_category . '<br>Request Details: ' . $detailsOfRequest . '<br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
 
                 $mail->isSMTP();                                      // Set mailer to use SMTP
                 $mail->Host = 'mail.glorylocal.com.ph';                       // Specify main and backup SMTP servers
@@ -307,7 +310,7 @@ if (isset($_POST['approveRequest'])) {
                 $dompdf->setPaper('A5', 'portrait'); // Set paper size and orientation
                 $dompdf->render();
                 $pdfContent = $dompdf->output();
-                $mail->addStringAttachment($pdfContent, 'Helpdesk Report.pdf', 'base64', 'application/pdf');
+                // $mail->addStringAttachment($pdfContent, 'Helpdesk Report.pdf', 'base64', 'application/pdf');
                 $mail->Subject = $subject4;
                 $mail->Body    = $message4;
 
@@ -316,7 +319,8 @@ if (isset($_POST['approveRequest'])) {
 
 
             $subject3 = 'Approved Job Order';
-            $message3 = 'Hi ' . $requestor . ',<br> <br>  Your Job Order with JO number JO-' . $completejoid . ' is now approved by your head. It is now sent to your administrator. Please check the details below or by signing in into our Helpdesk.<br> Click this ' . $link . ' to sign in. <br><br>Request Type: ' . $request_type . '<br> Request Category: ' . $request_category . '<br>Request Details: ' . $detailsOfRequest . '<br> Assigned Personnel: ' . $personnelName . '<br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
+            $request_type =   'Job Order';
+            $message3 = 'Hi ' . $requestor . ',<br> <br>  Your Job Order with JO number ' . $completejoid . ' is now approved by your head. It is now sent to your administrator. Please check the details below or by signing in into our Helpdesk.<br> Click this ' . $link . ' to sign in. <br><br>Request Type: ' . $request_type . '<br> Request Category: ' . $request_category . '<br>Request Details: ' . $detailsOfRequest . '<br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
 
             // email this requestor
 
@@ -349,7 +353,7 @@ if (isset($_POST['approveRequest'])) {
             $dompdf->setPaper('A5', 'portrait'); // Set paper size and orientation
             $dompdf->render();
             $pdfContent = $dompdf->output();
-            $mail2->addStringAttachment($pdfContent, 'Helpdesk Report.pdf', 'base64', 'application/pdf');
+            // $mail2->addStringAttachment($pdfContent, 'Helpdesk Report.pdf', 'base64', 'application/pdf');
             $mail2->Subject = $subject3;
             $mail2->Body    = $message3;
 
