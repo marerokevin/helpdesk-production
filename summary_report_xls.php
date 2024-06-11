@@ -286,10 +286,10 @@ if ($reqtype == "ALL") {
                                     <td>$required_response_time</td>
                                     <td>$required_completion_days</td>
                                     <td>$approvalDate</td>
-                                    <td>$timeResponded </td>
+                                    <td>$time_responded </td>
                                     <td>$response_rate</td>
                                     <td $class>$response_remarks </td>
-                                    <td>$dateFinished</td>
+                                    <td>$date_finished</td>
                                     <td>$accomplishment_rate</td>
                                     <td $class1>$accomplishment_remarks</td>
                                     <td>$action_taken</td>

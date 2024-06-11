@@ -98,6 +98,7 @@ if (isset($_POST['submitTicket'])) {
 
     $ticket_category =  $_POST['r_categories'];
     $onthespot_ticket = "";
+
     $_SESSION['requestor'] = $_POST['r_name'];
     $_SESSION['pdepartment'] = $_POST['r_department'];
     $_SESSION['dateFiled'] = $datenow;
@@ -129,6 +130,7 @@ if (isset($_POST['submitTicket'])) {
         $recommendation = NULL;
         $status = "admin";
         $_SESSION['status'] = 'For Approval';
+
         $sql = mysqli_query($con, "INSERT INTO request (date_filled, status2, requestor, requestorUsername, email, department, request_type, request_to, request_category, request_details, assignedPersonnel, assignedPersonnelName, action, recommendation, onthespot_ticket, ticket_category, category_level, ticket_filer)
         VALUES ('$datenow', '$status', '$requestor','$requestorIdnumber', '$requestorEmail', '$requestorDepartment', 'Technical Support', 'mis', '$ticket_category','$detailsOfRequest', '$r_personnels', '$r_personnelsName', '$action', '$recommendation', '$onthespot_ticket', '$ticket_category', '$r_cat_level', '$user_name')");
     }
@@ -475,10 +477,10 @@ if (isset($_POST['submitTicket'])) {
                         <label for="r_categories" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Categories</label>
                         <select id="r_categories" name="r_categories" class="js-example-basic-single bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option disabled selected>Search Categories</option>
-
+                            <optgroup label="Critical" >
                             <?php
                             //    $sql1 = "Select * FROM `user` WHERE `username`='$username'";
-                            $sql1 = "Select * FROM `categories` WHERE req_type = 'TS'  ";
+                            $sql1 = "Select * FROM `categories` WHERE req_type = 'TS' AND level = 'Critical' ORDER BY hours ASC ";
                             $result = mysqli_query($con, $sql1);
                             while ($list = mysqli_fetch_assoc($result)) {
                                 $c_name = $list["c_name"];
@@ -487,11 +489,62 @@ if (isset($_POST['submitTicket'])) {
                             ?>
 
                                 <!-- <option selected  disabled class="text-gray-900">Choose Head:</option>  -->
-                                <option value="<?php echo  $c_name; ?>" data-hours="<?php echo  $hours; ?>" data-cname="<?php echo  $c_name; ?>" data-level="<?php echo  $level; ?>"><?php echo  $c_name; ?> </option> <?php
+                                <option class="" value="<?php echo  $c_name; ?>" data-hours="<?php echo  $hours; ?>" data-cname="<?php echo  $c_name; ?>" data-level="<?php echo  $level; ?>"><?php echo  $c_name; ?> </option> 
+                                <?php
+                                 }
+                                ?>
+                             </optgroup>   
+                             <optgroup label="High Priority" >
+                            <?php
+                            //    $sql1 = "Select * FROM `user` WHERE `username`='$username'";
+                            $sql1 = "Select * FROM `categories` WHERE req_type = 'TS' AND level = 'High Priority' ORDER BY hours ASC ";
+                            $result = mysqli_query($con, $sql1);
+                            while ($list = mysqli_fetch_assoc($result)) {
+                                $c_name = $list["c_name"];
+                                $hours = $list["hours"];
+                                $level = $list["level"];
+                            ?>
 
-                                                                                                                                                                                                                    }
+                                <!-- <option selected  disabled class="text-gray-900">Choose Head:</option>  -->
+                                <option class="" value="<?php echo  $c_name; ?>" data-hours="<?php echo  $hours; ?>" data-cname="<?php echo  $c_name; ?>" data-level="<?php echo  $level; ?>"><?php echo  $c_name; ?> </option> 
+                                <?php
+                                 }
+                                ?>
+                             </optgroup> 
+                             <optgroup label="Medium Priority" >
+                            <?php
+                            //    $sql1 = "Select * FROM `user` WHERE `username`='$username'";
+                            $sql1 = "Select * FROM `categories` WHERE req_type = 'TS' AND level = 'Medium Priority' ORDER BY hours ASC ";
+                            $result = mysqli_query($con, $sql1);
+                            while ($list = mysqli_fetch_assoc($result)) {
+                                $c_name = $list["c_name"];
+                                $hours = $list["hours"];
+                                $level = $list["level"];
+                            ?>
 
-                                                                                                                                                                                                                        ?>
+                                <!-- <option selected  disabled class="text-gray-900">Choose Head:</option>  -->
+                                <option class="" value="<?php echo  $c_name; ?>" data-hours="<?php echo  $hours; ?>" data-cname="<?php echo  $c_name; ?>" data-level="<?php echo  $level; ?>"><?php echo  $c_name; ?> </option> 
+                                <?php
+                                 }
+                                ?>
+                             </optgroup>                                                                                                                                                                                                  
+                             <optgroup label="Low Priority" >
+                            <?php
+                            //    $sql1 = "Select * FROM `user` WHERE `username`='$username'";
+                            $sql1 = "Select * FROM `categories` WHERE req_type = 'TS' AND level = 'Low Priority' ORDER BY hours ASC ";
+                            $result = mysqli_query($con, $sql1);
+                            while ($list = mysqli_fetch_assoc($result)) {
+                                $c_name = $list["c_name"];
+                                $hours = $list["hours"];
+                                $level = $list["level"];
+                            ?>
+
+                                <!-- <option selected  disabled class="text-gray-900">Choose Head:</option>  -->
+                                <option class="" value="<?php echo  $c_name; ?>" data-hours="<?php echo  $hours; ?>" data-cname="<?php echo  $c_name; ?>" data-level="<?php echo  $level; ?>"><?php echo  $c_name; ?> </option> 
+                                <?php
+                                 }
+                                ?>
+                             </optgroup>  
                         </select>
                     </div>
                     <div class="relative z-0 w-full  group">
