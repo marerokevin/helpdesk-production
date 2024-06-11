@@ -94,6 +94,7 @@ if (isset($_POST['submitTicket'])) {
     $detailsOfRequest = str_replace('"', '&quot;', $detailsOfRequest);
 
     $datenow = date("Y-m-d");
+    $datetime = date('Y-m-d H:i:s', time());
 
     $ticket_category =  $_POST['r_categories'];
     $onthespot_ticket = "";
@@ -133,12 +134,6 @@ if (isset($_POST['submitTicket'])) {
         $sql = mysqli_query($con, "INSERT INTO request (date_filled, status2, requestor, requestorUsername, email, department, request_type, request_to, request_category, request_details, assignedPersonnel, assignedPersonnelName, action, recommendation, onthespot_ticket, ticket_category, category_level, ticket_filer)
         VALUES ('$datenow', '$status', '$requestor','$requestorIdnumber', '$requestorEmail', '$requestorDepartment', 'Technical Support', 'mis', '$ticket_category','$detailsOfRequest', '$r_personnels', '$r_personnelsName', '$action', '$recommendation', '$onthespot_ticket', '$ticket_category', '$r_cat_level', '$user_name')");
     }
-
-
-
-
-
-
 
 
 
