@@ -85,10 +85,18 @@ if (isset($_POST['submitTicket'])) {
     if (isset($_POST['r_personnels'])) {
         $r_personnels = $_POST['r_personnels'];
         $r_personnelsName = $_POST['r_personnelsName'];
+
+        $sql1 = "Select * FROM `user` WHERE `username` = '$r_personnels'";
+        $result = mysqli_query($con, $sql1);
+        while ($list = mysqli_fetch_assoc($result)) {
+            $personnelEmail = $list["email"];
+            $personnelName = $list["name"];
+        }
     } else {
         $r_personnels = NULL;
         $r_personnelsName = NULL;
     }
+
     $detailsOfRequest = $_POST['detailsOfRequest'];
     $detailsOfRequest = str_replace("'", "&apos;", $detailsOfRequest);
     $detailsOfRequest = str_replace('"', '&quot;', $detailsOfRequest);
@@ -108,6 +116,53 @@ if (isset($_POST['submitTicket'])) {
     $_SESSION['section'] = 'ICT';
     $_SESSION['requestType'] = 'Technical Support';
     $_SESSION['ticket_category'] = $_POST['r_categories'];
+
+
+    $query = mysqli_query($con, "Select * FROM `categories` WHERE `c_name` = '$ticket_category'");
+    while ($cat = mysqli_fetch_assoc($query)) {
+        $completion_days = $cat['days'];
+    }
+
+    // Function to add weekdays, excluding weekends and holidays
+    $sqlHoli = "SELECT holidaysDate FROM holidays";
+    $resultHoli = mysqli_query($con, $sqlHoli);
+    $holidays = array();
+    while ($row = mysqli_fetch_assoc($resultHoli)) {
+        $holidays[] = $row['holidaysDate'];
+    }
+
+    // Function to add weekdays, excluding weekends and holidays
+    function addWeekdays2($startDate, $daysToAdd, $holidays)
+    {
+        $currentDate = strtotime($startDate); // ict approval date
+        $weekdaysAdded = 0;
+
+        while ($weekdaysAdded < $daysToAdd) {
+            $currentDayOfWeek = date('N', $currentDate);
+
+            // Exclude weekends (Saturday and Sunday)
+            if ($currentDayOfWeek < 6) {
+                $isHoliday = in_array(date('Y-m-d', $currentDate), $holidays);
+
+                // Exclude holidays
+                if (!$isHoliday) {
+                    $weekdaysAdded++;
+                }
+            }
+
+            // Move to the next day
+            $currentDate = strtotime('+1 day', $currentDate);
+        }
+
+        return date('Y-m-d', $currentDate);
+    }
+    $dateToday = date('Y-m-d H:i:s', time());
+    $date = date("Y-m-d");
+    $startDate = $date;
+    $daysToAdd = $completion_days;
+    $newDate = addWeekdays2($startDate, $daysToAdd, $holidays);
+
+
     if (isset($_POST['on_the_spot'])) {
         $onthespot_ticket = $_POST['on_the_spot'];
         $action = $_POST['requestAction'];
@@ -126,8 +181,8 @@ if (isset($_POST['submitTicket'])) {
     } else {
         $status = "inprogress";
         $_SESSION['status'] = 'In Progress';
-        $sql = mysqli_query($con, "INSERT INTO request (date_filled, status2, requestor, requestorUsername, email, department, request_type, request_to, request_category, request_details, assignedPersonnel, assignedPersonnelName, ticket_category, category_level, ticket_filer)
-        VALUES ('$datenow', '$status', '$requestor','$requestorIdnumber', '$requestorEmail', '$requestorDepartment', 'Technical Support', 'mis', '$ticket_category','$detailsOfRequest', '$r_personnels', '$r_personnelsName', '$ticket_category', '$r_cat_level', '$user_name')");
+        $sql = mysqli_query($con, "INSERT INTO request (date_filled, status2, requestor, requestorUsername, email, department, request_type, request_to, request_category, request_details, assignedPersonnel, assignedPersonnelName, ticket_category, category_level, ticket_filer, admin_approved_date, expectedFinishDate, ict_approval_date)
+        VALUES ('$datenow', '$status', '$requestor','$requestorIdnumber', '$requestorEmail', '$requestorDepartment', 'Technical Support', 'mis', '$ticket_category','$detailsOfRequest', '$r_personnels', '$r_personnelsName', '$ticket_category', '$r_cat_level', '$user_name', '$date', '$newDate', '$dateToday')");
     }
 
     if ($sql) {
@@ -264,7 +319,7 @@ if (isset($_POST['submitTicket'])) {
                 // Attach PDF to the email (ICT and Requestor)
                 $mail->addStringAttachment($pdfContent, 'Helpdesk Report.pdf', 'base64', 'application/pdf');
                 $mail->Subject = $subject;
-                $mail->Body    = 'Hi ' . $requestor . ',<br> <br>   Your ticket request has been created. Please find the details below: <br><br> Ticket No.: ' . $ticketNumber . '<br> Requestor: ' . $requestor . '<br> Requestor Email: ' . $requestorEmail . '<br> Requestor Department: ' . $requestorDepartment . '<br> Request Details: ' . $detailsOfRequest . '<br> Assigned Personnel: ' . $r_personnelsName . '<br>  Ticket Category: ' . $_SESSION['categories'] . '<br> Ticket Filer: ' . $user_name . '<br><br> You can check the status of your ticket by signing in into our Helpdesk <br> Click this ' . $link . ' to sign in. <br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
+                $mail->Body    = 'Hi ' . $requestor . ',<br> <br>   Your ticket request has been created. It is now in progress. Please find the details below: <br><br> Ticket No.: ' . $ticketNumber . '<br> Requestor: ' . $requestor . '<br> Requestor Email: ' . $requestorEmail . '<br> Requestor Department: ' . $requestorDepartment . '<br> Request Details: ' . $detailsOfRequest . '<br> Assigned Personnel: ' . $r_personnelsName . '<br>  Ticket Category: ' . $_SESSION['categories'] . '<br> Ticket Filer: ' . $user_name . '<br><br> You can check the status of your ticket by signing in into our Helpdesk <br> Click this ' . $link . ' to sign in. <br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
 
                 $mail->send();
 
@@ -286,6 +341,23 @@ if (isset($_POST['submitTicket'])) {
 
                 $mail->Subject = $subject;
                 $mail->Body    = 'Hi Admin,<br> <br>   You created a ticket with a ticket number ' . $ticketNumber . '. It is now in progress. Please find the details below: <br><br> Ticket No.: ' . $ticketNumber . '<br> Requestor: ' . $requestor . '<br>  Requestor Email: ' . $requestorEmail . '<br> Requestor Department: ' . $requestorDepartment . '<br> Request Details: ' . $detailsOfRequest . '<br> Assigned Personnel: ' . $r_personnelsName . '<br>  Ticket Category: ' . $_SESSION['categories'] . '<br> Ticket Filer: ' . $user_name . '<br><br> Please approve or reject the ticket by signing in into our Helpdesk <br> Click this ' . $link . ' to sign in. <br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
+
+                $mail->send();
+
+                //Message to ICT Personnel
+                $mail->clearAddresses();
+                $mail->addAddress($personnelEmail);
+
+                $mail->isHTML(true);
+                // Generate PDF content using Dompdf
+                $dompdf = new Dompdf\Dompdf();
+                $dompdf->loadHtml($html);
+                $dompdf->setPaper('A5', 'portrait'); // Set paper size and orientation
+                $dompdf->render();
+                $pdfContent = $dompdf->output();
+
+                $mail->Subject = 'New Ticket Request';
+                $mail->Body    = 'Hi ' . $personnelName . ',<br> <br>   You have a new ticket request with TS number ' . $completejoid . ' from ' . $requestor . '. Please check the details below or by signing in into our Helpdesk. <br> Click this ' . $link . ' to sign in. <br><br>Request Type: ' . $request_type . '<br> Ticket Category: ' . $ticket_category . '<br>Category Level: ' . $r_cat_level . '<br> Request Details: ' . $detailsOfRequest . '<br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
 
                 $mail->send();
             }

@@ -162,10 +162,16 @@ if (isset($_POST['submit'])) {
 
     $datenow = date("Y-m-d");
 
+    if ($headname === $requestor_name) {
+        $status = 'inprogress';
+    } else {
+        $status = 'admin';
+    }
+
     if (!empty($requestto && $category)) {
         // $email1=$_SESSION['email'];
         $sql = "insert into request (date_filled,status2,requestorUsername,requestor,email,department,request_type, request_to, request_category,request_details, approving_head,accept_termsandconddition,month,year, assignedPersonnel, assignedPersonnelName, ticket_filer) 
-            values('$datenow','admin','$requestor_username','$requestor_name','$requestor_email','$requestor_dept', 'Job Order', '$requestto','$category','$request','$headname','$terms','$month','$year', '$r_personnels', '$r_personnelsName', '$user_name')";
+            values('$datenow','$status','$requestor_username','$requestor_name','$requestor_email','$requestor_dept', 'Job Order', '$requestto','$category','$request','$headname','$terms','$month','$year', '$r_personnels', '$r_personnelsName', '$user_name')";
         $results = mysqli_query($con, $sql);
         if ($results) {
 
@@ -176,8 +182,26 @@ if (isset($_POST['submit'])) {
                 $accountpass = $list["password"];
             }
 
-            $subject = 'Job Order Request';
-            $message = 'Hi ' . $headname . ',<br> <br>   You filed a job order with number ' . $jono . '. Please check the details below or by signing in into our Helpdesk. <br> Click this ' . $link . ' to sign in. <br><br>Request Type: Job Order<br> Category: ' . $category . '<br> Request Details: ' . $request . '<br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
+            if ($headname === $requestor_name) {
+                $subject = 'Job order request';
+                $request_type =   'Job Order';
+                $message = 'Hi ' . $leaderName . ',<br> <br>   Mr/Ms. ' . $requestor . ' filed a job order with JO number ' . $completejoid . ' . Please check the details below or by signing in into our Helpdesk.  <br> Click this ' . $link . ' to sign in. <br><br>Request Type: ' . $request_type . '<br> Request Category: ' . $request_category . '<br>Request Details: ' . $detailsOfRequest . '<br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
+
+                $subject3 = 'Approved Job Order';
+                $request_type =   'Job Order';
+                $message3 = 'Hi ' . $requestor . ',<br> <br>  Your Job Order with JO number ' . $completejoid . ' is now sent to your administrator. Please check the details below or by signing in into our Helpdesk.<br> Click this ' . $link . ' to sign in. <br><br>Request Type: ' . $request_type . '<br> Request Category: ' . $request_category . '<br>Request Details: ' . $detailsOfRequest . '<br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
+
+                $request_type = "Job Order";
+                $subject = 'Job Order Request';
+                $message = 'Hi ' . $personnelName . ',<br> <br>   You have a new job order with JO number ' . $completejoid . ' from ' . $requestor . '. Please check the details below or by signing in into our Helpdesk. <br> Click this ' . $link . ' to sign in. <br><br>Request Type: ' . $request_type . '<br> Request Category: ' . $request_category . '<br>Request Details: ' . $detailsOfRequest . '<br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
+
+                $subject2 = 'Approved Job Order';
+                $message2 = 'Hi ' . $requestor . ',<br> <br>  Your Job Order with JO number ' . $completejoid . ' is now approved by the administrator. It is now in progress. Please check the details below or by signing in into our Helpdesk. <br> Click this ' . $link . ' to sign in. <br><br>Request Type: ' . $request_type . '<br> Request Category: ' . $request_category . '<br>Request Details: ' . $detailsOfRequest . '<br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
+            } else {
+                $subject = 'Job Order Request';
+                $message = 'Hi ' . $headname . ',<br> <br>   Mr/Ms. ' . $requestor_name . ' filed a job order. Please check the details below or by signing in into our Helpdesk. <br> Click this ' . $link . ' to sign in. <br><br>Request Type: Job Order<br> Category: ' . $category . '<br> Request Details: ' . $request . '<br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
+            }
+
 
 
             require '../vendor/autoload.php';
