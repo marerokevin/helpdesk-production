@@ -784,14 +784,14 @@ Copy
                                                     <div style="overflow:inherit" class="_qiHHw Ut_ecQ kHy45A">
                                                         <span class=" sr-only">Notifications</span>
                                                         <?php
-                                                        $sql1 = "SELECT COUNT(id) as 'pending' FROM request WHERE  `status2` ='inprogress' and `request_to` = '$user_level'";
+                                                        $sql1 = "SELECT COUNT(id) as 'pending' FROM request WHERE `request_to` = 'mis'";
                                                         $result = mysqli_query($con, $sql1);
                                                         while ($count = mysqli_fetch_assoc($result)) {
 
                                                             if ($count["pending"] > 0) {
                                                         ?>
                                                                 <div class=" absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-gray-900"> <?php
-                                                                                                                                                                                                                                                        $sql1 = "SELECT COUNT(id) as 'pending' FROM request WHERE `status2` ='inprogress' and `request_to` = '$user_level'";
+                                                                                                                                                                                                                                                        $sql1 = "SELECT COUNT(id) as 'pending' FROM request WHERE `request_to` = 'mis'";
                                                                                                                                                                                                                                                         $result = mysqli_query($con, $sql1);
                                                                                                                                                                                                                                                         while ($count = mysqli_fetch_assoc($result)) {
                                                                                                                                                                                                                                                             echo $count["pending"];
@@ -861,7 +861,7 @@ Copy
                                                         <span class=" sr-only">Notifications</span>
                                                         <?php
 
-                                                        $sql1 = "SELECT COUNT(id) as 'pending' FROM request WHERE `status2` ='admin'";
+                                                        $sql1 = "SELECT COUNT(id) as 'pending' FROM request WHERE `status2` ='admin' AND `request_to` ='mis'";
                                                         $result = mysqli_query($con, $sql1);
                                                         while ($count = mysqli_fetch_assoc($result)) {
 
@@ -884,9 +884,9 @@ Copy
                                                                                                                                                                                                                                                             echo $count["pending"];
                                                                                                                                                                                                                                                         }
                                                                                                                                                                                                                                                         ?></div><?php
-                                                                                                                                                                                                                                                            }
-                                                                                                                                                                                                                                                        }
-                                                                                                                                                                                                                                                                ?>
+                                                                    }
+                                                                }
+                                                                        ?>
                                                         <img src="../resources/img/list.png" class="h-full w-full text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
 
                                                     </div>
@@ -1217,7 +1217,7 @@ Copy
                                 $sql = "select * from `request` WHERE `status2` ='admin' AND `request_to` = 'fem' order by id asc  ";
                                 $result = mysqli_query($con, $sql);
                             } else if ($_SESSION['leaderof'] == "mis") {
-                                $sql = "select * from `request` WHERE `status2` ='admin' AND `request_to` = 'mis' AND onthespot_ticket = '0' order by id asc  ";
+                                $sql = "select * from `request` WHERE `status2` ='admin' AND `request_to` = 'mis' order by id asc  ";
                                 $result = mysqli_query($con, $sql);
                             } else {
                                 $sql = "select * from `request` WHERE `status2` ='admin' order by id asc  ";
@@ -2810,10 +2810,12 @@ FROM `user` u";
 
 
 
-        $("#sidehome").addClass("bg-gray-200");
+        $("#sidehome").addClass("text-white bg-gradient-to-r from-blue-900 to-teal-500");
+        $("#sideMyJo").addClass("text-white bg-gradient-to-r from-pink-500 to-orange-400");
+
         $("#sidehistory").removeClass("bg-gray-200");
         $("#sidepms").removeClass("bg-gray-200");
-
+        
 
         $(document).ready(function() {
             $('#forRatingTable').DataTable({

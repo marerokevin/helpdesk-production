@@ -72,9 +72,9 @@ if (isset($_POST['submit'])) {
     $requestto = $_POST['femmis'];
     $category = $_POST['category'];
     $terms = $_POST['terms'];
-    $request = $_POST['request'];
-    $request = str_replace("'", "&apos;", $request);
-    $request = str_replace('"', '&quot;', $request);
+    $requestdetails = $_POST['request'];
+    $request = str_replace("'", "&apos;", $requestdetails);
+    $request = str_replace('"', '&quot;', $requestdetails);
 
 
     if ($_POST['femmis'] === "mis") {
@@ -96,18 +96,25 @@ if (isset($_POST['submit'])) {
         $requestor_username = $username;
         $requestor_dept = $user_dept;
         $requestor_email = $email1;
-        $userid = $_POST['head'];
-        $sql1 = "Select * FROM `user` WHERE `id` = '$userid'";
-        $result = mysqli_query($con, $sql1);
-        while ($list = mysqli_fetch_assoc($result)) {
-            $email = $list["email"];
-            $headname = $list["name"];
-        }
+        $headname = $username;
         $r_personnels = NULL;
         $r_personnelsName = NULL;
     }
-
-
+    if ($requestto === 'mis') {
+        $section = 'ICT';
+    } else {
+        $section = 'FEM';
+    }
+    $datenow = date("Y-m-d");
+    $_SESSION['requestor'] = $requestor_name;
+    $_SESSION['pdepartment'] =    $requestor_dept;
+    $_SESSION['dateFiled'] = $datenow;
+    $_SESSION['categories'] = $category;
+    $_SESSION['details'] =  $requestdetails;
+    $_SESSION['assignedPersonnel'] =  $r_personnelsName;
+    $_SESSION['section'] = $section;
+    $_SESSION['requestType'] = 'Job Order';
+    $_SESSION['type'] = $category;
 
 
     $messageUpload = "";
@@ -162,12 +169,28 @@ if (isset($_POST['submit'])) {
 
     $datenow = date("Y-m-d");
 
+    if (($headname === $requestor_name) && ($requestto === 'mis')) {
+        $status = 'inprogress';
+    } elseif (($headname != $requestor_name) && ($requestto === 'mis')) {
+        $status = 'head';
+    } else {
+        $status = 'admin';
+    }
+    $_SESSION['status'] = $status;
     if (!empty($requestto && $category)) {
         // $email1=$_SESSION['email'];
         $sql = "insert into request (date_filled,status2,requestorUsername,requestor,email,department,request_type, request_to, request_category,request_details, approving_head,accept_termsandconddition,month,year, assignedPersonnel, assignedPersonnelName, ticket_filer) 
-            values('$datenow','admin','$requestor_username','$requestor_name','$requestor_email','$requestor_dept', 'Job Order', '$requestto','$category','$request','$headname','$terms','$month','$year', '$r_personnels', '$r_personnelsName', '$user_name')";
+            values('$datenow','$status','$requestor_username','$requestor_name','$requestor_email','$requestor_dept', 'Job Order', '$requestto','$category','$request','$headname','$terms','$month','$year', '$r_personnels', '$r_personnelsName', '$user_name')";
         $results = mysqli_query($con, $sql);
         if ($results) {
+
+            $getid = mysqli_query($con, "SELECT id FROM request ORDER BY id DESC LIMIT 1");
+            $row = mysqli_fetch_assoc($getid);
+            $id = $row['id'];
+            $date = new DateTime($datenow);
+            $date = $date->format('ym');
+            $ticketNumber = 'JO-' . $date . '-' . $id . '';
+            $_SESSION['jobOrderNo'] = 'JO-' . $date . '-' . $id . '';
 
             $sql2 = "Select * FROM `sender`";
             $result2 = mysqli_query($con, $sql2);
@@ -176,41 +199,171 @@ if (isset($_POST['submit'])) {
                 $accountpass = $list["password"];
             }
 
-            $subject = 'Job Order Request';
-            $message = 'Hi ' . $headname . ',<br> <br>   You filed a job order with number ' . $jono . '. Please check the details below or by signing in into our Helpdesk. <br> Click this ' . $link . ' to sign in. <br><br>Request Type: Job Order<br> Category: ' . $category . '<br> Request Details: ' . $request . '<br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
+
+            $result3 = mysqli_query($con, "SELECT * FROM `user` WHERE `username` = '$r_personnels'");
+            while ($list = mysqli_fetch_assoc($result3)) {
+                $personnels_email = $list["email"];
+            }
+
+            $query = "SELECT COUNT(*) as count FROM `user` WHERE `level` = 'head' AND `name` = '$requestor_name'";
+            $result = mysqli_query($con, $query);
+
+            if ($result) {
+                $row = mysqli_fetch_assoc($result);
+                $isHead = ($row['count'] > 0) ? true : false;
+            } else {
+                $isHead = false; // In case of query failure or no matching record
+            }
 
 
             require '../vendor/autoload.php';
-
+            require '../dompdf/vendor/autoload.php';
+            ob_start();
+            require 'Job Order Report copy.php'; // Replace 'your_php_file.php' with the path to your PHP file
+            $html = ob_get_clean();
             $mail = new PHPMailer(true);
+            $mail2 = new PHPMailer(true);
             try {
-                //Server settings
-                $mail->isSMTP();                                      // Set mailer to use SMTP
-                $mail->Host = 'mail.glorylocal.com.ph';                       // Specify main and backup SMTP servers
-                $mail->SMTPAuth = true;                               // Enable SMTP authentication
-                $mail->Username = $account;     // Your Email/ Server Email
-                $mail->Password = $accountpass;                     // Your Password
-                $mail->SMTPOptions = array(
-                    'ssl' => array(
-                        'verify_peer' => false,
-                        'verify_peer_name' => false,
-                        'allow_self_signed' => true
-                    )
-                );
-                $mail->SMTPSecure = 'none';
-                $mail->Port = 465;
+                $request_type =   'Job Order';
+                if (($isHead) && ($requestto === 'mis')) {
 
-                //Send Email
-                // $mail->setFrom('Helpdesk'); //eto ang mag front  notificationsys01@gmail.com
+                    //Server settings
+                    $mail->isSMTP();                                      // Set mailer to use SMTP
+                    $mail->Host = 'mail.glorylocal.com.ph';                       // Specify main and backup SMTP servers
+                    $mail->SMTPAuth = true;                               // Enable SMTP authentication
+                    $mail->Username = $account;     // Your Email/ Server Email
+                    $mail->Password = $accountpass;                     // Your Password
+                    $mail->SMTPOptions = array(
+                        'ssl' => array(
+                            'verify_peer' => false,
+                            'verify_peer_name' => false,
+                            'allow_self_signed' => true
+                        )
+                    );
+                    $mail->SMTPSecure = 'none';
+                    $mail->Port = 465;
 
-                //Recipients
-                $mail->setFrom('mis.dev@glory.com.ph', 'Helpdesk');
-                $mail->addAddress($email);
-                $mail->isHTML(true);
-                $mail->Subject = $subject;
-                $mail->Body    = $message;
+                    //Recipients
+                    $mail->setFrom('mis.dev@glory.com.ph', 'Helpdesk');
+                    $mail->addAddress($requestor_email);
+                    $mail->isHTML(true);
+                    // Generate PDF content using Dompdf
+                    $dompdf = new Dompdf\Dompdf();
+                    $dompdf->loadHtml($html);
+                    $dompdf->setPaper('A5', 'portrait'); // Set paper size and orientation
+                    $dompdf->render();
+                    $pdfContent = $dompdf->output();
 
-                $mail->send();
+                    // Attach PDF to the email
+                    $mail->addStringAttachment($pdfContent, 'Helpdesk Report.pdf', 'base64', 'application/pdf');
+                    $mail->Subject = 'Approved Job Order';
+                    $mail->Body    = 'Hi ' . $requestor_name . ',<br> <br>  Your Job Order with JO number ' . $_SESSION['jobOrderNo'] . ' is now in progress. Please check the details below or by signing in into our Helpdesk.<br> Click this ' . $link . ' to sign in. <br><br>Request Type: ' . $request_type . '<br> Request Category: ' . $category . '<br>Request Details: ' . $request . '<br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
+
+                    $mail->send();
+
+                    //Server settings
+                    $mail2->isSMTP();                                      // Set mailer to use SMTP
+                    $mail2->Host = 'mail.glorylocal.com.ph';                       // Specify main and backup SMTP servers
+                    $mail2->SMTPAuth = true;                               // Enable SMTP authentication
+                    $mail2->Username = $account;     // Your Email/ Server Email
+                    $mail2->Password = $accountpass;                     // Your Password
+                    $mail2->SMTPOptions = array(
+                        'ssl' => array(
+                            'verify_peer' => false,
+                            'verify_peer_name' => false,
+                            'allow_self_signed' => true
+                        )
+                    );
+                    $mail2->SMTPSecure = 'none';
+                    $mail2->Port = 465;
+
+                    //Recipients
+                    $mail2->setFrom('mis.dev@glory.com.ph', 'Helpdesk');
+                    $mail2->addAddress($personnels_email);
+                    $mail2->isHTML(true);
+                    // Attach PDF to the email
+                    $mail2->addStringAttachment($pdfContent, 'Helpdesk Report.pdf', 'base64', 'application/pdf');
+                    $mail2->Subject = 'Job Order Request';
+                    $mail2->Body    = 'Hi ' . $r_personnelsName . ',<br> <br>   You have a new job order with JO number ' . $_SESSION['jobOrderNo'] . ' from ' . $requestor_name . '. Please check the details below or by signing in into our Helpdesk. <br> Click this ' . $link . ' to sign in. <br><br>Request Type: ' . $request_type . '<br> Request Category: ' . $category . '<br>Request Details: ' . $request . '<br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
+
+                    $mail2->send();
+                } elseif (($isHead === false) && ($requestto === 'mis')) {
+
+                    //Server settings
+                    $mail->isSMTP();                                      // Set mailer to use SMTP
+                    $mail->Host = 'mail.glorylocal.com.ph';                       // Specify main and backup SMTP servers
+                    $mail->SMTPAuth = true;                               // Enable SMTP authentication
+                    $mail->Username = $account;     // Your Email/ Server Email
+                    $mail->Password = $accountpass;                     // Your Password
+                    $mail->SMTPOptions = array(
+                        'ssl' => array(
+                            'verify_peer' => false,
+                            'verify_peer_name' => false,
+                            'allow_self_signed' => true
+                        )
+                    );
+                    $mail->SMTPSecure = 'none';
+                    $mail->Port = 465;
+
+                    //Recipients
+                    $mail->setFrom('mis.dev@glory.com.ph', 'Helpdesk');
+                    $mail->addAddress($email);
+                    $mail->isHTML(true);
+                    // Generate PDF content using Dompdf
+                    $dompdf = new Dompdf\Dompdf();
+                    $dompdf->loadHtml($html);
+                    $dompdf->setPaper('A5', 'portrait'); // Set paper size and orientation
+                    $dompdf->render();
+                    $pdfContent = $dompdf->output();
+
+                    // Attach PDF to the email
+                    $mail->addStringAttachment($pdfContent, 'Helpdesk Report.pdf', 'base64', 'application/pdf');
+                    $mail->Subject = 'Job Order Request';
+                    $mail->Body    = 'Hi ' . $headname . ',<br> <br>   Mr/Ms. ' . $requestor_name . ' filed a job order with JO number ' . $_SESSION['jobOrderNo'] . '. Please check the details below or by signing in into our Helpdesk. <br> Click this ' . $link . ' to sign in. <br><br>Request Type: Job Order<br> Category: ' . $category . '<br> Request Details: ' . $request . '<br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
+
+                    $mail->send();
+                } elseif ($requestto === 'fem') {
+                    $sql1 = "Select * FROM `user` WHERE `level` = 'admin' AND `leader` = 'fem' ";
+                    $result = mysqli_query($con, $sql1);
+                    while ($list = mysqli_fetch_assoc($result)) {
+                        $adminEmail = $list["email"];
+                        $adminName = $list["name"];
+                    }
+                    //Server settings
+                    $mail->isSMTP();                                      // Set mailer to use SMTP
+                    $mail->Host = 'mail.glorylocal.com.ph';                       // Specify main and backup SMTP servers
+                    $mail->SMTPAuth = true;                               // Enable SMTP authentication
+                    $mail->Username = $account;     // Your Email/ Server Email
+                    $mail->Password = $accountpass;                     // Your Password
+                    $mail->SMTPOptions = array(
+                        'ssl' => array(
+                            'verify_peer' => false,
+                            'verify_peer_name' => false,
+                            'allow_self_signed' => true
+                        )
+                    );
+                    $mail->SMTPSecure = 'none';
+                    $mail->Port = 465;
+
+                    //Recipients
+                    $mail->setFrom('mis.dev@glory.com.ph', 'Helpdesk');
+                    $mail->addAddress($adminEmail);
+                    $mail->isHTML(true);
+                    // Generate PDF content using Dompdf
+                    $dompdf = new Dompdf\Dompdf();
+                    $dompdf->loadHtml($html);
+                    $dompdf->setPaper('A5', 'portrait'); // Set paper size and orientation
+                    $dompdf->render();
+                    $pdfContent = $dompdf->output();
+
+                    // Attach PDF to the email
+                    $mail->addStringAttachment($pdfContent, 'Helpdesk Report.pdf', 'base64', 'application/pdf');
+                    $mail->Subject = 'Job Order Request';
+                    $mail->Body    = 'Hi  ' . $adminName . ',<br> <br>   Mr/Ms. ' . $requestor_name . ' filed a job order with JO number ' . $_SESSION['jobOrderNo'] . '. Please check the details below or by signing in into our Helpdesk. <br> Click this ' . $link . ' to sign in. <br><br>Request Type: Job Order<br> Category: ' . $category . '<br> Request Details: ' . $request . '<br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
+
+                    $mail->send();
+                }
+
                 $_SESSION['message'] = 'Message has been sent';
                 echo "<script>alert('Thank you for filing a JO. $messageUpload') </script>";
                 echo "<script> location.href='index.php'; </script>";
@@ -869,6 +1022,21 @@ if (isset($_POST['submit'])) {
                 $('#r_personnelsName').val(selectedpersonnel);
 
             });
+
+            $("#r_personnels option").each(function() {
+                var assignedSection = $(this).attr("data-sectionassign");
+                var pending = $(this).attr("data-pending");
+
+                if (assignedSection != 'mis' && assignedSection != "admin") {
+                    $(this).hide();
+                } else {
+                    $(this).show();
+                    if (pending >= 5) {
+                        $(this).prop("disabled", true);
+                    }
+
+                }
+            })
 
             $('.peer').on('click', function() {
 
