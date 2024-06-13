@@ -169,6 +169,14 @@ if (isset($_POST['submit'])) {
         $results = mysqli_query($con, $sql);
         if ($results) {
 
+            $getid = mysqli_query($con, "SELECT id FROM request ORDER BY id DESC LIMIT 1");
+            $row = mysqli_fetch_assoc($getid);
+            $id = $row['id'];
+            $date = new DateTime($datenow);
+            $date = $date->format('ym');
+            $ticketNumber = 'JO-' . $date . '-' . $id . '';
+            $_SESSION['jobOrderNo'] = 'JO-' . $date . '-' . $id . '';
+
             $sql2 = "Select * FROM `sender`";
             $result2 = mysqli_query($con, $sql2);
             while ($list = mysqli_fetch_assoc($result2)) {
@@ -177,7 +185,7 @@ if (isset($_POST['submit'])) {
             }
 
             $subject = 'Job Order Request';
-            $message = 'Hi ' . $headname . ',<br> <br>   Mr/Ms. ' . $requestor_name . ' filed a job order. Please check the details below or by signing in into our Helpdesk. <br> Click this ' . $link . ' to sign in. <br><br>Request Type: Job Order<br> Category: ' . $category . '<br> Request Details: ' . $request . '<br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
+            $message = 'Hi ' . $headname . ',<br> <br>   Mr/Ms. ' . $requestor_name . ' filed a job order with JO number ' . $_SESSION['jobOrderNo'] . '. Please check the details below or by signing in into our Helpdesk. <br> Click this ' . $link . ' to sign in. <br><br>Request Type: Job Order<br> Category: ' . $category . '<br> Request Details: ' . $request . '<br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
 
 
             require '../vendor/autoload.php';
@@ -869,7 +877,20 @@ if (isset($_POST['submit'])) {
                 $('#r_personnelsName').val(selectedpersonnel);
 
             });
+            $("#r_personnels option").each(function() {
+                var assignedSection = $(this).attr("data-sectionassign");
+                var pending = $(this).attr("data-pending");
 
+                if (assignedSection != 'mis' && assignedSection != "admin") {
+                    $(this).hide();
+                } else {
+                    $(this).show();
+                    if (pending >= 5) {
+                        $(this).prop("disabled", true);
+                    }
+
+                }
+            })
             $('.peer').on('click', function() {
 
                 // Check if the checkbox is checked or not
