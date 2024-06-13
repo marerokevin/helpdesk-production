@@ -199,7 +199,7 @@ if (isset($_POST['submitTicket'])) {
         $date = new DateTime($datenow);
         $date = $date->format('ym');
         $ticketNumber = 'TS-' . $date . '-' . $id . '';
-        $_SESSION['jobOrderNo'] = $date . '-' . $id;
+        $_SESSION['jobOrderNo'] = 'TS-' . $date . '-' . $id . '';
 
 
         $requestorApprovalLink = $link . '/ticketApproval.php?id=' . $id . '&requestor=true';
@@ -209,12 +209,17 @@ if (isset($_POST['submitTicket'])) {
             $account = $list["email"];
             $accountpass = $list["password"];
         }
-        $ict_leader = array();
-        $query = "Select * FROM `user` WHERE `level` = 'admin' and `leader` = 'mis'";
-        $heademail = mysqli_query($con, $query);
-        while ($li = mysqli_fetch_assoc($heademail)) {
-            $ict_leader[] = $li;
+
+        $query = "SELECT COUNT(*) as count FROM `user` WHERE `level` = 'head' AND `name` = '$requestor'";
+        $result = mysqli_query($con, $query);
+
+        if ($result) {
+            $row = mysqli_fetch_assoc($result);
+            $isHead = ($row['count'] > 0) ? true : false;
+        } else {
+            $isHead = false; // In case of query failure or no matching record
         }
+
 
         require '../vendor/autoload.php';
         require '../dompdf/vendor/autoload.php';
@@ -248,6 +253,9 @@ if (isset($_POST['submitTicket'])) {
                 $subject = 'On the Spot Ticket Request Closed';
                 // Message to Requestor
                 $mail->addAddress($requestorEmail);
+                if ($isHead == false) {
+                    $mail->AddCC($immediateHeadEmail); // dept head   
+                }
                 $mail->isHTML(true);
                 // Generate PDF content using Dompdf
                 $dompdf = new Dompdf\Dompdf();
@@ -282,11 +290,15 @@ if (isset($_POST['submitTicket'])) {
                 //Send Email
                 $mail2->setFrom('mis.dev@glory.com.ph', 'Helpdesk');
                 $mail2->clearAddresses();
-                $mail2->addAddress($immediateHeadEmail);  // dept head          
+                $mail2->clearCCs();
+                $ict_leader = array();
+                $query = "Select * FROM `user` WHERE `level` = 'admin' and `leader` = 'mis'";
+                $heademail = mysqli_query($con, $query);
+                while ($li = mysqli_fetch_assoc($heademail)) {
+                    $ict_leader[] = $li;
+                }
                 foreach ($ict_leader as $item) {
-                    $mail2->AddCC($item['email']);  // ict head / leader
-
-
+                    $mail2->addAddress($item['email']);  // ict head / leader
                 }
 
                 $mail2->isHTML(true);
@@ -307,7 +319,10 @@ if (isset($_POST['submitTicket'])) {
                 $subject = 'Ticket Request Created';
                 // Message to Requestor & Dept Head
                 $mail->addAddress($requestorEmail); // requestor
-                $mail->AddCC($immediateHeadEmail); // dept head   
+                if ($isHead == false) {
+                    $mail->AddCC($immediateHeadEmail); // dept head   
+                }
+
                 $mail->isHTML(true);
                 // Generate PDF content using Dompdf
                 $dompdf = new Dompdf\Dompdf();
@@ -326,6 +341,12 @@ if (isset($_POST['submitTicket'])) {
                 //Message to ICT HEAD
                 $mail->clearAddresses();
                 $mail->clearCCs();
+                $ict_leader = array();
+                $query = "Select * FROM `user` WHERE `level` = 'admin' and `leader` = 'mis'";
+                $heademail = mysqli_query($con, $query);
+                while ($li = mysqli_fetch_assoc($heademail)) {
+                    $ict_leader[] = $li;
+                }
                 foreach ($ict_leader as $item) {
                     $mail->addAddress($item['email']);  // ict head / leader
 
@@ -357,7 +378,7 @@ if (isset($_POST['submitTicket'])) {
                 $pdfContent = $dompdf->output();
 
                 $mail->Subject = 'New Ticket Request';
-                $mail->Body    = 'Hi ' . $personnelName . ',<br> <br>   You have a new ticket request with TS number ' . $completejoid . ' from ' . $requestor . '. Please check the details below or by signing in into our Helpdesk. <br> Click this ' . $link . ' to sign in. <br><br>Request Type: ' . $request_type . '<br> Ticket Category: ' . $ticket_category . '<br>Category Level: ' . $r_cat_level . '<br> Request Details: ' . $detailsOfRequest . '<br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
+                $mail->Body    = 'Hi ' . $personnelName . ',<br> <br>   You have a new ticket request with a ticket number ' . $ticketNumber . ' from ' . $requestor . '. Please check the details below or by signing in into our Helpdesk. <br> Click this ' . $link . ' to sign in. <br><br>Request Type: ' . $request_type . '<br> Ticket Category: ' . $ticket_category . '<br>Category Level: ' . $r_cat_level . '<br> Request Details: ' . $detailsOfRequest . '<br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
 
                 $mail->send();
             }

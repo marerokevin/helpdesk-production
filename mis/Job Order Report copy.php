@@ -51,11 +51,11 @@ $adminsDate =  $_SESSION['adminsDate'];
 // }
 
 $status = $_SESSION['status'];
-if ($_SESSION['requestType'] === "Technical Support") {
-    $jobOrderNo = 'TS-' . $jobOrderNo;
-} else {
-    $jobOrderNo =  'JO-' . $jobOrderNo;
-}
+// if ($_SESSION['requestType'] === "Technical Support") {
+//     $jobOrderNo = 'TS-' . $jobOrderNo;
+// } else {
+//     $jobOrderNo =  'JO-' . $jobOrderNo;
+// }
 
 ?>
 
