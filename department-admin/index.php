@@ -2811,9 +2811,11 @@ FROM `user` u";
 
 
         $("#sidehome").addClass("text-white bg-gradient-to-r from-blue-900 to-teal-500");
+        $("#sideMyJo").addClass("text-white bg-gradient-to-r from-pink-500 to-orange-400");
+
         $("#sidehistory").removeClass("bg-gray-200");
         $("#sidepms").removeClass("bg-gray-200");
-
+        
 
         $(document).ready(function() {
             $('#forRatingTable').DataTable({

@@ -265,7 +265,15 @@ if (isset($_POST['excelReport'])) {
           <span class="ml-3">Home</span>
         </a>
       </li>
-      <li>
+      <li class="relative">
+      <div class=" absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-gray-900"> 
+        <?php
+         $sql1 = "SELECT COUNT(id) as 'pending' FROM request WHERE `status2` ='inprogress' and `assignedPersonnel` = '$username'";
+         $result = mysqli_query($con, $sql1);
+         while ($count = mysqli_fetch_assoc($result)) {
+             echo $count["pending"];
+         }
+          ?></div>
         <a href="myJobOrder.php" id="sideMyJo" class="flex items-center p-4 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
 
           <i class="fa-solid "><svg class="h-5 w-5 " fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
