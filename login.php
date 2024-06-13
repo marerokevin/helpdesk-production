@@ -191,7 +191,7 @@ if (isset($_POST['submit'])) {
     <div class="m-auto container px-6 py-4 h-full">
       <div class="flex justify-center items-center flex-wrap h-full g-6 text-gray-800">
         <div class="sm:p-20 w-1/2 md:w-8/12 lg:w-6/12 sm:mb-12 md:mb-0">
-          <img src="resources/img/heldesk 3d.png" class="w-full logo-container" alt="Login image" />
+          <img src="resources/img/heldesk 3d 30th Anniv Theme.png" class="w-full logo-container" alt="Login image" />
         </div>
         <div class="sm:p-28 w-full md:w-8/12 lg:w-6/12 mb-12 md:mb-0">
 
@@ -273,6 +273,8 @@ if (isset($_POST['submit'])) {
           <!-- <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" /> -->
           <!-- <span class="block text-sm text-gray-500 text-center dark:text-gray-400">  <a href="https://flowbite.com/" class="hover:underline">Designed By</a> Cedrick James - MIS Section</span> -->
           <span class="block text-sm  text-center text-white"> Developed By Information System - ICT Department</span>
+          <!-- <span class="block text-sm  text-center text-white"> Art Style by Cedrick James Orozo</span> -->
+
 
       </div>
       </footer>

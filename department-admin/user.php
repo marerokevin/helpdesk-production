@@ -1506,7 +1506,7 @@ function rate(id){
 }
 
 $("#sidehome").removeClass("bg-gray-200");
-$("#sideuser").addClass("bg-gray-200");
+$("#sideuser").addClass("text-white bg-gradient-to-r from-blue-900 to-teal-500");
 $("#sideMyRequest").removeClass("bg-gray-200");
 $("#sidepms").removeClass("bg-gray-200");
 
