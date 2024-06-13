@@ -273,6 +273,8 @@ if (isset($_POST['submit'])) {
           <!-- <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" /> -->
           <!-- <span class="block text-sm text-gray-500 text-center dark:text-gray-400">  <a href="https://flowbite.com/" class="hover:underline">Designed By</a> Cedrick James - MIS Section</span> -->
           <span class="block text-sm  text-center text-white"> Developed By Information System - ICT Department</span>
+          <span class="block text-sm  text-center text-white"> Art Style by Cedrick James Orozo</span>
+
 
       </div>
       </footer>
