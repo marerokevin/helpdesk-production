@@ -85,10 +85,18 @@ if (isset($_POST['submitTicket'])) {
     if (isset($_POST['r_personnels'])) {
         $r_personnels = $_POST['r_personnels'];
         $r_personnelsName = $_POST['r_personnelsName'];
+
+        $sql1 = "Select * FROM `user` WHERE `username` = '$r_personnels'";
+        $result = mysqli_query($con, $sql1);
+        while ($list = mysqli_fetch_assoc($result)) {
+            $personnelEmail = $list["email"];
+            $personnelName = $list["name"];
+        }
     } else {
         $r_personnels = NULL;
         $r_personnelsName = NULL;
     }
+
     $detailsOfRequest = $_POST['detailsOfRequest'];
     $detailsOfRequest = str_replace("'", "&apos;", $detailsOfRequest);
     $detailsOfRequest = str_replace('"', '&quot;', $detailsOfRequest);
@@ -98,7 +106,6 @@ if (isset($_POST['submitTicket'])) {
 
     $ticket_category =  $_POST['r_categories'];
     $onthespot_ticket = "";
-
     $_SESSION['requestor'] = $_POST['r_name'];
     $_SESSION['pdepartment'] = $_POST['r_department'];
     $_SESSION['dateFiled'] = $datenow;
@@ -109,6 +116,53 @@ if (isset($_POST['submitTicket'])) {
     $_SESSION['section'] = 'ICT';
     $_SESSION['requestType'] = 'Technical Support';
     $_SESSION['ticket_category'] = $_POST['r_categories'];
+
+
+    $query = mysqli_query($con, "Select * FROM `categories` WHERE `c_name` = '$ticket_category'");
+    while ($cat = mysqli_fetch_assoc($query)) {
+        $completion_days = $cat['days'];
+    }
+
+    // Function to add weekdays, excluding weekends and holidays
+    $sqlHoli = "SELECT holidaysDate FROM holidays";
+    $resultHoli = mysqli_query($con, $sqlHoli);
+    $holidays = array();
+    while ($row = mysqli_fetch_assoc($resultHoli)) {
+        $holidays[] = $row['holidaysDate'];
+    }
+
+    // Function to add weekdays, excluding weekends and holidays
+    function addWeekdays2($startDate, $daysToAdd, $holidays)
+    {
+        $currentDate = strtotime($startDate); // ict approval date
+        $weekdaysAdded = 0;
+
+        while ($weekdaysAdded < $daysToAdd) {
+            $currentDayOfWeek = date('N', $currentDate);
+
+            // Exclude weekends (Saturday and Sunday)
+            if ($currentDayOfWeek < 6) {
+                $isHoliday = in_array(date('Y-m-d', $currentDate), $holidays);
+
+                // Exclude holidays
+                if (!$isHoliday) {
+                    $weekdaysAdded++;
+                }
+            }
+
+            // Move to the next day
+            $currentDate = strtotime('+1 day', $currentDate);
+        }
+
+        return date('Y-m-d', $currentDate);
+    }
+    $dateToday = date('Y-m-d H:i:s', time());
+    $date = date("Y-m-d");
+    $startDate = $date;
+    $daysToAdd = $completion_days;
+    $newDate = addWeekdays2($startDate, $daysToAdd, $holidays);
+
+
     if (isset($_POST['on_the_spot'])) {
         $onthespot_ticket = $_POST['on_the_spot'];
         $action = $_POST['requestAction'];
@@ -125,10 +179,10 @@ if (isset($_POST['submitTicket'])) {
         $sql = mysqli_query($con, "INSERT INTO request (date_filled, status2, requestor, requestorUsername, email, department, request_type, request_to, request_category, request_details, assignedPersonnel, assignedPersonnelName, action, recommendation, onthespot_ticket, ticket_category, category_level, ticket_filer, actual_finish_date, admin_approved_date, ict_approval_date, first_responded_date, completed_date)
         VALUES ('$datenow', '$status', '$requestor','$requestorIdnumber', '$requestorEmail', '$requestorDepartment', 'Technical Support', 'mis', '$ticket_category','$detailsOfRequest', '$r_personnels', '$r_personnelsName', '$action', '$recommendation', '$onthespot_ticket', '$ticket_category', '$r_cat_level', '$user_name', '$datenow', '$datenow', '$datetime', '$datetime', '$datetime')");
     } else {
-        $status = "admin";
-        $_SESSION['status'] = 'For Approval';
-        $sql = mysqli_query($con, "INSERT INTO request (date_filled, status2, requestor, requestorUsername, email, department, request_type, request_to, request_category, request_details, assignedPersonnel, assignedPersonnelName, ticket_category, category_level, ticket_filer)
-        VALUES ('$datenow', '$status', '$requestor','$requestorIdnumber', '$requestorEmail', '$requestorDepartment', 'Technical Support', 'mis', '$ticket_category','$detailsOfRequest', '$r_personnels', '$r_personnelsName', '$ticket_category', '$r_cat_level', '$user_name')");
+        $status = "inprogress";
+        $_SESSION['status'] = 'In Progress';
+        $sql = mysqli_query($con, "INSERT INTO request (date_filled, status2, requestor, requestorUsername, email, department, request_type, request_to, request_category, request_details, assignedPersonnel, assignedPersonnelName, ticket_category, category_level, ticket_filer, admin_approved_date, expectedFinishDate, ict_approval_date)
+        VALUES ('$datenow', '$status', '$requestor','$requestorIdnumber', '$requestorEmail', '$requestorDepartment', 'Technical Support', 'mis', '$ticket_category','$detailsOfRequest', '$r_personnels', '$r_personnelsName', '$ticket_category', '$r_cat_level', '$user_name', '$date', '$newDate', '$dateToday')");
     }
 
     if ($sql) {
@@ -145,8 +199,8 @@ if (isset($_POST['submitTicket'])) {
         $date = new DateTime($datenow);
         $date = $date->format('ym');
         $ticketNumber = 'TS-' . $date . '-' . $id . '';
-        $_SESSION['jobOrderNo'] = $date . '-' . $id;
-        $headApprovalLink = $link . '/ticketApproval.php?id=' . $id . '&head=true';
+        $_SESSION['jobOrderNo'] = 'TS-' . $date . '-' . $id . '';
+
 
         $requestorApprovalLink = $link . '/ticketApproval.php?id=' . $id . '&requestor=true';
         $sql2 = "Select * FROM `sender`";
@@ -155,12 +209,17 @@ if (isset($_POST['submitTicket'])) {
             $account = $list["email"];
             $accountpass = $list["password"];
         }
-        $ict_leader = array();
-        $query = "Select * FROM `user` WHERE `level` = 'admin' and `leader` = 'mis'";
-        $heademail = mysqli_query($con, $query);
-        while ($li = mysqli_fetch_assoc($heademail)) {
-            $ict_leader[] = $li;
+
+        $query = "SELECT COUNT(*) as count FROM `user` WHERE `level` = 'head' AND `name` = '$requestor'";
+        $result = mysqli_query($con, $query);
+
+        if ($result) {
+            $row = mysqli_fetch_assoc($result);
+            $isHead = ($row['count'] > 0) ? true : false;
+        } else {
+            $isHead = false; // In case of query failure or no matching record
         }
+
 
         require '../vendor/autoload.php';
         require '../dompdf/vendor/autoload.php';
@@ -194,6 +253,9 @@ if (isset($_POST['submitTicket'])) {
                 $subject = 'On the Spot Ticket Request Closed';
                 // Message to Requestor
                 $mail->addAddress($requestorEmail);
+                if ($isHead == false) {
+                    $mail->AddCC($immediateHeadEmail); // dept head   
+                }
                 $mail->isHTML(true);
                 // Generate PDF content using Dompdf
                 $dompdf = new Dompdf\Dompdf();
@@ -228,11 +290,15 @@ if (isset($_POST['submitTicket'])) {
                 //Send Email
                 $mail2->setFrom('mis.dev@glory.com.ph', 'Helpdesk');
                 $mail2->clearAddresses();
-                $mail2->addAddress($immediateHeadEmail);  // dept head          
+                $mail2->clearCCs();
+                $ict_leader = array();
+                $query = "Select * FROM `user` WHERE `level` = 'admin' and `leader` = 'mis'";
+                $heademail = mysqli_query($con, $query);
+                while ($li = mysqli_fetch_assoc($heademail)) {
+                    $ict_leader[] = $li;
+                }
                 foreach ($ict_leader as $item) {
-                    $mail2->AddCC($item['email']);  // ict head / leader
-
-
+                    $mail2->addAddress($item['email']);  // ict head / leader
                 }
 
                 $mail2->isHTML(true);
@@ -253,7 +319,10 @@ if (isset($_POST['submitTicket'])) {
                 $subject = 'Ticket Request Created';
                 // Message to Requestor & Dept Head
                 $mail->addAddress($requestorEmail); // requestor
-                $mail->AddCC($immediateHeadEmail); // dept head   
+                if ($isHead == false) {
+                    $mail->AddCC($immediateHeadEmail); // dept head   
+                }
+
                 $mail->isHTML(true);
                 // Generate PDF content using Dompdf
                 $dompdf = new Dompdf\Dompdf();
@@ -262,16 +331,22 @@ if (isset($_POST['submitTicket'])) {
                 $dompdf->render();
                 $pdfContent = $dompdf->output();
 
-                // Attach PDF to the email
+                // Attach PDF to the email (ICT and Requestor)
                 $mail->addStringAttachment($pdfContent, 'Helpdesk Report.pdf', 'base64', 'application/pdf');
                 $mail->Subject = $subject;
-                $mail->Body    = 'Hi ' . $requestor . ',<br> <br>   Your ticket request has been created. Please find the details below: <br><br> Ticket No.: ' . $ticketNumber . '<br> Requestor: ' . $requestor . '<br> Requestor Email: ' . $requestorEmail . '<br> Requestor Department: ' . $requestorDepartment . '<br> Request Details: ' . $detailsOfRequest . '<br> Assigned Personnel: ' . $r_personnelsName . '<br>  Ticket Category: ' . $_SESSION['categories'] . '<br> Ticket Filer: ' . $user_name . '<br><br> You can check the status of your ticket by signing in into our Helpdesk <br> Click this ' . $link . ' to sign in. <br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
+                $mail->Body    = 'Hi ' . $requestor . ',<br> <br>   Your ticket request has been created. It is now in progress. Please find the details below: <br><br> Ticket No.: ' . $ticketNumber . '<br> Requestor: ' . $requestor . '<br> Requestor Email: ' . $requestorEmail . '<br> Requestor Department: ' . $requestorDepartment . '<br> Request Details: ' . $detailsOfRequest . '<br> Assigned Personnel: ' . $r_personnelsName . '<br>  Ticket Category: ' . $_SESSION['categories'] . '<br> Ticket Filer: ' . $user_name . '<br><br> You can check the status of your ticket by signing in into our Helpdesk <br> Click this ' . $link . ' to sign in. <br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
 
                 $mail->send();
 
                 //Message to ICT HEAD
                 $mail->clearAddresses();
                 $mail->clearCCs();
+                $ict_leader = array();
+                $query = "Select * FROM `user` WHERE `level` = 'admin' and `leader` = 'mis'";
+                $heademail = mysqli_query($con, $query);
+                while ($li = mysqli_fetch_assoc($heademail)) {
+                    $ict_leader[] = $li;
+                }
                 foreach ($ict_leader as $item) {
                     $mail->addAddress($item['email']);  // ict head / leader
 
@@ -284,10 +359,26 @@ if (isset($_POST['submitTicket'])) {
                 $dompdf->render();
                 $pdfContent = $dompdf->output();
 
-                // Attach PDF to the email
-                //  $mail->addStringAttachment($pdfContent, 'Helpdesk Report.pdf', 'base64', 'application/pdf');                                
+
                 $mail->Subject = $subject;
-                $mail->Body    = 'Hi Admin,<br> <br>   A ticket request has been created. Please find the details below: <br><br> Ticket No.: ' . $ticketNumber . '<br> Requestor: ' . $requestor . '<br>  Requestor Email: ' . $requestorEmail . '<br> Requestor Department: ' . $requestorDepartment . '<br> Request Details: ' . $detailsOfRequest . '<br> Assigned Personnel: ' . $r_personnelsName . '<br>  Ticket Category: ' . $_SESSION['categories'] . '<br> Ticket Filer: ' . $user_name . '<br><br> Please approve or reject the ticket by signing in into our Helpdesk <br> Click this ' . $link . ' to sign in. Or just click the link below to approve: <br> Click <a href="' . $headApprovalLink . '">this</a> to approve.<br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
+                $mail->Body    = 'Hi Admin,<br> <br>   You created a ticket with a ticket number ' . $ticketNumber . '. It is now in progress. Please find the details below: <br><br> Ticket No.: ' . $ticketNumber . '<br> Requestor: ' . $requestor . '<br>  Requestor Email: ' . $requestorEmail . '<br> Requestor Department: ' . $requestorDepartment . '<br> Request Details: ' . $detailsOfRequest . '<br> Assigned Personnel: ' . $r_personnelsName . '<br>  Ticket Category: ' . $_SESSION['categories'] . '<br> Ticket Filer: ' . $user_name . '<br><br> Please approve or reject the ticket by signing in into our Helpdesk <br> Click this ' . $link . ' to sign in. <br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
+
+                $mail->send();
+
+                //Message to ICT Personnel
+                $mail->clearAddresses();
+                $mail->addAddress($personnelEmail);
+
+                $mail->isHTML(true);
+                // Generate PDF content using Dompdf
+                $dompdf = new Dompdf\Dompdf();
+                $dompdf->loadHtml($html);
+                $dompdf->setPaper('A5', 'portrait'); // Set paper size and orientation
+                $dompdf->render();
+                $pdfContent = $dompdf->output();
+
+                $mail->Subject = 'New Ticket Request';
+                $mail->Body    = 'Hi ' . $personnelName . ',<br> <br>   You have a new ticket request with a ticket number ' . $ticketNumber . ' from ' . $requestor . '. Please check the details below or by signing in into our Helpdesk. <br> Click this ' . $link . ' to sign in. <br><br>Request Type: ' . $request_type . '<br> Ticket Category: ' . $ticket_category . '<br>Category Level: ' . $r_cat_level . '<br> Request Details: ' . $detailsOfRequest . '<br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
 
                 $mail->send();
             }
@@ -470,74 +561,23 @@ if (isset($_POST['submitTicket'])) {
                         <label for="r_categories" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Categories</label>
                         <select id="r_categories" name="r_categories" class="js-example-basic-single bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option disabled selected>Search Categories</option>
-                            <optgroup label="Critical">
-                                <?php
-                                //    $sql1 = "Select * FROM `user` WHERE `username`='$username'";
-                                $sql1 = "Select * FROM `categories` WHERE req_type = 'TS' AND level = 'Critical' ORDER BY hours ASC ";
-                                $result = mysqli_query($con, $sql1);
-                                while ($list = mysqli_fetch_assoc($result)) {
-                                    $c_name = $list["c_name"];
-                                    $hours = $list["hours"];
-                                    $level = $list["level"];
-                                ?>
 
-                                    <!-- <option selected  disabled class="text-gray-900">Choose Head:</option>  -->
-                                    <option class="" value="<?php echo  $c_name; ?>" data-hours="<?php echo  $hours; ?>" data-cname="<?php echo  $c_name; ?>" data-level="<?php echo  $level; ?>"><?php echo  $c_name; ?> </option>
-                                <?php
-                                }
-                                ?>
-                            </optgroup>
-                            <optgroup label="High Priority">
-                                <?php
-                                //    $sql1 = "Select * FROM `user` WHERE `username`='$username'";
-                                $sql1 = "Select * FROM `categories` WHERE req_type = 'TS' AND level = 'High Priority' ORDER BY hours ASC ";
-                                $result = mysqli_query($con, $sql1);
-                                while ($list = mysqli_fetch_assoc($result)) {
-                                    $c_name = $list["c_name"];
-                                    $hours = $list["hours"];
-                                    $level = $list["level"];
-                                ?>
+                            <?php
+                            //    $sql1 = "Select * FROM `user` WHERE `username`='$username'";
+                            $sql1 = "Select * FROM `categories` WHERE req_type = 'TS'  ";
+                            $result = mysqli_query($con, $sql1);
+                            while ($list = mysqli_fetch_assoc($result)) {
+                                $c_name = $list["c_name"];
+                                $hours = $list["hours"];
+                                $level = $list["level"];
+                            ?>
 
-                                    <!-- <option selected  disabled class="text-gray-900">Choose Head:</option>  -->
-                                    <option class="" value="<?php echo  $c_name; ?>" data-hours="<?php echo  $hours; ?>" data-cname="<?php echo  $c_name; ?>" data-level="<?php echo  $level; ?>"><?php echo  $c_name; ?> </option>
-                                <?php
-                                }
-                                ?>
-                            </optgroup>
-                            <optgroup label="Medium Priority">
-                                <?php
-                                //    $sql1 = "Select * FROM `user` WHERE `username`='$username'";
-                                $sql1 = "Select * FROM `categories` WHERE req_type = 'TS' AND level = 'Medium Priority' ORDER BY hours ASC ";
-                                $result = mysqli_query($con, $sql1);
-                                while ($list = mysqli_fetch_assoc($result)) {
-                                    $c_name = $list["c_name"];
-                                    $hours = $list["hours"];
-                                    $level = $list["level"];
-                                ?>
+                                <!-- <option selected  disabled class="text-gray-900">Choose Head:</option>  -->
+                                <option value="<?php echo  $c_name; ?>" data-hours="<?php echo  $hours; ?>" data-cname="<?php echo  $c_name; ?>" data-level="<?php echo  $level; ?>"><?php echo  $c_name; ?> </option> <?php
 
-                                    <!-- <option selected  disabled class="text-gray-900">Choose Head:</option>  -->
-                                    <option class="" value="<?php echo  $c_name; ?>" data-hours="<?php echo  $hours; ?>" data-cname="<?php echo  $c_name; ?>" data-level="<?php echo  $level; ?>"><?php echo  $c_name; ?> </option>
-                                <?php
-                                }
-                                ?>
-                            </optgroup>
-                            <optgroup label="Low Priority">
-                                <?php
-                                //    $sql1 = "Select * FROM `user` WHERE `username`='$username'";
-                                $sql1 = "Select * FROM `categories` WHERE req_type = 'TS' AND level = 'Low Priority' ORDER BY hours ASC ";
-                                $result = mysqli_query($con, $sql1);
-                                while ($list = mysqli_fetch_assoc($result)) {
-                                    $c_name = $list["c_name"];
-                                    $hours = $list["hours"];
-                                    $level = $list["level"];
-                                ?>
+                                                                                                                                                                                                                    }
 
-                                    <!-- <option selected  disabled class="text-gray-900">Choose Head:</option>  -->
-                                    <option class="" value="<?php echo  $c_name; ?>" data-hours="<?php echo  $hours; ?>" data-cname="<?php echo  $c_name; ?>" data-level="<?php echo  $level; ?>"><?php echo  $c_name; ?> </option>
-                                <?php
-                                }
-                                ?>
-                            </optgroup>
+                                                                                                                                                                                                                        ?>
                         </select>
                     </div>
                     <div class="relative z-0 w-full  group">
