@@ -239,7 +239,7 @@ if (isset($_POST['approveRequest'])) {
 
     $_SESSION['ticket_category'] =  $ticket_category;
 
-    if ($cat_lvl  == "" || $cat_lvl == NULL) {
+    if ($cat_lvl  == "" || $cat_lvl == NULL || $cat_lvl  == "Normal") {
         $sql1 = "SELECT * FROM `categories`
                 WHERE `req_type` = 'JO'";
         $result1 = mysqli_query($con, $sql1);
@@ -1129,7 +1129,7 @@ if (isset($_POST['cancelJO'])) {
 
                                 $cat_lvl = $row['category_level'];
 
-                                if ($cat_lvl  == "" || $cat_lvl == NULL) {
+                                if ($cat_lvl  == "" || $cat_lvl == NULL || $cat_lvl == "Normal") {
 
                                     $sql1 = "SELECT * FROM `categories`
                             WHERE `req_type` = 'JO'";

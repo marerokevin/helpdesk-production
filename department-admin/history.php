@@ -1490,7 +1490,7 @@
              }
          }
          $("#sidehome").removeClass("bg-gray-200");
-         $("#sidehistory").addClass("bg-gray-200");
+         $("#sidehistory").addClass("text-white bg-gradient-to-r from-blue-900 to-teal-500");
          $("#sidepms").removeClass("bg-gray-200");
      </script>
 
