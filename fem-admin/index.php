@@ -623,14 +623,14 @@ if (isset($_POST['cancelJO'])) {
                                                     <div style="overflow:inherit" class="_qiHHw Ut_ecQ kHy45A">
                                                         <span class=" sr-only">Notifications</span>
                                                         <?php
-                                                        $sql1 = "SELECT COUNT(id) as 'pending' FROM request WHERE  `status2` ='inprogress' and `request_to` = 'fem'";
+                                                        $sql1 = "SELECT COUNT(id) as 'pending' FROM request WHERE `request_to` = 'fem'";
                                                         $result = mysqli_query($con, $sql1);
                                                         while ($count = mysqli_fetch_assoc($result)) {
 
                                                             if ($count["pending"] > 0) {
                                                         ?>
                                                                 <div class=" absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-gray-900"> <?php
-                                                                                                                                                                                                                                                        $sql1 = "SELECT COUNT(id) as 'pending' FROM request WHERE `status2` ='inprogress' and `request_to` = 'fem'";
+                                                                                                                                                                                                                                                        $sql1 = "SELECT COUNT(id) as 'pending' FROM request WHERE `request_to` = 'fem'";
                                                                                                                                                                                                                                                         $result = mysqli_query($con, $sql1);
                                                                                                                                                                                                                                                         while ($count = mysqli_fetch_assoc($result)) {
                                                                                                                                                                                                                                                             echo $count["pending"];
