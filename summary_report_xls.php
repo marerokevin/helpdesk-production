@@ -45,9 +45,9 @@ include("includes/connect.php");
 
 $con->next_result();
 if ($reqtype == "ALL") {
-    $sql = mysqli_query($con, "SELECT req.id,  req.date_filled,  req.requestor,  req.department,  req.request_type,  req.ticket_category, req.request_category,  req.assignedPersonnelName, req.ict_approval_date, req.first_responded_date, req.completed_date, req.action, req.recommendation,  cat.level, cat.hours, cat.days, cat.req_type FROM `request` req LEFT JOIN `categories` cat ON cat.c_name = req.request_category WHERE req.admin_approved_date  BETWEEN '$lastMonthYear-$previousMonthNumber-28' AND '$year-$month-$lastDateOfMonth' AND req.request_to = 'mis' AND req.status2 != 'cancelled' ORDER BY req.id ASC");
+    $sql = mysqli_query($con, "SELECT req.id,  req.date_filled,  req.requestor,  req.department,  req.request_type,  req.ticket_category, req.request_category,  req.assignedPersonnelName, req.ict_approval_date, req.first_responded_date, req.completed_date, req.requestor_approval_date, req.ticket_close_date, req.action, req.recommendation,  cat.level, cat.hours, cat.days, cat.req_type FROM `request` req LEFT JOIN `categories` cat ON cat.c_name = req.request_category WHERE req.admin_approved_date  BETWEEN '$lastMonthYear-$previousMonthNumber-28' AND '$year-$month-$lastDateOfMonth' AND req.request_to = 'mis' AND req.status2 != 'cancelled' ORDER BY req.id ASC");
 } else {
-    $sql = mysqli_query($con, "SELECT req.id,  req.date_filled,  req.requestor,  req.department,  req.request_type,  req.ticket_category, req.request_category, req.assignedPersonnelName, req.ict_approval_date, req.first_responded_date, req.completed_date, req.action, req.recommendation,  cat.level, cat.hours, cat.days, cat.req_type FROM `request` req LEFT JOIN `categories` cat ON cat.c_name = req.request_category WHERE req.admin_approved_date  BETWEEN '$lastMonthYear-$previousMonthNumber-28' AND '$year-$month-$lastDateOfMonth' AND cat.req_type = '$reqtype' AND req.request_to = 'mis' AND req.status2 != 'cancelled' ORDER BY req.id ASC");
+    $sql = mysqli_query($con, "SELECT req.id,  req.date_filled,  req.requestor,  req.department,  req.request_type,  req.ticket_category, req.request_category, req.assignedPersonnelName, req.ict_approval_date, req.first_responded_date, req.completed_date,req.requestor_approval_date, req.ticket_close_date, req.action, req.recommendation,  cat.level, cat.hours, cat.days, cat.req_type FROM `request` req LEFT JOIN `categories` cat ON cat.c_name = req.request_category WHERE req.admin_approved_date  BETWEEN '$lastMonthYear-$previousMonthNumber-28' AND '$year-$month-$lastDateOfMonth' AND cat.req_type = '$reqtype' AND req.request_to = 'mis' AND req.status2 != 'cancelled' ORDER BY req.id ASC");
 }
 
 ?>
@@ -91,6 +91,7 @@ if ($reqtype == "ALL") {
                     <th rowspan="2">Date Finished</th>
                     <th rowspan="2">Accomplishment Rate (Days)</th>
                     <th rowspan="2">Remarks</th>
+                    <th rowspan="2">Closed by</th>
                     <th rowspan="2">Action Taken</th>
                     <th rowspan="2">Recommendation</th>
                 </tr>
@@ -113,7 +114,7 @@ if ($reqtype == "ALL") {
                     $year = $dateFilled->format('y');
                     $month = $dateFilled->format('m');
 
-                    if ($row['req_type'] === "TS") {
+                    if ($row['request_type'] === "Technical Support") {
                         $request_no = "TS-" . $year . $month . "-" . $row['id'];
                     } else {
                         $request_no = "JO-" . $year . $month . "-" . $row['id'];
@@ -138,6 +139,16 @@ if ($reqtype == "ALL") {
                     $date_finished1 = new DateTime($row['completed_date']);
                     $action_taken = $row['action'];
                     $recommendation = $row['recommendation'];
+                    $ticket_close_date =  $row['ticket_close_date'];
+                    $requestor_approval_date = $row['requestor_approval_date'];
+
+                    if ($ticket_close_date != NULL && $date_finished != NULL) {
+                        $closedBy = 'System';
+                    } elseif ($requestor_approval_date != NULL && $date_finished != NULL) {
+                        $closedBy = 'Requestor';
+                    } else {
+                        $closedBy = '';
+                    }
 
                     $ict_approval_date = $row['ict_approval_date'];
                     $approvalDate = new DateTime($row['ict_approval_date']);
@@ -292,6 +303,7 @@ if ($reqtype == "ALL") {
                                     <td>$date_finished</td>
                                     <td>$accomplishment_rate</td>
                                     <td $class1>$accomplishment_remarks</td>
+                                    <td>$closedBy</td>
                                     <td>$action_taken</td>
                                     <td>$recommendation</td>
                                     </tr>";
