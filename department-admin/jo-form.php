@@ -168,19 +168,28 @@ if (isset($_POST['submit'])) {
     $month = date("M");
 
     $datenow = date("Y-m-d");
+    $dateToday = date('Y-m-d H:i:s', time());
 
-    if (($headname === $requestor_name) && ($requestto === 'mis')) {
-        $status = 'inprogress';
-    } elseif (($headname != $requestor_name) && ($requestto === 'mis')) {
-        $status = 'head';
-    } else {
-        $status = 'admin';
-    }
     $_SESSION['status'] = $status;
     if (!empty($requestto && $category)) {
-        // $email1=$_SESSION['email'];
-        $sql = "insert into request (date_filled,status2,requestorUsername,requestor,email,department,request_type, request_to, request_category,request_details, approving_head,accept_termsandconddition,month,year, assignedPersonnel, assignedPersonnelName, ticket_filer) 
+
+        if (($headname === $requestor_name) && ($requestto === 'mis')) {
+            $status = 'inprogress';
+            $head_approval_date =  $datenow;
+            $ict_approval_date = $dateToday;
+            $admin_approved_date = $datenow;
+            $sql = "insert into request (date_filled,status2,requestorUsername,requestor,email,department,request_type, request_to, request_category,request_details, approving_head,head_approval_date,accept_termsandconddition,month,year, assignedPersonnel, assignedPersonnelName, ticket_filer, admin_approved_date, ict_approval_date) 
+            values('$datenow','$status','$requestor_username','$requestor_name','$requestor_email','$requestor_dept', 'Job Order', '$requestto','$category','$request','$headname','$head_approval_date','$terms','$month','$year', '$r_personnels', '$r_personnelsName', '$user_name', '$admin_approved_date', '$ict_approval_date')";
+        } elseif (($headname != $requestor_name) && ($requestto === 'mis')) {
+            $status = 'head';
+            $sql = "insert into request (date_filled,status2,requestorUsername,requestor,email,department,request_type, request_to, request_category,request_details, approving_head,accept_termsandconddition,month,year, assignedPersonnel, assignedPersonnelName, ticket_filer) 
             values('$datenow','$status','$requestor_username','$requestor_name','$requestor_email','$requestor_dept', 'Job Order', '$requestto','$category','$request','$headname','$terms','$month','$year', '$r_personnels', '$r_personnelsName', '$user_name')";
+        } else {
+            $status = 'admin';
+            $sql = "insert into request (date_filled,status2,requestorUsername,requestor,email,department,request_type, request_to, request_category,request_details, approving_head,accept_termsandconddition,month,year, assignedPersonnel, assignedPersonnelName, ticket_filer) 
+            values('$datenow','$status','$requestor_username','$requestor_name','$requestor_email','$requestor_dept', 'Job Order', '$requestto','$category','$request','$headname','$terms','$month','$year', '$r_personnels', '$r_personnelsName', '$user_name')";
+        }
+
         $results = mysqli_query($con, $sql);
         if ($results) {
 
@@ -375,19 +384,10 @@ if (isset($_POST['submit'])) {
                 echo "<script>alert('Message could not be sent. Mailer Error. $error') </script>";
             }
         } else {
-            echo "<script>alert('There is a problem with filing. Please contact your administrator.') </script>";
+            echo "<script>alert(' There is a problem with filing. Please contact your administrator.') </script>";
         }
-?>
-
-    <?php
-
     } else {
-
         echo "<script>alert('Please complete fields.') </script>";
-
-    ?>
-<?php
-
     }
 }
 
