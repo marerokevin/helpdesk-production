@@ -793,13 +793,13 @@ if (isset($_POST['cancelJO'])) {
                                                     <div style="overflow:inherit" class="_qiHHw Ut_ecQ kHy45A">
                                                         <span class=" sr-only">Notifications</span>
                                                         <?php
-                                                        $sql1 = "SELECT COUNT(id) as 'pending' FROM request WHERE  `status2` ='admin' and `ticket_filer` = '$misname'";
+                                                        $sql1 = "SELECT COUNT(id) as 'pending' FROM request WHERE (`status2` ='admin' OR `status2` = 'head') AND `ticket_filer` = '$misname'";
                                                         $result = mysqli_query($con, $sql1);
                                                         while ($count = mysqli_fetch_assoc($result)) {
 
                                                             if ($count["pending"] > 0) {
                                                         ?>
-                                                                <div class=" absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-border-white"> <?php $sql1 = "SELECT COUNT(id) as 'pending' FROM request WHERE  `status2` ='admin' and `ticket_filer` = '$misname'";
+                                                                <div class=" absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-border-white"> <?php $sql1 = "SELECT COUNT(id) as 'pending' FROM request WHERE (`status2` ='admin' OR `status2` = 'head') AND `ticket_filer` = '$misname'";
                                                                                                                                                                                                                                                             $result = mysqli_query($con, $sql1);
                                                                                                                                                                                                                                                             while ($count = mysqli_fetch_assoc($result)) {
                                                                                                                                                                                                                                                                 echo $count["pending"];
@@ -979,7 +979,7 @@ if (isset($_POST['cancelJO'])) {
                             $end_date = $end_date->format('Y-m-d');
                             $a = 1;
                             $sql = "SELECT * FROM `request`
-                        WHERE `status2` ='admin'
+                        WHERE (`status2` ='admin' OR `status2` = 'head')
                         AND `ticket_filer` = '$misname'
                         ORDER BY id ASC;";
                             $result = mysqli_query($con, $sql);

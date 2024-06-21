@@ -391,8 +391,13 @@ if (isset($_POST['submit'])) {
                 echo "<script>alert('Message could not be sent. Mailer Error. $error') </script>";
             }
         } else {
-            // echo "<script>alert('There is a problem with filing. Please contact your administrator.') </script>";
-            echo $sql;
+
+            echo "<script>alert('There is a problem with filing. Please contact your administrator.') </script>";
+            // echo $sql;
+            // echo $results;
+
+
+
         }
     } else {
 
