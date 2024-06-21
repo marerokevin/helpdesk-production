@@ -162,237 +162,238 @@ if (isset($_POST['submitTicket'])) {
     $daysToAdd = $completion_days;
     $newDate = addWeekdays2($startDate, $daysToAdd, $holidays);
 
-
-    if (isset($_POST['on_the_spot'])) {
-        $onthespot_ticket = $_POST['on_the_spot'];
-        $action = $_POST['requestAction'];
-        $action = str_replace("'", "&apos;", $action);
-        $action = str_replace('"', '&quot;', $action);
-        $recommendation = $_POST['recommendation'];
-        $recommendation = str_replace("'", "&apos;", $recommendation);
-        $recommendation = str_replace('"', '&quot;', $recommendation);
-        $status = "Done";
-        $_SESSION['status'] = $status;
-        $_SESSION['finalAction'] = $_POST['requestAction'];
-        $_SESSION['recommendation'] = $_POST['recommendation'];
-        $_SESSION['dateFinished'] = $datenow;
-        $sql = mysqli_query($con, "INSERT INTO request (date_filled, status2, requestor, requestorUsername, email, department, request_type, request_to, request_category, request_details, assignedPersonnel, assignedPersonnelName, action, recommendation, onthespot_ticket, ticket_category, category_level, ticket_filer, actual_finish_date, admin_approved_date, ict_approval_date, first_responded_date, completed_date)
+    if (!empty($r_personnels && $requestor && $ticket_category)) {
+        if (isset($_POST['on_the_spot'])) {
+            $onthespot_ticket = $_POST['on_the_spot'];
+            $action = $_POST['requestAction'];
+            $action = str_replace("'", "&apos;", $action);
+            $action = str_replace('"', '&quot;', $action);
+            $recommendation = $_POST['recommendation'];
+            $recommendation = str_replace("'", "&apos;", $recommendation);
+            $recommendation = str_replace('"', '&quot;', $recommendation);
+            $status = "Done";
+            $_SESSION['status'] = $status;
+            $_SESSION['finalAction'] = $_POST['requestAction'];
+            $_SESSION['recommendation'] = $_POST['recommendation'];
+            $_SESSION['dateFinished'] = $datenow;
+            $sql = mysqli_query($con, "INSERT INTO request (date_filled, status2, requestor, requestorUsername, email, department, request_type, request_to, request_category, request_details, assignedPersonnel, assignedPersonnelName, action, recommendation, onthespot_ticket, ticket_category, category_level, ticket_filer, actual_finish_date, admin_approved_date, ict_approval_date, first_responded_date, completed_date)
         VALUES ('$datenow', '$status', '$requestor','$requestorIdnumber', '$requestorEmail', '$requestorDepartment', 'Technical Support', 'mis', '$ticket_category','$detailsOfRequest', '$r_personnels', '$r_personnelsName', '$action', '$recommendation', '$onthespot_ticket', '$ticket_category', '$r_cat_level', '$user_name', '$datenow', '$datenow', '$datetime', '$datetime', '$datetime')");
-    } else {
-        $status = "inprogress";
-        $_SESSION['status'] = 'In Progress';
-        $sql = mysqli_query($con, "INSERT INTO request (date_filled, status2, requestor, requestorUsername, email, department, request_type, request_to, request_category, request_details, assignedPersonnel, assignedPersonnelName, ticket_category, category_level, ticket_filer, admin_approved_date, expectedFinishDate, ict_approval_date)
-        VALUES ('$datenow', '$status', '$requestor','$requestorIdnumber', '$requestorEmail', '$requestorDepartment', 'Technical Support', 'mis', '$ticket_category','$detailsOfRequest', '$r_personnels', '$r_personnelsName', '$ticket_category', '$r_cat_level', '$user_name', '$date', '$newDate', '$dateToday')");
-    }
-
-    if ($sql) {
-        $sqllink = "SELECT `link` FROM `setting`";
-        $resultlink = mysqli_query($con, $sqllink);
-        $link = "";
-        while ($listlink = mysqli_fetch_assoc($resultlink)) {
-            $link = $listlink["link"];
-        }
-
-        $getid = mysqli_query($con, "SELECT id FROM request ORDER BY id DESC LIMIT 1");
-        $row = mysqli_fetch_assoc($getid);
-        $id = $row['id'];
-        $date = new DateTime($datenow);
-        $date = $date->format('ym');
-        $ticketNumber = 'TS-' . $date . '-' . $id . '';
-        $_SESSION['jobOrderNo'] = 'TS-' . $date . '-' . $id . '';
-
-
-        $requestorApprovalLink = $link . '/ticketApproval.php?id=' . $id . '&requestor=true';
-        $sql2 = "Select * FROM `sender`";
-        $result2 = mysqli_query($con, $sql2);
-        while ($list = mysqli_fetch_assoc($result2)) {
-            $account = $list["email"];
-            $accountpass = $list["password"];
-        }
-
-        $query = "SELECT COUNT(*) as count FROM `user` WHERE `level` = 'head' AND `name` = '$requestor'";
-        $result = mysqli_query($con, $query);
-
-        if ($result) {
-            $row = mysqli_fetch_assoc($result);
-            $isHead = ($row['count'] > 0) ? true : false;
         } else {
-            $isHead = false; // In case of query failure or no matching record
+            $status = "inprogress";
+            $_SESSION['status'] = 'In Progress';
+            $sql = mysqli_query($con, "INSERT INTO request (date_filled, status2, requestor, requestorUsername, email, department, request_type, request_to, request_category, request_details, assignedPersonnel, assignedPersonnelName, ticket_category, category_level, ticket_filer, admin_approved_date, expectedFinishDate, ict_approval_date)
+        VALUES ('$datenow', '$status', '$requestor','$requestorIdnumber', '$requestorEmail', '$requestorDepartment', 'Technical Support', 'mis', '$ticket_category','$detailsOfRequest', '$r_personnels', '$r_personnelsName', '$ticket_category', '$r_cat_level', '$user_name', '$date', '$newDate', '$dateToday')");
         }
 
+        if ($sql) {
+            $sqllink = "SELECT `link` FROM `setting`";
+            $resultlink = mysqli_query($con, $sqllink);
+            $link = "";
+            while ($listlink = mysqli_fetch_assoc($resultlink)) {
+                $link = $listlink["link"];
+            }
 
-        require '../vendor/autoload.php';
-        require '../dompdf/vendor/autoload.php';
-        ob_start();
-        require 'Job Order Report copy.php'; // Replace 'your_php_file.php' with the path to your PHP file
-        $html = ob_get_clean();
-        $mail = new PHPMailer(true);
-        $mail2 = new PHPMailer(true);
-        try {
-            //Server settings
-            $mail->isSMTP();                                      // Set mailer to use SMTP
-            $mail->Host = 'mail.glorylocal.com.ph';               // Specify main and backup SMTP servers
-            $mail->SMTPAuth = true;                               // Enable SMTP authentication
-            $mail->Username = $account;
-            $mail->Password = $accountpass;
-            $mail->SMTPOptions = array(
-                'ssl' => array(
-                    'verify_peer' => false,
-                    'verify_peer_name' => false,
-                    'allow_self_signed' => true
-                )
-            );
-            $mail->SMTPSecure = 'none';
-            $mail->Port = 465;
-
-            //Send Email
-            $mail->setFrom('mis.dev@glory.com.ph', 'Helpdesk');
+            $getid = mysqli_query($con, "SELECT id FROM request ORDER BY id DESC LIMIT 1");
+            $row = mysqli_fetch_assoc($getid);
+            $id = $row['id'];
+            $date = new DateTime($datenow);
+            $date = $date->format('ym');
+            $ticketNumber = 'TS-' . $date . '-' . $id . '';
+            $_SESSION['jobOrderNo'] = 'TS-' . $date . '-' . $id . '';
 
 
-            if ($onthespot_ticket == '1') {
-                $subject = 'On the Spot Ticket Request Closed';
-                // Message to Requestor
-                $mail->addAddress($requestorEmail);
-                if ($isHead == false) {
-                    $mail->AddCC($immediateHeadEmail); // dept head   
-                }
-                $mail->isHTML(true);
-                // Generate PDF content using Dompdf
-                $dompdf = new Dompdf\Dompdf();
-                $dompdf->loadHtml($html);
-                $dompdf->setPaper('A5', 'portrait'); // Set paper size and orientation
-                $dompdf->render();
-                $pdfContent = $dompdf->output();
+            $requestorApprovalLink = $link . '/ticketApproval.php?id=' . $id . '&requestor=true';
+            $sql2 = "Select * FROM `sender`";
+            $result2 = mysqli_query($con, $sql2);
+            while ($list = mysqli_fetch_assoc($result2)) {
+                $account = $list["email"];
+                $accountpass = $list["password"];
+            }
 
-                // Attach PDF to the email
-                $mail->addStringAttachment($pdfContent, 'Helpdesk Report.pdf', 'base64', 'application/pdf');
-                $mail->Subject = $subject;
-                $mail->Body    = 'Hi ' . $requestor . ',<br> <br>   Your ticket request has been closed. Please find the details below: <br><br> Ticket No.: ' . $ticketNumber . '<br> Requestor: ' . $requestor . '<br> Requestor Email: ' . $requestorEmail . '<br> Requestor Department: ' . $requestorDepartment . '<br> Request Details: ' . $detailsOfRequest . '<br> Assigned Personnel: ' . $r_personnelsName . '<br> Action: ' . $action . '<br> Recommendation: ' . $recommendation . '<br> Ticket Category: ' . $_SESSION['categories'] . '<br> Ticket Filer: ' . $user_name . '<br><br> If you agree with the closure of this ticket, please click the link below to confirm: <br> Click <a href="' . $requestorApprovalLink . '">this</a>  to confirm. <br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
+            $isheadquery = mysqli_query($con, "SELECT COUNT(*) as count FROM `user` WHERE `level` = 'head' AND `name` = '$requestor'");
 
-                $mail->send();
+            if ($isheadquery) {
+                $row = mysqli_fetch_assoc($result);
+                $isHead = ($row['count'] > 0) ? true : false;
+            } else {
+                $isHead = false; // In case of query failure or no matching record
+            }
 
-                //Message to ICT HEAD & Dept Head
-                $mail2->isSMTP();                                      // Set mailer to use SMTP
-                $mail2->Host = 'mail.glorylocal.com.ph';               // Specify main and backup SMTP servers
-                $mail2->SMTPAuth = true;                               // Enable SMTP authentication
-                $mail2->Username = $account;
-                $mail2->Password = $accountpass;
-                $mail2->SMTPOptions = array(
+            require '../vendor/autoload.php';
+            require '../dompdf/vendor/autoload.php';
+            ob_start();
+            require 'Job Order Report copy.php'; // Replace 'your_php_file.php' with the path to your PHP file
+            $html = ob_get_clean();
+            $mail = new PHPMailer(true);
+            $mail2 = new PHPMailer(true);
+            try {
+                //Server settings
+                $mail->isSMTP();                                      // Set mailer to use SMTP
+                $mail->Host = 'mail.glorylocal.com.ph';               // Specify main and backup SMTP servers
+                $mail->SMTPAuth = true;                               // Enable SMTP authentication
+                $mail->Username = $account;
+                $mail->Password = $accountpass;
+                $mail->SMTPOptions = array(
                     'ssl' => array(
                         'verify_peer' => false,
                         'verify_peer_name' => false,
                         'allow_self_signed' => true
                     )
                 );
-                $mail2->SMTPSecure = 'none';
-                $mail2->Port = 465;
+                $mail->SMTPSecure = 'none';
+                $mail->Port = 465;
 
                 //Send Email
-                $mail2->setFrom('mis.dev@glory.com.ph', 'Helpdesk');
-                $mail2->clearAddresses();
-                $mail2->clearCCs();
-                $ict_leader = array();
-                $query = "Select * FROM `user` WHERE `level` = 'admin' and `leader` = 'mis'";
-                $heademail = mysqli_query($con, $query);
-                while ($li = mysqli_fetch_assoc($heademail)) {
-                    $ict_leader[] = $li;
+                $mail->setFrom('mis.dev@glory.com.ph', 'Helpdesk');
+
+
+                if ($onthespot_ticket == '1') {
+                    $subject = 'On the Spot Ticket Request Closed';
+                    // Message to Requestor
+                    $mail->addAddress($requestorEmail);
+                    // if ($isHead == false) {
+                    //     $mail->AddCC($immediateHeadEmail); // dept head   
+                    // }
+                    $mail->isHTML(true);
+                    // Generate PDF content using Dompdf
+                    $dompdf = new Dompdf\Dompdf();
+                    $dompdf->loadHtml($html);
+                    $dompdf->setPaper('A5', 'portrait'); // Set paper size and orientation
+                    $dompdf->render();
+                    $pdfContent = $dompdf->output();
+
+                    // Attach PDF to the email
+                    $mail->addStringAttachment($pdfContent, 'Helpdesk Report.pdf', 'base64', 'application/pdf');
+                    $mail->Subject = $subject;
+                    $mail->Body    = 'Hi ' . $requestor . ',<br> <br>   Your ticket request has been closed. Please find the details below: <br><br> Ticket No.: ' . $ticketNumber . '<br> Requestor: ' . $requestor . '<br> Requestor Email: ' . $requestorEmail . '<br> Requestor Department: ' . $requestorDepartment . '<br> Request Details: ' . $detailsOfRequest . '<br> Assigned Personnel: ' . $r_personnelsName . '<br> Action: ' . $action . '<br> Recommendation: ' . $recommendation . '<br> Ticket Category: ' . $_SESSION['categories'] . '<br> Ticket Filer: ' . $user_name . '<br><br> If you agree with the closure of this ticket, please click the link below to confirm: <br> Click <a href="' . $requestorApprovalLink . '">this</a>  to confirm. <br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
+
+                    $mail->send();
+
+                    //Message to ICT HEAD & Dept Head
+                    $mail2->isSMTP();                                      // Set mailer to use SMTP
+                    $mail2->Host = 'mail.glorylocal.com.ph';               // Specify main and backup SMTP servers
+                    $mail2->SMTPAuth = true;                               // Enable SMTP authentication
+                    $mail2->Username = $account;
+                    $mail2->Password = $accountpass;
+                    $mail2->SMTPOptions = array(
+                        'ssl' => array(
+                            'verify_peer' => false,
+                            'verify_peer_name' => false,
+                            'allow_self_signed' => true
+                        )
+                    );
+                    $mail2->SMTPSecure = 'none';
+                    $mail2->Port = 465;
+
+                    //Send Email
+                    $mail2->setFrom('mis.dev@glory.com.ph', 'Helpdesk');
+                    $mail2->clearAddresses();
+                    $mail2->clearCCs();
+                    $ict_leader = array();
+                    $query = "Select * FROM `user` WHERE `level` = 'admin' and `leader` = 'mis'";
+                    $heademail = mysqli_query($con, $query);
+                    while ($li = mysqli_fetch_assoc($heademail)) {
+                        $ict_leader[] = $li;
+                    }
+                    foreach ($ict_leader as $item) {
+                        $mail2->addAddress($item['email']);  // ict head / leader
+                    }
+
+                    $mail2->isHTML(true);
+                    // Generate PDF content using Dompdf
+                    $dompdf = new Dompdf\Dompdf();
+                    $dompdf->loadHtml($html);
+                    $dompdf->setPaper('A5', 'portrait'); // Set paper size and orientation
+                    $dompdf->render();
+                    $pdfContent = $dompdf->output();
+
+                    // Attach PDF to the email
+                    $mail2->addStringAttachment($pdfContent, 'Helpdesk Report.pdf', 'base64', 'application/pdf');
+                    $mail2->Subject = $subject;
+                    $mail2->Body    = 'Hi Admin,<br> <br>   A ticket request has been closed. Please find the details below: <br><br> Ticket No.: ' . $ticketNumber . '<br> Requestor: ' . $requestor . '<br> Requestor Email: ' . $requestorEmail . '<br> Requestor Department: ' . $requestorDepartment . '<br> Request Details: ' . $detailsOfRequest . '<br> Assigned Personnel: ' . $r_personnelsName . '<br> Action: ' . $action . '<br>  Recommendation: ' . $recommendation . '<br> Ticket Category: ' . $_SESSION['categories'] . '<br> Ticket Filer: ' . $user_name . '<br><br>  This is a generated email. Please do not reply. <br><br> Helpdesk';
+
+                    $mail2->send();
+                } else {
+                    $subject = 'Ticket Request Created';
+                    // Message to Requestor & Dept Head
+                    $mail->addAddress($requestorEmail); // requestor
+                    if ($isHead == false) {
+                        $mail->AddCC($immediateHeadEmail); // dept head   
+                    }
+
+                    $mail->isHTML(true);
+                    // Generate PDF content using Dompdf
+                    $dompdf = new Dompdf\Dompdf();
+                    $dompdf->loadHtml($html);
+                    $dompdf->setPaper('A5', 'portrait'); // Set paper size and orientation
+                    $dompdf->render();
+                    $pdfContent = $dompdf->output();
+
+                    // Attach PDF to the email (ICT and Requestor)
+                    $mail->addStringAttachment($pdfContent, 'Helpdesk Report.pdf', 'base64', 'application/pdf');
+                    $mail->Subject = $subject;
+                    $mail->Body    = 'Hi ' . $requestor . ',<br> <br>   Your ticket request has been created. It is now in progress. Please find the details below: <br><br> Ticket No.: ' . $ticketNumber . '<br> Requestor: ' . $requestor . '<br> Requestor Email: ' . $requestorEmail . '<br> Requestor Department: ' . $requestorDepartment . '<br> Request Details: ' . $detailsOfRequest . '<br> Assigned Personnel: ' . $r_personnelsName . '<br>  Ticket Category: ' . $_SESSION['categories'] . '<br> Ticket Filer: ' . $user_name . '<br><br> You can check the status of your ticket by signing in into our Helpdesk <br> Click this ' . $link . ' to sign in. <br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
+
+                    $mail->send();
+
+                    //Message to ICT HEAD
+                    $mail->clearAddresses();
+                    $mail->clearCCs();
+                    $ict_leader = array();
+                    $query = "Select * FROM `user` WHERE `level` = 'admin' and `leader` = 'mis'";
+                    $heademail = mysqli_query($con, $query);
+                    while ($li = mysqli_fetch_assoc($heademail)) {
+                        $ict_leader[] = $li;
+                    }
+                    foreach ($ict_leader as $item) {
+                        $mail->addAddress($item['email']);  // ict head / leader
+
+                    }
+                    $mail->isHTML(true);
+                    // Generate PDF content using Dompdf
+                    $dompdf = new Dompdf\Dompdf();
+                    $dompdf->loadHtml($html);
+                    $dompdf->setPaper('A5', 'portrait'); // Set paper size and orientation
+                    $dompdf->render();
+                    $pdfContent = $dompdf->output();
+
+
+                    $mail->Subject = $subject;
+                    $mail->Body    = 'Hi Admin,<br> <br>   You created a ticket with a ticket number ' . $ticketNumber . '. It is now in progress. Please find the details below: <br><br> Ticket No.: ' . $ticketNumber . '<br> Requestor: ' . $requestor . '<br>  Requestor Email: ' . $requestorEmail . '<br> Requestor Department: ' . $requestorDepartment . '<br> Request Details: ' . $detailsOfRequest . '<br> Assigned Personnel: ' . $r_personnelsName . '<br>  Ticket Category: ' . $_SESSION['categories'] . '<br> Ticket Filer: ' . $user_name . '<br><br> Please approve or reject the ticket by signing in into our Helpdesk <br> Click this ' . $link . ' to sign in. <br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
+
+                    $mail->send();
+
+                    //Message to ICT Personnel
+                    $mail->clearAddresses();
+                    $mail->addAddress($personnelEmail);
+
+                    $mail->isHTML(true);
+                    // Generate PDF content using Dompdf
+                    $dompdf = new Dompdf\Dompdf();
+                    $dompdf->loadHtml($html);
+                    $dompdf->setPaper('A5', 'portrait'); // Set paper size and orientation
+                    $dompdf->render();
+                    $pdfContent = $dompdf->output();
+
+                    $mail->Subject = 'New Ticket Request';
+                    $mail->Body    = 'Hi ' . $personnelName . ',<br> <br>   You have a new ticket request with a ticket number ' . $ticketNumber . ' from ' . $requestor . '. Please check the details below or by signing in into our Helpdesk. <br> Click this ' . $link . ' to sign in. <br><br>Request Type: ' . $request_type . '<br> Ticket Category: ' . $ticket_category . '<br>Category Level: ' . $r_cat_level . '<br> Request Details: ' . $detailsOfRequest . '<br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
+
+                    $mail->send();
                 }
-                foreach ($ict_leader as $item) {
-                    $mail2->addAddress($item['email']);  // ict head / leader
-                }
-
-                $mail2->isHTML(true);
-                // Generate PDF content using Dompdf
-                $dompdf = new Dompdf\Dompdf();
-                $dompdf->loadHtml($html);
-                $dompdf->setPaper('A5', 'portrait'); // Set paper size and orientation
-                $dompdf->render();
-                $pdfContent = $dompdf->output();
-
-                // Attach PDF to the email
-                $mail2->addStringAttachment($pdfContent, 'Helpdesk Report.pdf', 'base64', 'application/pdf');
-                $mail2->Subject = $subject;
-                $mail2->Body    = 'Hi Admin,<br> <br>   A ticket request has been closed. Please find the details below: <br><br> Ticket No.: ' . $ticketNumber . '<br> Requestor: ' . $requestor . '<br> Requestor Email: ' . $requestorEmail . '<br> Requestor Department: ' . $requestorDepartment . '<br> Request Details: ' . $detailsOfRequest . '<br> Assigned Personnel: ' . $r_personnelsName . '<br> Action: ' . $action . '<br>  Recommendation: ' . $recommendation . '<br> Ticket Category: ' . $_SESSION['categories'] . '<br> Ticket Filer: ' . $user_name . '<br><br>  This is a generated email. Please do not reply. <br><br> Helpdesk';
-
-                $mail2->send();
-            } else {
-                $subject = 'Ticket Request Created';
-                // Message to Requestor & Dept Head
-                $mail->addAddress($requestorEmail); // requestor
-                if ($isHead == false) {
-                    $mail->AddCC($immediateHeadEmail); // dept head   
-                }
-
-                $mail->isHTML(true);
-                // Generate PDF content using Dompdf
-                $dompdf = new Dompdf\Dompdf();
-                $dompdf->loadHtml($html);
-                $dompdf->setPaper('A5', 'portrait'); // Set paper size and orientation
-                $dompdf->render();
-                $pdfContent = $dompdf->output();
-
-                // Attach PDF to the email (ICT and Requestor)
-                $mail->addStringAttachment($pdfContent, 'Helpdesk Report.pdf', 'base64', 'application/pdf');
-                $mail->Subject = $subject;
-                $mail->Body    = 'Hi ' . $requestor . ',<br> <br>   Your ticket request has been created. It is now in progress. Please find the details below: <br><br> Ticket No.: ' . $ticketNumber . '<br> Requestor: ' . $requestor . '<br> Requestor Email: ' . $requestorEmail . '<br> Requestor Department: ' . $requestorDepartment . '<br> Request Details: ' . $detailsOfRequest . '<br> Assigned Personnel: ' . $r_personnelsName . '<br>  Ticket Category: ' . $_SESSION['categories'] . '<br> Ticket Filer: ' . $user_name . '<br><br> You can check the status of your ticket by signing in into our Helpdesk <br> Click this ' . $link . ' to sign in. <br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
-
-                $mail->send();
-
-                //Message to ICT HEAD
-                $mail->clearAddresses();
-                $mail->clearCCs();
-                $ict_leader = array();
-                $query = "Select * FROM `user` WHERE `level` = 'admin' and `leader` = 'mis'";
-                $heademail = mysqli_query($con, $query);
-                while ($li = mysqli_fetch_assoc($heademail)) {
-                    $ict_leader[] = $li;
-                }
-                foreach ($ict_leader as $item) {
-                    $mail->addAddress($item['email']);  // ict head / leader
-
-                }
-                $mail->isHTML(true);
-                // Generate PDF content using Dompdf
-                $dompdf = new Dompdf\Dompdf();
-                $dompdf->loadHtml($html);
-                $dompdf->setPaper('A5', 'portrait'); // Set paper size and orientation
-                $dompdf->render();
-                $pdfContent = $dompdf->output();
-
-
-                $mail->Subject = $subject;
-                $mail->Body    = 'Hi Admin,<br> <br>   You created a ticket with a ticket number ' . $ticketNumber . '. It is now in progress. Please find the details below: <br><br> Ticket No.: ' . $ticketNumber . '<br> Requestor: ' . $requestor . '<br>  Requestor Email: ' . $requestorEmail . '<br> Requestor Department: ' . $requestorDepartment . '<br> Request Details: ' . $detailsOfRequest . '<br> Assigned Personnel: ' . $r_personnelsName . '<br>  Ticket Category: ' . $_SESSION['categories'] . '<br> Ticket Filer: ' . $user_name . '<br><br> Please approve or reject the ticket by signing in into our Helpdesk <br> Click this ' . $link . ' to sign in. <br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
-
-                $mail->send();
-
-                //Message to ICT Personnel
-                $mail->clearAddresses();
-                $mail->addAddress($personnelEmail);
-
-                $mail->isHTML(true);
-                // Generate PDF content using Dompdf
-                $dompdf = new Dompdf\Dompdf();
-                $dompdf->loadHtml($html);
-                $dompdf->setPaper('A5', 'portrait'); // Set paper size and orientation
-                $dompdf->render();
-                $pdfContent = $dompdf->output();
-
-                $mail->Subject = 'New Ticket Request';
-                $mail->Body    = 'Hi ' . $personnelName . ',<br> <br>   You have a new ticket request with a ticket number ' . $ticketNumber . ' from ' . $requestor . '. Please check the details below or by signing in into our Helpdesk. <br> Click this ' . $link . ' to sign in. <br><br>Request Type: ' . $request_type . '<br> Ticket Category: ' . $ticket_category . '<br>Category Level: ' . $r_cat_level . '<br> Request Details: ' . $detailsOfRequest . '<br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
-
-                $mail->send();
+                $_SESSION['message'] = 'Message has been sent';
+                echo "<script>alert('Thank you! Your request has been sent.') </script>";
+                echo "<script> location.href='index.php'; </script>";
+                // header("location: form.php");
+            } catch (Exception $e) {
+                $_SESSION['message'] = 'Message could not be sent. Mailer Error: ' . $mail->ErrorInfo;
+                $error = $_SESSION['message'];
+                echo "<script>alert('Message could not be sent. Mailer Error. $error') </script>";
             }
-            $_SESSION['message'] = 'Message has been sent';
-            echo "<script>alert('Thank you! Your request has been sent.') </script>";
-            echo "<script> location.href='index.php'; </script>";
-            // header("location: form.php");
-        } catch (Exception $e) {
-            $_SESSION['message'] = 'Message could not be sent. Mailer Error: ' . $mail->ErrorInfo;
-            $error = $_SESSION['message'];
-            echo "<script>alert('Message could not be sent. Mailer Error. $error') </script>";
+        } else {
+            echo "<script>alert('There is a problem with filing. Please contact your administrator.') </script>";
         }
     } else {
-        echo "<script>alert('There is a problem with filing. Please contact your administrator.') </script>";
+        echo "<script>alert('Please complete fields.') </script>";
     }
 }
 ?>
