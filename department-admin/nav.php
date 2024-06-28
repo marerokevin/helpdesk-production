@@ -484,10 +484,10 @@ if (isset($_POST['excelReport'])) {
                 $month = $date->format('F');
               ?> <option <?php if ($monthNow == $month) {
                             echo "selected";
-                          } ?> value="<?php echo $i; ?>"><?php echo $month; ?></option> <?php
-                                                                                        $date->modify('next month');
-                                                                                      }
-                                                                                        ?>
+                          } ?> value="<?php echo $month; ?>"><?php echo $month; ?></option> <?php
+                                                                                            $date->modify('next month');
+                                                                                          }
+                                                                                            ?>
             </select>
 
           </div>
