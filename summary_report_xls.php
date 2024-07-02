@@ -1,5 +1,4 @@
 <?php
-
 $month = $_GET['month'];
 $year = $_GET['year'];
 $reqtype = $_GET['request_type'];
@@ -34,19 +33,25 @@ $previousMonthName = date('F', mktime(0, 0, 0, $previousMonthNumber, 1));
 $previousMonthNumber = str_pad($previousMonthNumber, 2, '0', STR_PAD_LEFT);
 $lastDateOfMonth = date('d', strtotime("last day of $year-$month"));
 
-header("Content-Type:   application/vnd.ms-excel; charset=utf-8");
-header("Content-Disposition: attachment; filename=Summary Report for the Month of " . $month . ".xls");  //File name extension was wrong
-header("Expires: 0");
-header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-header("Cache-Control: private", false);
+// header("Content-Type:   application/vnd.ms-excel; charset=utf-8");
+// header("Content-Disposition: attachment; filename=Summary Report for the Month of " . $month . ".xls");  //File name extension was wrong
+// header("Expires: 0");
+// header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+// header("Cache-Control: private", false);
 
 include("includes/connect.php");
 
 $con->next_result();
 if ($reqtype == "ALL") {
-    $sql = mysqli_query($con, "SELECT req.id,  req.date_filled,  req.requestor,  req.department,  req.request_type,  req.ticket_category, req.request_category,  req.assignedPersonnelName, req.ict_approval_date, req.first_responded_date, req.completed_date, req.requestor_approval_date, req.ticket_close_date, req.action, req.recommendation, req.onthespot_ticket, req.request_details, cat.level, cat.hours, cat.days, cat.req_type FROM `request` req LEFT JOIN `categories` cat ON cat.c_name = req.request_category WHERE ((req.admin_approved_date  BETWEEN '$lastMonthYear-$previousMonthNumber-28' AND '$year-$monthNumber-$lastDateOfMonth' AND req.status2 != 'cancelled') OR (req.status2 = 'inprogress'  AND req.admin_approved_date <='$year-$monthNumber-$lastDateOfMonth' )) AND req.request_to = 'mis' ORDER BY req.admin_approved_date ASC");
+    $sql = mysqli_query($con, "SELECT req.id,  req.date_filled, req.status2, req.requestor,  req.department,  req.request_type,  req.ticket_category, req.request_category,  req.assignedPersonnelName, req.ict_approval_date, req.first_responded_date, req.completed_date, req.requestor_approval_date, req.ticket_close_date, req.action, req.action1,  req.recommendation, req.onthespot_ticket, req.request_details, req.rateDate, cat.level, cat.hours, cat.days, cat.req_type FROM `request` req LEFT JOIN `categories` cat ON cat.c_name = req.request_category 
+    WHERE ((req.admin_approved_date  BETWEEN '$lastMonthYear-$previousMonthNumber-28' AND '$year-$monthNumber-$lastDateOfMonth' AND req.status2 != 'cancelled') 
+    OR (req.status2 = 'inprogress'  AND req.admin_approved_date <='$year-$monthNumber-$lastDateOfMonth' ) 
+    OR ((req.status2 = 'done' OR req.status2 = 'rated') AND req.completed_date >='$lastMonthYear-$previousMonthNumber-28' AND req.admin_approved_date <='$year-$monthNumber-$lastDateOfMonth') )
+    AND req.request_to = 'mis' ORDER BY req.admin_approved_date ASC");
 } else {
-    $sql = mysqli_query($con, "SELECT req.id,  req.date_filled,  req.requestor,  req.department,  req.request_type,  req.ticket_category, req.request_category, req.assignedPersonnelName, req.ict_approval_date, req.first_responded_date, req.completed_date,req.requestor_approval_date, req.ticket_close_date, req.action, req.recommendation, req.onthespot_ticket, req.request_details,  cat.level, cat.hours, cat.days, cat.req_type FROM `request` req LEFT JOIN `categories` cat ON cat.c_name = req.request_category WHERE ((req.admin_approved_date  BETWEEN '$lastMonthYear-$previousMonthNumber-28' AND '$year-$monthNumber-$lastDateOfMonth' AND req.status2 != 'cancelled') OR (req.status2 = 'inprogress'  AND req.admin_approved_date <='$year-$monthNumber-$lastDateOfMonth' )) AND req.request_to = 'mis'  AND cat.req_type = '$reqtype' ORDER BY req.admin_approved_date ASC");
+    $sql = mysqli_query($con, "SELECT req.id,  req.date_filled, req.status2, req.requestor,  req.department,  req.request_type,  req.ticket_category, req.request_category, req.assignedPersonnelName, req.ict_approval_date, req.first_responded_date, req.completed_date,req.requestor_approval_date, req.ticket_close_date, req.action, req.action1,  req.recommendation, req.onthespot_ticket, req.request_details,  req.rateDate, cat.level, cat.hours, cat.days, cat.req_type FROM `request` req LEFT JOIN `categories` cat ON cat.c_name = req.request_category WHERE ((req.admin_approved_date  BETWEEN '$lastMonthYear-$previousMonthNumber-28' AND '$year-$monthNumber-$lastDateOfMonth' AND req.status2 != 'cancelled') 
+    OR (req.status2 = 'inprogress'  AND req.admin_approved_date <='$year-$monthNumber-$lastDateOfMonth' ) 
+    OR ((req.status2 = 'done' OR req.status2 = 'rated') AND req.completed_date >='$lastMonthYear-$previousMonthNumber-28' AND req.admin_approved_date <='$year-$monthNumber-$lastDateOfMonth') ) AND req.request_to = 'mis'  AND cat.req_type = '$reqtype' ORDER BY req.admin_approved_date ASC");
 }
 
 ?>
@@ -108,7 +113,8 @@ if ($reqtype == "ALL") {
                 <?php
 
                 while ($row = mysqli_fetch_array($sql)) {
-
+                    $action_taken = $row['action1'];
+                    $final_action = $row['action'];
                     $dateFilled = new DateTime($row['date_filled']);
                     $year = $dateFilled->format('y');
                     $month = $dateFilled->format('m');
@@ -136,16 +142,17 @@ if ($reqtype == "ALL") {
                     $required_completion_days = $row['days'];
                     $date_finished = $row['completed_date'];
                     $date_finished1 = new DateTime($row['completed_date']);
-                    $action_taken = $row['action'];
+                    $status  = $row['status2'];
                     $recommendation = $row['recommendation'];
                     $ticket_close_date =  $row['ticket_close_date'];
                     $requestor_approval_date = $row['requestor_approval_date'];
                     $onthespot_ticket = $row['onthespot_ticket'];
                     $details = $row['request_details'];
+                    $rateDate = $row['rateDate'];
 
                     if ($ticket_close_date != NULL && $date_finished != NULL) {
                         $closedBy = 'System';
-                    } elseif ($requestor_approval_date != NULL && $date_finished != NULL) {
+                    } elseif (($requestor_approval_date != NULL || $rateDate != NULL) && $date_finished != NULL) {
                         $closedBy = 'Requestor';
                     } else {
                         $closedBy = '';
@@ -155,6 +162,7 @@ if ($reqtype == "ALL") {
                     $approvalDate = new DateTime($row['ict_approval_date']);
                     $approvalDate = $approvalDate->format('F d, Y H:i:s');
                     $time_responded = $row['first_responded_date'];
+
 
                     $ictApprovalDate1 = new DateTime($row['ict_approval_date']);
                     $dateResponded2 = new DateTime($row['first_responded_date']);
@@ -173,7 +181,6 @@ if ($reqtype == "ALL") {
                     }
                     $interval = $ictApprovalDate1->diff($dateResponded2);
                     $hours = $interval->days * 8 + $interval->h;
-
                     $start = clone $ictApprovalDate1;
                     $end = clone $dateResponded2;
                     $interval_days = new DateInterval('P1D');
@@ -208,6 +215,7 @@ if ($reqtype == "ALL") {
                     }
 
 
+
                     $finalHours = ($finalHours - $minutes1_decimal) + $minutes2_decimal;
                     $response_rate = number_format($finalHours, 2, '.', ',');
 
@@ -226,7 +234,7 @@ if ($reqtype == "ALL") {
                         $class = "style='color:black;'";
                     } elseif (($response_rate > $required_response_time) && ($time_responded == "" || $time_responded == null)) {
                         $response_rate = "";
-                        $response_remarks = "On Going";
+                        $response_remarks = "Late";
                         $class = "style='color:red;'";
                     }
 
@@ -278,8 +286,14 @@ if ($reqtype == "ALL") {
                         $class1 = "style='color:black;'";
                     } elseif (($accomplishment_rate > $required_completion_days) && ($date_finished == "" || $date_finished == null)) {
                         $accomplishment_rate = "";
-                        $accomplishment_remarks = "On Going";
+                        $accomplishment_remarks = "Late";
                         $class1 = "style='color:red;'";
+                    }
+
+                    if (($time_responded != "" || $time_responded != null) && ($date_finished == "" || $date_finished == null)) {
+                        $action = $action_taken;
+                    } else {
+                        $action = $final_action;
                     }
 
                     echo "<tr>    
@@ -300,7 +314,7 @@ if ($reqtype == "ALL") {
                                     <td>$accomplishment_rate</td>
                                     <td $class1>$accomplishment_remarks</td>
                                     <td>$closedBy</td>
-                                    <td>$action_taken</td>
+                                    <td>$action</td>
                                     <td>$recommendation</td>
                                     </tr>";
                 }
