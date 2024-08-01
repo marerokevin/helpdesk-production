@@ -360,7 +360,7 @@
                          <div role="tablist" class="_6TVppg sJ9N9w">
                              <div class="uGmi4w">
                                  <ul class="flex flex-wrap -mb-px text-sm font-medium text-center text-gray-500 dark:text-gray-400" id="tabExample" role="tablist">
-                                     <li role="presentation" class="hidden">
+                                     <li role="presentation">
                                          <div class="p__uwg" style="width: 106px; margin-right: 0px;">
                                              <button id="headApprovalTab" onclick="goToFinished()" type="button" role="tab" aria-controls="headApproval" class="_1QoxDw o4TrkA CA2Rbg Di_DSA cwOZMg zQlusQ uRvRjQ POMxOg _lWDfA" aria-selected="false">
                                                  <div class="_1cZINw">
@@ -370,7 +370,7 @@
 
                                                      </div>
                                                  </div>
-                                                 <p class="_5NHXTA _2xcaIA ZSdr0w CCfw7w GHIRjw">ICT</p>
+                                                 <p class="_5NHXTA _2xcaIA ZSdr0w CCfw7w GHIRjw">MIS</p>
                                              </button>
                                          </div>
                                      </li>
@@ -552,7 +552,7 @@
                          <input type="text" name="joid2" id="joid2" class="hidden col-span-2 bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 
                          <div class="w-full grid gap-4 grid-cols-2">
-                             <h2 class="font-semibold text-gray-900 dark:text-gray-900"><span class="text-gray-400">JO Number : </span><span id="jonumber"></span></h2>
+                             <h2 class="font-semibold text-gray-900 dark:text-gray-900"><span class="text-gray-400">Request Number : </span><span id="jonumber"></span></h2>
                              <h2 class="pl-10 font-semibold text-gray-900 dark:text-gray-900"><span class="text-gray-400">Date filed: </span><span id="datefiled"></span></h2>
                          </div>
                          <div class="w-full grid gap-4 grid-cols-2">
@@ -1169,7 +1169,7 @@
 
          // options with default values
          const taboptions = {
-             defaultTabId: 'adminApproval1',
+             defaultTabId: 'headApproval1',
              activeClasses: 'text-white hover:text-amber-400 dark:text-blue-500 dark:hover:text-blue-400 border-blue-600 dark:border-blue-500',
              inactiveClasses: 'text-gray-300 hover:text-amber-500 dark:text-gray-400 border-gray-100 hover:border-gray-300 dark:border-gray-700 dark:hover:text-gray-300',
              onShow: () => {
@@ -1184,7 +1184,7 @@
          const tabs = new Tabs(tabElements, taboptions);
 
          // open tab item based on id
-         tabs.show('adminApproval1');
+         tabs.show('headApproval1');
 
 
          // // get the tab object based on ID
@@ -1314,7 +1314,7 @@
              const myElement = document.querySelector('#diamond');
 
              // Get the current transform value
-             const currentTransform = myElement.style.transform = 'translateX(50px) translateY(2px) rotate(135deg)';
+             const currentTransform = myElement.style.transform = 'translateX(180px) translateY(2px) rotate(135deg)';
 
 
              // transform: translateX(55px) translateY(2px) rotate(135deg);

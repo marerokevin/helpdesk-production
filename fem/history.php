@@ -87,12 +87,7 @@
 
 
 
-    $sqllink = "SELECT `link` FROM `setting`";
-    $resultlink = mysqli_query($con, $sqllink);
-    $link = "";
-    while ($listlink = mysqli_fetch_assoc($resultlink)) {
-        $link = $listlink["link"];
-    }
+
     if (isset($_POST['print'])) {
         $_SESSION['jobOrderNo'] = $_POST['pjobOrderNo'];
         $_SESSION['status'] = $_POST['pstatus'];
@@ -122,7 +117,8 @@
         $_SESSION['totalRating'] = $_POST['ptotalRating'];
         $_SESSION['ratingRemarks'] = $_POST['pratingRemarks'];
         $_SESSION['ratedDate'] = $_POST['pratedDate'];
-
+        $_SESSION['headsDate'] = $_POST['pheadsDate'];
+        $_SESSION['adminsDate'] = $_POST['padminsDate'];
 
         //    header("location:Job Order Report.php", true, 302);
     ?>
@@ -136,7 +132,12 @@
     }
 
 
-
+    $sqllink = "SELECT `link` FROM `setting`";
+    $resultlink = mysqli_query($con, $sqllink);
+    $link = "";
+    while ($listlink = mysqli_fetch_assoc($resultlink)) {
+        $link = $listlink["link"];
+    }
     if (isset($_POST['updateJO'])) {
         $computername = $_POST['computername'];
         $start = $_POST['start'];
@@ -232,6 +233,7 @@
     }
 
 
+
     ?>
 
 
@@ -246,6 +248,7 @@
      <meta http-equiv="X-UA-Compatible" content="IE=edge">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <title>Helpdesk</title>
+     <link rel="shortcut icon" href="../resources/img/helpdesk.png">
 
      <!-- font awesome -->
      <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" /> -->
@@ -272,8 +275,6 @@
      <!-- <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.3/dist/flowbite.min.css" /> -->
      <link rel="stylesheet" href="../node_modules/flowbite/dist/flowbite.min.css" />
 
-
-     <link rel="shortcut icon" href="../resources/img/helpdesk.png">
      <!-- <link rel="stylesheet" href="css/style.css" /> -->
 
 
@@ -294,7 +295,7 @@
 
 
 
-     <div class=" ml-72 flex mt-16  left-10 right-5  flex-col  px-14 sm:px-8  pt-6 pb-14 z-50 ">
+     <div id="mainContent" class=" ml-72 flex mt-16  left-10 right-5  flex-col  px-14 sm:px-8  pt-6 pb-14 z-50 ">
          <div class="justify-center text-center flex items-start h-auto bg-gradient-to-r from-blue-900 to-teal-500 rounded-xl ">
              <div class="text-center py-2 m-auto lg:text-center w-full">
                  <!-- <h6 class="text-sm  tracking-tight text-gray-200 sm:text-lg">Good Day</h6> -->
@@ -347,17 +348,37 @@
 </div>  -->
                  <div class="FrD3PA">
                      <div class="QnQnDA" tabindex="-1">
-                         <div role="tablist" class="_6TVppg sJ9N9w">
+                         <div role="tablist" style="overflow:inherit" class="_6TVppg sJ9N9w" style="overflow-x: auto;">
                              <div class="uGmi4w">
                                  <ul class="flex flex-wrap -mb-px text-sm font-medium text-center text-gray-500 dark:text-gray-400" id="tabExample" role="tablist">
                                      <li role="presentation">
                                          <div class="p__uwg" style="width: 106px; margin-right: 0px;">
                                              <button id="headApprovalTab" onclick="goToFinished()" type="button" role="tab" aria-controls="headApproval" class="_1QoxDw o4TrkA CA2Rbg Di_DSA cwOZMg zQlusQ uRvRjQ POMxOg _lWDfA" aria-selected="false">
                                                  <div class="_1cZINw">
-                                                     <div class="_qiHHw Ut_ecQ kHy45A">
+                                                     <div style="overflow:inherit" class="_qiHHw Ut_ecQ kHy45A">
+                                                         <span class=" sr-only">Notifications</span>
+                                                         <?php
+
+                                                            $sql1 = "SELECT COUNT(id) as 'pending' FROM request WHERE  (`status2` = 'rated' OR `status2` = 'Done') and `assignedPersonnel` = '$misusername'";
+                                                            $result = mysqli_query($con, $sql1);
+                                                            while ($count = mysqli_fetch_assoc($result)) {
+
+                                                                if ($count["pending"] > 0) {
+                                                            ?>
+                                                                 <div class=" absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-border-white"> <?php
+                                                                                                                                                                                                                                                                $sql1 = "SELECT COUNT(id) as 'pending' FROM request WHERE  (`status2` = 'rated' OR `status2` = 'Done') and `assignedPersonnel` = '$misusername'";
+                                                                                                                                                                                                                                                                $result = mysqli_query($con, $sql1);
+                                                                                                                                                                                                                                                                while ($count = mysqli_fetch_assoc($result)) {
+                                                                                                                                                                                                                                                                    echo $count["pending"];
+                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                                ?></div><?php
+                                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                                }
+
+                                                                                                                                                                                                                                                                        ?>
+
 
                                                          <img src="../resources/img/list.png" class="h-full w-full text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-
                                                      </div>
                                                  </div>
                                                  <p class="_5NHXTA _2xcaIA ZSdr0w CCfw7w GHIRjw">Finished J.O.</p>
@@ -368,9 +389,26 @@
                                          <div class="p__uwg" style="width: 106px; margin-right: 0px;">
                                              <button id="overallTab" onclick="goToOverall()" type="button" role="tab" aria-controls="overall" class="_1QoxDw o4TrkA CA2Rbg Di_DSA cwOZMg zQlusQ uRvRjQ POMxOg _lWDfA" aria-selected="false">
                                                  <div class="_1cZINw">
-                                                     <div class="_qiHHw Ut_ecQ kHy45A">
+                                                     <div style="overflow:inherit" class="_qiHHw Ut_ecQ kHy45A">
+                                                         <span class=" sr-only">Notifications</span>
+                                                         <?php
+                                                            $sql1 = "SELECT COUNT(id) as 'pending' FROM request WHERE (`status2` = 'rated' OR `status2` = 'Done')and `request_to` = 'mis'";
+                                                            $result = mysqli_query($con, $sql1);
+                                                            while ($count = mysqli_fetch_assoc($result)) {
 
-                                                         <span class="gkK1Zg jxuDbQ"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+                                                                if ($count["pending"] > 0) {
+                                                            ?>
+                                                                 <div class=" absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-border-white"> <?php
+                                                                                                                                                                                                                                                                $sql1 = "SELECT COUNT(id) as 'pending' FROM request  WHERE (`status2` = 'rated' OR `status2` = 'Done')and `request_to` = 'mis'";
+                                                                                                                                                                                                                                                                $result = mysqli_query($con, $sql1);
+                                                                                                                                                                                                                                                                while ($count = mysqli_fetch_assoc($result)) {
+                                                                                                                                                                                                                                                                    echo $count["pending"];
+                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                                ?></div><?php
+                                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                                        ?>
+                                                         <span class="gkK1Zg"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
                                                                  <path fill="currentColor" d="M24 0C10.7 0 0 10.7 0 24s10.7 24 24 24 24-10.7 24-24S37.3 0 24 0zM11.9 15.2c.1-.1.2-.1.2-.1 1.6-.5 2.5-1.4 3-3 0 0 0-.1.1-.2l.1-.1c.1 0 .2-.1.3-.1.4 0 .5.3.5.3.5 1.6 1.4 2.5 3 3 0 0 .1 0 .2.1s.1.2.1.3c0 .4-.3.5-.3.5-1.6.5-2.5 1.4-3 3 0 0-.1.3-.4.3-.6.1-.7-.2-.7-.2-.5-1.6-1.4-2.5-3-3 0 0-.4-.1-.4-.5l.3-.3zm24.2 18.6c-.5.2-.9.6-1.3 1s-.7.8-1 1.3c0 0 0 .1-.1.2-.1 0-.1.1-.3.1-.3-.1-.4-.4-.4-.4-.2-.5-.6-.9-1-1.3s-.8-.7-1.3-1c0 0-.1 0-.1-.1-.1-.1-.1-.2-.1-.3 0-.3.2-.4.2-.4.5-.2.9-.6 1.3-1s.7-.8 1-1.3c0 0 .1-.2.4-.2.3 0 .4.2.4.2.2.5.6.9 1 1.3s.8.7 1.3 1c0 0 .2.1.2.4 0 .4-.2.5-.2.5zm-.7-8.7s-4.6 1.5-5.7 2.4c-1 .6-1.9 1.5-2.4 2.5-.9 1.5-2.2 5.4-2.2 5.4-.1.5-.5.9-1 .9v-.1.1c-.5 0-.9-.4-1.1-.9 0 0-1.5-4.6-2.4-5.7-.6-1-1.5-1.9-2.5-2.4-1.5-.9-5.4-2.2-5.4-2.2-.5-.1-.9-.5-.9-1h.1-.1c0-.5.4-.9.9-1.1 0 0 4.6-1.5 5.7-2.4 1-.6 1.9-1.5 2.4-2.5.9-1.5 2.2-5.4 2.2-5.4.1-.5.5-.9 1-.9s.9.4 1 .9c0 0 1.5 4.6 2.4 5.7.6 1 1.5 1.9 2.5 2.4 1.5.9 5.4 2.2 5.4 2.2.5.1.9.5.9 1h-.1.1c.1.5-.2.9-.8 1.1z"></path>
                                                              </svg></span>
 
@@ -382,11 +420,32 @@
                                      </li>
                                      <li role="presentation">
 
-                                         <div class="p__uwg" style="width: 113px; margin-left: 16px; margin-right: 0px;">
+                                         <div class="p__uwg" style="width: 96px; margin-left: 16px; margin-right: 0px;">
                                              <button id="adminApprovalTab" onclick="goToCancelled()" class="_1QoxDw o4TrkA CA2Rbg cwOZMg zQlusQ uRvRjQ POMxOg" type="button" tabindex="-1" role="tab" aria-controls="adminApproval" aria-selected="false">
                                                  <div class="_1cZINw">
-                                                     <div class="_qiHHw Ut_ecQ kHy45A">
+                                                     <div style="overflow:inherit" class="_qiHHw Ut_ecQ kHy45A">
+                                                         <span class=" sr-only">Notifications</span>
+                                                         <?php
+                                                            $date1 = new DateTime();
+                                                            $dateMonth = $date1->format('M');
+                                                            $dateYear = $date1->format('Y');
 
+                                                            $sql1 = "SELECT COUNT(id) as 'pending' FROM request WHERE  `request_to` = 'mis' and `status2` = 'cancelled'";
+                                                            $result = mysqli_query($con, $sql1);
+                                                            while ($count = mysqli_fetch_assoc($result)) {
+
+                                                                if ($count["pending"] > 0) {
+                                                            ?>
+                                                                 <div class=" absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-border-white"> <?php
+                                                                                                                                                                                                                                                                $sql1 = "SELECT COUNT(id) as 'pending' FROM request WHERE `request_to` = 'mis' and `status2` = 'cancelled'";
+                                                                                                                                                                                                                                                                $result = mysqli_query($con, $sql1);
+                                                                                                                                                                                                                                                                while ($count = mysqli_fetch_assoc($result)) {
+                                                                                                                                                                                                                                                                    echo $count["pending"];
+                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                                ?></div><?php
+                                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                                        ?>
                                                          <img src="../resources/img/disapprove.png" class="h-full w-full text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
 
                                                      </div>
@@ -503,11 +562,12 @@
                      <input type="text" id="ptotalRating" name="ptotalRating" class="hidden">
                      <input type="text" id="pratingRemarks" name="pratingRemarks" class="hidden">
                      <input type="text" id="pratedDate" name="pratedDate" class="hidden">
-
+                     <input type="text" id="pheadsDate" name="pheadsDate" class="hidden">
+                     <input type="text" id="padminsDate" name="padminsDate" class="hidden">
 
                      <div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
                          <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                             Job Order Details
+                             <span id="reqtype"></span> Details
                          </h3>
                          <button onclick="modalHide()" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
                              <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -536,14 +596,16 @@
                          <input type="text" name="joid2" id="joid2" class="hidden col-span-2 bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 
                          <div class="w-full grid gap-4 grid-cols-2">
-                             <h2 class="font-semibold text-gray-900 dark:text-gray-900"><span class="text-gray-400">JO Number : </span><span id="jonumber"></span></h2>
+                             <h2 class="font-semibold text-gray-900 dark:text-gray-900"><span class="text-gray-400">Request Number : </span><span id="jonumber"></span></h2>
                              <h2 class="pl-10 font-semibold text-gray-900 dark:text-gray-900"><span class="text-gray-400">Date filed: </span><span id="datefiled"></span></h2>
                          </div>
                          <div class="w-full grid gap-4 grid-cols-2">
-                             <h2 class="font-semibold text-gray-900 dark:text-gray-900"><span class="text-gray-400">Requested Section: </span><span id="sectionmodal"></span></h2>
+                             <h2 class="font-semibold text-gray-900 dark:text-gray-900"><span class="text-gray-400">Requested Section: </span>
+                                 <span id="sectionmodal"></span>
+                             </h2>
                              <h2 class="pl-10 font-semibold text-gray-900 dark:text-gray-900"><span class="text-gray-400">Type: </span><span id="category"></span></h2>
                          </div>
-                         <div class="w-full grid gap-4 grid-cols-2">
+                         <div class="w-full grid gap-4 grid-cols-2 hidden">
                              <div id="categoryDivParent" class="grid gap-4 grid-cols-2">
                                  <h2 class="float-left font-semibold text-gray-900 dark:text-gray-900"><span class="text-gray-400">Computer Name: </span></h2>
                                  <input disabled type="text" name="computername" id="computername" class="col-span-1 bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
@@ -559,7 +621,7 @@
                          <a type="button" name="attachment" id="attachment" target="_blank" class="shadow-lg shadow-teal-500/50 dark:shadow-lg dark:shadow-teal-800/80  w-full text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">View Attachment</a>
 
                          <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
-                         <div>
+                         <div class="hidden">
                              <div class="grid grid-cols-3">
                                  <h2 class=" py-4 col-span-1 font-semibold text-gray-400 dark:text-gray-400"><span class="inline-block align-middle">Requested Schedule: </span></h2>
                                  <div class="col-span-2 flex items-center">
@@ -588,7 +650,7 @@
                              <h2 class="font-semibold text-gray-900 dark:text-gray-900"><span class="text-gray-400">Actual date finished : </span><span id="actualDateFinished"></span></h2>
                          </div>
 
-                         <div id="ratingstar" class="w-full grid grid-cols-12">
+                         <div id="ratingstar" class="w-full grid grid-cols-12 hidden">
                              <h2 class="col-span-2 font-semibold text-gray-900 dark:text-gray-900"><span class="text-gray-400">Delivery: </span> </h2>
                              <div id="starsdel" class="grid col-span-10">
                                  <div class="flex items-center">
@@ -609,6 +671,9 @@
                                      <div id="stardiv" class="flex items-center"></div>
                                      <p class="ml-2 text-sm font-medium text-gray-500 dark:text-gray-400"><span id="finalRatings"></span> out of 5</p>
                                  </div>
+                             </div>
+                             <div id="comments" class="grid col-span-10">
+                                 <h2 class="font-semibold text-gray-900 dark:text-gray-900"><span class="text-gray-400">Comments: </span><span id="userComments"></span></h2>
                              </div>
                          </div>
                          <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
@@ -694,7 +759,7 @@
                                  <!-- Modal header -->
                                  <div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
                                      <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                                         Job Order Details
+                                         <span id="reqtype"></span> Details
                                      </h3>
                                      <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="rateModal">
                                          <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -838,13 +903,14 @@
              document.getElementById("action1").innerHTML = element.getAttribute("data-action1");
              document.getElementById("action2").innerHTML = element.getAttribute("data-action2");
              document.getElementById("action3").innerHTML = element.getAttribute("data-action3");
-
+             document.getElementById("reqtype").innerHTML = element.getAttribute("data-reqtype");
 
              document.getElementById("pjobOrderNo").value = element.getAttribute("data-joidprint");
              document.getElementById("pstatus").value = element.getAttribute("data-status");
              document.getElementById("prequestor").value = element.getAttribute("data-requestor");
              document.getElementById("pdepartment").value = element.getAttribute("data-department");
              document.getElementById("pdateFiled").value = element.getAttribute("data-datefiled");
+
 
              const dateStart = new Date(element.getAttribute("data-start")); // Get the current date
              const optionsStart = {
@@ -884,7 +950,11 @@
              document.getElementById("pquality").value = element.getAttribute("data-quality");
              document.getElementById("ptotalRating").value = element.getAttribute("data-ratings");
              document.getElementById("pratingRemarks").value = element.getAttribute("data-requestorremarks");
+             document.getElementById("userComments").innerHTML = element.getAttribute("data-requestorremarks");
              document.getElementById("pratedDate").value = element.getAttribute("data-daterate");
+
+             document.getElementById("pheadsDate").value = element.getAttribute("data-headdate");
+             document.getElementById("padminsDate").value = element.getAttribute("data-admindate");
 
 
              var action1 = element.getAttribute("data-action1");
@@ -1123,6 +1193,16 @@
          drawer.show();
          var show = true;
 
+
+
+         var screenWidth = window.screen.width; // Screen width in pixels
+         var screenHeight = window.screen.height; // Screen height in pixels
+
+         console.log("Screen width: " + screenWidth);
+         console.log("Screen height: " + screenHeight);
+         var sidebar = 0;
+
+
          function shows() {
              if (show) {
                  drawer.hide();
@@ -1131,12 +1211,40 @@
                  drawer.show();
                  show = true;
              }
+             // var sidebar=0;
+             if (sidebar == 0) {
+                 document.getElementById("mainContent").style.width = "100%";
+                 document.getElementById("mainContent").style.marginLeft = "0px";
+                 // document.getElementById("sidebar").style.opacity= ""; 
+                 // document.getElementById("sidebar").style.transition = "all .1s";
+
+                 document.getElementById("mainContent").style.transition = "all .3s";
+
+
+
+
+
+
+                 sidebar = 1;
+             } else {
+                 document.getElementById("mainContent").style.width = "calc(100% - 288px)";
+                 document.getElementById("mainContent").style.marginLeft = "288px";
+
+                 sidebar = 0;
+             }
 
 
          }
 
 
+         if (screenWidth <= 1132) {
+             shows();
 
+         } else {
+             drawer.show();
+             // sidebar=0;/
+
+         }
 
 
          // // Code for tabs
@@ -1261,7 +1369,7 @@
              document.getElementById("computername").disabled = true;
              $("#assignedPersonnelDiv").removeClass("hidden");
 
-             $("#ratingstar").removeClass("hidden");
+             $("#ratingstar").addClass("hidden");
 
              $("#actionDetailsDiv").removeClass("hidden");
              $("#actionsDiv").removeClass("hidden");
@@ -1287,7 +1395,8 @@
              document.getElementById("computername").disabled = true;
              $("#assignedPersonnelDiv").removeClass("hidden");
 
-             $("#ratingstar").removeClass("hidden");
+             //  $("#ratingstar").removeClass("hidden");
+
 
              $("#actionDetailsDiv").removeClass("hidden");
              $("#actionsDiv").removeClass("hidden");
@@ -1540,9 +1649,15 @@
          }
 
          $("#sidehome").removeClass("bg-gray-200");
-         $("#sidehistory").addClass("bg-gray-200");
+         $("#sidehistory").addClass("text-white bg-gradient-to-r from-blue-900 to-teal-500");
          $("#sideMyRequest").removeClass("bg-gray-200");
          $("#sidepms").removeClass("bg-gray-200");
+
+
+         $("#sidehome1").removeClass("bg-gray-200");
+         $("#sidehistory1").addClass("text-white bg-gradient-to-r from-blue-900 to-teal-500");
+         $("#sideMyRequest1").removeClass("bg-gray-200");
+         $("#sidepms1").removeClass("bg-gray-200");
      </script>
 
  </body>

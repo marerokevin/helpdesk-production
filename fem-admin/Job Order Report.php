@@ -36,16 +36,21 @@ $quality = $_SESSION['quality'];
 $totalRating = $_SESSION['totalRating'];
 $ratingRemarks = $_SESSION['ratingRemarks'];
 $ratedDate = $_SESSION['ratedDate'];
+$approved_reco = $_SESSION['approved_reco'];
+$icthead_reco_remarks = $_SESSION['icthead_reco_remarks'];
+
 
 $headsDate =  $_SESSION['headsDate'];
 $adminsDate =  $_SESSION['adminsDate'];
 
-if ($_SESSION['status'] == "inprogress") {
+if ($_SESSION['status'] == "admin") {
     $status = "In Progress";
+} else if ($_SESSION['status'] == "inprogress") {
+    $status = "Done";
 } else if ($_SESSION['status'] == "rated") {
     $status = "Done";
 } else if ($_SESSION['status'] == "Done") {
-    $status = "To Rate";
+    $status = "Done";
 }
 
 $html = '<!DOCTYPE html>
@@ -54,7 +59,7 @@ $html = '<!DOCTYPE html>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Job Order Report</title>
+        <title>Helpdesk Report</title>
         <link rel="shortcut icon" href="../resources/img/helpdesk.png">
 
         <style>
@@ -118,10 +123,9 @@ padding-top: 5px;
     </head>
     <body style="margin: 0px; padding: 0px; ">
         <div style="text-align: center">
-            <p style="font-size: 11px; margin: 0">Glory (Philippines) Inc.</p>
-            <p style="font-size: 11px; margin: 0">Administration Department</p>
+        <p style="font-size: 11px; margin: 0">GLORY (PHILIPPINES) INC.</p>
             <p style="font-size: 10px; margin: 0">http://glory-helpdesk.com</p>
-            <p style="font-size: 11px; margin: 0; font-weight: bold">Job Order Report</p>
+            <p style="font-size: 11px; margin: 0; font-weight: bold">Helpdesk Report</p>
         </div>
 
 
@@ -191,14 +195,14 @@ if ($headsRemarks != "") {
 
 if ($adminsRemarks != "") {
     $html .= ' <tr>
-                <td class="first"><span class="label">Admin&apos;s Remarks</span></td>
+                <td class="first"><span class="label">ICT Head&apos;s Remarks</span></td>
                 <td class="second"> <span class="child">' . $adminsRemarks . '</span></td>
                 <td><span class="label">Date: </span></td>
                 <td class="fourth"><span class="child">' . $adminsDate . '</span></td>
             </tr>';
 } else {
     $html .= '<tr>
-                <td class="first"><span class="label">Admin&apos;s Remarks</span></td>
+                <td class="first"><span class="label">ICT Head&apos;s Remarks</span></td>
                 <td class="second"> <span class="child">n/a</span></td>
                 <td><span class="label">Date: </span></td>
                 <td class="fourth"><span class="child">' . $adminsDate . '</span></td>
@@ -251,58 +255,45 @@ if ($finalAction != "") {
 
 </tr>';
 }
-if ($recommendation != "") {
-    $html .= '<tr>
-            <td class="first"><span class="label">Recommendation:</span></td>
-            <td colspan="4"> <span class="child">' . $recommendation . '</span></td>
-
-        </tr>';
-}
-if ($dateFinished != "") {
-    $html .= '  <tr>
-                <td class="first"><span class="label">Date Finished:</span></td>
-                <td colspan="4"> <span class="child">' . $dateFinished . '
-                    </span></td>
-
-            </tr>';
-}
-
-
 $html .= '  </table>
 
-        <hr>';
-if ($status == "Done") {
-    $html .= ' <table>
-    <tr>
-    <td class="category"><span class="label">RATING</span></td>
-    </tr>
-    <tr>
-    <td class="first"><span class="label">Rated by: </span></td>
-    <td style="width: 60%"> <span class="child">' . $ratedBy . '</span></td>
-    <td style="width: 20%"><span class="label">Date: </span></td>
-    <td style="width: 25%"><span class="child">' . $ratedDate . '</span></td>
-     </tr>
-     <tr>
-     <td><span class="label">Delivery: </span></td>
-     <td> <span class="child">' . $delivery . '</span></td>
- </tr>
- <tr>
- <td><span class="label">Quality: </span></td>
- <td> <span class="child">' . $quality . '</span></td>
-</tr>
-<tr>
-<td><span class="label">TOTAL RATING: </span></td>
-<td> <span class="child">' . $totalRating . '</span></td>
-</tr>
-<tr>
-<td class="first"><span class="label">Remarks:</span></td>
-<td colspan="4"> <span class="child">' . $ratingRemarks . '
-</span></td>
+<hr>';
+// if($dateFinished !=""){
+//         $html.='  <tr>
+//                 <td class="first"><span class="label">Date Finished:</span></td>
+//                 <td colspan="4"> <span class="child">'.$dateFinished.'
+//                     </span></td>
 
-</tr>
+//             </tr>';
+// }
 
-    </table>';
+
+
+if ($recommendation != "" && ($icthead_reco_remarks != ""  || $icthead_reco_remarks != NULL) && $approved_reco == 1) {
+    $html .= '<table>
+                <tr>
+                    <td colspan="2" class="category"><span class="label">RECOMMENDATION</span></td>
+                </tr>
+                <tr>
+                    <td class="first"><span class="label">Assigned Personnel Recommendation:</span></td>
+                    <td colspan="4"> <span class="child">' . $recommendation . '</span></td>
+                </tr>';
+    $html .= '<tr>
+                    <td class="first"><span class="label">ICT Head&apos;s Remarks:</span></td>
+                    <td colspan="4"> <span class="child">' . $icthead_reco_remarks . '</span></td>
+                    </tr></table> <hr>';
+} elseif ($recommendation != "" && ($icthead_reco_remarks == "" || $icthead_reco_remarks == NULL) && $approved_reco == 1) {
+    $html .= '<table>
+                        <tr>
+                            <td colspan="2" class="category"><span class="label">RECOMMENDATION</span></td>
+                        </tr>
+                        <tr>
+                            <td class="first"><span class="label">Assigned Personnel Recommendation:</span></td>
+                            <td colspan="4"> <span class="child">' . $recommendation . '</span></td>
+                        </tr></table> <hr>';
 }
+
+
 
 $html .= '<table style="bottom: 35px; position: absolute;">
 <tr>
