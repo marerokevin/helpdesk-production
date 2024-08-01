@@ -49,8 +49,8 @@
         $leaderof = $_SESSION['leaderof'];
         if ($level == 'user') {
             header("location:../employees");
-        } else if ($level == 'mis') {
-            header("location:../mis");
+        } else if ($level == 'fem') {
+            header("location:../fem");
         } else if ($level == 'head') {
             header("location:../department-head");
         } else if ($level == 'admin' && $leaderof == 'mis') {
@@ -63,8 +63,18 @@
         header("location: ../logout.php");
     }
 
+
     // connection php and transfer of session
     include("../includes/connect.php");
+
+    $sqllink = "SELECT `link` FROM `setting`";
+    $resultlink = mysqli_query($con, $sqllink);
+    $link = "";
+    while ($listlink = mysqli_fetch_assoc($resultlink)) {
+        $link = $listlink["link"];
+    }
+
+
     $user_dept = $_SESSION['department'];
     $user_level = $_SESSION['level'];
     $username = $_SESSION['username'];
@@ -141,24 +151,17 @@
 
     }
 
-
-    $sqllink = "SELECT `link` FROM `setting`";
-    $resultlink = mysqli_query($con, $sqllink);
-    $link = "";
-    while ($listlink = mysqli_fetch_assoc($resultlink)) {
-        $link = $listlink["link"];
-    }
-
     if (isset($_POST['updateJO'])) {
         $computername = $_POST['computername'];
-        $start = $_POST['start'];
-        $finish = $_POST['finish'];
-        $telephone = $_POST['telephone'];
+        // $start = $_POST['start'];
+        // $finish = $_POST['finish'];
+        // $telephone = $_POST['telephone'];
 
 
         $joid = $_POST['joid2'];
         $message = $_POST['message'];
-        $sql = "UPDATE `request` SET `computerName`='$computername',`reqstart_date`='$start',`reqfinish_date`='$finish', `request_details` = '$message' , `telephone`='$telephone' WHERE `id` = '$joid';";
+        // $sql = "UPDATE `request` SET `computerName`='$computername',`reqstart_date`='$start',`reqfinish_date`='$finish', `request_details` = '$message' , `telephone`='$telephone' WHERE `id` = '$joid';";
+        $sql = "UPDATE `request` SET `computerName`='$computername',`request_details` = '$message'  WHERE `id` = '$joid';";
         $results = mysqli_query($con, $sql);
     }
 
@@ -261,6 +264,7 @@
      <meta http-equiv="X-UA-Compatible" content="IE=edge">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <title>Helpdesk</title>
+     <link rel="shortcut icon" href="../resources/img/helpdesk.png">
 
      <!-- font awesome -->
      <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" /> -->
@@ -288,7 +292,6 @@
      <link rel="stylesheet" href="../node_modules/flowbite/dist/flowbite.min.css" />
 
 
-     <link rel="shortcut icon" href="../resources/img/helpdesk.png">
      <!-- <link rel="stylesheet" href="css/style.css" /> -->
 
 
@@ -313,15 +316,15 @@
          <div class="justify-center text-center flex items-start h-auto bg-gradient-to-r from-blue-900 to-teal-500 rounded-xl ">
              <div class="text-center py-2 m-auto lg:text-center w-full">
                  <!-- <h6 class="text-sm  tracking-tight text-gray-200 sm:text-lg">Good Day</h6> -->
-                 <div class="m-auto flex flex-col w-2/4  h-12">
+                 <div class="m-auto flex flex-col w-2/4  h-12 hidden">
                      <h2 class="text-xl font-bold tracking-tight text-gray-100 sm:text-xl">Total numbers of pending Job Order</h2>
 
                  </div>
 
 
-                 <div class="m-auto flex flex-col w-2/4">
+                 <div class="m-auto flex flex-col w-2/4 hidden">
 
-                     <div class="mt-0 grid grid-cols-1 gap-4 sm:grid-cols-1 lg:grid-cols-1 xl:grid-cols-1 ">
+                     <div class="mt-0 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 ">
 
                          <div class="flex items-start rounded-xl bg-teal-700 dark:bg-white p-4 shadow-lg">
                              <div class="flex h-12 w-12 overflow-hidden items-center justify-center rounded-full border border-red-100 bg-red-50">
@@ -340,7 +343,7 @@
                                                                                     ?></p>
                              </div>
                          </div>
-                         <div class="flex items-start rounded-xl bg-sky-900 dark:bg-white p-4 shadow-lg hidden">
+                         <div class="flex items-start rounded-xl bg-sky-900 dark:bg-white p-4 shadow-lg">
                              <div class="flex h-12 w-12 items-center overflow-hidden  justify-center rounded-full border border-indigo-100 bg-indigo-50">
                                  <img src="../resources/img/itboy.png" class="h-full w-full text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
 
@@ -390,7 +393,7 @@
 
                                                      </div>
                                                  </div>
-                                                 <p class="_5NHXTA _2xcaIA ZSdr0w CCfw7w GHIRjw">Final approval</p>
+                                                 <p class="_5NHXTA _2xcaIA ZSdr0w CCfw7w GHIRjw">Admin approval</p>
                                              </button>
                                          </div>
                                      </li>
@@ -425,7 +428,7 @@
                                      </li>
                                  </ul>
                              </div>
-                             <div class="rzHaWQ theme light" id="diamond" style="transform: translateX(75px) translateY(2px) rotate(135deg);"></div>
+                             <div class="rzHaWQ theme light" id="diamond" style="transform: translateX(50px) translateY(2px) rotate(135deg);"></div>
                          </div>
                      </div>
                  </div>
@@ -530,7 +533,7 @@
                      <!-- Modal header -->
                      <div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
                          <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                             Job Order Details
+                             <span id="reqtype"></span> Details
                          </h3>
 
                          <button onclick="modalHide()" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
@@ -550,14 +553,14 @@
                          <input type="text" name="joid2" id="joid2" class="hidden col-span-2 bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 
                          <div class="w-full grid gap-4 grid-cols-2">
-                             <h2 class="font-semibold text-gray-900 dark:text-gray-900"><span class="text-gray-400">JO Number : </span><span id="jonumber"></span></h2>
+                             <h2 class="font-semibold text-gray-900 dark:text-gray-900"><span class="text-gray-400">Request Number : </span><span id="jonumber"></span></h2>
                              <h2 class="pl-10 font-semibold text-gray-900 dark:text-gray-900"><span class="text-gray-400">Date filed: </span><span id="datefiled"></span></h2>
                          </div>
                          <div class="w-full grid gap-4 grid-cols-2">
                              <h2 class="font-semibold text-gray-900 dark:text-gray-900"><span class="text-gray-400">Requested Section: </span><span id="sectionmodal"></span></h2>
                              <h2 class="pl-10 font-semibold text-gray-900 dark:text-gray-900"><span class="text-gray-400">Type: </span><span id="category"></span></h2>
                          </div>
-                         <div class="w-full grid gap-4 grid-cols-2">
+                         <div class="w-full grid gap-4 grid-cols-2 hidden">
                              <div id="categoryDivParent" class="grid gap-4 grid-cols-2">
                                  <h2 class="float-left font-semibold text-gray-900 dark:text-gray-900"><span class="text-gray-400">Computer Name: </span></h2>
                                  <input type="text" name="computername" id="computername" class="col-span-1 bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
@@ -583,7 +586,7 @@
                                                  <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
                                              </svg>
                                          </div>
-                                         <input id="datestart" onchange="testDate()" name="start" type="date" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Request date start" required="">
+                                         <input id="datestart" onchange="testDate()" name="start" type="date" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Request date start">
                                      </div>
                                      <span class="mx-4 text-gray-500">to</span>
                                      <div class="relative">
@@ -592,7 +595,7 @@
                                                  <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
                                              </svg>
                                          </div>
-                                         <input id="datefinish" onchange="endDate()" name="finish" type="date" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Request date finish" required>
+                                         <input id="datefinish" onchange="endDate()" name="finish" type="date" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Request date finish">
                                      </div>
                                  </div>
                              </div>
@@ -879,6 +882,7 @@
              document.getElementById("action1").innerHTML = element.getAttribute("data-action1");
              document.getElementById("action2").innerHTML = element.getAttribute("data-action2");
              document.getElementById("action3").innerHTML = element.getAttribute("data-action3");
+             document.getElementById("reqtype").innerHTML = element.getAttribute("data-reqtype");
 
 
              document.getElementById("pjobOrderNo").value = element.getAttribute("data-joidprint");
@@ -1072,7 +1076,6 @@
 
          // // get the current active tab object
          // tabs.getActiveTab()
-
          function goToHead() {
              $("#buttondiv").removeClass("hidden");
              $("#buttonRateDiv").addClass("hidden");
@@ -1470,9 +1473,17 @@
 
          $("#sidehome").removeClass("bg-gray-200");
          $("#sidehistory").removeClass("bg-gray-200");
-         $("#sideMyRequest").addClass("bg-gray-200");
+         $("#sideMyRequest").addClass("text-white bg-gradient-to-r from-blue-900 to-teal-500");
 
          $("#sidepms").removeClass("bg-gray-200");
+
+
+
+         $("#sidehome1").removeClass("bg-gray-200");
+         $("#sidehistory1").removeClass("bg-gray-200");
+         $("#sideMyRequest1").addClass("text-white bg-gradient-to-r from-blue-900 to-teal-500");
+
+         $("#sidepms1").removeClass("bg-gray-200");
      </script>
 
  </body>

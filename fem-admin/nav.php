@@ -51,6 +51,7 @@ if (isset($_POST['monthlyReport'])) {
 <?php
 
 }
+
 if (isset($_POST['registerUser'])) {
   $userEmployeeId = $_POST['userEmployeeId'];
   $userFullName = $_POST['userFullName'];
@@ -61,8 +62,38 @@ if (isset($_POST['registerUser'])) {
   $sql = "INSERT INTO `user`(`username`, `password`, `name`, `department`, `email`, `level`) VALUES ('$userEmployeeId','$userEmployeeId','$userFullName',' $userDepartment','$userEmail','$userType')";
   $results = mysqli_query($con, $sql);
 }
-?>
 
+if (isset($_POST['pdfReport'])) {
+  $sqllink = "SELECT `link` FROM `setting`";
+  $resultlink = mysqli_query($con, $sqllink);
+  $link = "";
+  while ($listlink = mysqli_fetch_assoc($resultlink)) {
+    $link = $listlink["link"];
+  }
+  $_SESSION['month'] = $_POST['month'];
+  $_SESSION['year'] = $_POST['year'];
+  $_SESSION['request_type'] = $_POST['request_type'];
+
+  header("location: $link/summary_report_xls.php");
+?>
+  <script type="text/javascript">
+    window.open('../PDF Summary Report.php', '_blank');
+  </script>
+<?php
+
+}
+
+if (isset($_POST['excelReport'])) {
+  $_SESSION['month'] = $_POST['month'];
+  $_SESSION['year'] = $_POST['year'];
+  $_SESSION['request_type'] = $_POST['request_type'];
+?>
+  <script type="text/javascript">
+    window.open('../summary_report_xls.php?request_type=<?php echo  $_SESSION['request_type']; ?>&month=<?php echo $_SESSION['month']; ?>&year=<?php echo $_SESSION['year']; ?>', '_blank');
+  </script>
+<?php
+}
+?>
 
 <nav class="drop-shadow-md  bg-white px-2 sm:px-4 py-2 dark:bg-gray-900 fixed w-full z-20 top-0  left-0 border-b border-gray-200 dark:border-gray-600">
 
@@ -78,10 +109,15 @@ if (isset($_POST['registerUser'])) {
     </a>
 
     <div class="flex items-center md:order-2">
-      <a data-modal-target="registerModal" data-modal-toggle="registerModal" type="button" class="text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80 w-60 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mx-3 md:mx-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Register</a>
-      <a data-modal-target="reportModal" data-modal-toggle="reportModal" type="button" class="text-white bg-gradient-to-r from-purple-400 to-blue-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80 w-60 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mx-3 md:mx-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Monthly Report</a>
+      <a href="ticketForm.php" type="button" class=" lg:block text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 shadow-lg shadow-teal-500/50 dark:shadow-lg dark:shadow-teal-800/80 w-60 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mx-3 md:mx-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Create a Ticket</a>
 
-      <!-- <a href="jo-form.php" type="button" class="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 shadow-lg shadow-teal-500/50 dark:shadow-lg dark:shadow-teal-800/80 w-60 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mx-3 md:mx-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Request Job Order</a> -->
+      <a data-modal-target="generateReportModal" data-modal-toggle="generateReportModal" type="button" class="text-white bg-gradient-to-r from-purple-400 to-blue-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80 w-60 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mx-3 md:mx-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Monthly Report</a>
+
+      <a data-modal-target="registerModal" data-modal-toggle="registerModal" type="button" class="text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80 w-60 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mx-3 md:mx-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Register</a>
+
+      <a data-modal-target="reportModal" data-modal-toggle="reportModal" type="button" class="hidden text-white bg-gradient-to-r from-purple-400 to-blue-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80 w-60 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mx-3 md:mx-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Monthly Report</a>
+
+      <a href="jo-form.php" type="button" class="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 shadow-lg shadow-teal-500/50 dark:shadow-lg dark:shadow-teal-800/80 w-60 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mx-3 md:mx-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Request Job Order</a>
       <button type="button" class="flex mr-3 text-sm bg-white rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
         <span class="sr-only">Open user menu</span>
         <!-- <img class="w-8 h-8 rounded-full" src="../src/Photo/<?php echo $username; ?>.png" alt="user photo"> -->
@@ -232,7 +268,15 @@ if (isset($_POST['registerUser'])) {
           <span class="ml-3">Home</span>
         </a>
       </li>
-      <li>
+      <li class="relative">
+        <div class=" absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-gray-900">
+          <?php
+          $sql1 = "SELECT COUNT(id) as 'pending' FROM request WHERE `status2` ='inprogress' and `assignedPersonnel` = '$username'";
+          $result = mysqli_query($con, $sql1);
+          while ($count = mysqli_fetch_assoc($result)) {
+            echo $count["pending"];
+          }
+          ?></div>
         <a href="myJobOrder.php" id="sideMyJo" class="flex items-center p-4 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
 
           <i class="fa-solid "><svg class="h-5 w-5 " fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -249,30 +293,30 @@ if (isset($_POST['registerUser'])) {
           <i class="fa-solid fa-clock-rotate-left"></i> <span class="flex-1 ml-3 whitespace-nowrap">History</span>
         </a>
       </li>
-      <li>
-        <a href="Ratings.php" id="sideratings" class="flex items-center p-4 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-
-          <i class="text-yellow-400 fa-solid fa-star"></i> <span class="flex-1 ml-3 whitespace-nowrap">Ratings</span>
-        </a>
-      </li>
       <!-- <li>
-        <a href="devices.php" id="sidedevice" class="  flex items-center p-4 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-
-          <i class="fa-solid fa-computer"></i> <span class="flex-1 ml-3 whitespace-nowrap">Devices</span>
-        </a>
-      </li>
+            <a href="Ratings.php" id="sideratings" class="flex items-center p-4 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+              
+            <i class="text-yellow-400 fa-solid fa-star"></i> <span class="flex-1 ml-3 whitespace-nowrap">Ratings</span>
+            </a>
+         </li> -->
+      <!-- <li>
+            <a href="devices.php" id="sidedevice" class="  flex items-center p-4 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+              
+            <i class="fa-solid fa-computer"></i> <span class="flex-1 ml-3 whitespace-nowrap">Devices</span>
+            </a>
+         </li> -->
       <li>
         <a href="user.php" id="sideuser" class="flex items-center p-4 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
 
           <i class="fa-solid fa-user"></i> <span class="flex-1 ml-3 whitespace-nowrap">User</span>
         </a>
       </li>
-      <li>
-        <a href="pms.php" id="sidepms" class="flex items-center p-4 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-
-          <i class="fa-solid fa-broom"></i> <span class="flex-1 ml-3 whitespace-nowrap">PMS</span>
-        </a>
-      </li> -->
+      <!-- <li>
+            <a href="pms.php" id="sidepms" class="flex items-center p-4 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+              
+            <i class="fa-solid fa-broom"></i> <span class="flex-1 ml-3 whitespace-nowrap">PMS</span>
+            </a>
+         </li> -->
     </ul>
   </div>
 </div>
@@ -318,7 +362,7 @@ if (isset($_POST['registerUser'])) {
 
                                                                                                               ?>
             </select>
-            <label for="month" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Department</label>
+            <label for="month" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">User Type</label>
 
             <select id="userType" name="userType" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
               <option selected value="user">Employee</option>
@@ -401,6 +445,74 @@ if (isset($_POST['registerUser'])) {
     </div>
   </div>
 </div>
+
+<!-- iibahin ni olive -->
+
+<div id="generateReportModal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+  <div class="relative w-full max-w-md max-h-full">
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <button type="button" data-modal-toggle="generateReportModal" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white">
+        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+        </svg>
+        <span class="sr-only">Close modal</span>
+      </button>
+      <div class="px-6 py-6 lg:px-8">
+        <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">View Summary Report</h3>
+        <form class="space-y-6" action="" method="POST">
+          <div>
+            <label for="section" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Request Type</label>
+
+
+            <select id="request_type" name="request_type" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              <option value="ALL">All</option>
+              <option value="TS">Technical Support</option>
+              <option value="JO">Job Order Request</option>
+              <!-- <option  value="SR">System Request</option> -->
+            </select>
+            <label for="month" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Month</label>
+
+            <select id="month" name="month" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+
+              <?php
+              $date = new DateTime('01-01-2023');
+              $dateNow = new DateTime();
+              $monthNow = $dateNow->format('F');
+
+              for ($i = 1; $i <= 12; $i++) {
+                $month = $date->format('F');
+              ?> <option <?php if ($monthNow == $month) {
+                            echo "selected";
+                          } ?> value="<?php echo $month; ?>"><?php echo $month; ?></option> <?php
+                                                                                            $date->modify('next month');
+                                                                                          }
+                                                                                            ?>
+            </select>
+
+          </div>
+          <div>
+            <label for="year" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Year</label>
+            <input type="number" value="<?php $dateNow2 = new DateTime();
+                                        $year = $dateNow2->format('Y');
+                                        echo $year; ?>" name="year" id="year" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
+          </div>
+
+          <!-- <button type="submit" name="pdfReport" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                      Generate PDF
+                    </button> -->
+
+          <button type="submit" name="excelReport" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            Generate Excel
+          </button>
+
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
   function clickButton() {
     var button = document.getElementById("sidebarButton"); // replace "myButton" with the ID of your button
