@@ -416,8 +416,10 @@ if (isset($_POST['approveRequest'])) {
         $_SESSION['status'] = 'inprogress';
         $sql = "UPDATE `request` SET `status2`='inprogress',`reqstart_date` = '$start',`reqfinish_date` = '$finish',`admin_approved_date`='$date',`expectedFinishDate` = '$newDate',`admin_remarks`='$remarks',`admin_approved_date`='$date',`assignedPersonnel`='$assigned',`assignedPersonnelName`='$personnelName', `ict_approval_date`= '$dateToday' WHERE `id` = '$requestID';";
     } elseif ($section == "FEM" || $section === "fem") {
-        $_SESSION['status'] = 'admin';
-        $sql = "UPDATE `request` SET `status2`='admin',`approving_head`='$username',`head_approval_date`='$date',`head_remarks`='$remarks' WHERE `id` = '$requestID';";
+        // $_SESSION['status'] = 'admin';
+        // $sql = "UPDATE `request` SET `status2`='admin',`approving_head`='$username',`head_approval_date`='$date',`head_remarks`='$remarks' WHERE `id` = '$requestID';";
+        $_SESSION['status'] = 'inprogress';
+        $sql = "UPDATE `request` SET `status2`='inprogress',`reqstart_date` = '$start',`reqfinish_date` = '$finish',`admin_approved_date`='$date',`expectedFinishDate` = '$newDate',`admin_remarks`='$remarks',`admin_approved_date`='$date',`assignedPersonnel`='$assigned',`assignedPersonnelName`='$personnelName', `ict_approval_date`= '$dateToday' WHERE `id` = '$requestID';";
     }
     $results = mysqli_query($con, $sql);
 
@@ -810,7 +812,7 @@ Copy
                                             </button>
                                         </div>
                                     </li>
-                                    <li role="presentation">
+                                    <!-- <li role="presentation">
                                         <div class="p__uwg" style="width: 106px; margin-right: 0px;">
                                             <button id="headApprovalTab1" onclick="goToHeadApproval()" type="button" role="tab" aria-controls="headApprovalMain" class="_1QoxDw o4TrkA CA2Rbg Di_DSA cwOZMg zQlusQ uRvRjQ POMxOg _lWDfA" aria-selected="false">
                                                 <div class="_1cZINw">
@@ -852,7 +854,7 @@ Copy
                                                 <p class="_5NHXTA _2xcaIA ZSdr0w CCfw7w GHIRjw">ICT's Requests</p>
                                             </button>
                                         </div>
-                                    </li>
+                                    </li> -->
                                     <li role="presentation">
                                         <div class="p__uwg" style="width: 106px; margin-right: 0px;">
                                             <button id="headApprovalTab" onclick="goToHead()" type="button" role="tab" aria-controls="headApproval" class="_1QoxDw o4TrkA CA2Rbg Di_DSA cwOZMg zQlusQ uRvRjQ POMxOg _lWDfA" aria-selected="false">
@@ -979,7 +981,7 @@ Copy
                                     </li>
                                 </ul>
                             </div>
-                            <div class="rzHaWQ theme light" id="diamond" style="transform: translateX(275px) translateY(2px) rotate(135deg);"></div>
+                            <div class="rzHaWQ theme light" id="diamond" style="transform: translateX(160px) translateY(2px) rotate(135deg);"></div>
                         </div>
                     </div>
                 </div>
@@ -1696,7 +1698,7 @@ Copy
                         </h3>
                         <div class="ml-auto">
                             <button onclick="requireSelect()" id="transferButton" type="button" data-modal-target="transfer" data-modal-toggle="transfer" class=" hidden text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#3b5998]/55 ">
-                                <svg class="w-4 h-4 mr-2 -ml-1 " fill="none" focusable="false" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <svg class="w-4 h-4 mr-2 -ml-1 " fill="none" focusable="false" stroke="currentCoAlor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 00-3.7-3.7 48.678 48.678 0 00-7.324 0 4.006 4.006 0 00-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3l-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 003.7 3.7 48.656 48.656 0 007.324 0 4.006 4.006 0 003.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3l-3 3"></path>
                                 </svg> Transfer
                             </button>
@@ -2585,11 +2587,11 @@ FROM `user` u";
                 triggerEl: document.querySelector('#overallTab'),
                 targetEl: document.querySelector('#overAll')
             },
-            {
-                id: 'headApprovalmain',
-                triggerEl: document.querySelector('#headApprovalTab1'),
-                targetEl: document.querySelector('#headApprovalMain')
-            },
+            // {
+            //     id: 'headApprovalmain',
+            //     triggerEl: document.querySelector('#headApprovalTab1'),
+            //     targetEl: document.querySelector('#headApprovalMain')
+            // },
             {
                 id: 'headApproval1',
                 triggerEl: document.querySelector('#headApprovalTab'),
@@ -2639,7 +2641,7 @@ FROM `user` u";
             document.getElementById("datefinish").disabled = true;
 
 
-            const currentTransform = myElement.style.transform = 'translateX(55px) translateY(2px) rotate(135deg)';
+            const currentTransform = myElement.style.transform = 'translateX(50px) translateY(2px) rotate(135deg)';
 
             $("#buttonPrintDiv").addClass("hidden");
             $("#recommendationDiv").addClass("hidden");
@@ -2665,7 +2667,7 @@ FROM `user` u";
 
         function goToHeadApproval() {
             const myElement = document.querySelector('#diamond');
-            const currentTransform = myElement.style.transform = 'translateX(165px) translateY(2px) rotate(135deg)';
+            // const currentTransform = myElement.style.transform = 'translateX(165px) translateY(2px) rotate(135deg)';
             $("#adminremarksDiv").addClass("hidden");
             $("#remarksDiv").removeClass("hidden");
             $("#chooseAssignedDiv").addClass("hidden");
@@ -2686,7 +2688,7 @@ FROM `user` u";
             $("#buttonPrintDiv").removeClass("hidden");
             $("#actionDetailsDiv").addClass("hidden");
             $("#ratingstar").addClass("hidden");
-            const currentTransform = myElement.style.transform = 'translateX(275px) translateY(2px) rotate(135deg)';
+            const currentTransform = myElement.style.transform = 'translateX(160px) translateY(2px) rotate(135deg)';
             document.getElementById("reasonCancel").required = false;
             document.getElementById("telephone").disabled = true;
             document.getElementById("assigned").required = true;
@@ -2718,7 +2720,9 @@ FROM `user` u";
             $("#transferButton").removeClass("hidden");
             document.getElementById("datestart").disabled = true;
             document.getElementById("datefinish").disabled = true;
-            const currentTransform = myElement.style.transform = 'translateX(385px) translateY(2px) rotate(135deg)';
+            // const currentTransform = myElement.style.transform = 'translateX(385px) translateY(2px) rotate(135deg)';
+
+            const currentTransform = myElement.style.transform = 'translateX(270px) translateY(2px) rotate(135deg)';
 
 
 
@@ -2734,7 +2738,7 @@ FROM `user` u";
             $("#actionDetailsDiv").removeClass("hidden");
             $("#buttonPrintDiv").removeClass("hidden");
 
-            const currentTransform = myElement.style.transform = 'translateX(495px) translateY(2px) rotate(135deg)';
+            const currentTransform = myElement.style.transform = 'translateX(380px) translateY(2px) rotate(135deg)';
             $("#recommendationDiv").removeClass("hidden");
 
             document.getElementById("reasonCancel").required = false;

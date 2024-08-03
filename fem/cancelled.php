@@ -24,7 +24,7 @@ $user_level = $_SESSION['level'];
       <?php
       $a = 1;
 
-      $sql = "select * from `request` WHERE `request_to` = 'mis' and `status2` = 'cancelled' order by id asc  ";
+      $sql = "select * from `request` WHERE `request_to` = 'fem' and `status2` = 'cancelled' order by id asc  ";
       $result = mysqli_query($con, $sql);
 
       while ($row = mysqli_fetch_assoc($result)) {

@@ -230,14 +230,14 @@ $status = $_SESSION['status'];
 
         if ($adminsRemarks != "") { ?>
             <tr>
-                <td class="first"><span class="label">ICT Head&apos;s Remarks</span></td>
+                <td class="first"><span class="label">FEM Admin&apos;s Remarks</span></td>
                 <td class="second"> <span class="child"><?php echo $adminsRemarks; ?></span></td>
                 <td><span class="label">Date: </span></td>
                 <td class="fourth"><span class="child"><?php echo $adminsDate; ?></span></td>
             </tr>
         <?php } elseif ($adminsRemarks == "" && $adminsDate != "") { ?>
             <tr>
-                <td class="first"><span class="label">ICT Head&apos;s Remarks</span></td>
+                <td class="first"><span class="label">FEM Admin&apos;s Remarks</span></td>
                 <td class="second"> <span class="child">n/a</span></td>
                 <td><span class="label">Date: </span></td>
                 <td class="fourth"><span class="child"><?php echo $adminsDate; ?></span></td>
@@ -314,7 +314,7 @@ $status = $_SESSION['status'];
                 <td colspan="4"> <span class="child"><?php echo $recommendation; ?></span></td>
             </tr>
             <tr>
-                <td class="first"><span class="label">ICT Head&apos;s Remarks:</span></td>
+                <td class="first"><span class="label">FEM Admin&apos;s Remarks:</span></td>
                 <td colspan="4"> <span class="child"><?php echo $icthead_reco_remarks; ?></span></td>
             </tr>
         </table>

@@ -32,7 +32,7 @@ $username = $_SESSION['username'];
             $a = 1;
 
 
-            $sql = "select * from `request` WHERE  (`status2` = 'rated' OR `status2` = 'Done')and `request_to` = 'mis' order by `actual_finish_date` desc  ";
+            $sql = "select * from `request` WHERE  (`status2` = 'rated' OR `status2` = 'Done')and `request_to` = 'fem' order by `actual_finish_date` desc  ";
             $result = mysqli_query($con, $sql);
 
 

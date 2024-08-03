@@ -193,14 +193,14 @@ if ($headsRemarks != "") {
 
 if ($adminsRemarks != "") {
     $html .= ' <tr>
-                <td class="first"><span class="label">ICT Head&apos;s Remarks</span></td>
+                <td class="first"><span class="label">FEM Admin&apos;s Remarks</span></td>
                 <td class="second"> <span class="child">' . $adminsRemarks . '</span></td>
                 <td><span class="label">Date: </span></td>
                 <td class="fourth"><span class="child">' . $adminsDate . '</span></td>
             </tr>';
 } else {
     $html .= '<tr>
-                <td class="first"><span class="label">ICT Head&apos;s Remarks</span></td>
+                <td class="first"><span class="label">FEM Admin&apos;s Remarks</span></td>
                 <td class="second"> <span class="child">n/a</span></td>
                 <td><span class="label">Date: </span></td>
                 <td class="fourth"><span class="child">' . $adminsDate . '</span></td>
@@ -276,7 +276,7 @@ if ($recommendation != "" && ($icthead_reco_remarks != ""  || $icthead_reco_rema
                     <td colspan="4"> <span class="child">' . $recommendation . '</span></td>
                 </tr>';
     $html .= '<tr>
-                    <td class="first"><span class="label">ICT Head&apos;s Remarks:</span></td>
+                    <td class="first"><span class="label">FEM Admin&apos;s Remarks:</span></td>
                     <td colspan="4"> <span class="child">' . $icthead_reco_remarks . '</span></td>
                     </tr></table> <hr>';
 } elseif ($recommendation != "" && ($icthead_reco_remarks == "" || $icthead_reco_remarks == NULL) && $approved_reco == 1) {
