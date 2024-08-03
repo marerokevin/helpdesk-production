@@ -392,14 +392,14 @@
                                                      <div style="overflow:inherit" class="_qiHHw Ut_ecQ kHy45A">
                                                          <span class=" sr-only">Notifications</span>
                                                          <?php
-                                                            $sql1 = "SELECT COUNT(id) as 'pending' FROM request WHERE (`status2` = 'rated' OR `status2` = 'Done')and `request_to` = 'mis'";
+                                                            $sql1 = "SELECT COUNT(id) as 'pending' FROM request WHERE (`status2` = 'rated' OR `status2` = 'Done')and `request_to` = 'fem'";
                                                             $result = mysqli_query($con, $sql1);
                                                             while ($count = mysqli_fetch_assoc($result)) {
 
                                                                 if ($count["pending"] > 0) {
                                                             ?>
                                                                  <div class=" absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-border-white"> <?php
-                                                                                                                                                                                                                                                                $sql1 = "SELECT COUNT(id) as 'pending' FROM request  WHERE (`status2` = 'rated' OR `status2` = 'Done')and `request_to` = 'mis'";
+                                                                                                                                                                                                                                                                $sql1 = "SELECT COUNT(id) as 'pending' FROM request  WHERE (`status2` = 'rated' OR `status2` = 'Done')and `request_to` = 'fem'";
                                                                                                                                                                                                                                                                 $result = mysqli_query($con, $sql1);
                                                                                                                                                                                                                                                                 while ($count = mysqli_fetch_assoc($result)) {
                                                                                                                                                                                                                                                                     echo $count["pending"];
@@ -430,14 +430,14 @@
                                                             $dateMonth = $date1->format('M');
                                                             $dateYear = $date1->format('Y');
 
-                                                            $sql1 = "SELECT COUNT(id) as 'pending' FROM request WHERE  `request_to` = 'mis' and `status2` = 'cancelled'";
+                                                            $sql1 = "SELECT COUNT(id) as 'pending' FROM request WHERE  `request_to` = 'fem' and `status2` = 'cancelled'";
                                                             $result = mysqli_query($con, $sql1);
                                                             while ($count = mysqli_fetch_assoc($result)) {
 
                                                                 if ($count["pending"] > 0) {
                                                             ?>
                                                                  <div class=" absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-border-white"> <?php
-                                                                                                                                                                                                                                                                $sql1 = "SELECT COUNT(id) as 'pending' FROM request WHERE `request_to` = 'mis' and `status2` = 'cancelled'";
+                                                                                                                                                                                                                                                                $sql1 = "SELECT COUNT(id) as 'pending' FROM request WHERE `request_to` = 'fem' and `status2` = 'cancelled'";
                                                                                                                                                                                                                                                                 $result = mysqli_query($con, $sql1);
                                                                                                                                                                                                                                                                 while ($count = mysqli_fetch_assoc($result)) {
                                                                                                                                                                                                                                                                     echo $count["pending"];
