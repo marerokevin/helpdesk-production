@@ -238,13 +238,13 @@ if (isset($_POST['approveRequest'])) {
     $_SESSION['ticket_category'] =  $ticket_category;
 
     if ($cat_lvl  == "" || $cat_lvl == NULL || $cat_lvl  == "Normal") {
-        $sql1 = "SELECT * FROM `categories`
+        $sql1 = "SELECT * FROM `femcategories`
                 WHERE `req_type` = 'JO'";
         $result1 = mysqli_query($con, $sql1);
         $row1 = mysqli_fetch_assoc($result1);
         $days = $row1['days'];
     } else {
-        $sql1 = "SELECT * FROM `categories`
+        $sql1 = "SELECT * FROM `femcategories`
                 WHERE `level` LIKE '$cat_lvl%' AND `req_type`= 'TS'";
         $result1 = mysqli_query($con, $sql1);
         $row1 = mysqli_fetch_assoc($result1);
@@ -1112,9 +1112,9 @@ if (isset($_POST['cancelJO'])) {
                             $end_date = new DateTime();
                             $end_date = $end_date->format('Y-m-d');
                             $a = 1;
-                            $sql = "SELECT request.*, categories.level, categories.hours
+                            $sql = "SELECT request.*, femcategories.level, femcategories.hours
                             FROM request
-                            LEFT JOIN categories ON request.request_category = categories.c_name
+                            LEFT JOIN femcategories ON request.request_category = femcategories.c_name
                             WHERE request.status2 = 'inprogress'
                             AND request.assignedPersonnel = '$femusername'
                             ORDER BY request.id ASC;";
@@ -1128,14 +1128,14 @@ if (isset($_POST['cancelJO'])) {
 
                                 if ($cat_lvl  == "" || $cat_lvl == NULL || $cat_lvl == "Normal") {
 
-                                    $sql1 = "SELECT * FROM `categories`
+                                    $sql1 = "SELECT * FROM `femcategories`
                             WHERE `req_type` = 'JO'";
                                     $result1 = mysqli_query($con, $sql1);
                                     $row1 = mysqli_fetch_assoc($result1);
                                     $days = $row1['days'];
                                 } else {
 
-                                    $sql1 = "SELECT * FROM `categories`
+                                    $sql1 = "SELECT * FROM `femcategories`
                             WHERE `level` LIKE '$cat_lvl%' AND `req_type`= 'TS'";
                                     $result1 = mysqli_query($con, $sql1);
                                     $row1 = mysqli_fetch_assoc($result1);

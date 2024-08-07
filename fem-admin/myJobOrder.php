@@ -238,13 +238,13 @@ if (isset($_POST['approveRequest'])) {
     $_SESSION['ticket_category'] =  $ticket_category;
 
     if ($cat_lvl  == "" || $cat_lvl == NULL || $cat_lvl  == "Normal") {
-        $sql1 = "SELECT * FROM `categories`
+        $sql1 = "SELECT * FROM `femcategories`
                 WHERE `req_type` = 'JO'";
         $result1 = mysqli_query($con, $sql1);
         $row1 = mysqli_fetch_assoc($result1);
         $days = $row1['days'];
     } else {
-        $sql1 = "SELECT * FROM `categories`
+        $sql1 = "SELECT * FROM `femcategories`
                 WHERE `level` LIKE '$cat_lvl%' AND `req_type`= 'TS'";
         $result1 = mysqli_query($con, $sql1);
         $row1 = mysqli_fetch_assoc($result1);
@@ -290,7 +290,7 @@ if (isset($_POST['approveRequest'])) {
         }
 
         $ict_leader = array();
-        $query = "Select * FROM `user` WHERE `level` = 'admin' and `leader` = 'mis'";
+        $query = "Select * FROM `user` WHERE `level` = 'admin' and `leader` = 'fem'";
         $heademail = mysqli_query($con, $query);
         while ($li = mysqli_fetch_assoc($heademail)) {
             $ict_leader[] = $li;
@@ -854,14 +854,14 @@ if (isset($_POST['cancelJO'])) {
                                                     <div style="overflow:inherit" class="_qiHHw Ut_ecQ kHy45A">
                                                         <span class=" sr-only">Notifications</span>
                                                         <?php
-                                                        $sql1 = "SELECT COUNT(id) as 'pending' FROM request WHERE `status2` ='inprogress' and `request_to` = 'mis'";
+                                                        $sql1 = "SELECT COUNT(id) as 'pending' FROM request WHERE `status2` ='inprogress' and `request_to` = 'fem'";
                                                         $result = mysqli_query($con, $sql1);
                                                         while ($count = mysqli_fetch_assoc($result)) {
 
                                                             if ($count["pending"] > 0) {
                                                         ?>
                                                                 <div class=" absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-border-white"> <?php
-                                                                                                                                                                                                                                                            $sql1 = "SELECT COUNT(id) as 'pending' FROM request  WHERE `status2` ='inprogress' and `request_to` = 'mis'";
+                                                                                                                                                                                                                                                            $sql1 = "SELECT COUNT(id) as 'pending' FROM request  WHERE `status2` ='inprogress' and `request_to` = 'fem'";
                                                                                                                                                                                                                                                             $result = mysqli_query($con, $sql1);
                                                                                                                                                                                                                                                             while ($count = mysqli_fetch_assoc($result)) {
                                                                                                                                                                                                                                                                 echo $count["pending"];
@@ -1113,9 +1113,9 @@ if (isset($_POST['cancelJO'])) {
                             $end_date = new DateTime();
                             $end_date = $end_date->format('Y-m-d');
                             $a = 1;
-                            $sql = "SELECT request.*, categories.level, categories.hours
+                            $sql = "SELECT request.*, femcategories.level, femcategories.hours
                             FROM request
-                            LEFT JOIN categories ON request.request_category = categories.c_name
+                            LEFT JOIN femcategories ON request.request_category = femcategories.c_name
                             WHERE request.status2 = 'inprogress'
                             AND request.assignedPersonnel = '$misusername'
                             ORDER BY request.id ASC;";
@@ -1129,14 +1129,14 @@ if (isset($_POST['cancelJO'])) {
 
                                 if ($cat_lvl  == "" || $cat_lvl == NULL || $cat_lvl == "Normal") {
 
-                                    $sql1 = "SELECT * FROM `categories`
+                                    $sql1 = "SELECT * FROM `femcategories`
                             WHERE `req_type` = 'JO'";
                                     $result1 = mysqli_query($con, $sql1);
                                     $row1 = mysqli_fetch_assoc($result1);
                                     $days = $row1['days'];
                                 } else {
                                     // echo $cat_lvl;
-                                    $sql1 = "SELECT * FROM `categories`
+                                    $sql1 = "SELECT * FROM `femcategories`
                             WHERE `level` LIKE '$cat_lvl%' AND `req_type`= 'TS'";
                                     $result1 = mysqli_query($con, $sql1);
                                     $row1 = mysqli_fetch_assoc($result1);
@@ -1447,7 +1447,7 @@ if (isset($_POST['cancelJO'])) {
                             <?php
                             $a = 1;
 
-                            $sql = "select * from `request` WHERE `status2` ='inprogress' and `request_to` = 'mis' order by id asc  ";
+                            $sql = "select * from `request` WHERE `status2` ='inprogress' and `request_to` = 'fem' order by id asc  ";
                             $result = mysqli_query($con, $sql);
 
                             while ($row = mysqli_fetch_assoc($result)) {

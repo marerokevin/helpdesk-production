@@ -118,7 +118,7 @@ if (isset($_POST['submitTicket'])) {
     $_SESSION['ticket_category'] = $_POST['r_categories'];
 
 
-    $query = mysqli_query($con, "Select * FROM `categories` WHERE `c_name` = '$ticket_category'");
+    $query = mysqli_query($con, "Select * FROM `femcategories` WHERE `c_name` = '$ticket_category'");
     while ($cat = mysqli_fetch_assoc($query)) {
         $completion_days = $cat['days'];
     }
