@@ -4,14 +4,11 @@ $timeout = 3600;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-
 ini_set("session.gc_maxlifetime", $timeout);
 
 ini_set("session.cookie_lifetime", $timeout);
 
 $s_name = session_name();
-// $url1 = $_SERVER['REQUEST_URI'];
-// header("Refresh: 500; URL=$url1");
 
 if (isset($_COOKIE[$s_name])) {
 
@@ -23,40 +20,6 @@ if (isset($_COOKIE[$s_name])) {
 
 session_start();
 
-
-//  function addWeekdays($startDate, $daysToAdd) {
-//     $currentDate = strtotime($startDate);
-
-//     while ($daysToAdd > 0) {
-//         $currentDayOfWeek = date('N', $currentDate);
-
-//         // Skip Saturday (6) and Sunday (7)
-//         if ($currentDayOfWeek >= 6) {
-//             $currentDate = strtotime('+1 day', $currentDate);
-//             continue;
-//         }
-
-//         $currentDate = strtotime('+1 day', $currentDate);
-//         $daysToAdd--;
-//     }
-
-//     return date('Y-m-d', $currentDate);
-// }
-
-// $startDate = '2023-09-29'; // Replace with your start date
-// $daysToAdd = 5; // Number of weekdays to add
-
-// $newDate = addWeekdays($startDate, $daysToAdd);
-// echo "New date after adding $daysToAdd weekdays: $newDate";
-
-
-
-
-
-
-
-
-//  echo  $_SESSION['leaderof'];
 include("../includes/connect.php");
 if (isset($_SESSION['connected'])) {
 
@@ -79,47 +42,6 @@ if (!isset($_SESSION['connected'])) {
     header("location: ../logout.php");
 }
 
-//   $sqlHoli = "SELECT holidaysDate FROM holidays";
-//   $resultHoli = mysqli_query($con, $sqlHoli);
-//   $holidays = array();
-//   while ($row = mysqli_fetch_assoc($resultHoli)) {
-//       $holidays[] = $row['holidaysDate'];
-//   }
-
-//   // Function to add weekdays, excluding weekends and holidays
-//   function addWeekdays($startDate, $daysToAdd, $holidays) {
-//       $currentDate = strtotime($startDate);
-//       $weekdaysAdded = 0;
-
-//       while ($weekdaysAdded < $daysToAdd) {
-//           $currentDayOfWeek = date('N', $currentDate);
-
-//           // Exclude weekends (Saturday and Sunday)
-//           if ($currentDayOfWeek < 6) {
-//               $isHoliday = in_array(date('Y-m-d', $currentDate), $holidays);
-
-//               // Exclude holidays
-//               if (!$isHoliday) {
-//                   $weekdaysAdded++;
-//               }
-//           }
-
-//           // Move to the next day
-//           $currentDate = strtotime('+1 day', $currentDate);
-//       }
-
-//       return date('Y-m-d', $currentDate);
-//   }
-
-//   // Your existing code to set the start date and add 7 weekdays
-//   $date = date("Y-m-d");
-//   $startDate = $date; // Replace with your start date
-//   $daysToAdd = 7; // Number of weekdays to add
-
-//   $newDate = addWeekdays($startDate, $daysToAdd, $holidays);
-//   echo "Start Date: $startDate<br>";
-//   echo "New Date (after adding 7 weekdays excluding weekends and holidays): $newDate";
-
 
 $sqllink = "SELECT `link` FROM `setting`";
 $resultlink = mysqli_query($con, $sqllink);
@@ -128,13 +50,8 @@ while ($listlink = mysqli_fetch_assoc($resultlink)) {
     $link = $listlink["link"];
 }
 
-
 $user_dept = $_SESSION['department'];
 $user_level = $_SESSION['level'];
-
-
-
-
 
 $_SESSION['jobOrderNo'] = "";
 $_SESSION['status'] = "";
@@ -167,9 +84,6 @@ $_SESSION['ratedDate'] = "";
 $_SESSION['headsDate'] = "";
 $_SESSION['adminsDate'] = "";
 
-
-
-
 if (isset($_POST['transferJo'])) {
     $joidtransfer =  $_POST['joidtransfer'];
     $assigned = $_POST['transferUser'];
@@ -184,17 +98,23 @@ if (isset($_POST['transferJo'])) {
     }
     $sql = "UPDATE `request` SET `assignedPersonnel`='$assigned',`assignedPersonnelName`='$personnelName' WHERE `id` = '$joidtransfer';";
     $results = mysqli_query($con, $sql);
+    if ($results) {
+        echo "<script>alert('Successfuly transfered request.')</script>";
+        echo "<script> location.href='index.php'; </script>";
+    }
 }
-
-
 
 if (isset($_POST['changeSchedJo'])) {
     $joidtransfer =  $_POST['joidtransfer'];
-    // $targetDate = $_POST['changeScheddate'];
+    // $targetDate = $_POST['changeScheddate']; 
     $targetDate = $_POST['expectedfinishdate'];
 
     $sql = "UPDATE `request` SET `expectedFinishDate`='$targetDate' WHERE `id` = '$joidtransfer';";
     $results = mysqli_query($con, $sql);
+    if ($results) {
+        echo "<script>alert('Successfuly changed target finish date.' )</script>";
+        echo "<script> location.href='index.php'; </script>";
+    }
 }
 
 if (isset($_POST['print'])) {
@@ -260,7 +180,6 @@ if (isset($_POST['print'])) {
     </script>
 <?php
 
-
 }
 function addWeekdays($startDate, $daysToAdd)
 {
@@ -283,6 +202,8 @@ function addWeekdays($startDate, $daysToAdd)
 }
 
 if (isset($_POST['approveRequest'])) {
+
+
     $_SESSION['jobOrderNo'] = $_POST['pjobOrderNo'];
     $_SESSION['requestor'] = $_POST['prequestor'];
     $_SESSION['pdepartment'] = $_POST['pdepartment'];
@@ -357,10 +278,6 @@ if (isset($_POST['approveRequest'])) {
     $sql1 = "Select * FROM `request` WHERE `id` = '$requestID'";
     $result = mysqli_query($con, $sql1);
     while ($list = mysqli_fetch_assoc($result)) {
-        // $requestorUsername=$list["requestorUsername"];
-        // $email=$list["email"];
-        // $requestor=$list["requestor"];
-
         $request_type = $list['request_type'];
         $request_category = $list["request_category"];
         $detailsOfRequest = $list["request_details"];
@@ -374,72 +291,20 @@ if (isset($_POST['approveRequest'])) {
     $start = $_POST['start'];
     $finish = $_POST['finish'];
 
-    $query = mysqli_query($con, "Select * FROM `femcategories` WHERE `c_name` = '$ticket_category'");
-    while ($cat = mysqli_fetch_assoc($query)) {
-        $completion_days = $cat['days'];
-    }
-
-
-
-    // Function to add weekdays, excluding weekends and holidays
-    $sqlHoli = "SELECT holidaysDate FROM holidays";
-    $resultHoli = mysqli_query($con, $sqlHoli);
-    $holidays = array();
-    while ($row = mysqli_fetch_assoc($resultHoli)) {
-        $holidays[] = $row['holidaysDate'];
-    }
-
-    // Function to add weekdays, excluding weekends and holidays
-    function addWeekdays2($startDate, $daysToAdd, $holidays)
-    {
-        $currentDate = strtotime($startDate); // ict approval date
-        $weekdaysAdded = 0;
-
-        while ($weekdaysAdded < $daysToAdd) {
-            $currentDayOfWeek = date('N', $currentDate);
-
-            // Exclude weekends (Saturday and Sunday)
-            if ($currentDayOfWeek < 6) {
-                $isHoliday = in_array(date('Y-m-d', $currentDate), $holidays);
-
-                // Exclude holidays
-                if (!$isHoliday) {
-                    $weekdaysAdded++;
-                }
-            }
-
-            // Move to the next day
-            $currentDate = strtotime('+1 day', $currentDate);
-        }
-
-        return date('Y-m-d', $currentDate);
-    }
+    // echo "<script> console.log('" $requestID; "') </script>";
     $dateToday = date('Y-m-d H:i:s', time());
-    // Your existing code to set the start date and add 7 weekdays
-    $date = date("Y-m-d");
-    $startDate = $date; // Replace with your start date
-    // $daysToAdd = 5; // Number of weekdays to add
-    $daysToAdd = $completion_days;
-    if (isset($_POST['expectedfinishdate'])) {
-        $newDate = $_POST['expectedfinishdate'];
-    } else {
-        $newDate = addWeekdays2($startDate, $daysToAdd, $holidays);
-    }
-
-    // echo "Start Date: $startDate<br>";
-    // echo "New Date (after adding 7 weekdays excluding weekends and holidays): $newDate";
+    $newDate = $_POST['expectedfinishdate'];
 
     $username = $_SESSION['name'];
     if ($section  === "ICT" || $section === "mis") {
         $_SESSION['status'] = 'inprogress';
         $sql = "UPDATE `request` SET `status2`='inprogress',`reqstart_date` = '$start',`reqfinish_date` = '$finish',`admin_approved_date`='$date',`expectedFinishDate` = '$newDate',`admin_remarks`='$remarks',`admin_approved_date`='$date',`assignedPersonnel`='$assigned',`assignedPersonnelName`='$personnelName', `ict_approval_date`= '$dateToday' WHERE `id` = '$requestID';";
-    } elseif ($section == "FEM" || $section === "fem") {
-        // $_SESSION['status'] = 'admin';
-        // $sql = "UPDATE `request` SET `status2`='admin',`approving_head`='$username',`head_approval_date`='$date',`head_remarks`='$remarks' WHERE `id` = '$requestID';";
+    } elseif ($section === "FEM" || $section === "fem") {
         $_SESSION['status'] = 'inprogress';
         $sql = "UPDATE `request` SET `status2`='inprogress',`reqstart_date` = '$start',`reqfinish_date` = '$finish',`admin_approved_date`='$date',`expectedFinishDate` = '$newDate',`admin_remarks`='$remarks',`admin_approved_date`='$date',`assignedPersonnel`='$assigned',`assignedPersonnelName`='$personnelName', `ict_approval_date`= '$dateToday' WHERE `id` = '$requestID';";
     }
     $results = mysqli_query($con, $sql);
+
 
     if ($results) {
         $sql2 = "Select * FROM `sender`";
@@ -455,17 +320,17 @@ if (isset($_POST['approveRequest'])) {
 
             if ($request_type === "Technical Support") {
                 $subject = 'New Ticket Request';
-                $message = 'Hi ' . $personnelName . ',<br> <br>   You have a new ticket request with TS number ' . $completejoid . ' from ' . $requestor . '. Please check the details below or by signing in into our Helpdesk. <br> Click this ' . $link . ' to sign in. <br><br>Request Type: ' . $request_type . '<br> Ticket Category: ' . $ticket_category . '<br>Category Level: ' . $cat_lvl . '<br> Request Details: ' . $detailsOfRequest . '<br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
+                $message = 'Hi ' . $personnelName . ',<br> <br>   You have a new ticket request with TS number ' . $completejoid . ' from ' . $requestor . '. Please check the details below or by signing in into our Helpdesk. <br> Click this ' . $link . ' to sign in. <br><br>Request to: FEM <br> Ticket Category: ' . $ticket_category . '<br> Request Details: ' . $detailsOfRequest . '<br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
 
                 $subject2 = 'Approved Ticket Request';
-                $message2 = 'Hi ' . $requestor . ',<br> <br>  Your ticket request with TS number ' . $completejoid . ' is now approved by the administrator. It is now in progress. Please check the details below or by signing in into our Helpdesk. <br> Click this ' . $link . ' to sign in. <br><br>Request Type: ' . $request_type . '<br> Ticket Category: ' . $ticket_category . '<br>Request Details: ' . $detailsOfRequest . '<br> Assigned Personnel: ' . $personnelName . '<br> Ticket Filer: ' . $user_name . '<br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
+                $message2 = 'Hi ' . $requestor . ',<br> <br>  Your ticket request with TS number ' . $completejoid . ' is now approved by the administrator. It is now in progress. Please check the details below or by signing in into our Helpdesk. <br> Click this ' . $link . ' to sign in. <br><br>Request to: FEM <br> Ticket Category: ' . $ticket_category . '<br>Request Details: ' . $detailsOfRequest . '<br> Assigned Personnel: ' . $personnelName . '<br> Ticket Filer: ' . $user_name . '<br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
             } else {
                 $request_type = "Job Order";
                 $subject = 'Job Order Request';
-                $message = 'Hi ' . $personnelName . ',<br> <br>   You have a new job order with JO number ' . $completejoid . ' from ' . $requestor . '. Please check the details below or by signing in into our Helpdesk. <br> Click this ' . $link . ' to sign in. <br><br>Request Type: ' . $request_type . '<br> Request Category: ' . $request_category . '<br>Request Details: ' . $detailsOfRequest . '<br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
+                $message = 'Hi ' . $personnelName . ',<br> <br>   You have a new job order with JO number ' . $completejoid . ' from ' . $requestor . '. Please check the details below or by signing in into our Helpdesk. <br> Click this ' . $link . ' to sign in. <br><br>Request to: FEM <br> Request Category: ' . $request_category . '<br>Request Details: ' . $detailsOfRequest . '<br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
 
                 $subject2 = 'Approved Job Order';
-                $message2 = 'Hi ' . $requestor . ',<br> <br>  Your Job Order with JO number ' . $completejoid . ' is now approved by the administrator. It is now in progress. Please check the details below or by signing in into our Helpdesk. <br> Click this ' . $link . ' to sign in. <br><br>Request Type: ' . $request_type . '<br> Request Category: ' . $request_category . '<br>Request Details: ' . $detailsOfRequest . '<br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
+                $message2 = 'Hi ' . $requestor . ',<br> <br>  Your Job Order with JO number ' . $completejoid . ' is now approved by the administrator. It is now in progress. Please check the details below or by signing in into our Helpdesk. <br> Click this ' . $link . ' to sign in. <br><br>Request to: FEM <br> Request Category: ' . $request_category . '<br>Request Details: ' . $detailsOfRequest . '<br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
             }
         } elseif ($section === "ICT" || $section === "mis") {
             $sql1 = "Select * FROM `user` WHERE `level` = 'admin' AND `leader` = 'mis' ";
@@ -475,10 +340,10 @@ if (isset($_POST['approveRequest'])) {
                 $leaderName = $list["name"];
             }
             $subject = 'Job Order Request';
-            $message = 'Hi ' . $leaderName . ',<br> <br>   Mr/Ms. ' . $requestor . ' filed a job order with JO number ' . $completejoid . ' . Please check the details below or by signing in into our Helpdesk.  <br> Click this ' . $link . ' to sign in. <br><br>Request Type: ' . $request_type . '<br> Request Category: ' . $request_category . '<br>Request Details: ' . $detailsOfRequest . '<br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
+            $message = 'Hi ' . $leaderName . ',<br> <br>   Mr/Ms. ' . $requestor . ' filed a job order with JO number ' . $completejoid . ' . Please check the details below or by signing in into our Helpdesk.  <br> Click this ' . $link . ' to sign in. <br><br>Request to: FEM <br> Request Category: ' . $request_category . '<br>Request Details: ' . $detailsOfRequest . '<br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
 
             $subject2 = 'Approved Job Order';
-            $message2 = 'Hi ' . $requestor . ',<br> <br>  Your Job Order with JO number ' . $completejoid . ' is now approved by your head. It is now sent to your administrator. Please check the details below or by signing in into our Helpdesk.<br> Click this ' . $link . ' to sign in. <br><br>Request Type: ' . $request_type . '<br> Request Category: ' . $request_category . '<br>Request Details: ' . $detailsOfRequest . '<br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
+            $message2 = 'Hi ' . $requestor . ',<br> <br>  Your Job Order with JO number ' . $completejoid . ' is now approved by your head. It is now sent to your administrator. Please check the details below or by signing in into our Helpdesk.<br> Click this ' . $link . ' to sign in. <br><br>Request to: FEM <br> Request Category: ' . $request_category . '<br>Request Details: ' . $detailsOfRequest . '<br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
         }
         require '../vendor/autoload.php';
         require '../dompdf/vendor/autoload.php';
@@ -576,8 +441,6 @@ if (isset($_POST['approveRequest'])) {
 
 }
 
-
-
 if (isset($_POST['cancelJO'])) {
     $joid = $_POST['joid2'];
     $reasonCancel = $_POST['reasonCancel'];
@@ -656,6 +519,51 @@ if (isset($_POST["approveReco"])) {
     $sql = "UPDATE `request` SET `approved_reco`= 1 ,`icthead_reco_remarks` = '$remarks' WHERE `id` = '$requestID';";
     $results = mysqli_query($con, $sql);
 }
+$x = $_SESSION['ticket_category'];
+$query = mysqli_query($con, "Select * FROM `femcategories` WHERE `c_name` = '$x'");
+while ($cat = mysqli_fetch_assoc($query)) {
+    $completion_days = $cat['days'];
+}
+// Function to add weekdays, excluding weekends and holidays
+$sqlHoli = "SELECT holidaysDate FROM holidays";
+$resultHoli = mysqli_query($con, $sqlHoli);
+$holidays = array();
+while ($row = mysqli_fetch_assoc($resultHoli)) {
+    $holidays[] = $row['holidaysDate'];
+}
+
+// Function to add weekdays, excluding weekends and holidays
+function addWeekdays2($startDate, $daysToAdd, $holidays)
+{
+    $currentDate = strtotime($startDate); // ict approval date
+    $weekdaysAdded = 0;
+
+    while ($weekdaysAdded < $daysToAdd) {
+        $currentDayOfWeek = date('N', $currentDate);
+
+        // Exclude weekends (Saturday and Sunday)
+        if ($currentDayOfWeek < 6) {
+            $isHoliday = in_array(date('Y-m-d', $currentDate), $holidays);
+
+            // Exclude holidays
+            if (!$isHoliday) {
+                $weekdaysAdded++;
+            }
+        }
+
+        // Move to the next day
+        $currentDate = strtotime('+1 day', $currentDate);
+    }
+
+    return date('Y-m-d', $currentDate);
+}
+$dateToday = date('Y-m-d H:i:s', time());
+// Your existing code to set the start date and add 7 weekdays
+$date = date("Y-m-d");
+$startDate = $date; // Replace with your start date
+// $daysToAdd = 5; // Number of weekdays to add
+$daysToAdd =  $completion_days;
+$newDate1 = addWeekdays2($startDate, $daysToAdd, $holidays);
 
 ?>
 
@@ -697,50 +605,7 @@ if (isset($_POST["approveReco"])) {
 
     </div>
     <div id="mainContent" class=" ml-72 flex mt-16  left-10 right-5  flex-col  px-14 sm:px-8  pt-6 pb-14 z-50 ">
-        <!-- <div id="dialParent" class="fixed right-6 bottom-6 group">
-<div id="dialContent" class="flex flex-col items-center hidden mb-4 space-y-2">
-<a href="devicesReport.php" target="_blank" type="button" class="felx w-[56px] h-[56px] text-gray-500 bg-white rounded-full border border-gray-200 dark:border-gray-600 hover:text-gray-900 shadow-sm dark:hover:text-white dark:text-gray-400 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 focus:outline-none dark:focus:ring-gray-400">
-<svg aria-hidden="true" class="w-6 h-6 mx-auto mt-px" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5 4v3H4a2 2 0 00-2 2v3a2 2 0 002 2h1v2a2 2 0 002 2h6a2 2 0 002-2v-2h1a2 2 0 002-2V9a2 2 0 00-2-2h-1V4a2 2 0 00-2-2H7a2 2 0 00-2 2zm8 0H7v3h6V4zm0 8H7v4h6v-4z" clip-rule="evenodd"></path></svg>
-<span class="block mb-px text-xs font-medium">Print Report</span>
-</a>
-<button type="button" data-tooltip-target="tooltip-share" data-tooltip-placement="left" class="flex justify-center items-center w-[52px] h-[52px] text-gray-500 hover:text-gray-900 bg-white rounded-full border border-gray-200 dark:border-gray-600 shadow-sm dark:hover:text-white dark:text-gray-400 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 focus:outline-none dark:focus:ring-gray-400">
-<svg aria-hidden="true" class="w-6 h-6 -ml-px " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z"></path></svg>
-<span class="sr-only">Share</span>
-</button>
-<div id="tooltip-share" role="tooltip" class="absolute z-10 invisible inline-block w-auto px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-Share
-<div class="tooltip-arrow" data-popper-arrow></div>
-</div>
-<button type="button" data-tooltip-target="tooltip-print" data-tooltip-placement="left" class="flex justify-center items-center w-[52px] h-[52px] text-gray-500 hover:text-gray-900 bg-white rounded-full border border-gray-200 dark:border-gray-600 shadow-sm dark:hover:text-white dark:text-gray-400 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 focus:outline-none dark:focus:ring-gray-400">
-<svg aria-hidden="true" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5 4v3H4a2 2 0 00-2 2v3a2 2 0 002 2h1v2a2 2 0 002 2h6a2 2 0 002-2v-2h1a2 2 0 002-2V9a2 2 0 00-2-2h-1V4a2 2 0 00-2-2H7a2 2 0 00-2 2zm8 0H7v3h6V4zm0 8H7v4h6v-4z" clip-rule="evenodd"></path></svg>
-<span class="sr-only">Print</span>
-</button>
-<div id="tooltip-print" role="tooltip" class="absolute z-10 invisible inline-block w-auto px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-Print
-<div class="tooltip-arrow" data-popper-arrow></div>
-</div>
-<button type="button" data-tooltip-target="tooltip-download" data-tooltip-placement="left" class="flex justify-center items-center w-[52px] h-[52px] text-gray-500 hover:text-gray-900 bg-white rounded-full border border-gray-200 dark:border-gray-600 shadow-sm dark:hover:text-white dark:text-gray-400 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 focus:outline-none dark:focus:ring-gray-400">
-<svg aria-hidden="true" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V8a2 2 0 00-2-2h-5L9 4H4zm7 5a1 1 0 00-2 0v1.586l-.293-.293a.999.999 0 10-1.414 1.414l2 2a.999.999 0 001.414 0l2-2a.999.999 0 10-1.414-1.414l-.293.293V9z" fill-rule="evenodd"></path></svg>
-<span class="sr-only">Download</span>
-</button>
-<div id="tooltip-download" role="tooltip" class="absolute z-10 invisible inline-block w-auto px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-Download
-<div class="tooltip-arrow" data-popper-arrow></div>
-</div>
-<button type="button" data-tooltip-target="tooltip-copy" data-tooltip-placement="left" class="flex justify-center items-center w-[52px] h-[52px] text-gray-500 hover:text-gray-900 bg-white rounded-full border border-gray-200 dark:border-gray-600 dark:hover:text-white shadow-sm dark:text-gray-400 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 focus:outline-none dark:focus:ring-gray-400">
-<svg aria-hidden="true" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M7 9a2 2 0 012-2h6a2 2 0 012 2v6a2 2 0 01-2 2H9a2 2 0 01-2-2V9z"></path><path d="M5 3a2 2 0 00-2 2v6a2 2 0 002 2V5h8a2 2 0 00-2-2H5z"></path></svg>
-<span class="sr-only">Copy</span>
-</button>
-<div id="tooltip-copy" role="tooltip" class="absolute z-10 invisible inline-block w-auto px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-Copy
-<div class="tooltip-arrow" data-popper-arrow></div>
-</div>
-</div>
-<button type="button" id="dialButton" aria-controls="speed-dial-menu-default" aria-expanded="false" class="flex items-center justify-center text-white bg-blue-700 rounded-full w-14 h-14 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:focus:ring-blue-800">
-<svg aria-hidden="true" class="w-8 h-8 transition-transform group-hover:rotate-45" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
-<span class="sr-only">Open actions menu</span>
-</button>
-</div> -->
+
         <div class="justify-center text-center flex items-start h-auto bg-gradient-to-r from-blue-900 to-teal-500 rounded-xl ">
             <div class="text-center py-2 m-auto lg:text-center w-full">
 
@@ -1125,11 +990,15 @@ Copy
 
                                         <button type="button" id="viewdetails" onclick="modalShow(this)" data-reqtype="<?php echo $reqtype; ?>" data-requestype="<?php echo $row['request_type']; ?>" data-recommendation="<?php echo $row['recommendation'] ?>" data-requestorremarks="<?php echo $row['requestor_remarks'] ?>" data-quality="<?php echo $row['rating_quality'] ?>" data-delivery="<?php echo $row['rating_delivery'] ?>" data-ratedby="<?php echo $row['ratedBy'] ?>" data-daterate="<?php echo $row['rateDate'] ?>" data-action1date="<?php echo $row['action1Date'] ?>" data-action2date="<?php echo $row['action2Date'] ?>" data-action3date="<?php echo $row['action3Date'] ?>" data-headremarks="<?php echo $row['head_remarks']; ?>" data-adminremarks="<?php echo $row['admin_remarks']; ?>" data-headdate="<?php echo $row['head_approval_date']; ?>" data-admindate="<?php echo $row['admin_approved_date']; ?>" data-department="<?php echo $row['department'] ?>" data-status="<?php echo $row['status2'] ?>" data-action1="<?php echo $row['action1'] ?>" data-action2="<?php echo $row['action2'] ?>" data-action3="<?php echo $row['action3'] ?>" data-ratings="<?php echo $row['rating_final']; ?>" data-actualdatefinished="" data-assignedpersonnel="<?php echo $row['assignedPersonnelName'] ?> " data-requestor="<?php echo $row['requestor'] ?>" data-personnel="<?php echo $row['assignedPersonnel'] ?>" data-action="<?php echo $dataAction = str_replace('"', '', $row['action']); ?>" data-telephone="<?php echo $row['telephone']; ?>" data-attachment="<?php echo $row['attachment']; ?>" data-joidprint="<?php echo $joid; ?>" data-headremarks="<?php echo $row['head_remarks']; ?>" data-adminremarks="<?php echo $row['admin_remarks']; ?>" data-joid="<?php echo $row['id']; ?>" data-requestoremail="<?php echo $row['email']; ?>" data-requestor="<?php echo $row['requestor']; ?>" data-datefiled="<?php $date = new DateTime($row['date_filled']);
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         $date = $date->format('F d, Y');
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        echo $date; ?>" data-expectedfinishdate="<?php echo $row['expectedFinishDate']; ?>" data-section="<?php if ($row['request_to'] == "fem") {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                echo "FEM";
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            } else if ($row['request_to'] == "mis") {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                echo "ICT";
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            } ?>" data-category="<?php echo $row['request_category']; ?>" data-comname="<?php echo $row['computerName']; ?>" data-start="<?php echo $row['reqstart_date']; ?>" data-end="<?php echo $row['reqfinish_date']; ?>" data-details="<?php echo $row['request_details']; ?>" class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        echo $date; ?>" data-expectedfinishdate="<?php if ($row['expectedFinishDate'] == "") {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        echo $newDate1;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    } else {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        echo $row['expectedFinishDate'];
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    } ?>" data-section="<?php if ($row['request_to'] == "fem") {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            echo "FEM";
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        } else if ($row['request_to'] == "mis") {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            echo "ICT";
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        } ?>" data-category="<?php echo $row['request_category']; ?>" data-comname="<?php echo $row['computerName']; ?>" data-start="<?php echo $row['reqstart_date']; ?>" data-end="<?php echo $row['reqfinish_date']; ?>" data-details="<?php echo $row['request_details']; ?>" class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
                                             View more
                                         </button>
                                     </td>
@@ -1654,7 +1523,7 @@ Copy
                                     <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
 
                                     </div>
-                                    <input id="expectedfinishdate" name="expectedfinishdate" type="date" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    <input id="expectedfinishdate" name="expectedfinishdate" type="date" value="<?php echo $newDate1 ?>" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                 </div>
 
                                 <button type="submit" name="changeSchedJo" id="changeSchedButton" class="hidden text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#3b5998]/55">
@@ -1690,7 +1559,8 @@ Copy
                                                 <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
                                             </svg>
                                         </div>
-                                        <input id="datestart" name="start" type="date" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Request date start">
+                                        <input id="datestart" name="start" type="date" class="bg-gray-50 border border
+                                        -gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Request date start">
                                     </div>
                                     <span class="mx-4 text-gray-500">to</span>
                                     <div class="relative">
