@@ -6,12 +6,13 @@ $llevel = $_SESSION['level'];
 $username = $_SESSION['username'];
 
 
-$sqlLevel = "select level from user where username='$username'";
+$sqlLevel = "select level, leader from user where username='$username'";
 $resultLevel = mysqli_query($con, $sqlLevel);
 while ($field = mysqli_fetch_assoc($resultLevel)) {
   $level = $field["level"];
+  $leader = $field["leader"];
   $_SESSION['level'] = $level;
-
+  $_SESSION['leader'] = $leader;
 
 
   if ($_SESSION['level'] == 'admin') {
@@ -63,7 +64,9 @@ if (isset($_POST['monthlyReport'])) {
       <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Helpdesk</span>
     </a>
     <div class="flex items-center md:order-2">
-      <a href="ticketForm.php" type="button" class=" hidden lg:block text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 shadow-lg shadow-teal-500/50 dark:shadow-lg dark:shadow-teal-800/80 w-60 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mx-3 md:mx-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Create a Ticket</a>
+      <?php if ($_SESSION['level'] == 'fem' && $_SESSION['leader'] == 'filler') { ?>
+        <a href="ticketForm.php" type="button" class=" hidden lg:block text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 shadow-lg shadow-teal-500/50 dark:shadow-lg dark:shadow-teal-800/80 w-60 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mx-3 md:mx-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Create a Ticket</a>
+      <?php   } ?>
 
       <a data-modal-target="generateReportModal" data-modal-toggle="generateReportModal" type="button" class=" hidden text-white bg-gradient-to-r from-purple-400 to-blue-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80 w-60 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mx-3 md:mx-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Monthly Report</a>
 
