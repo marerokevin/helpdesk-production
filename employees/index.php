@@ -277,7 +277,27 @@ while ($userRow = mysqli_fetch_assoc($result)) {
     $email = $userRow['email'];
 }
 
+if (isset($_POST['closeTicket'])) {
+    $id = $_POST['joid2'];
+    $query = mysqli_query($con, "SELECT * FROM `request` WHERE `id`='" . $id . "'");
+    $row = mysqli_fetch_assoc($query);
+    $approval_date = $row['requestor_approval_date'];
 
+    if ($approval_date != NULL) {
+        echo "<script>alert('Request already approved! Date of approval: $approval_date');</script>";
+        echo "<script>location.href='index.php';</script>";
+    } else {
+        $dateToday = date('Y-m-d H:i:s', time());
+        $sql = "UPDATE `request` SET `requestor_approval_date`='$dateToday' WHERE `id` = '$id';";
+        $results = mysqli_query($con, $sql);
+        if ($results) {
+            echo "<script>alert('Request has been closed successfully!');</script>";
+            echo "<script>location.href='index.php';</script>";
+        } else {
+            echo "<script>alert('There is a problem with filing. Please contact your administrator.');</script>";
+        }
+    }
+}
 ?>
 
 
@@ -700,6 +720,8 @@ while ($userRow = mysqli_fetch_assoc($result)) {
                     <input type="text" id="pratedDate" name="pratedDate" class="hidden">
                     <input type="text" id="papproved_reco" name="papproved_reco" class="hidden">
                     <input type="text" id="picthead_reco_remarks" name="picthead_reco_remarks" class="hidden">
+                    <input type="text" id="closedbyreqstr" name="closedbyreqstr" class="hidden">
+                    <input type="text" id="closedbysystem" name="closedbysystem" class="hidden">
                     <!-- Modal header -->
                     <div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
                         <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
@@ -736,8 +758,8 @@ while ($userRow = mysqli_fetch_assoc($result)) {
                                 <input type="text" name="computername" id="computername" class="col-span-1 bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 
                             </div>
-                            <div class="grid gap-4 grid-cols-2">
-                                <h2 id="telephoneh2" class="pl-10 float-left font-semibold text-gray-900 dark:text-gray-500"><span class="text-gray-400">Telephone</span></h2>
+                            <div class=" hidden grid gap-4 grid-cols-2">
+                                <h2 id="telephoneh2" class="  pl-10 float-left font-semibold text-gray-900 dark:text-gray-500"><span class="text-gray-400">Telephone</span></h2>
                                 <input type="text" name="telephone" id="telephone" class="col-span-1 bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 
                             </div>
@@ -796,7 +818,7 @@ while ($userRow = mysqli_fetch_assoc($result)) {
 
                     </div>
 
-                    <div id="buttondiv" class=" items-center p-4 border-t border-gray-200 rounded-b dark:border-gray-600">
+                    <div id="buttondiv" class=" hidden items-center p-4 border-t border-gray-200 rounded-b dark:border-gray-600">
                         <button type="submit" name="updateJO" class="shadow-lg shadow-teal-500/50 dark:shadow-lg dark:shadow-teal-800/80  w-full text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Update</button>
 
                         <button type="button" onclick="cancellation()" data-modal-target="popup-modal" data-modal-toggle="popup-modal" class="shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-pink-800/80  w-full text-white bg-gradient-to-br from-red-400 to-pink-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Cancel Request</button>
@@ -805,7 +827,10 @@ while ($userRow = mysqli_fetch_assoc($result)) {
                     <div id="buttonRateDiv" class="hidden items-center p-4 border-t border-gray-200 rounded-b dark:border-gray-600 hidden">
                         <button type="button" data-modal-target="rateModal" data-modal-toggle="rateModal" class="shadow-lg shadow-teal-500/50 dark:shadow-lg dark:shadow-teal-800/80  w-full text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Rate</button>
                     </div>
-                    <div id="buttonPrintDiv" class="hidden items-center px-4 rounded-b dark:border-gray-600">
+                    <div id="buttonCloseTicket" class=" hidden items-center p-4 border-t border-gray-200 rounded-b dark:border-gray-600 hidden">
+                        <button type="submit" name="closeTicket" class="shadow-lg shadow-teal-500/50 dark:shadow-lg dark:shadow-teal-800/80  w-full text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Close Request</button>
+                    </div>
+                    <div id="buttonPrintDiv" class=" items-center px-4 rounded-b dark:border-gray-600">
                         <button type="submit" name="print" class="shadow-lg shadow-blue-500/30 dark:shadow-lg dark:shadow-teal-800/80  w-full text-white bg-gradient-to-br from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Print</button>
                     </div>
 
@@ -1182,6 +1207,8 @@ while ($userRow = mysqli_fetch_assoc($result)) {
             document.getElementById("prequestor").value = element.getAttribute("data-requestor");
             document.getElementById("pdepartment").value = element.getAttribute("data-department");
             document.getElementById("pdateFiled").value = element.getAttribute("data-datefiled");
+            document.getElementById("closedbyreqstr").value = element.getAttribute("data-closedbyreqstr");
+            document.getElementById("closedbysystem").value = element.getAttribute("data-closedbysystem");
 
             const dateStart = new Date(element.getAttribute("data-start")); // Get the current date
             const optionsStart = {
@@ -1237,7 +1264,17 @@ while ($userRow = mysqli_fetch_assoc($result)) {
                 $("#recommendationDiv").removeClass("hidden");
 
             }
+            // alert(document.getElementById("closedbysystem").value)
+            if ((document.getElementById("closedbyreqstr").value != "" || document.getElementById("closedbysystem").value != "") && (document.getElementById("pstatus").value == "Done" || document.getElementById("pstatus").value == "rated")) {
 
+                $("#buttonCloseTicket").addClass("hidden");
+
+            } else if ((document.getElementById("closedbyreqstr").value == "" || document.getElementById("closedbysystem").value == "") && (document.getElementById("pstatus").value == "Done" || document.getElementById("pstatus").value == "rated")) {
+                $("#buttonCloseTicket").removeClass("hidden");
+
+            } else {
+                $("#buttonCloseTicket").addClass("hidden");
+            }
 
             $("#action1div").addClass("hidden");
             $("#action1div").removeClass("hidden");
@@ -1432,13 +1469,13 @@ while ($userRow = mysqli_fetch_assoc($result)) {
             document.getElementById("datefinish").disabled = true;
             document.getElementById("message").disabled = true;
             document.getElementById("computername").disabled = true;
-
+            $("#buttonCloseTicket").addClass("hidden");
             $("#assignedPersonnelDiv").addClass("hidden");
 
             $("#buttondiv").addClass("hidden");
             $("#buttonRateDiv").addClass("hidden");
             $("#actionDetailsDiv").addClass("hidden");
-            $("#buttonPrintDiv").addClass("hidden");
+            $("#buttonPrintDiv").removeClass("hidden");
             $("#recommendationDiv").addClass("hidden");
 
 
@@ -1456,7 +1493,7 @@ while ($userRow = mysqli_fetch_assoc($result)) {
             document.getElementById("message").disabled = true;
             document.getElementById("computername").disabled = true;
             $("#recommendationDiv").addClass("hidden");
-
+            $("#buttonCloseTicket").addClass("hidden");
             $("#assignedPersonnelDiv").removeClass("hidden");
             $("#buttondiv").addClass("hidden");
 
@@ -1476,6 +1513,7 @@ while ($userRow = mysqli_fetch_assoc($result)) {
         }
 
         function goToRate() {
+
             document.getElementById("telephone").disabled = true;
             document.getElementById("datestart").disabled = true;
             document.getElementById("datefinish").disabled = true;
@@ -1484,7 +1522,8 @@ while ($userRow = mysqli_fetch_assoc($result)) {
             $("#assignedPersonnelDiv").removeClass("hidden");
             $("#recommendationDiv").removeClass("hidden");
 
-            $("#buttonRateDiv").removeClass("hidden");
+            $("#buttonRateDiv").addClass("hidden");
+            // $("#buttonCloseTicket").removeClass("hidden");
             $("#actionDetailsDiv").removeClass("hidden");
 
             $("#buttondiv").addClass("hidden");
@@ -1501,19 +1540,19 @@ while ($userRow = mysqli_fetch_assoc($result)) {
         }
 
         function goToHead() {
-            $("#buttondiv").removeClass("hidden");
+            $("#buttondiv").addClass("hidden");
             $("#buttonRateDiv").addClass("hidden");
             $("#actionDetailsDiv").addClass("hidden");
             $("#assignedPersonnelDiv").addClass("hidden");
             $("#recommendationDiv").addClass("hidden");
-
+            $("#buttonCloseTicket").addClass("hidden");
             document.getElementById("telephone").disabled = false;
             document.getElementById("computername").disabled = false;
             document.getElementById("datestart").disabled = false;
             document.getElementById("datefinish").disabled = false;
             document.getElementById("message").disabled = false;
             const myElement = document.querySelector('#diamond');
-            $("#buttonPrintDiv").addClass("hidden");
+            $("#buttonPrintDiv").removeClass("hidden");
 
             // Get the current transform value
             const currentTransform = myElement.style.transform = 'translateX(50px) translateY(2px) rotate(135deg)';

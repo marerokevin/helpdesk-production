@@ -266,7 +266,7 @@ if (isset($_POST['submit'])) {
                     // Attach PDF to the email
                     $mail->addStringAttachment($pdfContent, 'Helpdesk Report.pdf', 'base64', 'application/pdf');
                     $mail->Subject = 'Approved Job Order';
-                    $mail->Body    = 'Hi ' . $requestor_name . ',<br> <br>  Your Job Order with JO number ' . $_SESSION['jobOrderNo'] . ' is now in progress. Please check the details below or by signing in into our Helpdesk.<br> Click this ' . $link . ' to sign in. <br><br>Request Type: ' . $request_type . '<br> Request Category: ' . $category . '<br>Request Details: ' . $request . '<br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
+                    $mail->Body    = 'Hi ' . $requestor_name . ',<br> <br>  Your Job Order with JO number ' . $_SESSION['jobOrderNo'] . ' is now in progress. Please check the details below or by signing in into our Helpdesk.<br> Click this ' . $link . ' to sign in. <br><br>Request to: FEM <br> Request Category: ' . $category . '<br>Request Details: ' . $request . '<br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
 
                     $mail->send();
 
@@ -293,7 +293,7 @@ if (isset($_POST['submit'])) {
                     // Attach PDF to the email
                     $mail2->addStringAttachment($pdfContent, 'Helpdesk Report.pdf', 'base64', 'application/pdf');
                     $mail2->Subject = 'Job Order Request';
-                    $mail2->Body    = 'Hi ' . $r_personnelsName . ',<br> <br>   You have a new job order with JO number ' . $_SESSION['jobOrderNo'] . ' from ' . $requestor_name . '. Please check the details below or by signing in into our Helpdesk. <br> Click this ' . $link . ' to sign in. <br><br>Request Type: ' . $request_type . '<br> Request Category: ' . $category . '<br>Request Details: ' . $request . '<br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
+                    $mail2->Body    = 'Hi ' . $r_personnelsName . ',<br> <br>   You have a new job order with JO number ' . $_SESSION['jobOrderNo'] . ' from ' . $requestor_name . '. Please check the details below or by signing in into our Helpdesk. <br> Click this ' . $link . ' to sign in. <br><br>Request to: FEM <br> Request Category: ' . $category . '<br>Request Details: ' . $request . '<br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
 
                     $mail2->send();
                 } elseif (($isHead === false) && ($requestto === 'fem')) {
@@ -328,7 +328,7 @@ if (isset($_POST['submit'])) {
                     // Attach PDF to the email
                     $mail->addStringAttachment($pdfContent, 'Helpdesk Report.pdf', 'base64', 'application/pdf');
                     $mail->Subject = 'Job Order Request';
-                    $mail->Body    = 'Hi ' . $headname . ',<br> <br>   Mr/Ms. ' . $requestor_name . ' filed a job order with JO number ' . $_SESSION['jobOrderNo'] . '. Please check the details below or by signing in into our Helpdesk. <br> Click this ' . $link . ' to sign in. <br><br>Request Type: Job Order<br> Category: ' . $category . '<br> Request Details: ' . $request . '<br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
+                    $mail->Body    = 'Hi ' . $headname . ',<br> <br>   Mr/Ms. ' . $requestor_name . ' filed a job order with JO number ' . $_SESSION['jobOrderNo'] . '. Please check the details below or by signing in into our Helpdesk. <br> Click this ' . $link . ' to sign in. <br><br>Request to: FEM<br> Category: ' . $category . '<br> Request Details: ' . $request . '<br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
 
                     $mail->send();
                 } elseif ($requestto === 'mis') {
@@ -368,7 +368,7 @@ if (isset($_POST['submit'])) {
                     // Attach PDF to the email
                     $mail->addStringAttachment($pdfContent, 'Helpdesk Report.pdf', 'base64', 'application/pdf');
                     $mail->Subject = 'Job Order Request';
-                    $mail->Body    = 'Hi  ' . $adminName . ',<br> <br>   Mr/Ms. ' . $requestor_name . ' filed a job order with JO number ' . $_SESSION['jobOrderNo'] . '. Please check the details below or by signing in into our Helpdesk. <br> Click this ' . $link . ' to sign in. <br><br>Request Type: Job Order<br> Category: ' . $category . '<br> Request Details: ' . $request . '<br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
+                    $mail->Body    = 'Hi  ' . $adminName . ',<br> <br>   Mr/Ms. ' . $requestor_name . ' filed a job order with JO number ' . $_SESSION['jobOrderNo'] . '. Please check the details below or by signing in into our Helpdesk. <br> Click this ' . $link . ' to sign in. <br><br>Request to: FEM<br> Category: ' . $category . '<br> Request Details: ' . $request . '<br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
 
                     $mail->send();
                 }

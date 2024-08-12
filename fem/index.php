@@ -441,10 +441,12 @@ if (isset($_POST['cancelJO'])) {
     $requestorEmail = $_POST['requestoremail'];
     $requestor = $_POST['requestor'];
     $completejoid = $_POST['completejoid'];
-
+    $request_type = $_POST['ptype'];
+    $detailsOfRequest = $_POST['pdetails'];
     $dateOfCancellation = date("Y-m-d");
+    $cancelledBy =  $_SESSION['name'];
 
-    $sql = "UPDATE `request` SET `status2`='cancelled', `reasonOfCancellation`='$reasonCancel', `dateOfCancellation` = '$dateOfCancellation' WHERE `id` = '$joid';";
+    $sql = "UPDATE `request` SET `status2`='cancelled', `reasonOfCancellation`='$reasonCancel', `dateOfCancellation` = '$dateOfCancellation', `cancelledBy` = '$cancelledBy' WHERE `id` = '$joid';";
     $results = mysqli_query($con, $sql);
     if ($results) {
         $sql2 = "Select * FROM `sender`";
@@ -461,8 +463,8 @@ if (isset($_POST['cancelJO'])) {
         try {
             //Server settings
 
-            $subject2 = 'Cancelled Job Order';
-            $message2 = 'Hi ' . $requestor . ',<br> <br>  Your Job Order with JO number of ' . $completejoid . ' is CANCELLED by the administrator. Please check the details by signing in into our Helpdesk <br> Click this ' . $link . ' to sign in. <br><br><br> This is a generated email. Please do not reply. <br><br> HELPDESK';
+            $subject2 = 'Cancelled Request';
+            $message2 = 'Hi ' . $requestor . ',<br> <br>  Your request with request number of ' . $completejoid . ' is CANCELLED by the administrator. Please check the details by signing in into our Helpdesk <br> Click this ' . $link . ' to sign in. <br><br>Request to: FEM <br>Request Type: ' . $request_type . '<br> Request Details: ' . $detailsOfRequest . '<br> Reason for Cancellation: ' . $reasonCancel . '<br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
 
             // email this requestor
 
@@ -506,7 +508,13 @@ if (isset($_POST['cancelJO'])) {
     }
 }
 
+if (isset($_POST['updateJO'])) {
+    $joid = $_POST['joid2'];
+    $message = $_POST['message'];
 
+    $sql = "UPDATE `request` SET `request_details` = '$message'  WHERE `id` = '$joid';";
+    $results = mysqli_query($con, $sql);
+}
 
 // $uploadDir = '../src/Photo/';
 // $uploadFile = $uploadDir . $username . '.png';
@@ -1854,7 +1862,7 @@ if (isset($_POST['cancelJO'])) {
                         <div id="action3div" class="w-full grid gap-4 grid-col-1">
                             <h2 class="font-semibold text-gray-900 dark:text-gray-900"><span class="text-gray-400">Action 3: </span><span id="action3"></span></h2>
                         </div>
-                        <label for="message" class="py-4 col-span-1 font-semibold text-gray-400 dark:text-gray-400">Action</label>
+                        <label for="message" class="py-4 col-span-1 font-semibold text-gray-400 dark:text-gray-400">Action:</label>
                         <textarea required id="action" name="action" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="State your action..."> </textarea>
                         <div id="recommendationDiv" class="hidden w-full grid gap-4 grid-col-1">
                             <h2 class="font-semibold text-gray-900 dark:text-gray-900"><span class="text-gray-400">Recommendation: </span><span id="recommendation"></span></h2>
@@ -1895,6 +1903,12 @@ if (isset($_POST['cancelJO'])) {
 
                     </div>
 
+                    <div id="buttonDiv1" class="hidden items-center p-4 border-t border-gray-200 rounded-b dark:border-gray-600">
+                        <button type="submit" name="updateJO" class="shadow-lg shadow-teal-500/50 dark:shadow-lg dark:shadow-teal-800/80  w-full text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Update</button>
+
+                        <button type="button" onclick="cancellation()" data-modal-target="popup-modal-cancel" data-modal-toggle="popup-modal-cancel" class="shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-pink-800/80  w-full text-white bg-gradient-to-br from-red-400 to-pink-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Cancel Request</button>
+
+                    </div>
 
 
                     <div id="popup-modal-cancel" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] md:h-full">
@@ -2712,8 +2726,10 @@ if (isset($_POST['cancelJO'])) {
 
         function filledTicket() {
             const myElement = document.querySelector('#diamond');
+            $("#buttonDiv1").removeClass("hidden");
             $("#buttonDiv").addClass("hidden");
             document.getElementById("action").disabled = true;
+            document.getElementById("message").disabled = false;
             $("#ratingstar").addClass("hidden");
             const currentTransform = myElement.style.transform = 'translateX(50px) translateY(2px) rotate(135deg)';
 
@@ -2723,8 +2739,10 @@ if (isset($_POST['cancelJO'])) {
 
         function goToOverall() {
             const myElement = document.querySelector('#diamond');
+            $("#buttonDiv1").addClass("hidden");
             $("#buttonDiv").addClass("hidden");
             document.getElementById("action").disabled = true;
+            document.getElementById("message").disabled = true;
             $("#ratingstar").addClass("hidden");
             const currentTransform = myElement.style.transform = 'translateX(270px) translateY(2px) rotate(135deg)';
 
@@ -2732,21 +2750,23 @@ if (isset($_POST['cancelJO'])) {
 
         }
 
-        function goToMis() {
-            const myElement = document.querySelector('#diamond');
-            $("#ratingstar").addClass("hidden");
+        // function goToMis() {
+        //     $("#buttonDiv1").addClass("hidden");
+        //     const myElement = document.querySelector('#diamond');
+        //     $("#ratingstar").addClass("hidden");
+        //     const currentTransform = myElement.style.transform = 'translateX(300px) translateY(2px) rotate(135deg)';
+        //     $("#recommendationDiv").addClass("hidden");
 
-            const currentTransform = myElement.style.transform = 'translateX(300px) translateY(2px) rotate(135deg)';
-            $("#recommendationDiv").addClass("hidden");
 
 
-
-        }
+        // }
 
         function goToRate() {
             const myElement = document.querySelector('#diamond');
+            $("#buttonDiv1").addClass("hidden");
             $("#buttonDiv").addClass("hidden");
             document.getElementById("action").disabled = true;
+            document.getElementById("message").disabled = true;
             // $("#ratingstar").removeClass("hidden");
             $("#recommendationDiv").removeClass("hidden");
 
@@ -2757,8 +2777,10 @@ if (isset($_POST['cancelJO'])) {
         }
 
         function goToHead() {
+            $("#buttonDiv1").addClass("hidden");
             const myElement = document.querySelector('#diamond');
             document.getElementById("action").disabled = false;
+            document.getElementById("message").disabled = true;
             $("#ratingstar").addClass("hidden");
 
             $("#buttonDiv").removeClass("hidden");

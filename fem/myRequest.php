@@ -49,8 +49,8 @@
         $leaderof = $_SESSION['leaderof'];
         if ($level == 'user') {
             header("location:../employees");
-        } else if ($level == 'fem') {
-            header("location:../fem");
+        } else if ($level == 'mis') {
+            header("location:../mis");
         } else if ($level == 'head') {
             header("location:../department-head");
         } else if ($level == 'admin' && $leaderof == 'mis') {
@@ -422,7 +422,7 @@
 
                                                      </div>
                                                  </div>
-                                                 <p class="_5NHXTA _2xcaIA ZSdr0w CCfw7w GHIRjw">To rate</p>
+                                                 <p class="_5NHXTA _2xcaIA ZSdr0w CCfw7w GHIRjw">Finished</p>
                                              </button>
                                          </div>
                                      </li>
@@ -1158,7 +1158,7 @@
              document.getElementById("computername").disabled = true;
              $("#assignedPersonnelDiv").removeClass("hidden");
 
-             $("#buttonRateDiv").removeClass("hidden");
+             $("#buttonRateDiv").addClass("hidden");
              $("#actionDetailsDiv").removeClass("hidden");
 
              $("#buttondiv").addClass("hidden");

@@ -447,9 +447,12 @@ if (isset($_POST['cancelJO'])) {
     $requestorEmail = $_POST['requestoremail'];
     $requestor = $_POST['requestor'];
     $completejoid = $_POST['completejoid'];
-    $username = $_SESSION['name'];
+    $request_type = $_POST['ptype'];
+    $detailsOfRequest = $_POST['pdetails'];
     $dateOfCancellation = date("Y-m-d");
-    $sql = "UPDATE `request` SET `status2`='cancelled',`cancelledBy`='$username', `reasonOfCancellation`='$reasonCancel', `dateOfCancellation` = '$dateOfCancellation' WHERE `id` = '$joid';";
+    $cancelledBy =  $_SESSION['name'];
+
+    $sql = "UPDATE `request` SET `status2`='cancelled', `reasonOfCancellation`='$reasonCancel', `dateOfCancellation` = '$dateOfCancellation', `cancelledBy` = '$cancelledBy' WHERE `id` = '$joid';";
     $results = mysqli_query($con, $sql);
     if ($results) {
         $sql2 = "Select * FROM `sender`";
@@ -466,17 +469,17 @@ if (isset($_POST['cancelJO'])) {
         try {
             //Server settings
 
-            $subject2 = 'Cancelled Job Order';
-            $message2 = 'Hi ' . $requestor . ',<br> <br>  Your Job Order with JO number ' . $completejoid . ' is CANCELLED by the administrator. Please check the details by signing in into our Helpdesk <br> Click this ' . $link . ' to sign in. <br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
+            $subject2 = 'Cancelled Request';
+            $message2 = 'Hi ' . $requestor . ',<br> <br>  Your request with request number of ' . $completejoid . ' is CANCELLED by the administrator. Please check the details by signing in into our Helpdesk <br> Click this ' . $link . ' to sign in. <br><br>Request to: FEM <br>Request Type: ' . $request_type . '<br> Request Details: ' . $detailsOfRequest . '<br> Reason for Cancellation: ' . $reasonCancel . '<br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
 
             // email this requestor
 
             //Server settings
             $mail->isSMTP();                                      // Set mailer to use SMTP
-            $mail->Host = 'mail.glorylocal.com.ph';              // Specify main and backup SMTP servers
-            $mail->SMTPAuth = true;                              // Enable SMTP authentication
-            $mail->Username = $account;                          // Your Email/ Server Email
-            $mail->Password = $accountpass;                     // Your Password
+            $mail->Host = 'mail.glorylocal.com.ph';               // Specify main and backup SMTP servers
+            $mail->SMTPAuth = true;                               // Enable SMTP authentication
+            $mail->Username = $account;                           // Your Email/ Server Email
+            $mail->Password = $accountpass;                       // Your Password
             $mail->SMTPOptions = array(
                 'ssl' => array(
                     'verify_peer' => false,
@@ -492,7 +495,7 @@ if (isset($_POST['cancelJO'])) {
             // $mail->setFrom('Helpdesk'); //eto ang mag front  notificationsys01@gmail.com
 
             //Recipients
-            $mail->setFrom('helpdesk@glorylocal.com.ph', 'Helpdesk');
+            $mail->setFrom('mis.dev@glory.com.ph', 'Helpdesk');
             $mail->addAddress($requestorEmail);
             $mail->isHTML(true);
             $mail->Subject = $subject2;
@@ -502,7 +505,6 @@ if (isset($_POST['cancelJO'])) {
             $_SESSION['message'] = 'Message has been sent';
             echo "<script>alert('The request was successfully cancelled.') </script>";
             echo "<script> location.href='index.php'; </script>";
-
 
             // header("location: form.php");
         } catch (Exception $e) {
@@ -1612,7 +1614,7 @@ $newDate1 = addWeekdays2($startDate, $daysToAdd, $holidays);
                         </div>
                         <div id="ictheadRecoRemarksDiv" class="hidden">
                             <hr class="h-px  bg-gray-200 border-0 dark:bg-gray-700">
-                            <label for="message" class="py-4 col-span-1 font-semibold text-gray-400 dark:text-gray-400">ICT Head Remarks</label>
+                            <label for="message" class="py-4 col-span-1 font-semibold text-gray-400 dark:text-gray-400">FEM Head Remarks</label>
                             <textarea id="ictheadrecoremarks" name="ictheadrecoremarks" rows="1" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Leave  remarks..."></textarea>
                         </div>
                         <div id="ratingstar" class="hidden w-full grid grid-cols-12">
@@ -2530,6 +2532,7 @@ $newDate1 = addWeekdays2($startDate, $daysToAdd, $holidays);
             document.getElementById("assigned").required = false;
             document.getElementById("datestart").disabled = true;
             document.getElementById("datefinish").disabled = true;
+            document.getElementById("changeSchedButton").disabled = true;
             $("#transferButton").addClass("hidden");
 
 

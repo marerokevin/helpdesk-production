@@ -311,7 +311,7 @@ if (isset($_POST['submit'])) {
                     <label for="category" class="block mb-2 text-lg font-medium text-gray-900 dark:text-gray-300">Category <a href="#" class="text-blue-600 hover:underline dark:text-blue-500"></a></label>
                     <!-- <label for="remember" class="ml-2 text-lg font-medium text-gray-900 dark:text-gray-400" data-modal-toggle="defaultModal">I agree with the <a href="#" class="text-blue-600 hover:underline dark:text-blue-500">terms and conditions</a>.</label> -->
 
-                    <select name="category" id="type" class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
+                    <select name="category" id="type" class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="" disabled>
                         <option selected disabled value=" " data-val="">Choose Category:</option>
                         <!-- <option value="na" data-val="na"></option> -->
                         <!-- <option value="Facilities" data-val="fem">Facilities</option>
@@ -340,7 +340,7 @@ if (isset($_POST['submit'])) {
                 <div id="gridtochange" class="grid grid-cols-1 col-span-2 gap-8">
                     <div>
                         <label for="head" class="block mb-2 text-lg font-medium text-gray-900 dark:text-gray-300">Approving Head </label>
-                        <select name="head" id="head" class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <select disabled name="head" id="head" class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 
                             <?php
                             //    $sql1 = "Select * FROM `user` WHERE `username`='$username'";
@@ -415,12 +415,12 @@ if (isset($_POST['submit'])) {
                 </div>
                 <div class="mb-2">
                     <label class="block mb-2 text-lg font-medium text-gray-900 dark:text-gray-300" for="uploadedFile">Telephone</label>
-                    <input required name="telephone" class="block w-full text-lg text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="telephone" type="text" readonly>
+                    <input required name="telephone" class="block w-full text-lg text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="telephone" type="text" disabled>
 
                 </div>
                 <div class="mb-2">
                     <label class="block mb-2 text-lg font-medium text-gray-900 dark:text-gray-300" for="uploadedFile">Upload file <span class="text-xs">(jpg, png, zip, txt, xls, doc , pdf, csv, xlsx)</span></label>
-                    <input name="uploadedFile" value="upload" class="block w-full text-lg text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="uploadedFile" type="file">
+                    <input name="uploadedFile" value="upload" class="block w-full text-lg text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="uploadedFile" type="file" disabled>
 
                 </div>
             </div>
@@ -429,7 +429,7 @@ if (isset($_POST['submit'])) {
 
             <div class="mb-2">
                 <label for="request" class="block mb-2 text-lg font-medium text-gray-900 dark:text-gray-300">Request</label>
-                <textarea name="request" autocomplete="off" type="text" id="request" class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Details" required readonly></textarea>
+                <textarea name="request" autocomplete="off" type="text" id="request" class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Details" required disabled></textarea>
             </div>
 
 
@@ -437,7 +437,7 @@ if (isset($_POST['submit'])) {
 
 
             <div class="flex items-center mb-4">
-                <input required id="link-checkbox" type="checkbox" data-modal-target="terms" data-modal-toggle="terms" value="True" name="terms" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                <input disabled required id="link-checkbox" type="checkbox" data-modal-target="terms" data-modal-toggle="terms" value="True" name="terms" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                 <label for="link-checkbox" class="ml-2 text-lg font-medium text-gray-900 dark:text-gray-300">I agree and understand the <a href="#" data-modal-target="terms" data-modal-toggle="terms" class="text-blue-600 dark:text-blue-500 hover:underline">terms and conditions.</a></label>
             </div>
 
