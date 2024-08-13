@@ -39,10 +39,7 @@ while ($field = mysqli_fetch_assoc($resultLevel)) {
 if (isset($_POST['monthlyReport'])) {
   $_SESSION['month'] = $_POST['month'];
   $_SESSION['year'] = $_POST['year'];
-  $_SESSION['adminsection'] = $_POST['section'];
-
-
-
+  $_SESSION['adminsection'] = 'fem';
 
 ?>
   <script type="text/javascript">
@@ -87,9 +84,10 @@ if (isset($_POST['excelReport'])) {
   $_SESSION['month'] = $_POST['month'];
   $_SESSION['year'] = $_POST['year'];
   $_SESSION['request_type'] = $_POST['request_type'];
+  $_SESSION['fem_member'] = $_POST['femmember'];
 ?>
   <script type="text/javascript">
-    window.open('../summary_report_xls.php?request_type=<?php echo  $_SESSION['request_type']; ?>&month=<?php echo $_SESSION['month']; ?>&year=<?php echo $_SESSION['year']; ?>', '_blank');
+    window.open('../fem_summary_report_xls.php?fem=<?php echo  $_SESSION['fem_member']; ?>&month=<?php echo $_SESSION['month']; ?>&year=<?php echo $_SESSION['year']; ?>', '_blank');
   </script>
 <?php
 }
@@ -402,13 +400,39 @@ if (isset($_POST['excelReport'])) {
         <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Choose month and year</h3>
         <form class="space-y-6" action="" method="POST">
           <div>
-            <label for="section" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Section</label>
-
-            <select id="section" name="section" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-              <option value="mis">ICT</option>
-              <option value="fem">FEM</option>
-
+            <label for="report" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Report Type</label>
+            <select id="report" name="report" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              <option selected disabled>Select Type</option>
+              <option value="overall">Overall Report</option>
+              <option value="individual">Individual Report</option>
             </select>
+          </div>
+          <div id="femMember" class="grid md:grid-cols-1 md:gap-x-6 gap-y-3 hidden">
+            <div class="relative z-0 w-full  group">
+              <label for="femmember" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">FEM Member</label>
+              <select id="femmember" name="femmember" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                <option disabled selected>Search Member</option>
+
+                <?php
+                $sql1 = "SELECT u.*
+                                FROM `user` u WHERE u.level = 'fem' or u.level = 'admin' AND u.leader = 'fem'";
+                $result = mysqli_query($con, $sql1);
+                while ($row = mysqli_fetch_assoc($result)) {
+
+                ?>
+
+                  <option data-sectionassign="<?php echo $row['level']; ?>" data-pending="<?php echo $row['pending'] ?>" data-personnelsname="<?php echo $row['name'] ?>" value="<?php echo $row['username']; ?>"><?php echo $row['name']; ?> </option>; <?php
+                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                          ?>
+              </select>
+            </div>
+
+            <!-- <input class="" type="text" id="r_personnelsName" name="r_personnelsName" class="bg-gray-50 border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" /> -->
+
+
+          </div>
+          <div>
+
             <label for="month" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Month</label>
 
             <select id="month" name="month" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
@@ -436,8 +460,11 @@ if (isset($_POST['excelReport'])) {
                                         echo $year; ?>" name="year" id="year" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
           </div>
 
-          <button type="submit" name="monthlyReport" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-            Generate
+          <button type="submit" name="monthlyReport" id="monthlyReportOverall" class="hidden w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            Generate PDF
+          </button>
+          <button type="submit" name="excelReport" id="excelReportIndividual" class="hidden w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            Generate Excel
           </button>
 
         </form>
@@ -446,7 +473,7 @@ if (isset($_POST['excelReport'])) {
   </div>
 </div>
 
-<!-- iibahin ni olive -->
+
 
 <div id="generateReportModal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
   <div class="relative w-full max-w-md max-h-full">
@@ -502,7 +529,7 @@ if (isset($_POST['excelReport'])) {
                       Generate PDF
                     </button> -->
 
-          <button type="submit" name="excelReport" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+          <button type="submit" name="excelReport" id="excelReport" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
             Generate Excel
           </button>
 
@@ -512,7 +539,7 @@ if (isset($_POST['excelReport'])) {
     </div>
   </div>
 </div>
-
+<script src="../node_modules/jquery/dist/jquery.min.js"></script>
 <script>
   function clickButton() {
     var button = document.getElementById("sidebarButton"); // replace "myButton" with the ID of your button
@@ -532,10 +559,25 @@ if (isset($_POST['excelReport'])) {
   }
 
 
+  $('#report').change(function() {
 
-  //   var homeoption = document.getElementById("homeoption");
-  //   homeoption.classList.remove("text-gray-700");
-  //   homeoption.classList.add("text-white");
-  //   homeoption.classList.remove("dark:text-gray-400");
-  //   homeoption.classList.add("dark:text-white");
+    var selectedOption = $(this).val();
+
+    if (selectedOption === "overall") {
+      $("#monthlyReportOverall").removeClass("hidden");
+      $("#excelReportIndividual").addClass("hidden");
+
+      $("#femMember").addClass("hidden");
+      document.getElementById("femmember").required = false;
+
+
+    } else {
+      $("#femMember").removeClass("hidden");
+      $("#monthlyReportOverall").addClass("hidden");
+      $("#excelReportIndividual").removeClass("hidden");
+      document.getElementById("femmember").required = true;
+
+    }
+
+  })
 </script>
