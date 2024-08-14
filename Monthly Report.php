@@ -45,10 +45,9 @@ $previousMonthNumber = str_pad($previousMonthNumber, 2, '0', STR_PAD_LEFT);
 if ($section == "admin") {
     $section = $_SESSION['adminsection'];
 }
-if ($section == "mis"){
-$headname = "Jonathan Nemedez";
-}
-else{
+if ($section == "mis") {
+    $headname = "Jonathan Nemedez";
+} else {
     $headname = "Rio Monzon";
 }
 $firstdate = date('d', strtotime("first day of $year-$month"));
@@ -218,12 +217,19 @@ while ($row = mysqli_fetch_assoc($result)) {
 
     $dateFinished = new DateTime($row['actual_finish_date']);
     $dateFinished = $dateFinished->format('F d, Y');
-
+    $req_type = $row['request_type'];
+    if ($req_type == "Technical Support") {
+        $req_id = 'TS-' . $date . '-' . $row['id'];
+    } elseif ($req_type == "Job Order") {
+        $req_id = 'JO-' . $date . '-' . $row['id'];
+    } elseif ($req_type == NULL) {
+        $req_id = $date . '-' . $row['id'];
+    }
     $expected = new DateTime($row['expectedFinishDate']);
     $expected = $expected->format('F d, Y');
     $html .= '  <tr>
            <td>' . $a . '</td>
-           <td>' . $date . '-' . $row['id'] . '</td>
+           <td>' .  $req_id . '</td>
            <td>' . $row['requestor'] . '</td>
            <td>' . $row['request_details'] . '</td>
            <td>' . $row['assignedPersonnelName'] . '</td>
@@ -275,13 +281,20 @@ while ($row = mysqli_fetch_assoc($result)) {
 
     $dateFinished = new DateTime($row['actual_finish_date']);
     $dateFinished = $dateFinished->format('F d, Y');
-
+    $req_type = $row['request_type'];
+    if ($req_type == "Technical Support") {
+        $req_id = 'TS-' . $date . '-' . $row['id'];
+    } elseif ($req_type == "Job Order") {
+        $req_id = 'JO-' . $date . '-' . $row['id'];
+    } elseif ($req_type == NULL) {
+        $req_id = $date . '-' . $row['id'];
+    }
 
     $expected = new DateTime($row['expectedFinishDate']);
     $expected = $expected->format('F d, Y');
     $html .= '  <tr>
            <td>' . $a . '</td>
-           <td>' . $date . '-' . $row['id'] . '</td>
+           <td>' .  $req_id . '</td>
            <td>' . $row['requestor'] . '</td>
            <td>' . $row['request_details'] . '</td>
            <td>' . $row['assignedPersonnelName'] . '</td>
@@ -328,10 +341,17 @@ while ($row = mysqli_fetch_assoc($result)) {
 
     $expectedDate = new DateTime($row['expectedFinishDate']);
     $expectedDate = $expectedDate->format('F d, Y');
-
+    $req_type = $row['request_type'];
+    if ($req_type == "Technical Support") {
+        $req_id = 'TS-' . $date . '-' . $row['id'];
+    } elseif ($req_type == "Job Order") {
+        $req_id = 'JO-' . $date . '-' . $row['id'];
+    } elseif ($req_type == NULL) {
+        $req_id = $date . '-' . $row['id'];
+    }
     $html .= '  <tr>
            <td>' . $a . '</td>
-           <td>' . $date . '-' . $row['id'] . '</td>
+           <td>' .  $req_id . '</td>
            <td>' . $row['requestor'] . '</td>
            <td>' . $row['request_details'] . '</td>
            <td>' . $row['assignedPersonnelName'] . '</td>
@@ -371,7 +391,7 @@ $html .= '
        <tr>
        <td class="first" style="text-align: center"><span class="label">' . $_SESSION['name'] . '</span></td>
        <td class="second"> <span class="child"></span></td>
-       <td class="third" style="text-align: center"><span class="label">'.$headname.'</span></td>
+       <td class="third" style="text-align: center"><span class="label">' . $headname . '</span></td>
        
        
        </tr>

@@ -19,7 +19,7 @@ while ($list = mysqli_fetch_assoc($result2)) {
 }
 $datenow = date("Y-m-d");
 $dateToday = date('Y-m-d H:i:s', time());
-$query = mysqli_query($con, "SELECT * FROM `request` WHERE requestor_approval_date IS NULL  AND `rateDate` IS NULL AND request_to = 'mis' AND completed_date IS NOT NULL AND `ticket_close_date` IS NULL AND completed_date BETWEEN '2024-05-28' AND '$datenow'");
+$query = mysqli_query($con, "SELECT * FROM `request` WHERE requestor_approval_date IS NULL  AND `rateDate` IS NULL AND completed_date IS NOT NULL AND `ticket_close_date` IS NULL AND completed_date BETWEEN '2024-05-28' AND '$datenow'");
 while ($row = $query->fetch_assoc()) {
     $id = $row['id'];
     $requestor = $row['requestor'];
@@ -68,7 +68,7 @@ while ($row = $query->fetch_assoc()) {
 
 
     if ($days >= 5) {
-        $sql = "UPDATE `request` SET `ticket_close_date` = '$dateToday' WHERE `requestor_approval_date` IS NULL AND `rateDate` IS NULL AND `request_to` = 'mis' AND `completed_date` IS NOT NULL AND `id` = '$id' AND `ticket_close_date` IS NULL AND completed_date BETWEEN '2024-05-28' AND '$datenow'";
+        $sql = "UPDATE `request` SET `ticket_close_date` = '$dateToday' WHERE `requestor_approval_date` IS NULL AND `rateDate` IS NULL AND `completed_date` IS NOT NULL AND `id` = '$id' AND `ticket_close_date` IS NULL AND completed_date BETWEEN '2024-05-28' AND '$datenow'";
         $results = mysqli_query($con, $sql);
 
         if ($results) {

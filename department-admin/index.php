@@ -564,9 +564,12 @@ if (isset($_POST['cancelJO'])) {
     $requestorEmail = $_POST['requestoremail'];
     $requestor = $_POST['requestor'];
     $completejoid = $_POST['completejoid'];
-    $username = $_SESSION['name'];
+    $request_type = $_POST['ptype'];
+    $detailsOfRequest = $_POST['pdetails'];
     $dateOfCancellation = date("Y-m-d");
-    $sql = "UPDATE `request` SET `status2`='cancelled',`cancelledBy`='$username', `reasonOfCancellation`='$reasonCancel', `dateOfCancellation` = '$dateOfCancellation' WHERE `id` = '$joid';";
+    $cancelledBy =  $_SESSION['name'];
+
+    $sql = "UPDATE `request` SET `status2`='cancelled', `reasonOfCancellation`='$reasonCancel', `dateOfCancellation` = '$dateOfCancellation', `cancelledBy` = '$cancelledBy' WHERE `id` = '$joid';";
     $results = mysqli_query($con, $sql);
     if ($results) {
         $sql2 = "Select * FROM `sender`";
@@ -583,17 +586,17 @@ if (isset($_POST['cancelJO'])) {
         try {
             //Server settings
 
-            $subject2 = 'Cancelled Job Order';
-            $message2 = 'Hi ' . $requestor . ',<br> <br>  Your Job Order with JO number ' . $completejoid . ' is CANCELLED by the administrator. Please check the details by signing in into our Helpdesk <br> Click this ' . $link . ' to sign in. <br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
+            $subject2 = 'Cancelled Request';
+            $message2 = 'Hi ' . $requestor . ',<br> <br>  Your request with request number of ' . $completejoid . ' is CANCELLED by the administrator. Please check the details by signing in into our Helpdesk <br> Click this ' . $link . ' to sign in. <br><br>Request to: ICT <br>Request Type: ' . $request_type . '<br> Request Details: ' . $detailsOfRequest . '<br> Reason for Cancellation: ' . $reasonCancel . '<br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
 
             // email this requestor
 
             //Server settings
             $mail->isSMTP();                                      // Set mailer to use SMTP
-            $mail->Host = 'mail.glorylocal.com.ph';              // Specify main and backup SMTP servers
-            $mail->SMTPAuth = true;                              // Enable SMTP authentication
-            $mail->Username = $account;                          // Your Email/ Server Email
-            $mail->Password = $accountpass;                     // Your Password
+            $mail->Host = 'mail.glorylocal.com.ph';               // Specify main and backup SMTP servers
+            $mail->SMTPAuth = true;                               // Enable SMTP authentication
+            $mail->Username = $account;                           // Your Email/ Server Email
+            $mail->Password = $accountpass;                       // Your Password
             $mail->SMTPOptions = array(
                 'ssl' => array(
                     'verify_peer' => false,
@@ -609,7 +612,7 @@ if (isset($_POST['cancelJO'])) {
             // $mail->setFrom('Helpdesk'); //eto ang mag front  notificationsys01@gmail.com
 
             //Recipients
-            $mail->setFrom('helpdesk@glorylocal.com.ph', 'Helpdesk');
+            $mail->setFrom('mis.dev@glory.com.ph', 'Helpdesk');
             $mail->addAddress($requestorEmail);
             $mail->isHTML(true);
             $mail->Subject = $subject2;
@@ -619,7 +622,6 @@ if (isset($_POST['cancelJO'])) {
             $_SESSION['message'] = 'Message has been sent';
             echo "<script>alert('The request was successfully cancelled.') </script>";
             echo "<script> location.href='index.php'; </script>";
-
 
             // header("location: form.php");
         } catch (Exception $e) {
@@ -884,9 +886,9 @@ Copy
                                                                                                                                                                                                                                                             echo $count["pending"];
                                                                                                                                                                                                                                                         }
                                                                                                                                                                                                                                                         ?></div><?php
-                                                                    }
-                                                                }
-                                                                        ?>
+                                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                                ?>
                                                         <img src="../resources/img/list.png" class="h-full w-full text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
 
                                                     </div>
@@ -2815,7 +2817,7 @@ FROM `user` u";
 
         $("#sidehistory").removeClass("bg-gray-200");
         $("#sidepms").removeClass("bg-gray-200");
-        
+
 
         $(document).ready(function() {
             $('#forRatingTable').DataTable({
