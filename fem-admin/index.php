@@ -796,14 +796,14 @@ $newDate1 = addWeekdays2($startDate, $daysToAdd, $holidays);
                                                         $dateMonth = $date1->format('M');
                                                         $dateYear = $date1->format('Y');
 
-                                                        $sql1 = "SELECT COUNT(id) as 'pending' FROM request WHERE   (`status2` = 'Done' OR `status2`='late')  and  `request_to` = '$section' ";
+                                                        $sql1 = "SELECT COUNT(id) as 'pending' FROM request WHERE   (`status2` = 'Done' OR `status2`='late')  and  `request_to` = 'fem' ";
                                                         $result = mysqli_query($con, $sql1);
                                                         while ($count = mysqli_fetch_assoc($result)) {
 
                                                             if ($count["pending"] > 0) {
                                                         ?>
                                                                 <div class=" absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-border-white"> <?php
-                                                                                                                                                                                                                                                            $sql1 = "SELECT COUNT(id) as 'pending' FROM request WHERE (`status2` = 'Done' OR `status2`='late')  and  `request_to` = '$section' ";
+                                                                                                                                                                                                                                                            $sql1 = "SELECT COUNT(id) as 'pending' FROM request WHERE (`status2` = 'Done' OR `status2`='late')  and  `request_to` =  'fem' ";
                                                                                                                                                                                                                                                             $result = mysqli_query($con, $sql1);
                                                                                                                                                                                                                                                             while ($count = mysqli_fetch_assoc($result)) {
                                                                                                                                                                                                                                                                 echo $count["pending"];
@@ -873,7 +873,7 @@ $newDate1 = addWeekdays2($startDate, $daysToAdd, $holidays);
 
                             $a = 1;
 
-                            $sql = "select * from `request` where request_to = '$section' order by id asc  ";
+                            $sql = "select * from `request` where request_to = 'fem' order by id asc  ";
                             $result = mysqli_query($con, $sql);
 
                             while ($row = mysqli_fetch_assoc($result)) {
@@ -1201,13 +1201,13 @@ $newDate1 = addWeekdays2($startDate, $daysToAdd, $holidays);
 
                             if ($_SESSION['leaderof'] == "fem") {
 
-                                $sql = "select * from `request` WHERE  `request_to`='fem' AND ( `status2` = 'Done'  OR `status2` = 'rated'  AND `month`='$dateMonth' AND `year`='$dateYear' )order by id asc ";
+                                $sql = "select * from `request` WHERE  `request_to`='fem' AND ( `status2` = 'Done'  OR `status2` = 'rated' OR `status2` = 'late' AND `month`='$dateMonth' AND `year`='$dateYear' )order by id asc ";
                                 $result = mysqli_query($con, $sql);
                             } else if ($_SESSION['leaderof'] == "mis") {
-                                $sql = "select * from `request` WHERE  `request_to`='mis' AND ( `status2` = 'Done'  OR `status2` = 'rated'  AND `month`='$dateMonth' AND `year`='$dateYear' )order by id asc ";
+                                $sql = "select * from `request` WHERE  `request_to`='mis' AND ( `status2` = 'Done'  OR `status2` = 'rated' OR `status2` = 'late'  AND `month`='$dateMonth' AND `year`='$dateYear' )order by id asc ";
                                 $result = mysqli_query($con, $sql);
                             } else {
-                                $sql = "select * from `request` WHERE  ( `status2` = 'Done'  OR `status2` = 'rated'  AND `month`='$dateMonth' AND `year`='$dateYear' )order by id asc ";
+                                $sql = "select * from `request` WHERE  ( `status2` = 'Done'  OR `status2` = 'rated' OR `status2` = 'late'  AND `month`='$dateMonth' AND `year`='$dateYear' )order by id asc ";
                                 $result = mysqli_query($con, $sql);
                             }
 
