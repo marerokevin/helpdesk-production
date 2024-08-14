@@ -530,7 +530,7 @@
                                  <input disabled type="text" name="computername" id="computername" class="col-span-1 bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 
                              </div>
-                             <div class="grid gap-4 grid-cols-2">
+                             <div class=" hidden grid gap-4 grid-cols-2">
                                  <h2 id="telephoneh2" class="pl-10 float-left font-semibold text-gray-900 dark:text-gray-900"><span class="text-gray-400">Telephone</span></h2>
                                  <input disabled type="text" name="telephone" id="telephone" class="col-span-1 bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 
@@ -541,7 +541,7 @@
 
                          <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
                          <div>
-                             <div class="grid grid-cols-3">
+                             <div class=" hidden grid grid-cols-3" id="reqSched">
                                  <h2 class=" py-4 col-span-1 font-semibold text-gray-400 dark:text-gray-400"><span class="inline-block align-middle">Requested Schedule: </span></h2>
                                  <div class="col-span-2 flex items-center">
                                      <div class="relative">
@@ -569,7 +569,7 @@
                              <h2 class="font-semibold text-gray-900 dark:text-gray-900"><span class="text-gray-400">Actual date finished : </span><span id="actualDateFinished"></span></h2>
                          </div>
 
-                         <div id="ratingstar" class="w-full grid grid-cols-12">
+                         <div id="ratingstar" class="hidden w-full grid grid-cols-12">
                              <h2 class="col-span-2 font-semibold text-gray-900 dark:text-gray-900"><span class="text-gray-400">Delivery: </span> </h2>
                              <div id="starsdel" class="grid col-span-10">
                                  <div class="flex items-center">
@@ -1236,7 +1236,7 @@
              document.getElementById("computername").disabled = true;
              $("#assignedPersonnelDiv").removeClass("hidden");
 
-             $("#ratingstar").removeClass("hidden");
+             $("#ratingstar").addClass("hidden");
 
              $("#actionDetailsDiv").removeClass("hidden");
              $("#actionsDiv").removeClass("hidden");
@@ -1266,21 +1266,15 @@
              $("#actualDateFinishedDiv").addClass("hidden");
              $("#ratingstar").addClass("hidden");
              $("#actionsDiv").addClass("hidden");
-
-
-
-
-
+             $("#telephone").addClass("hidden");
+             $("#telephoneh2").addClass("hidden");
+             $("#reqSched").addClass("hidden");
              $("#actionDetailsDiv").addClass("hidden");
-
              $("#buttondiv").addClass("hidden");
 
-
              const myElement = document.querySelector('#diamond');
-
              // Get the current transform value
              const currentTransform = myElement.style.transform = 'translateX(180px) translateY(2px) rotate(135deg)';
-
 
              // transform: translateX(55px) translateY(2px) rotate(135deg);
          }

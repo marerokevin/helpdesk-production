@@ -389,7 +389,6 @@ if (isset($_POST['cancelJO'])) {
     $username = $_SESSION['name'];
     $dateOfCancellation = date("Y-m-d");
 
-
     $sql = "UPDATE `request` SET `status2`='cancelled', `cancelledBy`='$username', `reasonOfCancellation`='$reasonCancel', `dateOfCancellation` = '$dateOfCancellation' WHERE `id` = '$joid';";
     $results = mysqli_query($con, $sql);
     if ($results) {
@@ -408,7 +407,7 @@ if (isset($_POST['cancelJO'])) {
             //Server settings
 
             $subject2 = 'Cancelled Job Order';
-            $message2 = 'Hi ' . $requestor . ',<br> <br>  Your Job Order with JO number of ' . $completejoid . ' is CANCELLED by your head. Please check the details by signing in into our Helpdesk <br> Click this ' . $link . ' to signin. <br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
+            $message2 = 'Hi ' . $requestor . ',<br> <br>  Your Request with Request number of ' . $completejoid . ' is CANCELLED by your head. Please check the details by signing in into our Helpdesk <br> Click this ' . $link . ' to signin. <br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
 
             // email this requestor
 
@@ -680,7 +679,7 @@ if (isset($_POST['cancelJO'])) {
 
                                                     </div>
                                                 </div>
-                                                <p class="_5NHXTA _2xcaIA ZSdr0w CCfw7w GHIRjw">To rate</p>
+                                                <p class="_5NHXTA _2xcaIA ZSdr0w CCfw7w GHIRjw">Finished</p>
                                             </button>
                                         </div>
                                     </li>
@@ -1519,7 +1518,7 @@ if (isset($_POST['cancelJO'])) {
             $("#buttondiv").addClass("hidden");
             $("#buttonRateDiv").addClass("hidden");
             $("#actionDetailsDiv").addClass("hidden");
-            $("#buttonPrintDiv").addClass("hidden");
+            $("#buttonPrintDiv").removeClass("hidden");
             $("#recommendationDiv").addClass("hidden");
 
 

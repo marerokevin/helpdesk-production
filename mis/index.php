@@ -443,10 +443,12 @@ if (isset($_POST['cancelJO'])) {
     $requestorEmail = $_POST['requestoremail'];
     $requestor = $_POST['requestor'];
     $completejoid = $_POST['completejoid'];
-
+    $request_type = $_POST['ptype'];
+    $detailsOfRequest = $_POST['pdetails'];
     $dateOfCancellation = date("Y-m-d");
+    $cancelledBy =  $_SESSION['name'];
 
-    $sql = "UPDATE `request` SET `status2`='cancelled', `reasonOfCancellation`='$reasonCancel', `dateOfCancellation` = '$dateOfCancellation' WHERE `id` = '$joid';";
+    $sql = "UPDATE `request` SET `status2`='cancelled', `reasonOfCancellation`='$reasonCancel', `dateOfCancellation` = '$dateOfCancellation', `cancelledBy` = '$cancelledBy' WHERE `id` = '$joid';";
     $results = mysqli_query($con, $sql);
     if ($results) {
         $sql2 = "Select * FROM `sender`";
@@ -463,8 +465,8 @@ if (isset($_POST['cancelJO'])) {
         try {
             //Server settings
 
-            $subject2 = 'Cancelled Job Order';
-            $message2 = 'Hi ' . $requestor . ',<br> <br>  Your Job Order with JO number of ' . $completejoid . ' is CANCELLED by the administrator. Please check the details by signing in into our Helpdesk <br> Click this ' . $link . ' to sign in. <br><br><br> This is a generated email. Please do not reply. <br><br> HELPDESK';
+            $subject2 = 'Cancelled Request';
+            $message2 = 'Hi ' . $requestor . ',<br> <br>  Your request with request number of ' . $completejoid . ' is CANCELLED by the administrator. Please check the details by signing in into our Helpdesk <br> Click this ' . $link . ' to sign in. <br><br>Request to: ICT <br>Request Type: ' . $request_type . '<br> Request Details: ' . $detailsOfRequest . '<br> Reason for Cancellation: ' . $reasonCancel . '<br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
 
             // email this requestor
 
@@ -508,21 +510,6 @@ if (isset($_POST['cancelJO'])) {
     }
 }
 
-
-
-// $uploadDir = '../src/Photo/';
-// $uploadFile = $uploadDir . $username . '.png';
-
-// $response = array();
-
-// if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadFile)) {
-//     $response['success'] = true;
-// } else {
-//     $response['success'] = false;
-// }
-
-// header('Content-Type: application/json');
-// echo json_encode($response);
 ?>
 
 

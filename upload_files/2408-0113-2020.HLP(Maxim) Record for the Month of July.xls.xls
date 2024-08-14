@@ -1,0 +1,95 @@
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body>
+    <center>
+        <b>
+            <font color="blue">GLORY (PHILIPPINES), INC.</font>
+        </b>
+        <br>
+        <b>Electronic Medical Record</b>
+        <br>
+        <h3> <b> HLP(Maxim) Record for the Month of July</b></h3>
+
+        <br>
+    </center>
+    <br>
+
+    <div id="table-scroll">
+        <table width="100%" border="1" align="left">
+
+            <thead>
+                <tr>
+                    <th rowspan="2">Date</th>
+                    <th rowspan="2">Time</th>
+                    <th rowspan="2">Building Transaction</th>
+                    <th rowspan="2">Name</th>
+                    <th rowspan="2">Section </th>
+                    <th rowspan="2">Department</th>
+                    <th rowspan="2">Building</th>
+                    <th rowspan="2">Employer</th>
+                    <th rowspan="2">Gender</th>
+                    <th rowspan="2">Type</th>
+                    <th rowspan="2">Diagnosis</th>
+                    <th rowspan="2">Intervention</th>
+                    <th rowspan="2">Medicine</th>
+                    <th rowspan="2">Follow-up Date</th>
+                    <th rowspan="2">Remarks</th>
+                    <th colspan="11">Laboratory</th>
+
+                </tr>
+                <tr>
+                    <th>FBS</th>
+                    <th>Cholesterol</th>
+                    <th>Triglycerides</th>
+                    <th>HDl</th>
+                    <th>LDL</th>
+                    <th>BUN</th>
+                    <th>BUA</th>
+                    <th>SGPT</th>
+                    <th>SGDT</th>
+                    <th>HBA1C</th>
+                    <th>Others</th>
+                </tr>
+                
+            </thead>
+            <tbody>
+
+                <tr>    
+                              
+                            <td>2024-07-22</td>
+                            <td>07:00:00</td>
+                            <td>Gpi 1</td>
+                             <td>Mark Ely Aragon</td>
+                              <td>MIS/Administration</td>
+                               <td>ICT</td>
+                                <td></td>
+                                 <td>Maxim</td>
+                                  <td>male</td>
+                                   <td>Follow up</td>
+                                    <td>test</td>
+                                     <td>Medication Only</td>
+                                      <td>test(1)</td>
+                                       <td>2024-07-29</td>
+                                        <td>Remarks</td>
+                                         <td>1</td>
+                                          <td>1</td>
+                                           <td>1</td>
+                                            <td>1</td>
+                                             <td>1</td>
+                                              <td>1</td>
+                                              <td>1</td>
+                                              <td>1</td>
+                                              <td>1</td>
+                                              <td>1</td>
+                                              <td>test</td>
+                                    </tr>            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>

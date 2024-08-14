@@ -319,10 +319,10 @@ if (isset($_POST['submit'])) {
                     <label for="category" class="block mb-2 text-lg font-medium text-gray-900 dark:text-gray-300">Category <a href="#" class="text-blue-600 hover:underline dark:text-blue-500"></a></label>
                     <!-- <label for="remember" class="ml-2 text-lg font-medium text-gray-900 dark:text-gray-400" data-modal-toggle="defaultModal">I agree with the <a href="#" class="text-blue-600 hover:underline dark:text-blue-500">terms and conditions</a>.</label> -->
 
-                    <select name="category" id="type" class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
-                        <option selected disabled value=" " data-val="">Choose Category:</option>
+                    <select name="category" id="type" class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="" disabled>
+                        <option disabled value=" " data-val="">Choose Category:</option>
                         <!-- <option value="na" data-val="na"></option> -->
-                        <option value="Facilities" data-val="fem">Facilities</option>
+                        <!-- <option value="Facilities" data-val="fem">Facilities</option>
                         <option value="Electrical" data-val="fem">Electrical</option>
                         <option value="Mechanical" data-val="fem">Mechanical</option>
                         <option value="Compliance" data-val="fem">Compliance</option>
@@ -339,7 +339,7 @@ if (isset($_POST['submit'])) {
                         <option value="CCTV" data-val="mis">CCTV-Attach approve letter from Admin head</option>
 
                         <option value="Others" data-val="mis">Others</option>
-                        <option value="Others" data-val="fem">Others</option>
+                        <option value="Others" data-val="fem">Others</option> -->
                         <!-- <option value="Non-Technical" data-val="mis">Non Technical Related</option> -->
 
                     </select>
@@ -422,12 +422,12 @@ if (isset($_POST['submit'])) {
                 </div>
                 <div class="mb-2">
                     <label class="block mb-2 text-lg font-medium text-gray-900 dark:text-gray-300" for="uploadedFile">Telephone</label>
-                    <input required name="telephone" class="block w-full text-lg text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="telephone" type="text">
+                    <input disabled required name="telephone" class="block w-full text-lg text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="telephone" type="text" readonly>
 
                 </div>
                 <div class="mb-2">
                     <label class="block mb-2 text-lg font-medium text-gray-900 dark:text-gray-300" for="uploadedFile">Upload file <span class="text-xs">(jpg, png, zip, txt, xls, doc , pdf, csv, xlsx)</span></label>
-                    <input name="uploadedFile" value="upload" class="block w-full text-lg text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="uploadedFile" type="file">
+                    <input name="uploadedFile" value="upload" class="block w-full text-lg text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="uploadedFile" type="file" disabled>
 
                 </div>
             </div>
@@ -436,7 +436,7 @@ if (isset($_POST['submit'])) {
 
             <div class="mb-2">
                 <label for="request" class="block mb-2 text-lg font-medium text-gray-900 dark:text-gray-300">Request</label>
-                <textarea name="request" autocomplete="off" type="text" id="request" class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Details" required></textarea>
+                <textarea disabled name="request" autocomplete="off" type="text" id="request" class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Details" required readonly></textarea>
             </div>
 
 
@@ -444,12 +444,12 @@ if (isset($_POST['submit'])) {
 
 
             <div class="flex items-center mb-4">
-                <input required id="link-checkbox" type="checkbox" data-modal-target="terms" data-modal-toggle="terms" value="True" name="terms" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                <input required id="link-checkbox" type="checkbox" data-modal-target="terms" data-modal-toggle="terms" value="True" name="terms" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" disabled>
                 <label for="link-checkbox" class="ml-2 text-lg font-medium text-gray-900 dark:text-gray-300">I agree and understand the <a href="#" data-modal-target="terms" data-modal-toggle="terms" class="text-blue-600 dark:text-blue-500 hover:underline">terms and conditions.</a></label>
             </div>
 
 
-            <button name="submit" type="submit" class="mb-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-lg w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+            <button name="submit" type="submit" class="mb-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-lg w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" disabled>Submit</button>
 
             <a href="index.php" type="button" class="text-white bg-red-400 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-red-400 font-medium rounded-lg text-lg w-full sm:w-auto px-5 py-2.5 text-center dark:bg-red-400 dark:hover:bg-red-700 dark:focus:ring-red-800">Cancel</a>
 
@@ -611,7 +611,36 @@ if (isset($_POST['submit'])) {
         </div>
     </div>
 
+    <div id="callFem" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] md:h-full">
+        <div class="relative w-full h-full max-w-2xl md:h-auto">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <!-- Modal header -->
+                <div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                        Guidelines for Requesting JO to FEM
+                    </h3>
+                    <button type="button" onclick="modalCallFemHide()" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                </div>
+                <!-- Modal body -->
+                <div class="p-6 space-y-6">
+                    <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                        Please call local 143
+                    </p>
+                </div>
+                <!-- Modal footer -->
+                <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
 
+                    <button onclick="modalCallFemHide()" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- end of main -->
 
 
@@ -641,6 +670,7 @@ if (isset($_POST['submit'])) {
         const $targetElModalPc = document.getElementById('pctagRules');
         const $targetElModal = document.getElementById('emailrules');
         const $targetModalIct = document.getElementById('callIct');
+        const $targetModalFem = document.getElementById('callFem');
 
         // options with default values
         const optionsModal = {
@@ -732,7 +762,33 @@ if (isset($_POST['submit'])) {
         function modalCallIctHide() {
             modalCallIct.toggle();
         }
+        const optionsModalFem = {
+            placement: 'center-center',
+            backdrop: 'dynamic',
+            backdropClasses: 'bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-40',
+            closable: true,
+            onHide: () => {
+                console.log('modal is hidden');
+            },
+            onShow: () => {
+                console.log('modal is shown');
 
+            },
+            onToggle: () => {
+                console.log('modal has been toggled');
+
+            }
+        };
+
+        const modalCallFem = new Modal($targetModalFem, optionsModalFem);
+
+        function modalCallFemShow(element) {
+            modalCallFem.toggle();
+        }
+
+        function modalCallFemHide() {
+            modalCallFem.toggle();
+        }
         $('#femmis').change(function() {
             var $options = $('#type')
                 .val('')
@@ -743,10 +799,13 @@ if (isset($_POST['submit'])) {
                 .not('[data-val="' + this.value + '"], [data-val=""]')
                 .hide();
             $('#type option:eq(0)').prop('selected', true)
-
             if (this.value == 'ict') {
                 modalCallIctShow();
             }
+            if (this.value == 'fem') {
+                modalCallFemShow();
+            }
+
         })
 
         $('#type').change(function() {
