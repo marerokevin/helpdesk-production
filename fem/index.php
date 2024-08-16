@@ -1555,7 +1555,7 @@ if (isset($_POST['updateJO'])) {
                             $result = mysqli_query($con, $sql);
                             $count = mysqli_num_rows($result);
                             if ($count == 0) {
-                                $sql = "select * from `request` WHERE `status2` = 'Done' and `assignedPersonnel` = '$misusername' order by id asc  ";
+                                $sql = "select * from `request` WHERE `status2` = 'Done' and `assignedPersonnel` = '$femusername' order by id asc  ";
                                 $result = mysqli_query($con, $sql);
                             }
                             while ($row = mysqli_fetch_assoc($result)) {
