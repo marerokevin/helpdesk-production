@@ -87,7 +87,7 @@ if (isset($_POST['submit'])) {
 
 
       if ($password == $userpass) {
-        header("location:http://192.168.60.47/srs/login.php?user=$username&pass=$userpass");
+        header("location:http://192.168.5.243/srs/login.php?user=$username&pass=$userpass");
       } else {
         echo '<script>alert("Login Failed! Wrong password")</script>';
       }
@@ -191,7 +191,7 @@ if (isset($_POST['submit'])) {
     <div class="m-auto container px-6 py-4 h-full">
       <div class="flex justify-center items-center flex-wrap h-full g-6 text-gray-800">
         <div class="sm:p-20 w-1/2 md:w-8/12 lg:w-6/12 sm:mb-12 md:mb-0">
-          <img src="resources/img/heldesk 3d 30th Anniv Theme.png" class="w-full logo-container" alt="Login image" />
+          <img src="resources/img/heldesk_3d.png" class="w-full logo-container" alt="Login image" />
         </div>
         <div class="sm:p-28 w-full md:w-8/12 lg:w-6/12 mb-12 md:mb-0">
 
