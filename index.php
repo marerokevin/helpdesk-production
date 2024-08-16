@@ -1,21 +1,30 @@
 
 
 <?php
-#   include ("includes/connect.php");
-$sql2 = "SELECT `link` FROM `setting`";
-$result2 = mysqli_query($con, $sql2);
-$link = "";
-while($list=mysqli_fetch_assoc($result2))
-{
-$link=$list["link"];
+#   this line is the only line commented originally
+#   but because setting the system's dns programatically
+#   is stupid as fuck, i will be commenting the lines after this.
+#   
+#   PS. Please stop this idiocracy.
+#   PPS. we have a proper function for this
+#
+#   Regards,
+#   Your systems and network administrator
+##   include ("includes/connect.php");
+#$sql2 = "SELECT `link` FROM `setting`";
+#$result2 = mysqli_query($con, $sql2);
+#$link = "";
+#while($list=mysqli_fetch_assoc($result2))
+#{
+#$link=$list["link"];
 
 
-  }    
+  #}    
 ?>
 
 <html>
   <head>
-    <meta http-equiv="refresh" content="0;url=<?php echo $link;?>login.php" />
+    <meta http-equiv="refresh" content="0;url=<?php #echo $link;?>login.php" />
     <title></title>
   </head>
  <body>

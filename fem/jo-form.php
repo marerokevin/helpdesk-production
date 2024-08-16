@@ -220,7 +220,7 @@ if (isset($_POST['submit'])) {
             $isheadquery = mysqli_query($con, "SELECT COUNT(*) as count FROM `user` WHERE `level` = 'head' AND `name` = '$requestor_name'");
 
             if ($isheadquery) {
-                $row = mysqli_fetch_assoc($result);
+                $row = mysqli_fetch_assoc($isheadquery);
                 $isHead = ($row['count'] > 0) ? true : false;
             } else {
                 $isHead = false; // In case of query failure or no matching record
