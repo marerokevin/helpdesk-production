@@ -294,14 +294,14 @@ if (isset($_POST['approveRequest'])) {
     // echo "<script> console.log('" $requestID; "') </script>";
     $dateToday = date('Y-m-d H:i:s', time());
     $newDate = $_POST['expectedfinishdate'];
-    $date = date("Y-m-d");
+
     $username = $_SESSION['name'];
     if ($section  === "ICT" || $section === "mis") {
         $_SESSION['status'] = 'inprogress';
-        $sql = "UPDATE `request` SET `status2`='inprogress',`reqstart_date` = '$start',`reqfinish_date` = '$finish',`admin_approved_date`='$date',`expectedFinishDate` = '$newDate',`admin_remarks`='$remarks',`assignedPersonnel`='$assigned',`assignedPersonnelName`='$personnelName', `ict_approval_date`= '$dateToday' WHERE `id` = '$requestID';";
+        $sql = "UPDATE `request` SET `status2`='inprogress',`reqstart_date` = '$start',`reqfinish_date` = '$finish',`admin_approved_date`='$date',`expectedFinishDate` = '$newDate',`admin_remarks`='$remarks',`admin_approved_date`='$date',`assignedPersonnel`='$assigned',`assignedPersonnelName`='$personnelName', `ict_approval_date`= '$dateToday' WHERE `id` = '$requestID';";
     } elseif ($section === "FEM" || $section === "fem") {
         $_SESSION['status'] = 'inprogress';
-        $sql = "UPDATE `request` SET `status2`='inprogress',`reqstart_date` = '$start',`reqfinish_date` = '$finish',`admin_approved_date`='$date',`expectedFinishDate` = '$newDate',`admin_remarks`='$remarks',`assignedPersonnel`='$assigned',`assignedPersonnelName`='$personnelName', `ict_approval_date`= '$dateToday' WHERE `id` = '$requestID';";
+        $sql = "UPDATE `request` SET `status2`='inprogress',`reqstart_date` = '$start',`reqfinish_date` = '$finish',`admin_approved_date`='$date',`expectedFinishDate` = '$newDate',`admin_remarks`='$remarks',`admin_approved_date`='$date',`assignedPersonnel`='$assigned',`assignedPersonnelName`='$personnelName', `ict_approval_date`= '$dateToday' WHERE `id` = '$requestID';";
     }
     $results = mysqli_query($con, $sql);
 
@@ -2533,6 +2533,7 @@ function addWeekdays2($startDate, $daysToAdd, $holidays)
             document.getElementById("assigned").required = false;
             document.getElementById("datestart").disabled = true;
             document.getElementById("datefinish").disabled = true;
+            document.getElementById("changeSchedButton").disabled = true;
             $("#transferButton").addClass("hidden");
 
 

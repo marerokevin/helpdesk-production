@@ -131,7 +131,7 @@ if (isset($_GET['id']) && isset($_GET['head'])) {
 
                 $_SESSION['message'] = 'Message has been sent';
                 echo "<script>alert('Thank you for approving.') </script>";
-                echo "<script>location.href='$link/login.php';</script>";
+                echo "<script> location.href='index.php'; </script>";
 
                 // header("location: form.php");
             } catch (Exception $e) {
