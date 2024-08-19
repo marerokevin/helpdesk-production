@@ -83,6 +83,7 @@ if (isset($_POST['pdfReport'])) {
 if (isset($_POST['excelReport'])) {
   $_SESSION['month'] = $_POST['month'];
   $_SESSION['year'] = $_POST['year'];
+  // $_SESSION['request_type'] = $_POST['request_type'];
   $_SESSION['fem_member'] = $_POST['femmember'];
 ?>
   <script type="text/javascript">
@@ -421,8 +422,8 @@ if (isset($_POST['excelReport'])) {
                 ?>
 
                   <option data-sectionassign="<?php echo $row['level']; ?>" data-personnelsname="<?php echo $row['name'] ?>" value="<?php echo $row['username']; ?>"><?php echo $row['name']; ?> </option>; <?php
-                                                                                                                                                                                                          }
-                                                                                                                                                                                                            ?>
+                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                          ?>
               </select>
             </div>
 

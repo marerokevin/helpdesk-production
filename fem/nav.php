@@ -292,9 +292,9 @@ if (isset($_POST['excelReport'])) {
 
                 ?>
 
-                  <option data-sectionassign="<?php echo $row['level']; ?>" data-personnelsname="<?php echo $row['name'] ?>" value="<?php echo $row['username']; ?>"><?php echo $row['name']; ?> </option>; <?php
-                                                                                                                                                                                                          }
-                                                                                                                                                                                                            ?>
+                <option data-sectionassign="<?php echo $row['level']; ?>" data-personnelsname="<?php echo $row['name'] ?>" value="<?php echo $row['username']; ?>"><?php echo $row['name']; ?> </option>; <?php
+                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                          ?>
               </select>
             </div>
 
