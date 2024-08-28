@@ -979,6 +979,47 @@ Copy
                                             </button>
                                         </div>
                                     </li>
+                                    <li role="presentation">
+                                        <div class="p__uwg" style="width: 96px; margin-left: 16px; margin-right: 0px;">
+                                            <button id="toRecoTab" onclick="goToReco()" class="_1QoxDw o4TrkA CA2Rbg cwOZMg zQlusQ uRvRjQ POMxOg" tabindex="-1" type="button" role="tab" aria-controls="forReco" aria-selected="false">
+                                                <div class="_1cZINw">
+                                                    <div style="overflow:inherit" class="_qiHHw Ut_ecQ kHy45A">
+                                                        <span class=" sr-only">Notifications</span>
+                                                        <?php
+
+
+
+                                                        $section = $_SESSION['leaderof'];
+                                                        $date1 = new DateTime();
+                                                        $dateMonth = $date1->format('M');
+                                                        $dateYear = $date1->format('Y');
+
+                                                        $sql1 = "SELECT COUNT(id) as 'pending' FROM request WHERE   (`status2` = 'Done' OR `status2`='late')  and  `request_to` = '$section' ";
+                                                        $result = mysqli_query($con, $sql1);
+                                                        while ($count = mysqli_fetch_assoc($result)) {
+
+                                                            if ($count["pending"] > 0) {
+                                                        ?>
+                                                                <div class=" absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-border-white"> <?php
+                                                                                                                                                                                                                                                            $sql1 = "SELECT COUNT(id) as 'pending' FROM request WHERE (`status2` = 'Done' OR `status2`='late' ) AND `recommendation` !='' AND `approved_reco` = 0 and  `request_to` = '$section' ";
+                                                                                                                                                                                                                                                            $result = mysqli_query($con, $sql1);
+                                                                                                                                                                                                                                                            while ($count = mysqli_fetch_assoc($result)) {
+                                                                                                                                                                                                                                                                echo $count["pending"];
+                                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                            ?></div><?php
+                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                                    ?>
+                                                        <img src="../resources/img/reco.png" class="h-full w-full text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+
+                                                        <!-- <img src="../resources/img/star.png" class="h-full w-full text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"> -->
+
+                                                    </div>
+                                                </div>
+                                                <p class="_5NHXTA _2xcaIA ZSdr0w CCfw7w GHIRjw">For Reco Approval</p>
+                                            </button>
+                                        </div>
+                                    </li>
                                 </ul>
                             </div>
                             <div class="rzHaWQ theme light" id="diamond" style="transform: translateX(275px) translateY(2px) rotate(135deg);"></div>
@@ -1432,6 +1473,10 @@ Copy
 
                 </section>
             </div>
+           
+
+
+
             <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="forRating" role="tabpanel" aria-labelledby="profile-tab">
                 <section class="mt-10">
                     <table id="forRatingTable" class="display" style="width:100%">
@@ -1458,7 +1503,7 @@ Copy
 
                             if ($_SESSION['leaderof'] == "fem") {
 
-                                $sql = "select * from `request` WHERE  `request_to`='fem' AND ( `status2` = 'Done'  OR `status2` = 'rated'  AND `month`='$dateMonth' AND `year`='$dateYear' )order by id asc ";
+                                $sql = "select * from `request` WHERE  `request_to`='fem' AND ( `status2` = 'Done'  OR `status2` = 'rated'  AND `month`='$dateMonth' AND `year`='$dateYear' ) order by id asc ";
                                 $result = mysqli_query($con, $sql);
                             } else if ($_SESSION['leaderof'] == "mis") {
                                 $sql = "select * from `request` WHERE  `request_to`='mis' AND ( `status2` = 'Done'  OR `status2` = 'rated'  AND `month`='$dateMonth' AND `year`='$dateYear' )order by id asc ";
@@ -1637,6 +1682,213 @@ Copy
 
                 </section>
             </div>
+            <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="forReco" role="tabpanel" aria-labelledby="profile-tab">
+                <section class="mt-10">
+                    <table id="forRecoTable" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Request Number</th>
+                                <th>Action</th>
+                                <th>Details</th>
+                                <th>Requestor</th>
+
+                                <th>Date Filed</th>
+                                <th>Comments</th>
+                                <th>Assigned to</th>
+                                <th>Assigned Section</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $a = 1;
+                            $date1 = new DateTime();
+                            $dateMonth = $date1->format('M');
+                            $dateYear = $date1->format('Y');
+
+                            if ($_SESSION['leaderof'] == "fem") {
+
+                                $sql = "select * from `request` WHERE  `request_to`='fem' AND ( `status2` = 'Done'  OR `status2` = 'rated'  AND `month`='$dateMonth' AND `year`='$dateYear' ) AND `recommendation` !='' AND `approved_reco` = 0 order by id asc ";
+                                $result = mysqli_query($con, $sql);
+                            } else if ($_SESSION['leaderof'] == "mis") {
+                                $sql = "select * from `request` WHERE  `request_to`='mis' AND ( `status2` = 'Done'  OR `status2` = 'rated'  AND `month`='$dateMonth' AND `year`='$dateYear' ) AND `recommendation` !='' AND `approved_reco` = 0 order by id asc ";
+                                $result = mysqli_query($con, $sql);
+                            } else {
+                                $sql = "select * from `request` WHERE  ( `status2` = 'Done'  OR `status2` = 'rated'  AND `month`='$dateMonth' AND `year`='$dateYear'  ) AND `recommendation` !='' AND `approved_reco` = 0 order by id asc ";
+                                $result = mysqli_query($con, $sql);
+                            }
+
+
+
+
+
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                if ($row['request_type'] == "Technical Support") {
+                                    $reqtype = "Ticket Request";
+                                } else {
+                                    $reqtype = "Job Order";
+                                }
+
+
+                                $date = new DateTime($row['date_filled']);
+                                $date = $date->format('ym');
+
+                                if ($row['ticket_category'] != NULL) {
+                                    $joid = 'TS-' . $date . '-' . $row['id'];
+                                } else {
+                                    $joid =  'JO-' . $date . '-' . $row['id'];
+                                }
+
+                                if ($row['request_to'] === "fem") {
+                                    $section_ = "FEM";
+                                } else if ($row['request_to'] === "mis") {
+                                    $section_ = "ICT";
+                                }
+
+                            ?>
+                                <tr class="">
+                                    <td class="">
+                                        <?php echo $joid; ?>
+                                    </td>
+                                    <td>
+                                        <!-- <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Select</a> -->
+                                        <?php if (($row['recommendation'] != "" || $row['recommendation'] != NULL) && $row['approved_reco'] == 0) {
+
+                                            echo "<button id='viewdetails' onclick='modalShow(this)'  data-reqtype='" . $reqtype . "' 
+                        data-reco='1' 
+                        data-recommendation='" . $row['recommendation'] . "' 
+                        data-approved_reco='" . $row['approved_reco'] . "' 
+                        data-icthead_reco_remarks='" . $row['icthead_reco_remarks'] . "' 
+                        data-requestorremarks='" . $row['requestor_remarks'] . "' 
+                        data-quality='" . $row['rating_quality'] . "' 
+                        data-delivery='" . $row['rating_delivery'] . "' 
+                        data-ratedby='" . $row['ratedBy'] . "' 
+                        data-daterate='" . $row['rateDate'] . "' 
+                        data-action1date='" . $row['action1Date'] . "' 
+                        data-action2date='" . $row['action2Date'] . "' 
+                        data-action3date='" . $row['action3Date'] . "' 
+                        data-headremarks='" . $row['head_remarks'] . "' 
+                        data-adminremarks='" . $row['admin_remarks'] . "' 
+                        data-headdate='" . $row['head_approval_date'] . "' 
+                        data-admindate='" . $row['admin_approved_date'] . "' 
+                        data-department='" . $row['department'] . "'  
+                        data-status='" . $row['status2'] . "'   
+                        data-action1='" . $row['action1'] . "'   
+                        data-action2='" . $row['action2'] . "' 
+                        data-action3='" . $row['action3'] . "'   
+                        data-ratings = '" . $row['rating_final'] . "' 
+                        data-actualdatefinished='' 
+                        data-assignedpersonnel='" . $row['assignedPersonnelName'] . "'
+                        data-requestor='" . $row['requestor'] . "' 
+                        data-personnel='" . $row['assignedPersonnel'] . "' 
+                        data-action='" . $dataAction = str_replace('"', '', $row['action']) . "' 
+                        data-requestoremail='" . $row['email'] . "'    
+                        data-joid='" . $row['id'] . "' 
+                        data-category='" . $row['request_category'] . "' 
+                        data-telephone='" . $row['telephone'] . "'
+                        data-attachment='" . $row['attachment'] . "'  
+                        data-comname='" . $row['computerName'] . "' 
+                        data-start='" . $row['reqstart_date'] . "'
+                        data-end='" . $row['reqfinish_date'] . "'
+                        data-details='" . $row['request_details'] . "' 
+                        data-joidprint='" . $joid . "' 
+                        data-section= '" . $section_ . "' 
+                        data-datefiled='" . $row['date_filled'] . "'>
+
+                        <span class= 'inline-block px-6 py-2.5 bg-gradient-to-r from-purple-400 to-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-800 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out' 
+                        >VIEW RECO</span></button>";
+                                        } else {
+                                            echo "<span id='viewdetails' onclick='modalShow(this)' data-reqtype='" . $reqtype . "'
+                    data-reco='0' 
+                    data-recommendation='" . $row['recommendation'] . "' 
+                    data-approved_reco='" . $row['approved_reco'] . "' 
+                    data-icthead_reco_remarks='" . $row['icthead_reco_remarks'] . "' 
+                    data-requestorremarks='" . $row['requestor_remarks'] . "' 
+                    data-quality='" . $row['rating_quality'] . "' 
+                    data-delivery='" . $row['rating_delivery'] . "' 
+                    data-ratedby='" . $row['ratedBy'] . "' 
+                    data-daterate='" . $row['rateDate'] . "' 
+                    data-action1date='" . $row['action1Date'] . "' 
+                    data-action2date='" . $row['action2Date'] . "' 
+                    data-action3date='" . $row['action3Date'] . "' 
+                    data-headremarks='" . $row['head_remarks'] . "' 
+                    data-adminremarks='" . $row['admin_remarks'] . "' 
+                    data-headdate='" . $row['head_approval_date'] . "' 
+                    data-admindate='" . $row['admin_approved_date'] . "' 
+                    data-department='" . $row['department'] . "'  
+                    data-status='" . $row['status2'] . "'   
+                    data-action1='" . $row['action1'] . "'   
+                    data-action2='" . $row['action2'] . "' 
+                    data-action3='" . $row['action3'] . "'   
+                    data-ratings = '" . $row['rating_final'] . "' 
+                    data-actualdatefinished='' 
+                    data-assignedpersonnel='" . $row['assignedPersonnelName'] . "'
+                    data-requestor='" . $row['requestor'] . "' 
+                    data-personnel='" . $row['assignedPersonnel'] . "' 
+                    data-action='" . $dataAction = str_replace('"', '', $row['action']) . "' 
+                    data-requestoremail='" . $row['email'] . "'    
+                    data-joid='" . $row['id'] . "' 
+                    data-category='" . $row['request_category'] . "' 
+                    data-telephone='" . $row['telephone'] . "'
+                    data-attachment='" . $row['attachment'] . "'  
+                    data-comname='" . $row['computerName'] . "' 
+                    data-start='" . $row['reqstart_date'] . "'
+                    data-end='" . $row['reqfinish_date'] . "'
+                    data-details='" . $row['request_details'] . "' 
+                    data-joidprint='" . $joid . "' 
+                    data-section= '" . $section_ . "' 
+                    data-datefiled='" . $row['date_filled'] . "'>
+                        
+                        <span class='inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out'>VIEW MORE</span></span>";
+                                        }
+                                        ?>
+                                    </td>
+
+                                    <td class="text-sm text-red-700 font-light px-6 py-4 whitespace-nowrap truncate max-w-xs">
+                                        <?php echo $row['request_details']; ?>
+                                    </td>
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap truncate " style="max-width: 40px;">
+                                        <?php echo $row['requestor']; ?>
+                                    </td>
+
+                                    <!-- to view pdf -->
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        <?php
+                                        $date = new DateTime($row['date_filled']);
+                                        $date = $date->format('F d, Y');
+                                        echo $date; ?>
+
+                                    </td>
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap truncate " style="max-width: 40px;">
+                                        <?php echo $row['requestor_remarks']; ?>
+                                    </td>
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap truncate" style="max-width: 10px;">
+
+                                        <?php echo $row['assignedPersonnelName'];
+                                        ?>
+                                    </td>
+
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+
+                                        <?php if ($row['request_to'] == "fem") {
+                                            echo "FEM";
+                                        } else if ($row['request_to'] == "mis") {
+                                            echo "ICT";
+                                        }
+                                        ?>
+                                    </td>
+                                </tr>
+                            <?php
+
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+
+                </section>
+            </div>
+
+            
         </div>
 
 
@@ -2606,6 +2858,11 @@ FROM `user` u";
                 id: 'forRating',
                 triggerEl: document.querySelector('#toRateTab'),
                 targetEl: document.querySelector('#forRating')
+            },
+            {
+                id: 'forReco',
+                triggerEl: document.querySelector('#toRecoTab'),
+                targetEl: document.querySelector('#forReco')
             }
         ];
 
@@ -2749,6 +3006,29 @@ FROM `user` u";
         }
 
 
+        function goToReco() {
+            const myElement = document.querySelector('#diamond');
+            $("#adminremarksDiv").removeClass("hidden");
+            $("#remarksDiv").addClass("hidden");
+            $("#assignedPersonnelDiv").removeClass("hidden");
+            $("#chooseAssignedDiv").addClass("hidden");
+            $("#buttonDiv").addClass("hidden");
+            $("#actionDetailsDiv").removeClass("hidden");
+            $("#buttonPrintDiv").removeClass("hidden");
+
+            const currentTransform = myElement.style.transform = 'translateX(605px) translateY(2px) rotate(135deg)';
+            $("#recommendationDiv").removeClass("hidden");
+
+            document.getElementById("reasonCancel").required = false;
+            document.getElementById("assigned").required = false;
+            document.getElementById("datestart").disabled = true;
+            document.getElementById("datefinish").disabled = true;
+            $("#transferButton").addClass("hidden");
+
+
+        }
+
+
 
         var setdate2;
 
@@ -2821,6 +3101,19 @@ FROM `user` u";
 
         $(document).ready(function() {
             $('#forRatingTable').DataTable({
+                "order": [
+                    [1, "desc"]
+                ],
+                responsive: true,
+                destroy: true,
+                lengthMenu: [
+                    [10, 15, 20, 50],
+                    [10, 15, 20, 50]
+                ],
+                pageLength: 10
+
+            });
+            $('#forRecoTable').DataTable({
                 "order": [
                     [1, "desc"]
                 ],
