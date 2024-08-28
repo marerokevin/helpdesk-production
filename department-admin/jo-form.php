@@ -96,7 +96,7 @@ if (isset($_POST['submit'])) {
         $requestor_username = $username;
         $requestor_dept = $user_dept;
         $requestor_email = $email1;
-        $headname = $username;
+        $headname = $user_name;
         $r_personnels = NULL;
         $r_personnelsName = NULL;
     }
@@ -184,7 +184,7 @@ if (isset($_POST['submit'])) {
             $status = 'head';
             $sql = "insert into request (date_filled,status2,requestorUsername,requestor,email,department,request_type, request_to, request_category,request_details, approving_head,accept_termsandconddition,month,year, assignedPersonnel, assignedPersonnelName, ticket_filer) 
             values('$datenow','$status','$requestor_username','$requestor_name','$requestor_email','$requestor_dept', 'Job Order', '$requestto','$category','$request','$headname','$terms','$month','$year', '$r_personnels', '$r_personnelsName', '$user_name')";
-        } else {
+        } else { //fem
             $status = 'admin';
             $sql = "insert into request (date_filled,status2,requestorUsername,requestor,email,department,request_type, request_to, request_category,request_details, approving_head,accept_termsandconddition,month,year, assignedPersonnel, assignedPersonnelName, ticket_filer) 
             values('$datenow','$status','$requestor_username','$requestor_name','$requestor_email','$requestor_dept', 'Job Order', '$requestto','$category','$request','$headname','$terms','$month','$year', '$r_personnels', '$r_personnelsName', '$user_name')";
@@ -487,24 +487,19 @@ if (isset($_POST['submit'])) {
 
                     <select name="category" id="type" class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
                         <option selected disabled value=" " data-val="">Choose Category:</option>
-                        <!-- <option value="na" data-val="na"></option> -->
-                        <option value="Facilities" data-val="fem">Facilities</option>
-                        <option value="Electrical" data-val="fem">Electrical</option>
-                        <option value="Mechanical" data-val="fem">Mechanical</option>
-                        <option value="Compliance" data-val="fem">Compliance</option>
-                        <option value="Relayout" data-val="fem">Relayout</option>
-                        <option value="Quotation" data-val="fem">Quotation</option>
-                        <!-- <option value="Computer" data-val="mis">Computer</option>
-            <option value="Network" data-val="mis">Network</option>
-            <option value="Printer" data-val="mis">Printer</option>
-            <option value="Telephone" data-val="mis">Telephone</option>
-            <option value="Email" data-val="mis">Email</option>
-            <option value="Relayout" data-val="mis">Relayout</option>
-            <option value="Quotation" data-val="mis">Quotation</option>
-            <option value="CCTV" data-val="mis">CCTV-Attach approve letter from Admin head</option>
-            <option value="Others" data-val="mis">Others</option> -->
-                        <option value="Others" data-val="fem">Others</option>
 
+                        <?php
+
+                        $sql1 = "Select * FROM `femcategories` WHERE req_type = 'JO'";
+                        $result = mysqli_query($con, $sql1);
+                        while ($list = mysqli_fetch_assoc($result)) {
+                            $c_name = $list["c_name"];
+                            $hours = $list["hours"];
+                            $level = $list["level"];
+                        ?>
+                            <option value="<?php echo  $c_name; ?>" data-hours="<?php echo  $hours; ?>" data-level="<?php echo  $level; ?>" data-val="fem"><?php echo  $c_name; ?> </option> <?php
+                                                                                                                                                                                            }
+                                                                                                                                                                                                ?>
                         <?php
 
                         $sql1 = "Select * FROM `categories` WHERE req_type = 'JO'";
