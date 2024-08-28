@@ -899,14 +899,14 @@ if (isset($_POST['updateJO'])) {
                                                         $dateMonth = $date1->format('M');
                                                         $dateYear = $date1->format('Y');
 
-                                                        $sql1 = "SELECT COUNT(id) as 'pending' FROM request WHERE  `status2` = 'Done'  and `assignedPersonnel` = '$femusername' ";
+                                                        $sql1 = "SELECT COUNT(id) as 'pending' FROM request WHERE   `status2` = 'Done'  and `assignedPersonnel` =  '$femusername' ";
                                                         $result = mysqli_query($con, $sql1);
                                                         while ($count = mysqli_fetch_assoc($result)) {
 
                                                             if ($count["pending"] > 0) {
                                                         ?>
                                                                 <div class=" absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-border-white"> <?php
-                                                                                                                                                                                                                                                            $sql1 = "SELECT COUNT(id) as 'pending' FROM request WHERE `status2` = 'Done'  and `assignedPersonnel` = '$femusername' ";
+                                                                                                                                                                                                                                                            $sql1 = "SELECT COUNT(id) as 'pending' FROM request WHERE  `status2` = 'Done'  and `assignedPersonnel` = '$femusername' ";
                                                                                                                                                                                                                                                             $result = mysqli_query($con, $sql1);
                                                                                                                                                                                                                                                             while ($count = mysqli_fetch_assoc($result)) {
                                                                                                                                                                                                                                                                 echo $count["pending"];
@@ -1551,7 +1551,7 @@ if (isset($_POST['updateJO'])) {
                             $dateMonth = $date1->format('M');
                             $dateYear = $date1->format('Y');
 
-                            $sql = "select * from `request` WHERE  `assignedPersonnel` = '$femusername' AND ( `status2` = 'Done'   OR `status2` = 'rated'  AND `month`='$dateMonth' AND `year`='$dateYear' )order by id asc";
+                            $sql = "select * from `request` WHERE  `assignedPersonnel` = '$femusername' AND ( `status2` = 'Done'   OR `status2` = 'rated'  AND `month`='$dateMonth' AND `year`='$dateYear' ) order by id asc";
                             $result = mysqli_query($con, $sql);
                             $count = mysqli_num_rows($result);
                             if ($count == 0) {

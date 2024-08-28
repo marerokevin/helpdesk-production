@@ -4165,7 +4165,7 @@ diff helpdesk/login.php helpdeskts2/login.php
 >   } else {
 95,96d75
 <     if($password == $userpass){
-<       header("location:http://192.168.60.47/srs/login.php?user=$username&pass=$userpass");
+<       header("location:http://192.168.5.243/srs/login.php?user=$username&pass=$userpass");
 97a77,93
 >     $sql1 = "Select * FROM `user` WHERE `username`='$username'";
 >     $result = mysqli_query($con, $sql1);
@@ -4180,7 +4180,7 @@ diff helpdesk/login.php helpdeskts2/login.php
 > 
 > 
 >       if ($password == $userpass) {
->         header("location:http://192.168.60.47/srs/login.php?user=$username&pass=$userpass");
+>         header("location:http://192.168.5.243/srs/login.php?user=$username&pass=$userpass");
 >       } else {
 >         echo '<script>alert("Login Failed! Wrong password")</script>';
 >       }

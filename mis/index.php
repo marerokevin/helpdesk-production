@@ -509,6 +509,13 @@ if (isset($_POST['cancelJO'])) {
         }
     }
 }
+if (isset($_POST['updateJO'])) {
+    $joid = $_POST['joid2'];
+    $message = $_POST['message'];
+
+    $sql = "UPDATE `request` SET `request_details` = '$message'  WHERE `id` = '$joid';";
+    $results = mysqli_query($con, $sql);
+}
 
 ?>
 
@@ -1883,7 +1890,12 @@ if (isset($_POST['cancelJO'])) {
                         <button type="button" onclick="cancellation()" data-modal-target="popup-modal-cancel" data-modal-toggle="popup-modal-cancel" class="shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-pink-800/80  w-full text-white bg-gradient-to-br from-red-400 to-pink-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Cancel Request</button>
 
                     </div>
+                    <div id="buttonDiv1" class="hidden items-center p-4 border-t border-gray-200 rounded-b dark:border-gray-600">
+                        <button type="submit" name="updateJO" class="shadow-lg shadow-teal-500/50 dark:shadow-lg dark:shadow-teal-800/80  w-full text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Update</button>
 
+                        <button type="button" onclick="cancellation()" data-modal-target="popup-modal-cancel" data-modal-toggle="popup-modal-cancel" class="shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-pink-800/80  w-full text-white bg-gradient-to-br from-red-400 to-pink-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Cancel Request</button>
+
+                    </div>
 
 
                     <div id="popup-modal-cancel" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] md:h-full">
@@ -2702,7 +2714,9 @@ if (isset($_POST['cancelJO'])) {
         function filledTicket() {
             const myElement = document.querySelector('#diamond');
             $("#buttonDiv").addClass("hidden");
+            $("#buttonDiv1").removeClass("hidden");
             document.getElementById("action").disabled = true;
+            document.getElementById("message").disabled = false;
             $("#ratingstar").addClass("hidden");
             const currentTransform = myElement.style.transform = 'translateX(50px) translateY(2px) rotate(135deg)';
 
@@ -2712,8 +2726,10 @@ if (isset($_POST['cancelJO'])) {
 
         function goToOverall() {
             const myElement = document.querySelector('#diamond');
+            $("#buttonDiv1").addClass("hidden");
             $("#buttonDiv").addClass("hidden");
             document.getElementById("action").disabled = true;
+            document.getElementById("message").disabled = true;
             $("#ratingstar").addClass("hidden");
             const currentTransform = myElement.style.transform = 'translateX(270px) translateY(2px) rotate(135deg)';
 
@@ -2724,7 +2740,8 @@ if (isset($_POST['cancelJO'])) {
         function goToMis() {
             const myElement = document.querySelector('#diamond');
             $("#ratingstar").addClass("hidden");
-
+            $("#buttonDiv1").addClass("hidden");
+            document.getElementById("message").disabled = true;
             const currentTransform = myElement.style.transform = 'translateX(300px) translateY(2px) rotate(135deg)';
             $("#recommendationDiv").addClass("hidden");
 
@@ -2735,7 +2752,9 @@ if (isset($_POST['cancelJO'])) {
         function goToRate() {
             const myElement = document.querySelector('#diamond');
             $("#buttonDiv").addClass("hidden");
+            $("#buttonDiv1").addClass("hidden");
             document.getElementById("action").disabled = true;
+            document.getElementById("message").disabled = true;
             // $("#ratingstar").removeClass("hidden");
             $("#recommendationDiv").removeClass("hidden");
 
@@ -2749,7 +2768,7 @@ if (isset($_POST['cancelJO'])) {
             const myElement = document.querySelector('#diamond');
             document.getElementById("action").disabled = false;
             $("#ratingstar").addClass("hidden");
-
+            $("#buttonDiv1").addClass("hidden");
             $("#buttonDiv").removeClass("hidden");
             const currentTransform = myElement.style.transform = 'translateX(160px) translateY(2px) rotate(135deg)';
             $("#recommendationDiv").addClass("hidden");

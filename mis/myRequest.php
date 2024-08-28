@@ -422,7 +422,7 @@
 
                                                      </div>
                                                  </div>
-                                                 <p class="_5NHXTA _2xcaIA ZSdr0w CCfw7w GHIRjw">To rate</p>
+                                                 <p class="_5NHXTA _2xcaIA ZSdr0w CCfw7w GHIRjw">Finished</p>
                                              </button>
                                          </div>
                                      </li>
