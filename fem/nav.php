@@ -6,12 +6,13 @@ $llevel = $_SESSION['level'];
 $username = $_SESSION['username'];
 
 
-$sqlLevel = "select level from user where username='$username'";
+$sqlLevel = "select level, leader from user where username='$username'";
 $resultLevel = mysqli_query($con, $sqlLevel);
 while ($field = mysqli_fetch_assoc($resultLevel)) {
   $level = $field["level"];
+  $leader = $field["leader"];
   $_SESSION['level'] = $level;
-
+  $_SESSION['leader'] = $leader;
 
 
   if ($_SESSION['level'] == 'admin') {
@@ -38,7 +39,7 @@ while ($field = mysqli_fetch_assoc($resultLevel)) {
 if (isset($_POST['monthlyReport'])) {
   $_SESSION['month'] = $_POST['month'];
   $_SESSION['year'] = $_POST['year'];
-
+  $_SESSION['adminsection'] = 'fem';
 ?>
   <script type="text/javascript">
     window.open('../Monthly Report.php', '_blank');
@@ -47,6 +48,17 @@ if (isset($_POST['monthlyReport'])) {
 
 }
 
+if (isset($_POST['excelReport'])) {
+  $_SESSION['month'] = $_POST['month'];
+  $_SESSION['year'] = $_POST['year'];
+  $_SESSION['request_type'] = $_POST['request_type'];
+  $_SESSION['fem_member'] = $_POST['femmember'];
+?>
+  <script type="text/javascript">
+    window.open('../fem_summary_report_xls.php?fem=<?php echo  $_SESSION['fem_member']; ?>&month=<?php echo $_SESSION['month']; ?>&year=<?php echo $_SESSION['year']; ?>', '_blank');
+  </script>
+<?php
+}
 ?>
 
 
@@ -63,6 +75,12 @@ if (isset($_POST['monthlyReport'])) {
       <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Helpdesk</span>
     </a>
     <div class="flex items-center md:order-2">
+      <?php if ($_SESSION['level'] == 'fem' && $_SESSION['leader'] == 'filler') { ?>
+        <a href="ticketForm.php" type="button" class=" hidden lg:block text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 shadow-lg shadow-teal-500/50 dark:shadow-lg dark:shadow-teal-800/80 w-60 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mx-3 md:mx-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Create a Ticket</a>
+      <?php   } ?>
+
+      <a data-modal-target="generateReportModal" data-modal-toggle="generateReportModal" type="button" class=" hidden text-white bg-gradient-to-r from-purple-400 to-blue-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80 w-60 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mx-3 md:mx-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Monthly Report</a>
+
       <a data-modal-target="reportModal" data-modal-toggle="reportModal" type="button" class="text-white bg-gradient-to-r from-purple-400 to-blue-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80 w-60 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mx-3 md:mx-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Monthly Report</a>
 
       <a href="jo-form.php" type="button" class="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 shadow-lg shadow-teal-500/50 dark:shadow-lg dark:shadow-teal-800/80 w-60 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mx-3 md:mx-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Request Job Order</a>
@@ -254,6 +272,39 @@ if (isset($_POST['monthlyReport'])) {
         <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Choose month and year</h3>
         <form class="space-y-6" action="" method="POST">
           <div>
+            <label for="report" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Report Type</label>
+            <select id="report" name="report" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              <option selected disabled>Select Type</option>
+              <option value="overall">Overall Report</option>
+              <option value="individual">Individual Report</option>
+            </select>
+          </div>
+          <div id="femMember" class="grid md:grid-cols-1 md:gap-x-6 gap-y-3 hidden">
+            <div class="relative z-0 w-full  group">
+              <label for="femmember" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">FEM Member</label>
+              <select id="femmember" name="femmember" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                <option disabled selected>Search Member</option>
+
+                <?php
+                $sql1 = "SELECT u.*
+                                FROM `user` u WHERE u.level = 'fem' or u.level = 'admin' AND u.leader = 'fem'";
+                $result = mysqli_query($con, $sql1);
+                while ($row = mysqli_fetch_assoc($result)) {
+
+                ?>
+
+                  <option data-sectionassign="<?php echo $row['level']; ?>" data-pending="<?php echo $row['pending'] ?>" data-personnelsname="<?php echo $row['name'] ?>" value="<?php echo $row['username']; ?>"><?php echo $row['name']; ?> </option>; <?php
+                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                          ?>
+              </select>
+            </div>
+
+            <!-- <input class="" type="text" id="r_personnelsName" name="r_personnelsName" class="bg-gray-50 border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" /> -->
+
+
+          </div>
+          <div>
+
             <label for="month" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Month</label>
 
             <select id="month" name="month" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
@@ -268,9 +319,9 @@ if (isset($_POST['monthlyReport'])) {
               ?> <option <?php if ($monthNow == $month) {
                             echo "selected";
                           } ?> value="<?php echo $month; ?>"><?php echo $month; ?></option> <?php
-                                                                                                          $date->modify('next month');
-                                                                                                        }
-                                                                                                          ?>
+                                                                                            $date->modify('next month');
+                                                                                          }
+                                                                                            ?>
             </select>
 
           </div>
@@ -281,8 +332,11 @@ if (isset($_POST['monthlyReport'])) {
                                         echo $year; ?>" name="year" id="year" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
           </div>
 
-          <button type="submit" name="monthlyReport" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-            Generate
+          <button type="submit" name="monthlyReport" id="monthlyReportOverall" class="hidden w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            Generate PDF
+          </button>
+          <button type="submit" name="excelReport" id="excelReportIndividual" class="hidden w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            Generate Excel
           </button>
 
         </form>
@@ -290,7 +344,7 @@ if (isset($_POST['monthlyReport'])) {
     </div>
   </div>
 </div>
-
+<script src="../node_modules/jquery/dist/jquery.min.js"></script>
 <script>
   function clickButton() {
     var button = document.getElementById("sidebarButton"); // replace "myButton" with the ID of your button
@@ -310,10 +364,25 @@ if (isset($_POST['monthlyReport'])) {
   }
 
 
+  $('#report').change(function() {
 
-  //   var homeoption = document.getElementById("homeoption");
-  //   homeoption.classList.remove("text-gray-700");
-  //   homeoption.classList.add("text-white");
-  //   homeoption.classList.remove("dark:text-gray-400");
-  //   homeoption.classList.add("dark:text-white");
+    var selectedOption = $(this).val();
+
+    if (selectedOption === "overall") {
+      $("#monthlyReportOverall").removeClass("hidden");
+      $("#excelReportIndividual").addClass("hidden");
+
+      $("#femMember").addClass("hidden");
+      document.getElementById("femmember").required = false;
+
+
+    } else {
+      $("#femMember").removeClass("hidden");
+      $("#monthlyReportOverall").addClass("hidden");
+      $("#excelReportIndividual").removeClass("hidden");
+      document.getElementById("femmember").required = true;
+
+    }
+
+  })
 </script>
