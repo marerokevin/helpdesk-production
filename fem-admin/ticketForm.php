@@ -585,10 +585,10 @@ if (isset($_POST['submitTicket'])) {
                         <label for="r_cat_level" class="block mb-2 text- font-medium text-gray-900 dark:text-white">Priority Level</label>
                         <input type="text" id="r_cat_level" name="r_cat_level" class="bg-gray-50 border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
                     </div> -->
-                    <div class="relative z-0 w-full  group">
+                    <!-- <div class="relative z-0 w-full  group">
                         <label for="r_cat_hours" class="block mb-2 text- font-medium text-gray-900 dark:text-white">Minutes/Hours</label>
                         <input type="text" id="r_cat_hours" name="r_cat_hours" class="bg-gray-50 border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
-                    </div>
+                    </div> -->
                 </div>
 
                 <div class="grid md:grid-cols-1 md:gap-x-6 gap-y-3">
