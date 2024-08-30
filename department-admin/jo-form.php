@@ -473,8 +473,8 @@ if (isset($_POST['submit'])) {
 
                 <div>
                     <label for="femmis" class="block mb-2 text-lg font-medium text-gray-900 dark:text-gray-300">Request to </label>
-                    <select name="femmis" id="femmis" class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
-                        <option selected disabled value=" " data-val="">Choose Section:</option>
+                    <select name="femmis" id="femmis" class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                        <option selected disabled value="" data-val="">Choose Section:</option>
                         <option value="fem">FEM: Facility and Equipment Maintenance</option>
                         <option value="mis">ICT: Information and Communication Technology</option>
 
@@ -485,8 +485,8 @@ if (isset($_POST['submit'])) {
                     <label for="category" class="block mb-2 text-lg font-medium text-gray-900 dark:text-gray-300">Category <a href="#" class="text-blue-600 hover:underline dark:text-blue-500"></a></label>
                     <!-- <label for="remember" class="ml-2 text-lg font-medium text-gray-900 dark:text-gray-400" data-modal-toggle="defaultModal">I agree with the <a href="#" class="text-blue-600 hover:underline dark:text-blue-500">terms and conditions</a>.</label> -->
 
-                    <select name="category" id="type" class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
-                        <option selected disabled value=" " data-val="">Choose Category:</option>
+                    <select name="category" id="type" class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                        <option selected disabled value="" data-val="">Choose Category:</option>
 
                         <?php
 

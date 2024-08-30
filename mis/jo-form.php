@@ -91,6 +91,29 @@ if (isset($_POST['submit'])) {
             $r_personnels = NULL;
             $r_personnelsName = NULL;
         }
+
+
+        
+
+    $r_assistantsName = $_POST['r_assistantsName'];
+
+    if (isset($_POST['r_assistants']))
+
+    {
+        $r_assistants = $_POST['r_assistants'];
+
+
+        if ($r_assistants != "") {
+      
+          $r_assistants = implode(', ', $r_assistants);
+        }
+
+    }
+    else{
+        $r_assistants = "";
+    }
+
+
     } else {
         $requestor_name = $user_name;
         $requestor_username = $username;
@@ -185,8 +208,8 @@ if (isset($_POST['submit'])) {
     $_SESSION['status'] = $status;
     if (!empty($requestto && $category)) {
         // $email1=$_SESSION['email'];
-        $sql = "insert into request (date_filled,status2,requestorUsername,requestor,email,department,request_type, request_to, request_category,request_details, approving_head, head_approval_date, accept_termsandconddition,month,year, assignedPersonnel, assignedPersonnelName, ticket_filer) 
-            values('$datenow','$status','$requestor_username','$requestor_name','$requestor_email','$requestor_dept', 'Job Order', '$requestto','$category','$request','$headname','$head_approval_date','$terms','$month','$year', '$r_personnels', '$r_personnelsName', '$user_name')";
+        $sql = "insert into request (date_filled,status2,requestorUsername,requestor,email,department,request_type, request_to, request_category,request_details, approving_head, head_approval_date, accept_termsandconddition,month,year, assignedPersonnel, assignedPersonnelName, assistantsId, assistanNames, ticket_filer) 
+            values('$datenow','$status','$requestor_username','$requestor_name','$requestor_email','$requestor_dept', 'Job Order', '$requestto','$category','$request','$headname','$head_approval_date','$terms','$month','$year', '$r_personnels', '$r_personnelsName', '$r_assistants','$r_assistantsName', '$user_name')";
         $results = mysqli_query($con, $sql);
 
         if ($results) {
@@ -488,7 +511,7 @@ if (isset($_POST['submit'])) {
                 <div>
                     <label for="femmis" class="block mb-2 text-lg font-medium text-gray-900 dark:text-gray-300">Request to </label>
                     <select name="femmis" id="femmis" class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
-                        <option selected disabled value=" " data-val="">Choose Section:</option>
+                        <option selected disabled value="" data-val="">Choose Section:</option>
                         <option value="fem">FEM: Facility and Equipment Maintenance</option>
                         <option value="mis">ICT: Information and Communication Technology</option>
 
@@ -500,7 +523,7 @@ if (isset($_POST['submit'])) {
                     <!-- <label for="remember" class="ml-2 text-lg font-medium text-gray-900 dark:text-gray-400" data-modal-toggle="defaultModal">I agree with the <a href="#" class="text-blue-600 hover:underline dark:text-blue-500">terms and conditions</a>.</label> -->
 
                     <select name="category" id="type" class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
-                        <option selected disabled value=" " data-val="">Choose Category:</option>
+                        <option selected disabled value="" data-val="">Choose Category:</option>
                         <!-- <option value="na" data-val="na"></option> -->
                         <option value="Facilities" data-val="fem">Facilities</option>
                         <option value="Electrical" data-val="fem">Electrical</option>
@@ -612,7 +635,7 @@ if (isset($_POST['submit'])) {
                         </div>
                     </div>
 
-                    <div id="assignedPersonnel" class="grid md:grid-cols-1 md:gap-x-6 gap-y-3 hidden">
+                    <div id="assignedPersonnel" class="grid md:grid-cols-2 md:gap-x-6 gap-y-3 hidden">
                         <div class="relative z-0 w-full  group">
                             <label for="r_personnels" class="block mb-2 text-lg font-medium text-gray-900 dark:text-gray-300">Assign Personnel</label>
                             <select id="r_personnels" name="r_personnels" class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
@@ -639,9 +662,39 @@ if (isset($_POST['submit'])) {
                                                                                                                                                                                                                                                                                                             ?>
                             </select>
                         </div>
+                           
+                        <div class="relative z-0 w-full  group">
+                        <label for="r_personnels" class="block mb-2 text-lg font-medium text-gray-900 dark:text-gray-300">Assistant/s</label>
+                       
+                        <select id="r_assistants" name="r_assistants[]" multiple="multiple" class="form-control js-assistant  bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                     
+
+                            <?php
+                            //    $sql1 = "Select * FROM `user` WHERE `username`='$username'";
+                            $sql1 = "SELECT u.*, 
+            (SELECT COUNT(id) FROM request 
+             WHERE  `status2` = 'inprogress' 
+             AND `assignedPersonnel` = u.username) AS 'pending'
+            FROM `user` u WHERE u.level = 'mis' or u.level = 'admin' AND u.leader = 'mis'";
+                            $result = mysqli_query($con, $sql1);
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                // $name=$list["name"];
+                                // $username=$list["username"];
+                                // $email=$list["email"];
+                            ?>
+
+                                <!-- <option selected  disabled class="text-gray-900">Choose Head:</option>  -->
+                                <option data-sectionassign="<?php echo $row['level']; ?>" data-pending="<?php echo $row['pending'] ?>" data-personnelsname="<?php echo $row['name'] ?>" value="<?php echo $row['username']; ?>"><?php echo $row['name']; ?> (<?php echo $row['pending'] ?>)</option>; <?php
+
+                                                                                                                                                                                                                                                                                                    }
+
+                                                                                                                                                                                                                                                                                                        ?>
+                        </select>
+                    </div>
+
 
                         <input class="hidden" type="text" id="r_personnelsName" name="r_personnelsName" class="bg-gray-50 border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
-
+                        <input class="hidden" type="text" id="r_assistantsName" name="r_assistantsName" class="bg-gray-50 border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />                                                                                                                                                                                                                                                                               
 
                     </div>
 
@@ -871,6 +924,15 @@ if (isset($_POST['submit'])) {
     <script type="text/javascript" src="index.js"></script>
 
     <script>
+
+
+        
+$(".js-assistant").select2({
+  tags: true
+});
+
+
+
         $(".js-example-tags").select2({
             tags: true
         });
@@ -1036,6 +1098,14 @@ if (isset($_POST['submit'])) {
                 $('#r_personnelsName').val(selectedpersonnel);
 
             });
+            $('#r_assistants').change(function() {
+    var selectedPersonnels = [];
+    $(this).find('option:selected').each(function() {
+        selectedPersonnels.push($(this).data('personnelsname'));
+    });
+    $('#r_assistantsName').val(selectedPersonnels.join(', '));
+});
+
             $("#r_personnels option").each(function() {
                 var assignedSection = $(this).attr("data-sectionassign");
                 var pending = $(this).attr("data-pending");
@@ -1050,6 +1120,24 @@ if (isset($_POST['submit'])) {
 
                 }
             })
+
+            $("#r_assistants option").each(function() {
+                var assignedSection = $(this).attr("data-sectionassign");
+                var pending = $(this).attr("data-pending");
+
+                if (assignedSection != 'mis' && assignedSection != "admin") {
+                    $(this).hide();
+                } else {
+                    $(this).show();
+                    if (pending >= 5) {
+                        $(this).prop("disabled", true);
+                    }
+
+                }
+            })
+
+
+
             $('.peer').on('click', function() {
 
                 // Check if the checkbox is checked or not

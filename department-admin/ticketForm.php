@@ -81,6 +81,25 @@ if (isset($_POST['submitTicket'])) {
     $immediateHeadEmail = $_POST['immediateHeadEmail'];
     $r_categories = $_POST['r_categories'];
 
+    $r_assistantsName = $_POST['r_assistantsName'];
+
+    if (isset($_POST['r_assistants']))
+
+    {
+        $r_assistants = $_POST['r_assistants'];
+
+
+        if ($r_assistants != "") {
+      
+          $r_assistants = implode(', ', $r_assistants);
+        }
+
+    }
+    else{
+        $r_assistants = "";
+    }
+   
+  
     $r_cat_level = $_POST['r_cat_level'];
     if (isset($_POST['r_personnels'])) {
         $r_personnels = $_POST['r_personnels'];
@@ -181,8 +200,8 @@ if (isset($_POST['submitTicket'])) {
         } else {
             $status = "inprogress";
             $_SESSION['status'] = 'In Progress';
-            $sql = mysqli_query($con, "INSERT INTO request (date_filled, status2, requestor, requestorUsername, email, department, request_type, request_to, request_category, request_details, assignedPersonnel, assignedPersonnelName, ticket_category, category_level, ticket_filer, admin_approved_date, expectedFinishDate, ict_approval_date)
-        VALUES ('$datenow', '$status', '$requestor','$requestorIdnumber', '$requestorEmail', '$requestorDepartment', 'Technical Support', 'mis', '$ticket_category','$detailsOfRequest', '$r_personnels', '$r_personnelsName', '$ticket_category', '$r_cat_level', '$user_name', '$date', '$newDate', '$dateToday')");
+            $sql = mysqli_query($con, "INSERT INTO request (date_filled, status2, requestor, requestorUsername, email, department, request_type, request_to, request_category, request_details, assignedPersonnel, assignedPersonnelName, assistantsId, assistanNames, ticket_category, category_level, ticket_filer, admin_approved_date, expectedFinishDate, ict_approval_date)
+        VALUES ('$datenow', '$status', '$requestor','$requestorIdnumber', '$requestorEmail', '$requestorDepartment', 'Technical Support', 'mis', '$ticket_category','$detailsOfRequest', '$r_personnels', '$r_personnelsName', '$r_assistants','$r_assistantsName', '$ticket_category', '$r_cat_level', '$user_name', '$date', '$newDate', '$dateToday')");
         }
 
         if ($sql) {
@@ -213,7 +232,7 @@ if (isset($_POST['submitTicket'])) {
             $isheadquery = mysqli_query($con, "SELECT COUNT(*) as count FROM `user` WHERE `level` = 'head' AND `name` = '$requestor'");
 
             if ($isheadquery) {
-                $row = mysqli_fetch_assoc($result);
+                $row = mysqli_fetch_assoc($isheadquery);
                 $isHead = ($row['count'] > 0) ? true : false;
             } else {
                 $isHead = false; // In case of query failure or no matching record
@@ -591,7 +610,7 @@ if (isset($_POST['submitTicket'])) {
                     </div>
                 </div>
 
-                <div class="grid md:grid-cols-1 md:gap-x-6 gap-y-3">
+                <div class="grid md:grid-cols-2 md:gap-x-6 gap-y-3">
                     <div class="relative z-0 w-full  group">
                         <label for="r_personnels" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Personnel</label>
                         <select id="r_personnels" name="r_personnels" class="js-example-basic-single bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
@@ -620,9 +639,45 @@ if (isset($_POST['submitTicket'])) {
                         </select>
                     </div>
 
-                    <input class="hidden" type="text" id="r_personnelsName" name="r_personnelsName" class="bg-gray-50 border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                    <div class="relative z-0 w-full  group">
+                        <label for="r_personnels" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Assistant/s</label>
+                        <select id="r_assistants" name="r_assistants[]" multiple="multiple" class="form-control js-assistant  bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                     
 
-                    <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Details</label>
+                            <?php
+                            //    $sql1 = "Select * FROM `user` WHERE `username`='$username'";
+                            $sql1 = "SELECT u.*, 
+            (SELECT COUNT(id) FROM request 
+             WHERE  `status2` = 'inprogress' 
+             AND `assignedPersonnel` = u.username) AS 'pending'
+            FROM `user` u WHERE u.level = 'mis' or u.level = 'admin' AND u.leader = 'mis'";
+                            $result = mysqli_query($con, $sql1);
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                // $name=$list["name"];
+                                // $username=$list["username"];
+                                // $email=$list["email"];
+                            ?>
+
+                                <!-- <option selected  disabled class="text-gray-900">Choose Head:</option>  -->
+                                <option data-sectionassign="<?php echo $row['level']; ?>" data-pending="<?php echo $row['pending'] ?>" data-personnelsname="<?php echo $row['name'] ?>" value="<?php echo $row['username']; ?>"><?php echo $row['name']; ?> (<?php echo $row['pending'] ?>)</option>; <?php
+
+                                                                                                                                                                                                                                                                                                    }
+
+                                                                                                                                                                                                                                                                                                        ?>
+                        </select>
+                    </div>
+
+
+                    <input class="hidden" type="text" id="r_personnelsName" name="r_personnelsName" class="bg-gray-50 border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                    <input class="hidden" type="text" id="r_assistantsName" name="r_assistantsName" class="bg-gray-50 border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+
+               
+
+
+                </div>
+
+                <div  class="grid md:grid-cols-1 md:gap-x-6 gap-y-3">
+                <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Details</label>
                     <textarea id="detailsOfRequest" name="detailsOfRequest" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="What is the problem?"></textarea>
                     <div id="detailsOfAction" class="hidden">
                         <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Action</label>
@@ -630,8 +685,6 @@ if (isset($_POST['submitTicket'])) {
                         <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Recommendation</label>
                         <textarea id="recommendation" name="recommendation" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="What is your recommendation"></textarea>
                     </div>
-
-
                 </div>
                 <br>
                 <button type="submit" name="submitTicket" id="submitTicket" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
@@ -702,6 +755,13 @@ if (isset($_POST['submitTicket'])) {
     <script type="text/javascript" src="index.js"></script>
 
     <script>
+
+$(".js-assistant").select2({
+  tags: true
+});
+
+
+
         $('.js-example-basic-single').select2();
 
         $(document).ready(function() {
@@ -785,6 +845,15 @@ if (isset($_POST['submitTicket'])) {
 
             });
 
+            $('#r_assistants').change(function() {
+    var selectedPersonnels = [];
+    $(this).find('option:selected').each(function() {
+        selectedPersonnels.push($(this).data('personnelsname'));
+    });
+    $('#r_assistantsName').val(selectedPersonnels.join(', '));
+});
+
+
             $("#r_personnels option").each(function() {
                 var assignedSection = $(this).attr("data-sectionassign");
                 var pending = $(this).attr("data-pending");
@@ -801,6 +870,23 @@ if (isset($_POST['submitTicket'])) {
             })
 
 
+            $("#r_assistants option").each(function() {
+                var assignedSection = $(this).attr("data-sectionassign");
+                var pending = $(this).attr("data-pending");
+
+                if (assignedSection != 'mis' && assignedSection != "admin") {
+                    $(this).hide();
+                } else {
+                    $(this).show();
+                    if (pending >= 5) {
+                        $(this).prop("disabled", true);
+                    }
+
+                }
+            })
+
+
+            
             $('.peer').on('click', function() {
 
                 // Check if the checkbox is checked or not
