@@ -572,7 +572,7 @@ function addWeekdays2($startDate, $daysToAdd, $holidays)
     <link rel="stylesheet" type="text/css" href="../node_modules/DataTables/Responsive-2.3.0/css/responsive.dataTables.min.css" />
 
     <link rel="stylesheet" href="index.css">
-
+    <link href="../node_modules/select2/dist/css/select2.min.css" rel="stylesheet" />
     <script src="../cdn_tailwindcss.js"></script>
 
     <link rel="stylesheet" href="../node_modules/flowbite/dist/flowbite.min.css">
@@ -926,6 +926,12 @@ function addWeekdays2($startDate, $daysToAdd, $holidays)
 
             <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="headApproval" role="tabpanel" aria-labelledby="profile-tab">
                 <section class="mt-10">
+                <!-- <select id="mySelect" multiple>
+  <option value="1">Option 1</option>
+  <option value="2">Option 2</option>
+  <option value="3">Option 3</option>
+  <option value="4">Option 4</option>
+</select> -->
                     <table id="employeeTable" class="display" style="width:100%">
                         <thead>
                             <tr>
@@ -992,7 +998,7 @@ function addWeekdays2($startDate, $daysToAdd, $holidays)
                                     <td>
                                         <!-- <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Select</a> -->
 
-                                        <button type="button" id="viewdetails" onclick="modalShow(this)" data-reqtype="<?php echo $reqtype; ?>" data-requestype="<?php echo $row['request_type']; ?>" data-recommendation="<?php echo $row['recommendation'] ?>" data-requestorremarks="<?php echo $row['requestor_remarks'] ?>" data-quality="<?php echo $row['rating_quality'] ?>" data-delivery="<?php echo $row['rating_delivery'] ?>" data-ratedby="<?php echo $row['ratedBy'] ?>" data-daterate="<?php echo $row['rateDate'] ?>" data-action1date="<?php echo $row['action1Date'] ?>" data-action2date="<?php echo $row['action2Date'] ?>" data-action3date="<?php echo $row['action3Date'] ?>" data-headremarks="<?php echo $row['head_remarks']; ?>" data-adminremarks="<?php echo $row['admin_remarks']; ?>" data-headdate="<?php echo $row['head_approval_date']; ?>" data-admindate="<?php echo $row['admin_approved_date']; ?>" data-department="<?php echo $row['department'] ?>" data-status="<?php echo $row['status2'] ?>" data-action1="<?php echo $row['action1'] ?>" data-action2="<?php echo $row['action2'] ?>" data-action3="<?php echo $row['action3'] ?>" data-ratings="<?php echo $row['rating_final']; ?>" data-actualdatefinished="" data-assignedpersonnel="<?php echo $row['assignedPersonnelName'] ?> " data-requestor="<?php echo $row['requestor'] ?>" data-personnel="<?php echo $row['assignedPersonnel'] ?>" data-action="<?php echo $dataAction = str_replace('"', '', $row['action']); ?>" data-telephone="<?php echo $row['telephone']; ?>" data-attachment="<?php echo $row['attachment']; ?>" data-joidprint="<?php echo $joid; ?>" data-headremarks="<?php echo $row['head_remarks']; ?>" data-adminremarks="<?php echo $row['admin_remarks']; ?>" data-joid="<?php echo $row['id']; ?>" data-requestoremail="<?php echo $row['email']; ?>" data-requestor="<?php echo $row['requestor']; ?>" data-datefiled="<?php $date = new DateTime($row['date_filled']);
+                                        <button type="button" id="viewdetails" onclick="modalShow(this)" data-reqtype="<?php echo $reqtype; ?>" data-requestype="<?php echo $row['request_type']; ?>" data-recommendation="<?php echo $row['recommendation'] ?>" data-requestorremarks="<?php echo $row['requestor_remarks'] ?>" data-quality="<?php echo $row['rating_quality'] ?>" data-delivery="<?php echo $row['rating_delivery'] ?>" data-ratedby="<?php echo $row['ratedBy'] ?>" data-daterate="<?php echo $row['rateDate'] ?>" data-action1date="<?php echo $row['action1Date'] ?>" data-action2date="<?php echo $row['action2Date'] ?>" data-action3date="<?php echo $row['action3Date'] ?>" data-headremarks="<?php echo $row['head_remarks']; ?>" data-adminremarks="<?php echo $row['admin_remarks']; ?>" data-headdate="<?php echo $row['head_approval_date']; ?>" data-admindate="<?php echo $row['admin_approved_date']; ?>" data-department="<?php echo $row['department'] ?>" data-status="<?php echo $row['status2'] ?>" data-action1="<?php echo $row['action1'] ?>" data-action2="<?php echo $row['action2'] ?>" data-action3="<?php echo $row['action3'] ?>" data-ratings="<?php echo $row['rating_final']; ?>" data-actualdatefinished="" data-assignedpersonnel="<?php echo $row['assignedPersonnelName'] ?> " data-requestor="<?php echo $row['requestor'] ?>" data-personnel="<?php echo $row['assignedPersonnel'] ?>" data-assistant="<?php echo $row['assistantsId'] ?>" data-action="<?php echo $dataAction = str_replace('"', '', $row['action']); ?>" data-telephone="<?php echo $row['telephone']; ?>" data-attachment="<?php echo $row['attachment']; ?>" data-joidprint="<?php echo $joid; ?>" data-headremarks="<?php echo $row['head_remarks']; ?>" data-adminremarks="<?php echo $row['admin_remarks']; ?>" data-joid="<?php echo $row['id']; ?>" data-requestoremail="<?php echo $row['email']; ?>" data-requestor="<?php echo $row['requestor']; ?>" data-datefiled="<?php $date = new DateTime($row['date_filled']);
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         $date = $date->format('F d, Y');
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         echo $date; ?>" data-expectedfinishdate="<?php echo $targetFinishDate ?>"
 
@@ -1441,7 +1447,7 @@ function addWeekdays2($startDate, $daysToAdd, $holidays)
 
                     <div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
                         <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                            <span id="reqtype"></span> Details <?php echo $_SESSION['ticket_category'] ?>
+                            <span id="reqtype"></span> Details 
                         </h3>
                         <div class="ml-auto">
                             <button onclick="requireSelect()" id="transferButton" type="button" data-modal-target="transfer" data-modal-toggle="transfer" class=" hidden text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#3b5998]/55 ">
@@ -1475,7 +1481,7 @@ function addWeekdays2($startDate, $daysToAdd, $holidays)
 
 
                         </div>
-                        <div id="chooseAssignedDiv" class="w-full grid gap-4 grid-cols-3">
+                        <div id="chooseAssignedDiv" class="w-full block gap-4 ">
 
                             <h2 class="float-left font-semibold text-gray-900 dark:text-gray-900"><span class="text-gray-400">Assigned Personnel</span></h2>
                             <select required id="assigned" name="assigned" class="bg-gray-50 col-span-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
@@ -1491,7 +1497,18 @@ function addWeekdays2($startDate, $daysToAdd, $holidays)
                                 while ($row = mysqli_fetch_assoc($result)) {
                                     // $date = new DateTime($row['date_filled']);
                                 ?>
-                                    <option data-sectionassign="<?php echo $row['level']; ?>" data-pending="<?php echo $row['pending'] ?>" value="<?php echo $row['username']; ?>"><?php echo $row['name']; ?> (<?php echo $row['pending'] ?>)</option>;
+                                    <option data-sectionassign="<?php echo $row['level']; ?>" data-pending="<?php echo $row['pending'] ?>" value="<?php echo $row['username']; ?>"><?php echo $row['name']; ?> (<?php
+                                    
+                                    $useridofssistant = $row['username'];
+                                    $sqlcount = "SELECT COUNT(id) as 'numberAssisting'
+                                     FROM request 
+                                        WHERE `status2` = 'inprogress' 
+                                        AND `assistantsId` LIKE '%$useridofssistant%';";
+                                    $resultCount = mysqli_query($con, $sqlcount);
+                                    while ($rowCount = mysqli_fetch_assoc($resultCount)) {
+                                            $countAssistant = $rowCount['numberAssisting'];
+                                    }
+                                    echo $row['pending'] + $countAssistant ?>)</option>;
                                 <?php
 
                                 }
@@ -1500,6 +1517,45 @@ function addWeekdays2($startDate, $daysToAdd, $holidays)
 
                             </select>
                         </div>
+
+
+                        <div id="chooseAssistantsDiv" class="w-full block">
+
+<h2 class="float-left font-semibold text-gray-900 dark:text-gray-900"><span class="text-gray-400">Assistant/s</span></h2>
+<select required id="assistants" name="assistants[]" multiple="multiple" class=" js-assistant bg-gray-50  border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+   
+    <?php
+    $sql = "SELECT u.*, 
+    (SELECT COUNT(id) FROM request 
+        WHERE `status2` = 'inprogress' 
+        AND `assignedPersonnel` = u.username) AS 'pending'
+        FROM `user` u WHERE u.level = 'fem' or (u.level = 'admin' AND u.leader = 'fem')";
+    $result = mysqli_query($con, $sql);
+
+    while ($row = mysqli_fetch_assoc($result)) {
+        // $date = new DateTime($row['date_filled']);
+    ?>
+        <option data-sectionassign="<?php echo $row['level']; ?>" data-pending="<?php echo $row['pending'] ?>" value="<?php echo $row['username']; ?>"><?php echo $row['name']; ?> (<?php
+        
+        $useridofssistant = $row['username'];
+        $sqlcount = "SELECT COUNT(id) as 'numberAssisting'
+         FROM request 
+            WHERE `status2` = 'inprogress' 
+            AND `assistantsId` LIKE '%$useridofssistant%';";
+        $resultCount = mysqli_query($con, $sqlcount);
+        while ($rowCount = mysqli_fetch_assoc($resultCount)) {
+                $countAssistant = $rowCount['numberAssisting'];
+        }
+        echo $row['pending'] + $countAssistant ?>)</option>;
+    <?php
+
+    }
+
+    ?>
+
+</select>
+</div>
+
                         <!-- <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"> -->
 
                         <div class="w-full grid gap-4 grid-cols-2">
@@ -1836,6 +1892,8 @@ function addWeekdays2($startDate, $daysToAdd, $holidays)
 
     <script src="../node_modules/flowbite/dist/flowbite.js"></script>
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="../node_modules/select2/dist/js/select2.min.js"></script>
+
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
     <script type="text/javascript" src="../node_modules/DataTables/datatables.min.js"></script>
     <script type="text/javascript" src="../node_modules/DataTables/Responsive-2.3.0/js/dataTables.responsive.min.js"></script>
@@ -1843,6 +1901,19 @@ function addWeekdays2($startDate, $daysToAdd, $holidays)
     <script type="text/javascript" src="index.js"></script>
 
     <script>
+
+// $(document).ready(function() {
+//     // Set the values for the multiple select
+//     $('#mySelect').val(['1', '3', '4']);
+// });
+
+        
+$(".js-assistant").select2({
+  tags: true
+});
+
+
+
         // parent element wrapping the speed dial
         // const $parentEld = document.getElementById('dialParent')
 
@@ -2127,14 +2198,24 @@ function addWeekdays2($startDate, $daysToAdd, $holidays)
                         if (pending >= 5) {
                             $(this).prop("disabled", true);
                         }
-                    } else if (section == "FEM") {
-                        if (pending >= 5) {
-                            $(this).prop("disabled", true);
-                        }
                     }
 
                 }
             })
+
+            // $('#assistants').val(['GP-', '3', '4']);
+            let arrayAssist = [element.getAttribute("data-assistant")];
+
+// Split the string by comma and trim each element
+let transformedArrayAssist = arrayAssist[0].split(',').map(item => item.trim());
+
+
+            $("#assistants").val(transformedArrayAssist).trigger('change');;
+// console.log(transformedArrayAssist)
+
+
+            
+          
 
             $("#transferUser option").each(function() {
                 var assignedSection1 = $(this).attr("data-transfer");
