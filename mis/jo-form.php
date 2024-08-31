@@ -195,9 +195,18 @@ if (isset($_POST['submit'])) {
     $_SESSION['requestType'] = 'Job Order';
     $_SESSION['type'] = $category;
 
-    if (($headname === $requestor_name) && ($requestto === 'mis')) {
+
+    $sqlrequestor = "Select * FROM `user` WHERE `username` = '$requestor_username'";
+    $resultrequestor = mysqli_query($con, $sqlrequestor);
+    while ($list = mysqli_fetch_assoc($resultrequestor)) {
+        $requestorLevel  = $list["level"];
+        $requestorName = $list["name"];
+
+    }
+    if (($requestorLevel == 'head') && ($requestto === 'mis')) {
         $status = 'admin';
         $head_approval_date = $datenow;
+        
     } elseif (($headname != $requestor_name) && ($requestto === 'mis')) {
         $status = 'head';
         $head_approval_date = NULL;
@@ -208,6 +217,11 @@ if (isset($_POST['submit'])) {
     $_SESSION['status'] = $status;
     if (!empty($requestto && $category)) {
         // $email1=$_SESSION['email'];
+
+        if (($requestorLevel == 'head') && ($requestto === 'mis')) {
+            $headname = $requestorName;
+            
+        }
         $sql = "insert into request (date_filled,status2,requestorUsername,requestor,email,department,request_type, request_to, request_category,request_details, approving_head, head_approval_date, accept_termsandconddition,month,year, assignedPersonnel, assignedPersonnelName, assistantsId, assistanNames, ticket_filer) 
             values('$datenow','$status','$requestor_username','$requestor_name','$requestor_email','$requestor_dept', 'Job Order', '$requestto','$category','$request','$headname','$head_approval_date','$terms','$month','$year', '$r_personnels', '$r_personnelsName', '$r_assistants','$r_assistantsName', '$user_name')";
         $results = mysqli_query($con, $sql);

@@ -274,6 +274,29 @@ if (isset($_POST['approveRequest'])) {
         $_SESSION['assignedPersonnel'] = $_POST['passignedPersonnel'];
     }
 
+
+
+            
+    $r_assistantsName = $_POST['r_assistantsName'];
+
+    if (isset($_POST['assistants']))
+
+    {
+        $r_assistants = $_POST['assistants'];
+
+
+        if ($r_assistants != "") {
+      
+          $r_assistants = implode(', ', $r_assistants);
+        }
+
+    }
+    else{
+        $r_assistants = "";
+    }
+
+
+
     $cat_lvl;
     $sql1 = "Select * FROM `request` WHERE `id` = '$requestID'";
     $result = mysqli_query($con, $sql1);
@@ -298,10 +321,11 @@ if (isset($_POST['approveRequest'])) {
     $username = $_SESSION['name'];
     if ($section  === "ICT" || $section === "mis") {
         $_SESSION['status'] = 'inprogress';
-        $sql = "UPDATE `request` SET `status2`='inprogress',`reqstart_date` = '$start',`reqfinish_date` = '$finish',`admin_approved_date`='$date',`expectedFinishDate` = '$newDate',`admin_remarks`='$remarks',`admin_approved_date`='$date',`assignedPersonnel`='$assigned',`assignedPersonnelName`='$personnelName', `ict_approval_date`= '$dateToday' WHERE `id` = '$requestID';";
+        $sql = "UPDATE `request` SET `status2`='inprogress',`reqstart_date` = '$start',`reqfinish_date` = '$finish',`admin_approved_date`='$dateToday',`expectedFinishDate` = '$newDate',`admin_remarks`='$remarks',`assignedPersonnel`='$assigned',`assignedPersonnelName`='$personnelName', `ict_approval_date`= '$dateToday' WHERE `id` = '$requestID';";
     } elseif ($section === "FEM" || $section === "fem") {
         $_SESSION['status'] = 'inprogress';
-        $sql = "UPDATE `request` SET `status2`='inprogress',`reqstart_date` = '$start',`reqfinish_date` = '$finish',`admin_approved_date`='$date',`expectedFinishDate` = '$newDate',`admin_remarks`='$remarks',`admin_approved_date`='$date',`assignedPersonnel`='$assigned',`assignedPersonnelName`='$personnelName', `ict_approval_date`= '$dateToday' WHERE `id` = '$requestID';";
+        $sql = "UPDATE `request` SET `status2`='inprogress',`reqstart_date` = '$start',`reqfinish_date` = '$finish',`admin_approved_date`='$dateToday',`expectedFinishDate` = '$newDate',`admin_remarks`='$remarks',`assignedPersonnel`='$assigned',`assignedPersonnelName`='$personnelName', `assistantsId` = '$r_assistants',`assistanNames`='$r_assistantsName', `ict_approval_date`= '$dateToday' WHERE `id` = '$requestID';";
+//    echo $sql;
     }
     $results = mysqli_query($con, $sql);
 
@@ -998,7 +1022,7 @@ function addWeekdays2($startDate, $daysToAdd, $holidays)
                                     <td>
                                         <!-- <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Select</a> -->
 
-                                        <button type="button" id="viewdetails" onclick="modalShow(this)" data-reqtype="<?php echo $reqtype; ?>" data-requestype="<?php echo $row['request_type']; ?>" data-recommendation="<?php echo $row['recommendation'] ?>" data-requestorremarks="<?php echo $row['requestor_remarks'] ?>" data-quality="<?php echo $row['rating_quality'] ?>" data-delivery="<?php echo $row['rating_delivery'] ?>" data-ratedby="<?php echo $row['ratedBy'] ?>" data-daterate="<?php echo $row['rateDate'] ?>" data-action1date="<?php echo $row['action1Date'] ?>" data-action2date="<?php echo $row['action2Date'] ?>" data-action3date="<?php echo $row['action3Date'] ?>" data-headremarks="<?php echo $row['head_remarks']; ?>" data-adminremarks="<?php echo $row['admin_remarks']; ?>" data-headdate="<?php echo $row['head_approval_date']; ?>" data-admindate="<?php echo $row['admin_approved_date']; ?>" data-department="<?php echo $row['department'] ?>" data-status="<?php echo $row['status2'] ?>" data-action1="<?php echo $row['action1'] ?>" data-action2="<?php echo $row['action2'] ?>" data-action3="<?php echo $row['action3'] ?>" data-ratings="<?php echo $row['rating_final']; ?>" data-actualdatefinished="" data-assignedpersonnel="<?php echo $row['assignedPersonnelName'] ?> " data-requestor="<?php echo $row['requestor'] ?>" data-personnel="<?php echo $row['assignedPersonnel'] ?>" data-assistant="<?php echo $row['assistantsId'] ?>" data-action="<?php echo $dataAction = str_replace('"', '', $row['action']); ?>" data-telephone="<?php echo $row['telephone']; ?>" data-attachment="<?php echo $row['attachment']; ?>" data-joidprint="<?php echo $joid; ?>" data-headremarks="<?php echo $row['head_remarks']; ?>" data-adminremarks="<?php echo $row['admin_remarks']; ?>" data-joid="<?php echo $row['id']; ?>" data-requestoremail="<?php echo $row['email']; ?>" data-requestor="<?php echo $row['requestor']; ?>" data-datefiled="<?php $date = new DateTime($row['date_filled']);
+                                        <button type="button" id="viewdetails" onclick="modalShow(this)" data-reqtype="<?php echo $reqtype; ?>" data-requestype="<?php echo $row['request_type']; ?>" data-recommendation="<?php echo $row['recommendation'] ?>" data-requestorremarks="<?php echo $row['requestor_remarks'] ?>" data-quality="<?php echo $row['rating_quality'] ?>" data-delivery="<?php echo $row['rating_delivery'] ?>" data-ratedby="<?php echo $row['ratedBy'] ?>" data-daterate="<?php echo $row['rateDate'] ?>" data-action1date="<?php echo $row['action1Date'] ?>" data-action2date="<?php echo $row['action2Date'] ?>" data-action3date="<?php echo $row['action3Date'] ?>" data-headremarks="<?php echo $row['head_remarks']; ?>" data-adminremarks="<?php echo $row['admin_remarks']; ?>" data-headdate="<?php echo $row['head_approval_date']; ?>" data-admindate="<?php echo $row['admin_approved_date']; ?>" data-department="<?php echo $row['department'] ?>" data-status="<?php echo $row['status2'] ?>" data-action1="<?php echo $row['action1'] ?>" data-action2="<?php echo $row['action2'] ?>" data-action3="<?php echo $row['action3'] ?>" data-ratings="<?php echo $row['rating_final']; ?>" data-actualdatefinished="" data-assignedpersonnel="<?php echo $row['assignedPersonnelName'] ?> " data-requestor="<?php echo $row['requestor'] ?>" data-personnel="<?php echo $row['assignedPersonnel'] ?>" data-assistant="<?php echo $row['assistantsId'] ?>" data-assistantName="<?php echo $row['assistanNames'] ?>" data-action="<?php echo $dataAction = str_replace('"', '', $row['action']); ?>" data-telephone="<?php echo $row['telephone']; ?>" data-attachment="<?php echo $row['attachment']; ?>" data-joidprint="<?php echo $joid; ?>" data-headremarks="<?php echo $row['head_remarks']; ?>" data-adminremarks="<?php echo $row['admin_remarks']; ?>" data-joid="<?php echo $row['id']; ?>" data-requestoremail="<?php echo $row['email']; ?>" data-requestor="<?php echo $row['requestor']; ?>" data-datefiled="<?php $date = new DateTime($row['date_filled']);
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         $date = $date->format('F d, Y');
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         echo $date; ?>" data-expectedfinishdate="<?php echo $targetFinishDate ?>"
 
@@ -1116,7 +1140,7 @@ function addWeekdays2($startDate, $daysToAdd, $holidays)
                                     </td>
                                     <td>
                                         <!-- <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Select</a> -->
-                                        <button type="button" id="viewdetails" onclick="modalShow(this)" data-reqtype="<?php echo $reqtype; ?>" data-recommendation="<?php echo $row['recommendation'] ?>" data-requestorremarks="<?php echo $row['requestor_remarks'] ?>" data-quality="<?php echo $row['rating_quality'] ?>" data-delivery="<?php echo $row['rating_delivery'] ?>" data-ratedby="<?php echo $row['ratedBy'] ?>" data-daterate="<?php echo $row['rateDate'] ?>" data-action1date="<?php echo $row['action1Date'] ?>" data-action2date="<?php echo $row['action2Date'] ?>" data-action3date="<?php echo $row['action3Date'] ?>" data-headremarks="<?php echo $row['head_remarks']; ?>" data-adminremarks="<?php echo $row['admin_remarks']; ?>" data-headdate="<?php echo $row['head_approval_date']; ?>" data-admindate="<?php echo $row['admin_approved_date']; ?>" data-department="<?php echo $row['department'] ?>" data-status="<?php echo $row['status2'] ?>" data-action1="<?php echo $row['action1'] ?>" data-action2="<?php echo $row['action2'] ?>" data-action3="<?php echo $row['action3'] ?>" data-ratings="<?php echo $row['rating_final']; ?>" data-actualdatefinished="" data-assignedpersonnel="<?php echo $row['assignedPersonnelName'] ?> " data-requestoremail="<?php echo $row['email']; ?>" data-requestor="<?php echo $row['requestor'] ?>" data-personnel="<?php echo $row['assignedPersonnel'] ?>" data-action="<?php echo $dataAction = str_replace('"', '', $row['action']); ?>" data-joidprint="<?php echo $joid; ?>" data-joid="<?php echo $row['id']; ?>" data-datefiled="<?php $date = new DateTime($row['date_filled']);
+                                        <button type="button" id="viewdetails" onclick="modalShow(this)" data-reqtype="<?php echo $reqtype; ?>" data-recommendation="<?php echo $row['recommendation'] ?>" data-requestorremarks="<?php echo $row['requestor_remarks'] ?>" data-quality="<?php echo $row['rating_quality'] ?>" data-delivery="<?php echo $row['rating_delivery'] ?>" data-ratedby="<?php echo $row['ratedBy'] ?>" data-daterate="<?php echo $row['rateDate'] ?>" data-action1date="<?php echo $row['action1Date'] ?>" data-action2date="<?php echo $row['action2Date'] ?>" data-action3date="<?php echo $row['action3Date'] ?>" data-headremarks="<?php echo $row['head_remarks']; ?>" data-adminremarks="<?php echo $row['admin_remarks']; ?>" data-headdate="<?php echo $row['head_approval_date']; ?>" data-admindate="<?php echo $row['admin_approved_date']; ?>" data-department="<?php echo $row['department'] ?>" data-status="<?php echo $row['status2'] ?>" data-action1="<?php echo $row['action1'] ?>" data-action2="<?php echo $row['action2'] ?>" data-action3="<?php echo $row['action3'] ?>" data-ratings="<?php echo $row['rating_final']; ?>" data-actualdatefinished="" data-assignedpersonnel="<?php echo $row['assignedPersonnelName'] ?>" data-assistant="<?php echo $row['assistantsId'] ?>" data-assistantName="<?php echo $row['assistanNames'] ?>"  data-requestoremail="<?php echo $row['email']; ?>" data-requestor="<?php echo $row['requestor'] ?>" data-personnel="<?php echo $row['assignedPersonnel'] ?>" data-action="<?php echo $dataAction = str_replace('"', '', $row['action']); ?>" data-joidprint="<?php echo $joid; ?>" data-joid="<?php echo $row['id']; ?>" data-datefiled="<?php $date = new DateTime($row['date_filled']);
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             $date = $date->format('F d, Y');
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             echo $date; ?>" data-expectedfinishdate="<?php echo $row['expectedFinishDate']; ?>" data-section="<?php if ($row['request_to'] === "fem") {
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     echo "FEM";
@@ -1478,6 +1502,7 @@ function addWeekdays2($startDate, $daysToAdd, $holidays)
                         <input type="text" name="joid2" id="joid2" class="hidden col-span-2 bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         <div id="assignedPersonnelDiv" class="hidden w-full">
                             <h2 class="font-semibold text-gray-900 dark:text-gray-900"><span class="text-gray-400">Assigned Personnel : </span><span id="assignedPersonnel"></span></h2>
+                            <h2 class="font-semibold text-gray-900 dark:text-gray-900"><span class="text-gray-400">Assistant/s : </span><span id="assignedAssistants"></span></h2>
 
 
                         </div>
@@ -1516,14 +1541,10 @@ function addWeekdays2($startDate, $daysToAdd, $holidays)
                                 ?>
 
                             </select>
-                        </div>
-
-
-                        <div id="chooseAssistantsDiv" class="w-full block">
-
+                            
 <h2 class="float-left font-semibold text-gray-900 dark:text-gray-900"><span class="text-gray-400">Assistant/s</span></h2>
 <select required id="assistants" name="assistants[]" multiple="multiple" class=" js-assistant bg-gray-50  border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-   
+
     <?php
     $sql = "SELECT u.*, 
     (SELECT COUNT(id) FROM request 
@@ -1535,7 +1556,7 @@ function addWeekdays2($startDate, $daysToAdd, $holidays)
     while ($row = mysqli_fetch_assoc($result)) {
         // $date = new DateTime($row['date_filled']);
     ?>
-        <option data-sectionassign="<?php echo $row['level']; ?>" data-pending="<?php echo $row['pending'] ?>" value="<?php echo $row['username']; ?>"><?php echo $row['name']; ?> (<?php
+        <option data-sectionassign="<?php echo $row['level']; ?>" data-pending="<?php echo $row['pending'] ?>" data-personnelsname="<?php echo $row['name'] ?>" value="<?php echo $row['username']; ?>"><?php echo $row['name']; ?> (<?php
         
         $useridofssistant = $row['username'];
         $sqlcount = "SELECT COUNT(id) as 'numberAssisting'
@@ -1554,7 +1575,11 @@ function addWeekdays2($startDate, $daysToAdd, $holidays)
     ?>
 
 </select>
-</div>
+<input class="hidden" type="text" id="r_assistantsName" name="r_assistantsName" class="bg-gray-50 border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+
+                        </div>
+
+
 
                         <!-- <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"> -->
 
@@ -1912,7 +1937,19 @@ $(".js-assistant").select2({
   tags: true
 });
 
+var selectedPersonnels = [];
+    $("#assistants").find('option:selected').each(function() {
+        selectedPersonnels.push($("#assistants").data('personnelsname'));
+    });
+    $('#r_assistantsName').val(selectedPersonnels.join(', '));
 
+$('#assistants').change(function() {
+    var selectedPersonnels = [];
+    $(this).find('option:selected').each(function() {
+        selectedPersonnels.push($(this).data('personnelsname'));
+    });
+    $('#r_assistantsName').val(selectedPersonnels.join(', '));
+});
 
         // parent element wrapping the speed dial
         // const $parentEld = document.getElementById('dialParent')
@@ -2049,6 +2086,8 @@ $(".js-assistant").select2({
             document.getElementById("requestorinput").value = element.getAttribute("data-requestor");
             document.getElementById("requestoremailinput").value = element.getAttribute("data-requestoremail");
             document.getElementById("assignedPersonnel").innerHTML = element.getAttribute("data-assignedpersonnel");
+            document.getElementById("assignedAssistants").innerHTML = element.getAttribute("data-assistantName");
+
             document.getElementById("prequestType").value = element.getAttribute("data-requestype");
             document.getElementById("reqtype").innerHTML = element.getAttribute("data-reqtype");
 

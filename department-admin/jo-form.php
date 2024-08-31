@@ -170,14 +170,26 @@ if (isset($_POST['submit'])) {
     $datenow = date("Y-m-d");
     $dateToday = date('Y-m-d H:i:s', time());
 
-    $_SESSION['status'] = $status;
     if (!empty($requestto && $category)) {
 
-        if (($headname === $requestor_name) && ($requestto === 'mis')) {
-            $status = 'inprogress';
+
+        
+
+    $sqlrequestor = "Select * FROM `user` WHERE `username` = '$requestor_username'";
+    $resultrequestor = mysqli_query($con, $sqlrequestor);
+    while ($list = mysqli_fetch_assoc($resultrequestor)) {
+        $requestorLevel  = $list["level"];
+        $requestorName = $list["name"];
+
+    }
+
+
+        if (($requestorLevel == 'head') && ($requestto === 'mis')) {
+            $status = 'admin';
             $head_approval_date =  $datenow;
             $ict_approval_date = $dateToday;
             $admin_approved_date = $datenow;
+            $headname = $requestorName;
             $sql = "insert into request (date_filled,status2,requestorUsername,requestor,email,department,request_type, request_to, request_category,request_details, approving_head,head_approval_date,accept_termsandconddition,month,year, assignedPersonnel, assignedPersonnelName, ticket_filer, admin_approved_date, ict_approval_date) 
             values('$datenow','$status','$requestor_username','$requestor_name','$requestor_email','$requestor_dept', 'Job Order', '$requestto','$category','$request','$headname','$head_approval_date','$terms','$month','$year', '$r_personnels', '$r_personnelsName', '$user_name', '$admin_approved_date', '$ict_approval_date')";
         } elseif (($headname != $requestor_name) && ($requestto === 'mis')) {
@@ -190,6 +202,7 @@ if (isset($_POST['submit'])) {
             values('$datenow','$status','$requestor_username','$requestor_name','$requestor_email','$requestor_dept', 'Job Order', '$requestto','$category','$request','$headname','$terms','$month','$year', '$r_personnels', '$r_personnelsName', '$user_name')";
         }
 
+        $_SESSION['status'] = $status;
         $results = mysqli_query($con, $sql);
         if ($results) {
 
