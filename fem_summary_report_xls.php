@@ -50,15 +50,14 @@ $con->next_result();
 //     AND req.request_to = 'fem' ORDER BY req.admin_approved_date ASC");
 // } else {
 
-$sql = mysqli_query($con, "SELECT req.id,  req.date_filled, req.status2, req.requestor,  req.department,  req.request_type,  req.ticket_category, req.request_category, req.assignedPersonnelName, req.ict_approval_date, req.first_responded_date, req.completed_date,req.requestor_approval_date, req.ticket_close_date, req.action, req.action1,  req.recommendation, req.onthespot_ticket, req.request_details,  req.rateDate, cat.level, cat.hours, cat.days, cat.req_type 
+$sql = mysqli_query($con, "SELECT req.id,  req.date_filled, req.status2, req.requestor,  req.department,  req.request_type,  req.ticket_category, req.request_category, req.assignedPersonnelName,req.assistanNames, req.ict_approval_date, req.first_responded_date, req.completed_date,req.requestor_approval_date, req.ticket_close_date, req.action, req.action1,  req.recommendation, req.onthespot_ticket, req.request_details,  req.rateDate, cat.level, cat.hours, cat.days, cat.req_type 
 FROM `request` req 
 LEFT JOIN `femcategories` cat ON cat.c_name = req.request_category 
 WHERE ((req.admin_approved_date  BETWEEN '$lastMonthYear-$previousMonthNumber-28' AND '$year-$monthNumber-$lastDateOfMonth' AND req.status2 != 'cancelled') 
     OR (req.status2 = 'inprogress'  AND req.admin_approved_date <='$year-$monthNumber-$lastDateOfMonth' ) 
-    OR ((req.status2 = 'done' OR req.status2 = 'rated') AND req.completed_date >='$lastMonthYear-$previousMonthNumber-28' AND req.admin_approved_date <='$year-$monthNumber-$lastDateOfMonth') ) AND req.request_to = 'fem'  AND req.assignedPersonnel = '$fem' ORDER BY req.admin_approved_date ASC");
+    OR ((req.status2 = 'done' OR req.status2 = 'rated') AND req.completed_date >='$lastMonthYear-$previousMonthNumber-28' AND req.admin_approved_date <='$year-$monthNumber-$lastDateOfMonth') ) AND req.request_to = 'fem'  AND req.assignedPersonnel = '$fem' OR req.assistantsId like '%$fem%' ORDER BY req.admin_approved_date ASC");
 
 // }
-
 ?>
 
 <html>
@@ -95,6 +94,7 @@ WHERE ((req.admin_approved_date  BETWEEN '$lastMonthYear-$previousMonthNumber-28
                         <th rowspan="2">Request Type (Category)</th>
                         <th rowspan="2">Request Details</th>
                         <th rowspan="2">In-charge</th>
+                        <th rowspan="2">Assistant/s</th>
                         <th colspan="3">Requirements</th>
                         <th rowspan="2">FEM Date Approval</th>
                         <th rowspan="2">Date Responded</th>
@@ -142,6 +142,8 @@ WHERE ((req.admin_approved_date  BETWEEN '$lastMonthYear-$previousMonthNumber-28
 
 
                         $in_charge = $row['assignedPersonnelName'];
+                        $assistants = $row['assistanNames'];
+
                         $piority_level = $row['level'];
                         $required_response_time = $row['hours'];
                         $required_completion_days = $row['days'];
@@ -308,6 +310,7 @@ WHERE ((req.admin_approved_date  BETWEEN '$lastMonthYear-$previousMonthNumber-28
                                     <td>$request_category</td>
                                     <td>$details</td>
                                     <td>$in_charge</td>
+                                    <td>$assistants</td>
                                     <td>$piority_level</td>
                                     <td>$required_response_time</td>
                                     <td>$required_completion_days</td>
