@@ -242,6 +242,8 @@ if (isset($_POST['print'])) {
         $_SESSION['assignedPersonnel'] = $_POST['passignedPersonnel'];
     }
 
+    
+
 ?>
     <script type="text/javascript">
         window.open('./Job Order Report.php', '_blank');
@@ -337,7 +339,26 @@ if (isset($_POST['approveRequest'])) {
         $_SESSION['assignedPersonnel'] =  $personnelName;
     } else {
         $personnelName = $_POST['passignedPersonnel'];
+        $assigned = $_POST['passignedPersonnel'];
         $_SESSION['assignedPersonnel'] = $_POST['passignedPersonnel'];
+    }
+
+    $r_assistantsName = $_POST['r_assistantsName'];
+
+    if (isset($_POST['assistants']))
+
+    {
+        $r_assistants = $_POST['assistants'];
+
+
+        if ($r_assistants != "") {
+      
+          $r_assistants = implode(', ', $r_assistants);
+        }
+
+    }
+    else{
+        $r_assistants = "";
     }
 
     $cat_lvl;
@@ -414,7 +435,7 @@ if (isset($_POST['approveRequest'])) {
     $username = $_SESSION['name'];
     if ($section  === "ICT" || $section === "mis") {
         $_SESSION['status'] = 'inprogress';
-        $sql = "UPDATE `request` SET `status2`='inprogress',`reqstart_date` = '$start',`reqfinish_date` = '$finish',`admin_approved_date`='$date',`expectedFinishDate` = '$newDate',`admin_remarks`='$remarks',`admin_approved_date`='$date',`assignedPersonnel`='$assigned',`assignedPersonnelName`='$personnelName', `ict_approval_date`= '$dateToday' WHERE `id` = '$requestID';";
+        $sql = "UPDATE `request` SET `status2`='inprogress',`reqstart_date` = '$start',`reqfinish_date` = '$finish',`admin_approved_date`='$date',`expectedFinishDate` = '$newDate',`admin_remarks`='$remarks',`admin_approved_date`='$date',`assignedPersonnel`='$assigned',`assignedPersonnelName`='$personnelName', `assistantsId` = '$r_assistants',`assistanNames`='$r_assistantsName', `ict_approval_date`= '$dateToday' WHERE `id` = '$requestID';";
     } elseif ($section == "FEM" || $section === "fem") {
         $_SESSION['status'] = 'admin';
         $sql = "UPDATE `request` SET `status2`='admin',`approving_head`='$username',`head_approval_date`='$date',`head_remarks`='$remarks' WHERE `id` = '$requestID';";
@@ -658,7 +679,7 @@ if (isset($_POST["approveReco"])) {
     <link rel="stylesheet" href="index.css">
 
     <script src="../cdn_tailwindcss.js"></script>
-
+    <link href="../node_modules/select2/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="../node_modules/flowbite/dist/flowbite.min.css">
     <link rel="shortcut icon" href="../resources/img/helpdesk.png">
 
@@ -1292,7 +1313,24 @@ Copy
                                     <td>
                                         <!-- <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Select</a> -->
 
-                                        <button type="button" id="viewdetails" onclick="modalShow(this)" data-reqtype="<?php echo $reqtype; ?>" data-requestype="<?php echo $row['request_type']; ?>" data-recommendation="<?php echo $row['recommendation'] ?>" data-requestorremarks="<?php echo $row['requestor_remarks'] ?>" data-quality="<?php echo $row['rating_quality'] ?>" data-delivery="<?php echo $row['rating_delivery'] ?>" data-ratedby="<?php echo $row['ratedBy'] ?>" data-daterate="<?php echo $row['rateDate'] ?>" data-action1date="<?php echo $row['action1Date'] ?>" data-action2date="<?php echo $row['action2Date'] ?>" data-action3date="<?php echo $row['action3Date'] ?>" data-headremarks="<?php echo $row['head_remarks']; ?>" data-adminremarks="<?php echo $row['admin_remarks']; ?>" data-headdate="<?php echo $row['head_approval_date']; ?>" data-admindate="<?php echo $row['admin_approved_date']; ?>" data-department="<?php echo $row['department'] ?>" data-status="<?php echo $row['status2'] ?>" data-action1="<?php echo $row['action1'] ?>" data-action2="<?php echo $row['action2'] ?>" data-action3="<?php echo $row['action3'] ?>" data-ratings="<?php echo $row['rating_final']; ?>" data-actualdatefinished="" data-assignedpersonnel="<?php echo $row['assignedPersonnelName'] ?> " data-requestor="<?php echo $row['requestor'] ?>" data-personnel="<?php echo $row['assignedPersonnel'] ?>" data-action="<?php echo $dataAction = str_replace('"', '', $row['action']); ?>" data-telephone="<?php echo $row['telephone']; ?>" data-attachment="<?php echo $row['attachment']; ?>" data-joidprint="<?php echo $joid; ?>" data-headremarks="<?php echo $row['head_remarks']; ?>" data-adminremarks="<?php echo $row['admin_remarks']; ?>" data-joid="<?php echo $row['id']; ?>" data-requestoremail="<?php echo $row['email']; ?>" data-requestor="<?php echo $row['requestor']; ?>" data-datefiled="<?php $date = new DateTime($row['date_filled']);
+                                        <button type="button" id="viewdetails" onclick="modalShow(this)" data-reqtype="<?php echo $reqtype; ?>" data-requestype="<?php echo $row['request_type']; ?>" data-recommendation="<?php echo $row['recommendation'] ?>" data-requestorremarks="<?php echo $row['requestor_remarks'] ?>" data-quality="<?php echo $row['rating_quality'] ?>" data-delivery="<?php echo $row['rating_delivery'] ?>" data-ratedby="<?php echo $row['ratedBy'] ?>" data-daterate="<?php echo $row['rateDate'] ?>" data-action1date="<?php echo $row['action1Date'] ?>" data-action2date="<?php echo $row['action2Date'] ?>" data-action3date="<?php echo $row['action3Date'] ?>" data-headremarks="<?php echo $row['head_remarks']; ?>" data-adminremarks="<?php echo $row['admin_remarks']; ?>" data-headdate="<?php echo $row['head_approval_date']; ?>" data-admindate="<?php echo $row['admin_approved_date']; ?>" data-department="<?php echo $row['department'] ?>" data-status="<?php echo $row['status2'] ?>" data-action1="<?php echo $row['action1'] ?>" data-action2="<?php echo $row['action2'] ?>" data-action3="<?php echo $row['action3'] ?>" data-ratings="<?php echo $row['rating_final']; ?>" data-actualdatefinished="" data-assignedpersonnel="<?php echo $row['assignedPersonnelName'] ?>"
+                                        
+                                        data-numberoftasks = "<?php $assignedPersonnelId = $row['assignedPersonnel'] ;
+                                // echo $assignedPersonnelId;
+                                        $sqlcount = "SELECT COUNT(id) as 'pending' FROM request WHERE `status2` = 'inprogress' AND `assignedPersonnel` = '$assignedPersonnelId'";
+                                        $resultcount = mysqli_query($con, $sqlcount);
+                                        while ($rowcount = mysqli_fetch_assoc($resultcount)) {
+                                            // $date = new DateTime($row['date_filled']);
+                                            echo $rowcount['pending'];
+
+                                        }
+
+                                        ?>"
+
+
+
+
+                                        data-assistant="<?php echo $row['assistantsId'] ?>" data-assistantName="<?php echo $row['assistanNames'] ?>"  data-requestor="<?php echo $row['requestor'] ?>" data-personnel="<?php echo $row['assignedPersonnel'] ?>" data-action="<?php echo $dataAction = str_replace('"', '', $row['action']); ?>" data-telephone="<?php echo $row['telephone']; ?>" data-attachment="<?php echo $row['attachment']; ?>" data-joidprint="<?php echo $joid; ?>" data-headremarks="<?php echo $row['head_remarks']; ?>" data-adminremarks="<?php echo $row['admin_remarks']; ?>" data-joid="<?php echo $row['id']; ?>" data-requestoremail="<?php echo $row['email']; ?>" data-requestor="<?php echo $row['requestor']; ?>" data-datefiled="<?php $date = new DateTime($row['date_filled']);
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         $date = $date->format('F d, Y');
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         echo $date; ?>" data-section="<?php if ($row['request_to'] == "fem") {
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             echo "FEM";
@@ -1407,13 +1445,13 @@ Copy
                                     </td>
                                     <td>
                                         <!-- <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Select</a> -->
-                                        <button type="button" id="viewdetails" onclick="modalShow(this)" data-reqtype="<?php echo $reqtype; ?>" data-recommendation="<?php echo $row['recommendation'] ?>" data-requestorremarks="<?php echo $row['requestor_remarks'] ?>" data-quality="<?php echo $row['rating_quality'] ?>" data-delivery="<?php echo $row['rating_delivery'] ?>" data-ratedby="<?php echo $row['ratedBy'] ?>" data-daterate="<?php echo $row['rateDate'] ?>" data-action1date="<?php echo $row['action1Date'] ?>" data-action2date="<?php echo $row['action2Date'] ?>" data-action3date="<?php echo $row['action3Date'] ?>" data-headremarks="<?php echo $row['head_remarks']; ?>" data-adminremarks="<?php echo $row['admin_remarks']; ?>" data-headdate="<?php echo $row['head_approval_date']; ?>" data-admindate="<?php echo $row['admin_approved_date']; ?>" data-department="<?php echo $row['department'] ?>" data-status="<?php echo $row['status2'] ?>" data-action1="<?php echo $row['action1'] ?>" data-action2="<?php echo $row['action2'] ?>" data-action3="<?php echo $row['action3'] ?>" data-ratings="<?php echo $row['rating_final']; ?>" data-actualdatefinished="" data-assignedpersonnel="<?php echo $row['assignedPersonnelName'] ?> " data-requestoremail="<?php echo $row['email']; ?>" data-requestor="<?php echo $row['requestor'] ?>" data-personnel="<?php echo $row['assignedPersonnel'] ?>" data-action="<?php echo $dataAction = str_replace('"', '', $row['action']); ?>" data-joidprint="<?php echo $joid; ?>" data-joid="<?php echo $row['id']; ?>" data-datefiled="<?php $date = new DateTime($row['date_filled']);
+                                        <button type="button" id="viewdetails" onclick="modalShow(this)" data-reqtype="<?php echo $reqtype; ?>" data-recommendation="<?php echo $row['recommendation'] ?>" data-requestorremarks="<?php echo $row['requestor_remarks'] ?>" data-quality="<?php echo $row['rating_quality'] ?>" data-delivery="<?php echo $row['rating_delivery'] ?>" data-ratedby="<?php echo $row['ratedBy'] ?>" data-daterate="<?php echo $row['rateDate'] ?>" data-action1date="<?php echo $row['action1Date'] ?>" data-action2date="<?php echo $row['action2Date'] ?>" data-action3date="<?php echo $row['action3Date'] ?>" data-headremarks="<?php echo $row['head_remarks']; ?>" data-adminremarks="<?php echo $row['admin_remarks']; ?>" data-headdate="<?php echo $row['head_approval_date']; ?>" data-admindate="<?php echo $row['admin_approved_date']; ?>" data-department="<?php echo $row['department'] ?>" data-status="<?php echo $row['status2'] ?>" data-action1="<?php echo $row['action1'] ?>" data-action2="<?php echo $row['action2'] ?>" data-action3="<?php echo $row['action3'] ?>" data-ratings="<?php echo $row['rating_final']; ?>" data-actualdatefinished="" data-assignedpersonnel="<?php echo $row['assignedPersonnelName'] ?> "  data-assistant="<?php echo $row['assistantsId'] ?>" data-assistantName="<?php echo $row['assistanNames'] ?>"  data-requestoremail="<?php echo $row['email']; ?>" data-requestor="<?php echo $row['requestor'] ?>" data-personnel="<?php echo $row['assignedPersonnel'] ?>" data-action="<?php echo $dataAction = str_replace('"', '', $row['action']); ?>" data-joidprint="<?php echo $joid; ?>" data-joid="<?php echo $row['id']; ?>" data-datefiled="<?php $date = new DateTime($row['date_filled']);
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             $date = $date->format('F d, Y');
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             echo $date; ?>" data-section="<?php if ($row['request_to'] === "fem") {
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 echo "FEM";
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             } else if ($row['request_to'] === "mis") {
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 echo "ICT";
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            } ?>" data-category="<?php echo $row['request_category']; ?>" data-telephone="<?php echo $row['telephone']; ?>" data-attachment="<?php echo $row['attachment']; ?>" data-comname="<?php echo $row['computerName']; ?>" data-start="<?php echo $row['reqstart_date']; ?>" data-end="<?php echo $row['reqfinish_date']; ?>" data-details="<?php echo $row['request_details']; ?>" class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            } ?>" data-category="<?php echo $row['request_category']; ?>" data-telephone="<?php echo $row['telephone']; ?>" data-attachment="<?php echo $row['attachment']; ?>" data-comname="<?php echo $row['computerName']; ?>" data-start="<?php echo $row['reqstart_date']; ?>" data-end="<?php echo $row['reqfinish_date']; ?>" data-assistant="<?php echo $row['assistantsId'] ?>" data-assistantName="<?php echo $row['assistanNames'] ?>"  data-details="<?php echo $row['request_details']; ?>" class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
                                             View more
                                         </button>
                                     </td>
@@ -1618,6 +1656,8 @@ Copy
                     data-ratings = '" . $row['rating_final'] . "' 
                     data-actualdatefinished='' 
                     data-assignedpersonnel='" . $row['assignedPersonnelName'] . "'
+                    data-assistant='".$row['assistantsId'] ."'
+                    data-assistantName='".$row['assistanNames'] ."'
                     data-requestor='" . $row['requestor'] . "' 
                     data-personnel='" . $row['assignedPersonnel'] . "' 
                     data-action='" . $dataAction = str_replace('"', '', $row['action']) . "' 
@@ -1637,6 +1677,7 @@ Copy
                         <span class='inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out'>VIEW MORE</span></span>";
                                         }
                                         ?>
+                                        
                                     </td>
 
                                     <td class="text-sm text-red-700 font-light px-6 py-4 whitespace-nowrap truncate max-w-xs">
@@ -1779,6 +1820,8 @@ Copy
                         data-ratings = '" . $row['rating_final'] . "' 
                         data-actualdatefinished='' 
                         data-assignedpersonnel='" . $row['assignedPersonnelName'] . "'
+                             data-assistant='".$row['assistantsId'] ."'
+                    data-assistantName='".$row['assistanNames'] ."'
                         data-requestor='" . $row['requestor'] . "' 
                         data-personnel='" . $row['assignedPersonnel'] . "' 
                         data-action='" . $dataAction = str_replace('"', '', $row['action']) . "' 
@@ -1973,9 +2016,10 @@ Copy
                         <div id="assignedPersonnelDiv" class="hidden w-full">
                             <h2 class="font-semibold text-gray-900 dark:text-gray-900"><span class="text-gray-400">Assigned Personnel : </span><span id="assignedPersonnel"></span></h2>
 
+                            <h2 class="font-semibold text-gray-900 dark:text-gray-900"><span class="text-gray-400">Assistant/s : </span><span id="assignedAssistants"></span></h2>
 
                         </div>
-                        <div id="chooseAssignedDiv" class="w-full grid gap-4 grid-cols-3">
+                        <div id="chooseAssignedDiv" class="w-full block gap-4">
 
                             <h2 class="float-left font-semibold text-gray-900 dark:text-gray-900"><span class="text-gray-400">Assigned Personnel</span></h2>
                             <select required id="assigned" name="assigned" class="bg-gray-50 col-span-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
@@ -1999,6 +2043,43 @@ Copy
                                 ?>
 
                             </select>
+                               
+<h2 class="float-left font-semibold text-gray-900 dark:text-gray-900"><span class="text-gray-400">Assistant/s</span></h2>
+<select  id="assistants" name="assistants[]" multiple="multiple" class=" js-assistant bg-gray-50  border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+
+    <?php
+    $sql = "SELECT u.*, 
+    (SELECT COUNT(id) FROM request 
+        WHERE `status2` = 'inprogress' 
+        AND `assignedPersonnel` = u.username) AS 'pending'
+        FROM `user` u WHERE u.level = 'mis' or (u.level = 'admin' AND u.leader = 'mis')";
+    $result = mysqli_query($con, $sql);
+
+    while ($row = mysqli_fetch_assoc($result)) {
+        // $date = new DateTime($row['date_filled']);
+    ?>
+        <option data-sectionassign="<?php echo $row['level']; ?>" data-pending="<?php echo $row['pending'] ?>" data-personnelsname="<?php echo $row['name'] ?>" value="<?php echo $row['username']; ?>"><?php echo $row['name']; ?> (<?php
+        
+        $useridofssistant = $row['username'];
+        $sqlcount = "SELECT COUNT(id) as 'numberAssisting'
+         FROM request 
+            WHERE `status2` = 'inprogress' 
+            AND `assistantsId` LIKE '%$useridofssistant%';";
+        $resultCount = mysqli_query($con, $sqlcount);
+        while ($rowCount = mysqli_fetch_assoc($resultCount)) {
+                $countAssistant = $rowCount['numberAssisting'];
+        }
+        echo $row['pending'] + $countAssistant ?>)</option>;
+    <?php
+
+    }
+
+    ?>
+
+</select>
+<input class="hidden" type="text" id="r_assistantsName" name="r_assistantsName" class="bg-gray-50 border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+
+
                         </div>
                         <!-- <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"> -->
 
@@ -2119,8 +2200,11 @@ Copy
                             </div>
                         </div>
                     </div>
+                    <div id="warningalertTasks" class="hidden p-4 mb-4 text-sm text-yellow-800 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-300" role="alert">
+                <span class="font-medium">Personnel's Number of Tasks Exceeds</span> 
+                </div>
                     <div id="buttonDiv" class=" items-center p-4 border-t border-gray-200 rounded-b dark:border-gray-600">
-                        <button type="button" data-modal-target="popup-modal-approve" data-modal-toggle="popup-modal-approve" class="shadow-lg shadow-teal-500/50 dark:shadow-lg dark:shadow-teal-800/80  w-full text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Approve</button>
+                        <button type="button" id="approveButton"  data-modal-target="popup-modal-approve" data-modal-toggle="popup-modal-approve" class="shadow-lg shadow-teal-500/50 dark:shadow-lg dark:shadow-teal-800/80  w-full text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Approve</button>
                         <button type="button" onclick="cancellation()" data-modal-target="popup-modal-cancel" data-modal-toggle="popup-modal-cancel" class="shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-pink-800/80  w-full text-white bg-gradient-to-br from-red-400 to-pink-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Cancel Request</button>
 
                     </div>
@@ -2284,10 +2368,32 @@ FROM `user` u";
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
     <script type="text/javascript" src="../node_modules/DataTables/datatables.min.js"></script>
     <script type="text/javascript" src="../node_modules/DataTables/Responsive-2.3.0/js/dataTables.responsive.min.js"></script>
+    <script src="../node_modules/select2/dist/js/select2.min.js"></script>
 
     <script type="text/javascript" src="index.js"></script>
 
     <script>
+
+
+$(".js-assistant").select2({
+  tags: true
+});
+
+var selectedPersonnels = [];
+    $("#assistants").find('option:selected').each(function() {
+        selectedPersonnels.push($("#assistants").data('personnelsname'));
+    });
+    $('#r_assistantsName').val(selectedPersonnels.join(', '));
+
+$('#assistants').change(function() {
+    var selectedPersonnels = [];
+    $(this).find('option:selected').each(function() {
+        selectedPersonnels.push($(this).data('personnelsname'));
+    });
+    $('#r_assistantsName').val(selectedPersonnels.join(', '));
+});
+
+
         // parent element wrapping the speed dial
         // const $parentEld = document.getElementById('dialParent')
 
@@ -2360,7 +2466,41 @@ FROM `user` u";
 
         function modalShow(element) {
 
+            $('#assigned').change(function() {
+                var selectedOption = $(this).find(':selected');
+    
+    // Log the data-pending attribute's value to the console
+    var pending = selectedOption.data('pending');
+    console.log(pending);
 
+    if(pending < 5 ){
+                $('#approveButton').prop('disabled', false);
+                $("#warningalertTasks").addClass("hidden");
+            }
+            else{
+                $('#approveButton').prop('disabled', false);
+                $("#warningalertTasks").removeClass("hidden");
+
+            }   
+
+    });
+
+
+            $numberoftask = element.getAttribute("data-numberoftasks");
+
+            if($numberoftask >= 5 ){
+                $('#approveButton').prop('disabled', true);
+                $("#warningalertTasks").removeClass("hidden");
+            }
+            else{
+                $('#approveButton').prop('disabled', false);
+                $("#warningalertTasks").addClass("hidden");
+
+            }
+
+
+
+           
             $headRemarksVar = element.getAttribute("data-headremarks");
             $adminRemarksVar = element.getAttribute("data-adminremarks");
             $approved_reco = element.getAttribute("data-approved_reco");
@@ -2423,6 +2563,8 @@ FROM `user` u";
             document.getElementById("requestorinput").value = element.getAttribute("data-requestor");
             document.getElementById("requestoremailinput").value = element.getAttribute("data-requestoremail");
             document.getElementById("assignedPersonnel").innerHTML = element.getAttribute("data-assignedpersonnel");
+
+            document.getElementById("assignedAssistants").innerHTML = element.getAttribute("data-assistantName");
             document.getElementById("prequestType").value = element.getAttribute("data-requestype");
             document.getElementById("reqtype").innerHTML = element.getAttribute("data-reqtype");
 
@@ -2554,10 +2696,10 @@ FROM `user` u";
 
             //console.log("asd"+sectionFEMorMIS);
             $("#assigned option").each(function() {
+                
                 var assignedSection = $(this).attr("data-sectionassign");
                 var pending = $(this).attr("data-pending");
-                var pending = $(this).attr("data-pending");
-
+            
 
                 //console.log(assignedSection);
                 //console.log(section);
@@ -2579,6 +2721,17 @@ FROM `user` u";
 
                 }
             })
+
+
+            let arrayAssist = [element.getAttribute("data-assistant")];
+
+// Split the string by comma and trim each element
+let transformedArrayAssist = arrayAssist[0].split(',').map(item => item.trim());
+console.log(transformedArrayAssist)
+
+            $("#assistants").val(transformedArrayAssist).trigger('change');;
+// console.log(transformedArrayAssist)
+
 
             $("#transferUser option").each(function() {
                 var assignedSection1 = $(this).attr("data-transfer");
