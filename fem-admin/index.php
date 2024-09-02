@@ -1303,6 +1303,8 @@ function addWeekdays2($startDate, $daysToAdd, $holidays)
                         data-ratings = '" . $row['rating_final'] . "' 
                         data-actualdatefinished='' 
                         data-assignedpersonnel='" . $row['assignedPersonnelName'] . "'
+                             data-assistant='".$row['assistantsId'] ."'
+                    data-assistantName='".$row['assistanNames'] ."'
                         data-requestor='" . $row['requestor'] . "' 
                         data-personnel='" . $row['assignedPersonnel'] . "' 
                         data-action='" . $dataAction = str_replace('"', '', $row['action']) . "' 
@@ -1348,6 +1350,8 @@ function addWeekdays2($startDate, $daysToAdd, $holidays)
                     data-ratings = '" . $row['rating_final'] . "' 
                     data-actualdatefinished='' 
                     data-assignedpersonnel='" . $row['assignedPersonnelName'] . "'
+                         data-assistant='".$row['assistantsId'] ."'
+                    data-assistantName='".$row['assistanNames'] ."'
                     data-requestor='" . $row['requestor'] . "' 
                     data-personnel='" . $row['assignedPersonnel'] . "' 
                     data-action='" . $dataAction = str_replace('"', '', $row['action']) . "' 
@@ -2247,9 +2251,9 @@ $('#assistants').change(function() {
 
 // Split the string by comma and trim each element
 let transformedArrayAssist = arrayAssist[0].split(',').map(item => item.trim());
+console.log(transformedArrayAssist)
 
-
-            $("#assistants").val(transformedArrayAssist).trigger('change');;
+            $("#assistants").val(transformedArrayAssist).trigger('change');
 // console.log(transformedArrayAssist)
 
 
