@@ -617,7 +617,10 @@ if (isset($_POST['submit'])) {
                         </div>
                     </div>
 
+
                     <div id="assignedPersonnel" class="grid md:grid-cols-2 md:gap-x-6 gap-y-3 hidden">
+
+
                         <div class="relative z-0 w-full  group">
                             <label for="r_personnels" class="block mb-2 text-lg font-medium text-gray-900 dark:text-gray-300">Assign Personnel</label>
                             <select id="r_personnels" name="r_personnels" class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
@@ -631,10 +634,8 @@ if (isset($_POST['submit'])) {
                         FROM `user` u WHERE u.level = 'fem' or u.level = 'admin' AND u.leader = 'fem'";
                                 $result = mysqli_query($con, $sql1);
                                 while ($row = mysqli_fetch_assoc($result)) {
-                                    // $name=$list["name"];
-                                    // $username=$list["username"];
-                                    // $email=$list["email"];
                                 ?>
+
 
                                     <!-- <option selected  disabled class="text-gray-900">Choose Head:</option>  -->
                                     <option data-sectionassign="<?php echo $row['level']; ?>" data-pending="<?php echo $row['pending'] ?>" data-personnelsname="<?php echo $row['name'] ?>" value="<?php echo $row['username']; ?>"><?php echo $row['name']; ?> (<?php
@@ -650,10 +651,15 @@ if (isset($_POST['submit'])) {
                                     }
                                     echo $row['pending'] + $countAssistant ?>)</option>; <?php
 
+
                                                                                                                                                                                                                                                                                                         }
 
                                                                                                                                                                                                                                                                                                             ?>
                             </select>
+
+
+
+
                         </div>
 
 
@@ -704,7 +710,33 @@ if (isset($_POST['submit'])) {
                         <input class="hidden" type="text" id="r_personnelsName" name="r_personnelsName" class="bg-gray-50 border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
                          <input class="hidden" type="text" id="r_assistantsName" name="r_assistantsName" class="bg-gray-50 border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
 
+               <div class="relative z-0 w-full  group">
+                            <label for="r_members" class="block mb-2 text-lg font-medium text-gray-900 dark:text-gray-300">Other Members</label>
+                            <select id="r_members" name="r_members[]" class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                <option disabled selected>Search Members</option>
 
+                                <?php
+                                $sql1 = "SELECT u.*, 
+                        (SELECT COUNT(id) FROM request 
+                        WHERE  `status2` = 'inprogress' 
+                        AND `assignedPersonnel` = u.username) AS 'pending'
+                        FROM `user` u WHERE u.level = 'fem' or u.level = 'admin' AND u.leader = 'fem'";
+                                $result = mysqli_query($con, $sql1);
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                ?>
+                                    <option data-sectionassign="<?php echo $row['level']; ?>" data-pending="<?php echo $row['pending'] ?>" data-personnelsname="<?php echo $row['name'] ?>" value="<?php echo $row['username']; ?>"><?php echo $row['name']; ?> (<?php echo $row['pending'] ?>)</option>; <?php
+
+                                                                                                                                                                                                                                                                                                        }
+
+                                                                                                                                                                                                                                                                                                            ?>
+                            </select>
+
+
+
+
+                        </div>
+
+                        <input class="hidden" type="text" id="r_membersName" name="r_membersName" class="bg-gray-50 border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
                     </div>
 
 
