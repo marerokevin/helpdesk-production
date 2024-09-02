@@ -454,7 +454,36 @@
                                              </button>
                                          </div>
                                      </li>
+                                     <li role="presentation">
+                                        <div class="p__uwg" style="width: 96px; margin-left: 16px; margin-right: 0px;">
+                                            <button id="toAssistTab" onclick="goToAssist()" class="_1QoxDw o4TrkA CA2Rbg cwOZMg zQlusQ uRvRjQ POMxOg" tabindex="-1" type="button" role="tab" aria-controls="toAssist" aria-selected="false">
+                                                <div class="_1cZINw">
+                                                    <div style="overflow:inherit" class="_qiHHw Ut_ecQ kHy45A">
+                                                        <span class=" sr-only">Notifications</span>
+                                                        <?php
+                                                        $date1 = new DateTime();
+                                                        $dateMonth = $date1->format('M');
+                                                        $dateYear = $date1->format('Y');
 
+                                                        $sql1 = "SELECT COUNT(id) as 'assisting' FROM request WHERE   (`status2` = 'rated' OR `status2` = 'Done') and `assistantsId` LIKE '%$misusername%' ";
+                                                        $result = mysqli_query($con, $sql1);
+                                                        while ($count = mysqli_fetch_assoc($result)) {
+
+                                                            if ($count["assisting"] > 0) {
+                                                        ?>
+                                                                <div class=" absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-border-white"> <?php echo $count["assisting"];
+                                                                                                                                                                                                                                                            ?></div><?php
+                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                                    ?>
+                                                        <img src="../resources/img/assist.png" class="h-full w-full text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+
+                                                    </div>
+                                                </div>
+                                                <p class="_5NHXTA _2xcaIA ZSdr0w CCfw7w GHIRjw">Assisted</p>
+                                            </button>
+                                        </div>
+                                    </li>
 
                                  </ul>
                              </div>
@@ -514,7 +543,10 @@
              <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="adminApproval" role="tabpanel" aria-labelledby="dashboard-tab">
                  <?php include 'cancelled.php'; ?>
              </div>
-
+             
+             <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="forAssist" role="tabpanel" aria-labelledby="dashboard-tab">
+                 <?php include 'assisted.php'; ?>
+             </div>
          </div>
 
 
@@ -1262,7 +1294,13 @@
                  id: 'adminApproval1',
                  triggerEl: document.querySelector('#adminApprovalTab'),
                  targetEl: document.querySelector('#adminApproval')
-             }
+             },
+             {
+                id: 'forAssist',
+                triggerEl: document.querySelector('#toAssistTab'),
+                targetEl: document.querySelector('#forAssist')
+            }
+ 
          ];
 
          // options with default values
@@ -1444,7 +1482,38 @@
 
              // transform: translateX(55px) translateY(2px) rotate(135deg);
          }
+         function goToAssist() {
+            document.getElementById("telephone").disabled = true;
+             document.getElementById("datestart").disabled = true;
+             document.getElementById("datefinish").disabled = true;
+             document.getElementById("message").disabled = true;
+             document.getElementById("computername").disabled = true;
+             $("#assignedPersonnelDiv").addClass("hidden");
+             $("#reasonCancelDiv").removeClass("hidden");
+             $("#cancelledByDiv").removeClass("hidden");
+             $("#actualDateFinishedDiv").addClass("hidden");
+             $("#ratingstar").addClass("hidden");
+             $("#actionsDiv").addClass("hidden");
 
+
+
+
+
+             $("#actionDetailsDiv").addClass("hidden");
+
+             $("#buttondiv").addClass("hidden");
+
+
+             const myElement = document.querySelector('#diamond');
+
+             // Get the current transform value
+             const currentTransform = myElement.style.transform = 'translateX(390px) translateY(2px) rotate(135deg)';
+
+
+
+
+
+        }
          function goToHead() {
              $("#buttondiv").removeClass("hidden");
 
