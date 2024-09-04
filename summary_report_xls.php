@@ -1,12 +1,35 @@
 <?php
+
+include("includes/connect.php");
+
+$con->next_result();
 $month = $_GET['month'];
 $year = $_GET['year'];
 $reqtype = $_GET['request_type'];
+
+header("Content-Type:   application/vnd.ms-excel; charset=utf-8");
+header("Content-Disposition: attachment; filename=Summary Report for the Month of " . $month . ".xls");  //File name extension was wrong
+header("Expires: 0");
+header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+header("Cache-Control: private", false);
+
+
+
+// readfile($filepath);
+
+// if (copy($filepath, $copyDestination)) {
+//     echo "File copied successfully.";
+// } else {
+//     echo "Failed to copy file.";
+// }
+
 
 
 // $date = new DateTime();
 // $date->setDate(2022, $month, 1); // Set the date to the first day of the specified month
 // $monthName = $date->format('F');
+
+
 $monthNumber = date('m', strtotime($month));
 // Create DateTime object
 $currentDate = DateTime::createFromFormat('m-d-Y', $monthNumber . '-01-' . $year);
@@ -33,26 +56,34 @@ $previousMonthName = date('F', mktime(0, 0, 0, $previousMonthNumber, 1));
 $previousMonthNumber = str_pad($previousMonthNumber, 2, '0', STR_PAD_LEFT);
 $lastDateOfMonth = date('d', strtotime("last day of $year-$month"));
 
-header("Content-Type:   application/vnd.ms-excel; charset=utf-8");
-header("Content-Disposition: attachment; filename=Summary Report for the Month of " . $month . ".xls");  //File name extension was wrong
-header("Expires: 0");
-header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-header("Cache-Control: private", false);
 
-include("includes/connect.php");
-
-$con->next_result();
 if ($reqtype == "ALL") {
     $sql = mysqli_query($con, "SELECT req.id,  req.date_filled, req.status2, req.requestor,  req.department,  req.request_type,  req.ticket_category, req.request_category,  req.assignedPersonnelName, req.ict_approval_date, req.first_responded_date, req.completed_date, req.requestor_approval_date, req.ticket_close_date, req.action, req.action1,  req.recommendation, req.onthespot_ticket, req.request_details, req.rateDate, cat.level, cat.hours, cat.days, cat.req_type FROM `request` req LEFT JOIN `categories` cat ON cat.c_name = req.request_category 
     WHERE ((req.admin_approved_date  BETWEEN '$lastMonthYear-$previousMonthNumber-28' AND '$year-$monthNumber-$lastDateOfMonth' AND req.status2 != 'cancelled') 
     OR (req.status2 = 'inprogress'  AND req.admin_approved_date <='$year-$monthNumber-$lastDateOfMonth' ) 
     OR ((req.status2 = 'done' OR req.status2 = 'rated') AND req.completed_date >='$lastMonthYear-$previousMonthNumber-28' AND req.admin_approved_date <='$year-$monthNumber-$lastDateOfMonth') )
     AND req.request_to = 'mis' ORDER BY req.admin_approved_date ASC");
+
+$print = "SELECT req.id,  req.date_filled, req.status2, req.requestor,  req.department,  req.request_type,  req.ticket_category, req.request_category,  req.assignedPersonnelName, req.ict_approval_date, req.first_responded_date, req.completed_date, req.requestor_approval_date, req.ticket_close_date, req.action, req.action1,  req.recommendation, req.onthespot_ticket, req.request_details, req.rateDate, cat.level, cat.hours, cat.days, cat.req_type FROM `request` req LEFT JOIN `categories` cat ON cat.c_name = req.request_category 
+    WHERE ((req.admin_approved_date  BETWEEN '$lastMonthYear-$previousMonthNumber-28' AND '$year-$monthNumber-$lastDateOfMonth' AND req.status2 != 'cancelled') 
+    OR (req.status2 = 'inprogress'  AND req.admin_approved_date <='$year-$monthNumber-$lastDateOfMonth' ) 
+    OR ((req.status2 = 'done' OR req.status2 = 'rated') AND req.completed_date >='$lastMonthYear-$previousMonthNumber-28' AND req.admin_approved_date <='$year-$monthNumber-$lastDateOfMonth') )
+    AND req.request_to = 'mis' ORDER BY req.admin_approved_date ASC";
+//     echo "SELECT req.id,  req.date_filled, req.status2, req.requestor,  req.department,  req.request_type,  req.ticket_category, req.request_category,  req.assignedPersonnelName, req.ict_approval_date, req.first_responded_date, req.completed_date, req.requestor_approval_date, req.ticket_close_date, req.action, req.action1,  req.recommendation, req.onthespot_ticket, req.request_details, req.rateDate, cat.level, cat.hours, cat.days, cat.req_type FROM `request` req LEFT JOIN `categories` cat ON cat.c_name = req.request_category 
+//     WHERE ((req.admin_approved_date  BETWEEN '$lastMonthYear-$previousMonthNumber-28' AND '$year-$monthNumber-$lastDateOfMonth' AND req.status2 != 'cancelled') 
+//     OR (req.status2 = 'inprogress'  AND req.admin_approved_date <='$year-$monthNumber-$lastDateOfMonth' ) 
+//     OR ((req.status2 = 'done' OR req.status2 = 'rated') AND req.completed_date >='$lastMonthYear-$previousMonthNumber-28' AND req.admin_approved_date <='$year-$monthNumber-$lastDateOfMonth') )
+//     AND req.request_to = 'mis' ORDER BY req.admin_approved_date ASC";
 } else {
     $sql = mysqli_query($con, "SELECT req.id,  req.date_filled, req.status2, req.requestor,  req.department,  req.request_type,  req.ticket_category, req.request_category, req.assignedPersonnelName, req.ict_approval_date, req.first_responded_date, req.completed_date,req.requestor_approval_date, req.ticket_close_date, req.action, req.action1,  req.recommendation, req.onthespot_ticket, req.request_details,  req.rateDate, cat.level, cat.hours, cat.days, cat.req_type FROM `request` req LEFT JOIN `categories` cat ON cat.c_name = req.request_category WHERE ((req.admin_approved_date  BETWEEN '$lastMonthYear-$previousMonthNumber-28' AND '$year-$monthNumber-$lastDateOfMonth' AND req.status2 != 'cancelled') 
     OR (req.status2 = 'inprogress'  AND req.admin_approved_date <='$year-$monthNumber-$lastDateOfMonth' ) 
     OR ((req.status2 = 'done' OR req.status2 = 'rated') AND req.completed_date >='$lastMonthYear-$previousMonthNumber-28' AND req.admin_approved_date <='$year-$monthNumber-$lastDateOfMonth') ) AND req.request_to = 'mis'  AND cat.req_type = '$reqtype' ORDER BY req.admin_approved_date ASC");
+// echo "SELECT req.id,  req.date_filled, req.status2, req.requestor,  req.department,  req.request_type,  req.ticket_category, req.request_category, req.assignedPersonnelName, req.ict_approval_date, req.first_responded_date, req.completed_date,req.requestor_approval_date, req.ticket_close_date, req.action, req.action1,  req.recommendation, req.onthespot_ticket, req.request_details,  req.rateDate, cat.level, cat.hours, cat.days, cat.req_type FROM `request` req LEFT JOIN `categories` cat ON cat.c_name = req.request_category WHERE ((req.admin_approved_date  BETWEEN '$lastMonthYear-$previousMonthNumber-28' AND '$year-$monthNumber-$lastDateOfMonth' AND req.status2 != 'cancelled') 
+//     OR (req.status2 = 'inprogress'  AND req.admin_approved_date <='$year-$monthNumber-$lastDateOfMonth' ) 
+//     OR ((req.status2 = 'done' OR req.status2 = 'rated') AND req.completed_date >='$lastMonthYear-$previousMonthNumber-28' AND req.admin_approved_date <='$year-$monthNumber-$lastDateOfMonth') ) AND req.request_to = 'mis'  AND cat.req_type = '$reqtype' ORDER BY req.admin_approved_date ASC";
 }
+
+
 
 ?>
 
@@ -71,7 +102,7 @@ if ($reqtype == "ALL") {
         <b>ICT Helpdesk </b>
         <br>
         <h3> <b> Summary Report for the Month of <?php echo $month ?></b></h3>
-
+<!-- <h4><?php echo $print; ?></h4> -->
         <br>
     </center>
     <br>
@@ -176,8 +207,8 @@ if ($reqtype == "ALL") {
                     $sqlHoli = "SELECT holidaysDate FROM holidays";
                     $resultHoli = mysqli_query($con, $sqlHoli);
                     $holidays = array();
-                    while ($row = mysqli_fetch_assoc($resultHoli)) {
-                        $holidays[] = $row['holidaysDate'];
+                    while ($row1 = mysqli_fetch_assoc($resultHoli)) {
+                        $holidays[] = $row1['holidaysDate'];
                     }
                     $interval = $ictApprovalDate1->diff($dateResponded2);
                     $hours = $interval->days * 8 + $interval->h;
@@ -203,7 +234,7 @@ if ($reqtype == "ALL") {
                     if ($time_responded != "" || $time_responded != null) {
                         $minutes2 = $dateResponded4->format('i');
                         $minutes2_decimal = $minutes2 / 60;
-
+                        // echo $row['first_responded_date'];
                         $timeResponded = new DateTime($row['first_responded_date']);
                         $timeResponded = $timeResponded->format('F d, Y H:i:s');
                     } else {
