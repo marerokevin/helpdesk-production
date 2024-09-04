@@ -1098,8 +1098,8 @@
          $("#sidereport").removeClass("bg-gray-200");
 
          $("#sideuser").addClass("text-white bg-gradient-to-r from-blue-900 to-teal-500");
-         $("#sideMyJo").addClass("text-white bg-gradient-to-r from-pink-500 to-orange-400");
-
+         $("#sideMyJo").removeClass("text-white bg-gradient-to-r from-pink-500 to-orange-400");
+         $("#sideMyJoText").addClass("RAIBAQ");
 
          
          $("#sidehome1").removeClass("bg-gray-200");

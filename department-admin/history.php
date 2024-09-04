@@ -1492,7 +1492,8 @@
          $("#sidehome").removeClass("bg-gray-200");
          $("#sidehistory").addClass("text-white bg-gradient-to-r from-blue-900 to-teal-500");
          $("#sidepms").removeClass("bg-gray-200");
-         $("#sideMyJo").addClass("text-white bg-gradient-to-r from-pink-500 to-orange-400");
+         $("#sideMyJo").removeClass("text-white bg-gradient-to-r from-pink-500 to-orange-400");
+         $("#sideMyJoText").addClass("RAIBAQ");
 
      </script>
 
