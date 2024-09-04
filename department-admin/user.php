@@ -1095,9 +1095,13 @@
          $("#sidehome").removeClass("bg-gray-200");
          $("#sidepms").removeClass("bg-gray-200");
          $("#sideMyRequest").removeClass("bg-gray-200");
+         $("#sidereport").removeClass("bg-gray-200");
+
          $("#sideuser").addClass("text-white bg-gradient-to-r from-blue-900 to-teal-500");
+         $("#sideMyJo").addClass("text-white bg-gradient-to-r from-pink-500 to-orange-400");
 
 
+         
          $("#sidehome1").removeClass("bg-gray-200");
          $("#sidepms1").removeClass("bg-gray-200");
          $("#sideMyRequest1").removeClass("bg-gray-200");

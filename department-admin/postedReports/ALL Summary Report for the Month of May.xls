@@ -1,0 +1,947 @@
+  <center>         <b>            <font color='blue'>GLORY (PHILIPPINES), INC.</font>        </b>        <br>        <b>ICT Helpdesk </b>        <br>        <h3> <b> Summary Report for the Month of  May </b></h3>        <br>    </center>    <br>    <div id='table-scroll'>        <table width='100%' border='1' align='left'>            <thead>                <tr>                    <th rowspan='2'>Request No.</th>                    <th rowspan='2'>Requestor</th>                    <th rowspan='2'>Department</th>                    <th rowspan='2'>Request Type (Category)</th>                    <th rowspan='2'>Request Details</th>                    <th rowspan='2'>In-charge</th>                    <th colspan='3'>Requirements</th>                    <th rowspan='2'>ICT Date Approval</th>                    <th rowspan='2'>Date Responded</th>                    <th rowspan='2'>Response Rate (Hours)</th>                    <th rowspan='2'>Remarks</th>                    <th rowspan='2'>Date Finished</th>                    <th rowspan='2'>Accomplishment Rate (Days)</th>                    <th rowspan='2'>Remarks</th>                    <th rowspan='2'>Closed by</th>                    <th rowspan='2'>Action Taken</th>                    <th rowspan='2'>Recommendation</th>                </tr>                <tr>                    <th>Priority Level</th>                    <th>Hours</th>                    <th>Days</th>                </tr><tr>
+                                    <td>JO-2404-752</td>
+                                    <td>Gawaran, Antonieta</td>
+                                    <td>PPIC</td>
+                                    <td>Job Order (Printer)</td>
+                                    <td>Printer not functioning</td>
+                                    <td>Yoshiyuki John Daganta</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>April 26, 2024 00:00:00</td>
+                                    <td>2024-06-07 08:41:59 </td>
+                                    <td>248.68</td>
+                                    <td style='color:red;'>Late </td>
+                                    <td>2024-06-07 08:41:59</td>
+                                    <td>32</td>
+                                    <td style='color:red;'>Late</td>
+                                    <td>System</td>
+                                    <td>We coordinated to VILJAM and reported the problem. As per contractor's advice  the printer cannot be repaired. They recommend for replacement due to dot matrix printer is more expensive if being repair than replacing a new unit,</td>
+                                    <td></td>
+                                    </tr><tr>
+                                    <td>JO-2404-714</td>
+                                    <td>Odviar, Melody</td>
+                                    <td>Parts Inspection</td>
+                                    <td>Job Order (Others)</td>
+                                    <td>To check input tool and foot switch on drss line 1(pc no.4) and drss line 2 (pc no.8) due to not working properly.</td>
+                                    <td>Mark Ely Aragon</td>
+                                    <td>Normal</td>
+                                    <td>40.00</td>
+                                    <td>10</td>
+                                    <td>April 29, 2024 00:00:00</td>
+                                    <td>2024-05-09 00:00:00 </td>
+                                    <td>64.00</td>
+                                    <td style='color:red;'>Late </td>
+                                    <td>2024-05-09 00:00:00</td>
+                                    <td>8</td>
+                                    <td style='color:green;'>On Time</td>
+                                    <td>Requestor</td>
+                                    <td>Already check needs to replace the foot switch .</td>
+                                    <td></td>
+                                    </tr><tr>
+                                    <td>JO-2404-760</td>
+                                    <td>Odviar, Melody</td>
+                                    <td>Parts Inspection</td>
+                                    <td>Job Order (Email)</td>
+                                    <td>To add on email group of pi.staff@glory.com.ph(use by auditor) ms. Krizzel leigh sayas.</td>
+                                    <td>Kevin Roy Marero</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>April 29, 2024 00:00:00</td>
+                                    <td>2024-05-03 00:00:00 </td>
+                                    <td>32.00</td>
+                                    <td style='color:red;'>Late </td>
+                                    <td>2024-05-03 00:00:00</td>
+                                    <td>4</td>
+                                    <td style='color:red;'>Late</td>
+                                    <td>Requestor</td>
+                                    <td>Felmhar Vivo created the e-mail address pi.staff@glory.com.ph and logged it in. Done by Felmhar Vivo</td>
+                                    <td>None</td>
+                                    </tr><tr>
+                                    <td>JO-2404-759</td>
+                                    <td>Rose Bella Austria</td>
+                                    <td>Production Support</td>
+                                    <td>Job Order (Computer)</td>
+                                    <td>Request to install email for ms. Jizelle tocaldo for the reason receiving of projection, standard manual and sending delivery schedule to purchasing.</td>
+                                    <td>Kevin Roy Marero</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>April 29, 2024 00:00:00</td>
+                                    <td>2024-04-29 00:00:00 </td>
+                                    <td>0.00</td>
+                                    <td style='color:red;'>Late </td>
+                                    <td>2024-04-29 00:00:00</td>
+                                    <td>0</td>
+                                    <td style='color:green;'>On Time</td>
+                                    <td></td>
+                                    <td>logged on the mail account to the designated computer. The account j.tolocado@glorylocal.com.ph is logged on. Done</td>
+                                    <td></td>
+                                    </tr><tr>
+                                    <td>JO-2404-761</td>
+                                    <td>Odviar, Melody</td>
+                                    <td>Parts Inspection</td>
+                                    <td>Job Order (Email)</td>
+                                    <td>To change the email address use by ms. Merrelyn bantugan (m.bantugan@glory.com.ph) to n.cruz@glory.com.ph under to ms. Noriza cruz. Due to need to transact to supplier with regards to trial sample concerns.</td>
+                                    <td>Yoshiyuki John Daganta</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>April 29, 2024 00:00:00</td>
+                                    <td>2024-05-03 00:00:00 </td>
+                                    <td>32.00</td>
+                                    <td style='color:red;'>Late </td>
+                                    <td>2024-05-03 00:00:00</td>
+                                    <td>4</td>
+                                    <td style='color:red;'>Late</td>
+                                    <td>Requestor</td>
+                                    <td>ICT staff already changed the email of Ms. Merrelyn bantugan (m.bantugan@glory.com.ph) to Ms. Noriza cruz (n.cruz@glory.com.ph).</td>
+                                    <td></td>
+                                    </tr><tr>
+                                    <td>JO-2405-762</td>
+                                    <td>Cornejo, Wenna Rose</td>
+                                    <td>Production 1</td>
+                                    <td>Job Order (CCTV)</td>
+                                    <td>Request for review of cctv on gpi-5 saitama due to missing parts.</td>
+                                    <td>Yoshiyuki John Daganta</td>
+                                    <td>Medium Priority</td>
+                                    <td>8.00</td>
+                                    <td>10</td>
+                                    <td>May 02, 2024 00:00:00</td>
+                                    <td>2024-05-03 00:00:00 </td>
+                                    <td>8.00</td>
+                                    <td style='color:green;'>On Time </td>
+                                    <td>2024-05-03 00:00:00</td>
+                                    <td>1</td>
+                                    <td style='color:green;'>On Time</td>
+                                    <td>Requestor</td>
+                                    <td>ICT staff assisted Ms. Wenna in reviewing the CCTV footage in GPI-5 Saitama.</td>
+                                    <td></td>
+                                    </tr><tr>
+                                    <td>JO-2405-763</td>
+                                    <td>Cornejo, Wenna Rose</td>
+                                    <td>Production 1</td>
+                                    <td>Job Order (Telephone)</td>
+                                    <td>Please check telephone local 515 due to suddenly disconnecting during calls.</td>
+                                    <td>Yoshiyuki John Daganta</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>May 03, 2024 00:00:00</td>
+                                    <td>2024-05-09 00:00:00 </td>
+                                    <td>32.00</td>
+                                    <td style='color:red;'>Late </td>
+                                    <td>2024-05-09 00:00:00</td>
+                                    <td>4</td>
+                                    <td style='color:red;'>Late</td>
+                                    <td>Requestor</td>
+                                    <td>ICT staff replaced the defective handle cord with their spare cord and it&apos;s ready to use again.</td>
+                                    <td></td>
+                                    </tr><tr>
+                                    <td>JO-2405-764</td>
+                                    <td>Bornasal, Rusitha Audrey</td>
+                                    <td>Administration</td>
+                                    <td>Job Order (Others)</td>
+                                    <td>Request for internet connection to be used by japan trainees on their registration to e-travel and visit japan website (may 3, 2024 - 2-4pm)</td>
+                                    <td>Kevin Roy Marero</td>
+                                    <td>Normal</td>
+                                    <td>40.00</td>
+                                    <td>10</td>
+                                    <td>May 03, 2024 00:00:00</td>
+                                    <td>2024-05-07 00:00:00 </td>
+                                    <td>16.00</td>
+                                    <td style='color:green;'>On Time </td>
+                                    <td>2024-05-07 00:00:00</td>
+                                    <td>2</td>
+                                    <td style='color:green;'>On Time</td>
+                                    <td>Requestor</td>
+                                    <td>Provided network connection for the japan trainees. Done</td>
+                                    <td>Thank you, all users was disconnected after.</td>
+                                    </tr><tr>
+                                    <td>JO-2405-766</td>
+                                    <td>Sabejon, Jinelyn</td>
+                                    <td>Production Support</td>
+                                    <td>Job Order (Computer)</td>
+                                    <td>Request checking of laptop due to slow performance.</td>
+                                    <td>Mark Ely Aragon</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>May 03, 2024 00:00:00</td>
+                                    <td>2024-05-03 00:00:00 </td>
+                                    <td>0.00</td>
+                                    <td style='color:red;'>Late </td>
+                                    <td>2024-05-03 00:00:00</td>
+                                    <td>0</td>
+                                    <td style='color:green;'>On Time</td>
+                                    <td>Requestor</td>
+                                    <td>We charge it for a while and decrease unwanted apps that cause the computer to slow. </td>
+                                    <td>Proper charging of the unit and close not using applications </td>
+                                    </tr><tr>
+                                    <td>JO-2405-770</td>
+                                    <td>Marcilla, Lenlyn</td>
+                                    <td>Administration</td>
+                                    <td>Job Order (Others)</td>
+                                    <td>Assist and set up audio system for zumba activity on may 8, 16, 22 and 30, 2024 at gpi 1 canteen from 4pm to 5pm</td>
+                                    <td>Cedrick James M. Orozo</td>
+                                    <td>Normal</td>
+                                    <td>40.00</td>
+                                    <td>10</td>
+                                    <td>May 06, 2024 00:00:00</td>
+                                    <td>2024-05-14 00:00:00 </td>
+                                    <td>48.00</td>
+                                    <td style='color:red;'>Late </td>
+                                    <td>2024-05-14 00:00:00</td>
+                                    <td>6</td>
+                                    <td style='color:green;'>On Time</td>
+                                    <td>Requestor</td>
+                                    <td>Setup audio system and projector</td>
+                                    <td></td>
+                                    </tr><tr>
+                                    <td>JO-2404-736</td>
+                                    <td>Sarte, Emyria</td>
+                                    <td>Production 2</td>
+                                    <td>Job Order (Computer)</td>
+                                    <td>Request to check UPS assigned to Ms. Cristelyn Sencil  (have noisy sound)</td>
+                                    <td>Yoshiyuki John Daganta</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>May 06, 2024 00:00:00</td>
+                                    <td>2024-05-07 00:00:00 </td>
+                                    <td>8.00</td>
+                                    <td style='color:red;'>Late </td>
+                                    <td>2024-05-07 00:00:00</td>
+                                    <td>1</td>
+                                    <td style='color:red;'>Late</td>
+                                    <td>Requestor</td>
+                                    <td>ICT staff replaced the old UPS battery with a new one and it is ready to use again.</td>
+                                    <td></td>
+                                    </tr><tr>
+                                    <td>JO-2405-771</td>
+                                    <td>Marcilla, Lenlyn</td>
+                                    <td>Administration</td>
+                                    <td>Job Order (Others)</td>
+                                    <td>Assist and set audio system for the sports activity today may 6, 2024 at gpi 1 loading area near at employees waiting area</td>
+                                    <td>Cedrick James M. Orozo</td>
+                                    <td>Normal</td>
+                                    <td>40.00</td>
+                                    <td>10</td>
+                                    <td>May 06, 2024 00:00:00</td>
+                                    <td>2024-05-14 00:00:00 </td>
+                                    <td>48.00</td>
+                                    <td style='color:red;'>Late </td>
+                                    <td>2024-05-14 00:00:00</td>
+                                    <td>6</td>
+                                    <td style='color:green;'>On Time</td>
+                                    <td>Requestor</td>
+                                    <td>Set up audio system at gpi 1 laoding area</td>
+                                    <td></td>
+                                    </tr><tr>
+                                    <td>JO-2405-774</td>
+                                    <td>Odviar, Melody</td>
+                                    <td>Parts Inspection</td>
+                                    <td>Job Order (Others)</td>
+                                    <td>To check ups of ms. Melody mine due to encounter sound.</td>
+                                    <td>Yoshiyuki John Daganta</td>
+                                    <td>Normal</td>
+                                    <td>40.00</td>
+                                    <td>10</td>
+                                    <td>May 07, 2024 00:00:00</td>
+                                    <td>2024-05-10 00:00:00 </td>
+                                    <td>24.00</td>
+                                    <td style='color:green;'>On Time </td>
+                                    <td>2024-05-10 00:00:00</td>
+                                    <td>3</td>
+                                    <td style='color:green;'>On Time</td>
+                                    <td>Requestor</td>
+                                    <td>ICT staff replaced the old UPS battery with a new one and it is ready to use again.</td>
+                                    <td></td>
+                                    </tr><tr>
+                                    <td>JO-2405-778</td>
+                                    <td>JANELLA MAE FRANCISCO</td>
+                                    <td>Administration</td>
+                                    <td>Job Order (Others)</td>
+                                    <td>Requesting for the speakers and amplifier to be used at gpi8 for biggest loser activities for the month of may</td>
+                                    <td>Yoshiyuki John Daganta</td>
+                                    <td>Normal</td>
+                                    <td>40.00</td>
+                                    <td>10</td>
+                                    <td>May 07, 2024 00:00:00</td>
+                                    <td>2024-05-15 00:00:00 </td>
+                                    <td>48.00</td>
+                                    <td style='color:red;'>Late </td>
+                                    <td>2024-05-15 00:00:00</td>
+                                    <td>6</td>
+                                    <td style='color:green;'>On Time</td>
+                                    <td>Requestor</td>
+                                    <td>ICT Staff provided an audio system for the biggest loser activities for the month of May.</td>
+                                    <td></td>
+                                    </tr><tr>
+                                    <td>JO-2405-776</td>
+                                    <td>Tolentino, Edwin</td>
+                                    <td>Production 2</td>
+                                    <td>Job Order (Others)</td>
+                                    <td>Cannot transfer files to server , see attached picture location : \192.168.5.250japanese sharedjapanese shareprod2 tech back-up2. Sdrb-260.250.24011. Sdrb-250 coin detection</td>
+                                    <td>Kevin Roy Marero</td>
+                                    <td>Normal</td>
+                                    <td>40.00</td>
+                                    <td>10</td>
+                                    <td>May 10, 2024 00:00:00</td>
+                                    <td>2024-05-10 00:00:00 </td>
+                                    <td>0.00</td>
+                                    <td style='color:green;'>On Time </td>
+                                    <td>2024-05-10 00:00:00</td>
+                                    <td>0</td>
+                                    <td style='color:green;'>On Time</td>
+                                    <td>Requestor</td>
+                                    <td>Checked the directory, found out that the user group JAPANESESHARED_FA is not included on the allowed access on the said directory. Changed the ownership of the whole directory to ICT Administrator account. Provided access the JAPANESESSHARED_FA group and enabled inheritance. Done</td>
+                                    <td></td>
+                                    </tr><tr>
+                                    <td>JO-2405-773</td>
+                                    <td>Roque, Karen</td>
+                                    <td>Production 2</td>
+                                    <td>Job Order (Computer)</td>
+                                    <td>Request to check-up UPS due to not charging. Encountered non-stop alarm.</td>
+                                    <td>Yoshiyuki John Daganta</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>May 10, 2024 00:00:00</td>
+                                    <td>2024-05-14 00:00:00 </td>
+                                    <td>16.00</td>
+                                    <td style='color:red;'>Late </td>
+                                    <td>2024-05-14 00:00:00</td>
+                                    <td>2</td>
+                                    <td style='color:red;'>Late</td>
+                                    <td>Requestor</td>
+                                    <td>ICT staff replaced the old UPS battery with a new one and it is ready to use again.</td>
+                                    <td></td>
+                                    </tr><tr>
+                                    <td>JO-2405-786</td>
+                                    <td>Rolle, Ryan</td>
+                                    <td>Parts Production</td>
+                                    <td>Job Order (Others)</td>
+                                    <td>The task bar on my computer always hang-up when left for a few moment. And it took 3-5 minutes before it works again after continuous clicking and refreshing my desktop. Kindly check please if this is normal or not.</td>
+                                    <td>Yoshiyuki John Daganta</td>
+                                    <td>Normal</td>
+                                    <td>40.00</td>
+                                    <td>10</td>
+                                    <td>May 10, 2024 00:00:00</td>
+                                    <td>2024-05-20 00:00:00 </td>
+                                    <td>48.00</td>
+                                    <td style='color:red;'>Late </td>
+                                    <td>2024-05-20 00:00:00</td>
+                                    <td>8</td>
+                                    <td style='color:green;'>On Time</td>
+                                    <td>Requestor</td>
+                                    <td>The ICT team will arrange an instructional session on how to fix the taskbar that is hang-up.</td>
+                                    <td></td>
+                                    </tr><tr>
+                                    <td>JO-2405-787</td>
+                                    <td>Armillo, Rey</td>
+                                    <td>Production 2</td>
+                                    <td>Job Order (Others)</td>
+                                    <td>Restoration of files on \192.168.5.250 japanese shared -> japanese share->temp files->hirooka->daily output 2024->may 2024.</td>
+                                    <td>Kevin Roy Marero</td>
+                                    <td>Normal</td>
+                                    <td>40.00</td>
+                                    <td>10</td>
+                                    <td>May 13, 2024 00:00:00</td>
+                                    <td>2024-05-16 00:00:00 </td>
+                                    <td>24.00</td>
+                                    <td style='color:green;'>On Time </td>
+                                    <td>2024-05-16 00:00:00</td>
+                                    <td>3</td>
+                                    <td style='color:green;'>On Time</td>
+                                    <td>Requestor</td>
+                                    <td>restored, done.</td>
+                                    <td></td>
+                                    </tr><tr>
+                                    <td>JO-2405-789</td>
+                                    <td>Margie Umali</td>
+                                    <td>Production Support</td>
+                                    <td>Job Order (Printer)</td>
+                                    <td>Request to install printer for our laptop (prod. Supplies)</td>
+                                    <td>Yoshiyuki John Daganta</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>May 14, 2024 00:00:00</td>
+                                    <td>2024-05-14 00:00:00 </td>
+                                    <td>0.00</td>
+                                    <td style='color:red;'>Late </td>
+                                    <td>2024-05-14 00:00:00</td>
+                                    <td>0</td>
+                                    <td style='color:green;'>On Time</td>
+                                    <td></td>
+                                    <td>ICT staff successfully installed the printer (Apeos 4570).</td>
+                                    <td></td>
+                                    </tr><tr>
+                                    <td>JO-2405-785</td>
+                                    <td>Calderon, Naomi</td>
+                                    <td>PPIC</td>
+                                    <td>Job Order (Others)</td>
+                                    <td>Request to install cube-pdf for editing pdf files. (total of 6 computers)
+3 for pm (m&apos; she / m&apos; chona / jonna)
+3 for impex (m&apos; mj / sherelyn / roger)</td>
+                                    <td>Mark Ely Aragon</td>
+                                    <td>Normal</td>
+                                    <td>40.00</td>
+                                    <td>10</td>
+                                    <td>May 15, 2024 00:00:00</td>
+                                    <td>2024-05-18 00:00:00 </td>
+                                    <td>24.00</td>
+                                    <td style='color:green;'>On Time </td>
+                                    <td>2024-05-18 00:00:00</td>
+                                    <td>3</td>
+                                    <td style='color:green;'>On Time</td>
+                                    <td></td>
+                                    <td>Done installing cube pdf on 6 computers of PM and Impex. </td>
+                                    <td></td>
+                                    </tr><tr>
+                                    <td>JO-2405-796</td>
+                                    <td>Nazareno, Bernadette</td>
+                                    <td>PPIC</td>
+                                    <td>Job Order (Relayout)</td>
+                                    <td>1.transfer 3 computer from gpi6 to gpi 9
+2.transfer vmi computer (gpi1) to gpi 6
+3. Transfer computer (michael barcena) from gpi 10 to gpi 1 (vmi area)</td>
+                                    <td>Yoshiyuki John Daganta</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>May 15, 2024 00:00:00</td>
+                                    <td>2024-05-21 00:00:00 </td>
+                                    <td>32.00</td>
+                                    <td style='color:red;'>Late </td>
+                                    <td>2024-05-21 00:00:00</td>
+                                    <td>4</td>
+                                    <td style='color:red;'>Late</td>
+                                    <td></td>
+                                    <td>Transferring the computers to their new station was done, and they are ready to use again.</td>
+                                    <td></td>
+                                    </tr><tr>
+                                    <td>JO-2405-802</td>
+                                    <td>Asuelo, Oscar Jr.</td>
+                                    <td>Production Support</td>
+                                    <td>Job Order (Others)</td>
+                                    <td>Benq digital projector model#:ms506 for checking due to malfunction.</td>
+                                    <td>Vivo, Felmhar</td>
+                                    <td>Normal</td>
+                                    <td>40.00</td>
+                                    <td>10</td>
+                                    <td>May 15, 2024 00:00:00</td>
+                                    <td>2024-06-13 15:53:25 </td>
+                                    <td>183.88</td>
+                                    <td style='color:red;'>Late </td>
+                                    <td>2024-06-19 09:29:58</td>
+                                    <td>27</td>
+                                    <td style='color:red;'>Late</td>
+                                    <td>System</td>
+                                    <td>ICT recommends to purchase new projector as replacement of the existing unit.</td>
+                                    <td>This JO should be attached as supporting reference when processing to purchase a new projector. Please coordinate with GS for the quotation of a projector.</td>
+                                    </tr><tr>
+                                    <td>JO-2405-794</td>
+                                    <td>Nacor Jr., Lorie</td>
+                                    <td>PPIC</td>
+                                    <td>Job Order (Relayout)</td>
+                                    <td>Re-lay-out/transfer of location of computer due its current location will be use for parts/rack relocation from gpi6</td>
+                                    <td>Vivo, Felmhar</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>May 15, 2024 00:00:00</td>
+                                    <td>2024-06-11 08:42:31 </td>
+                                    <td>160.70</td>
+                                    <td style='color:red;'>Late </td>
+                                    <td>2024-06-11 08:42:31</td>
+                                    <td>21</td>
+                                    <td style='color:red;'>Late</td>
+                                    <td>System</td>
+                                    <td>Already scheduled network connection support to the relocation of computer as per location requested by the department</td>
+                                    <td>Done JO</td>
+                                    </tr><tr>
+                                    <td>JO-2405-801</td>
+                                    <td>Sarte, Emyria</td>
+                                    <td>Production 2</td>
+                                    <td>Job Order (Computer)</td>
+                                    <td>Request to check cpu due to encountered malfunction (assigned to ms. Donalyn robledo)</td>
+                                    <td>Yoshiyuki John Daganta</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>May 15, 2024 00:00:00</td>
+                                    <td>2024-05-15 00:00:00 </td>
+                                    <td>0.00</td>
+                                    <td style='color:red;'>Late </td>
+                                    <td>2024-05-15 00:00:00</td>
+                                    <td>0</td>
+                                    <td style='color:green;'>On Time</td>
+                                    <td>Requestor</td>
+                                    <td>ICT staff replaced the defective SSD with a new one. Fortunately, the old files have been recovered.</td>
+                                    <td></td>
+                                    </tr><tr>
+                                    <td>JO-2405-798</td>
+                                    <td>Marcilla, Lenlyn</td>
+                                    <td>Administration</td>
+                                    <td>Job Order (Others)</td>
+                                    <td>Set up audio system on may 14, 2024 at loading area at 4:00pm</td>
+                                    <td>Mark Ely Aragon</td>
+                                    <td>Normal</td>
+                                    <td>40.00</td>
+                                    <td>10</td>
+                                    <td>May 15, 2024 00:00:00</td>
+                                    <td>2024-05-18 00:00:00 </td>
+                                    <td>24.00</td>
+                                    <td style='color:green;'>On Time </td>
+                                    <td>2024-05-18 00:00:00</td>
+                                    <td>3</td>
+                                    <td style='color:green;'>On Time</td>
+                                    <td>Requestor</td>
+                                    <td>Done set up on may 14 2024 that was used on zumba. </td>
+                                    <td></td>
+                                    </tr><tr>
+                                    <td>JO-2405-805</td>
+                                    <td>Desacula, Genny</td>
+                                    <td>Purchasing</td>
+                                    <td>Job Order (Others)</td>
+                                    <td>Request to install cube application for ecn and purchases (consolidation, split and delete pdf data)</td>
+                                    <td>Yoshiyuki John Daganta</td>
+                                    <td>Normal</td>
+                                    <td>40.00</td>
+                                    <td>10</td>
+                                    <td>May 18, 2024 00:00:00</td>
+                                    <td>2024-05-23 00:00:00 </td>
+                                    <td>24.00</td>
+                                    <td style='color:green;'>On Time </td>
+                                    <td>2024-05-23 00:00:00</td>
+                                    <td>3</td>
+                                    <td style='color:green;'>On Time</td>
+                                    <td>Requestor</td>
+                                    <td>ICT staff instruct them on how to use the said application.</td>
+                                    <td></td>
+                                    </tr><tr>
+                                    <td>JO-2405-807</td>
+                                    <td>Dela Cruz, Jaymar</td>
+                                    <td>Quality Assurance</td>
+                                    <td>Job Order (Others)</td>
+                                    <td>For checking of mouse (not functioning)</td>
+                                    <td>Mark Ely Aragon</td>
+                                    <td>Normal</td>
+                                    <td>40.00</td>
+                                    <td>10</td>
+                                    <td>May 18, 2024 00:00:00</td>
+                                    <td>2024-05-23 00:00:00 </td>
+                                    <td>24.00</td>
+                                    <td style='color:green;'>On Time </td>
+                                    <td>2024-05-23 00:00:00</td>
+                                    <td>3</td>
+                                    <td style='color:green;'>On Time</td>
+                                    <td>Requestor</td>
+                                    <td>Replace new mouse :) 
+</td>
+                                    <td></td>
+                                    </tr><tr>
+                                    <td>JO-2405-804</td>
+                                    <td>Asuelo, Oscar Jr.</td>
+                                    <td>Production Support</td>
+                                    <td>Job Order (Others)</td>
+                                    <td>Request access to japanese shared to view and copy standard manual on qa(audit&training).</td>
+                                    <td>Kevin Roy Marero</td>
+                                    <td>Normal</td>
+                                    <td>40.00</td>
+                                    <td>10</td>
+                                    <td>May 18, 2024 00:00:00</td>
+                                    <td>2024-06-11 14:41:35 </td>
+                                    <td>142.68</td>
+                                    <td style='color:red;'>Late </td>
+                                    <td>2024-06-11 14:41:35</td>
+                                    <td>18</td>
+                                    <td style='color:red;'>Late</td>
+                                    <td>System</td>
+                                    <td>Already provided access to Japanese Shared</td>
+                                    <td></td>
+                                    </tr><tr>
+                                    <td>JO-2405-806</td>
+                                    <td>Jayson Torres</td>
+                                    <td>Quality Assurance</td>
+                                    <td>Job Order (Others)</td>
+                                    <td>Request an updated id picture of the attached eprt gpi 2,3,7,9 and all plant workers representative committee, this is to make formal and uniform the picture pose in our organizational chart.</td>
+                                    <td>Cedrick James M. Orozo</td>
+                                    <td>Normal</td>
+                                    <td>40.00</td>
+                                    <td>10</td>
+                                    <td>May 20, 2024 00:00:00</td>
+                                    <td>2024-05-20 00:00:00 </td>
+                                    <td>0.00</td>
+                                    <td style='color:green;'>On Time </td>
+                                    <td>2024-05-20 00:00:00</td>
+                                    <td>0</td>
+                                    <td style='color:green;'>On Time</td>
+                                    <td>Requestor</td>
+                                    <td>Email all the pictures requested.</td>
+                                    <td></td>
+                                    </tr><tr>
+                                    <td>JO-2405-812</td>
+                                    <td>Joya, Renan</td>
+                                    <td>Quality Assurance</td>
+                                    <td>Job Order (Others)</td>
+                                    <td>Can i request an updated id picture of the attached 5s committee organizational chart, this is to make formal and uniform the picture pose in our organizational chart.</td>
+                                    <td>Cedrick James M. Orozo</td>
+                                    <td>Normal</td>
+                                    <td>40.00</td>
+                                    <td>10</td>
+                                    <td>May 20, 2024 00:00:00</td>
+                                    <td>2024-05-20 00:00:00 </td>
+                                    <td>0.00</td>
+                                    <td style='color:green;'>On Time </td>
+                                    <td>2024-05-20 00:00:00</td>
+                                    <td>0</td>
+                                    <td style='color:green;'>On Time</td>
+                                    <td>Requestor</td>
+                                    <td>Email all the pictures requested.</td>
+                                    <td></td>
+                                    </tr><tr>
+                                    <td>JO-2405-808</td>
+                                    <td>Florindo, Eric</td>
+                                    <td>PPIC</td>
+                                    <td>Job Order (Printer)</td>
+                                    <td>Request connection of computer c2402-5 to printer canon 6030 in gpi-10</td>
+                                    <td>Yoshiyuki John Daganta</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>May 24, 2024 00:00:00</td>
+                                    <td>2024-05-27 00:00:00 </td>
+                                    <td>8.00</td>
+                                    <td style='color:red;'>Late </td>
+                                    <td>2024-05-27 00:00:00</td>
+                                    <td>2</td>
+                                    <td style='color:red;'>Late</td>
+                                    <td>Requestor</td>
+                                    <td>ICT staff successfully installed the printer.</td>
+                                    <td></td>
+                                    </tr><tr>
+                                    <td>JO-2405-816</td>
+                                    <td>JANELLA MAE FRANCISCO</td>
+                                    <td>Administration</td>
+                                    <td>Job Order (Others)</td>
+                                    <td>Request for projector, mic and speaker for safe motherhood and family planning seminar on may 21, 2024</td>
+                                    <td>Mark Ely Aragon</td>
+                                    <td>Normal</td>
+                                    <td>40.00</td>
+                                    <td>10</td>
+                                    <td>May 24, 2024 00:00:00</td>
+                                    <td>2024-06-03 00:00:00 </td>
+                                    <td>48.00</td>
+                                    <td style='color:red;'>Late </td>
+                                    <td>2024-06-03 00:00:00</td>
+                                    <td>8</td>
+                                    <td style='color:green;'>On Time</td>
+                                    <td>System</td>
+                                    <td>Done set up </td>
+                                    <td></td>
+                                    </tr><tr>
+                                    <td>JO-2405-825</td>
+                                    <td>Jordan, Carmela</td>
+                                    <td>Quality Assurance</td>
+                                    <td>Job Order (Others)</td>
+                                    <td>Request copy of updated pictures for organizational charts (ems / eprt) and emergency contact number</td>
+                                    <td>Cedrick James M. Orozo</td>
+                                    <td>Normal</td>
+                                    <td>40.00</td>
+                                    <td>10</td>
+                                    <td>May 24, 2024 00:00:00</td>
+                                    <td>2024-05-30 00:00:00 </td>
+                                    <td>32.00</td>
+                                    <td style='color:green;'>On Time </td>
+                                    <td>2024-05-30 00:00:00</td>
+                                    <td>4</td>
+                                    <td style='color:green;'>On Time</td>
+                                    <td>System</td>
+                                    <td>Send all copies of the requested pictures.</td>
+                                    <td></td>
+                                    </tr><tr>
+                                    <td>JO-2405-829</td>
+                                    <td>Eunice Linde</td>
+                                    <td>Purchasing</td>
+                                    <td>Job Order (Others)</td>
+                                    <td>Jo request for the 18 members experiencing problem related to the language pack of the operating system. One member added on the list (for Mr. Nerio Gelle).</td>
+                                    <td>Vivo, Felmhar</td>
+                                    <td>Normal</td>
+                                    <td>40.00</td>
+                                    <td>10</td>
+                                    <td>May 24, 2024 00:00:00</td>
+                                    <td>2024-07-01 10:50:48 </td>
+                                    <td>218.83</td>
+                                    <td style='color:red;'>Late </td>
+                                    <td>2024-07-01 13:31:30</td>
+                                    <td>29</td>
+                                    <td style='color:red;'>Late</td>
+                                    <td>Requestor</td>
+                                    <td>Performed troubleshooting on system error encountered in G-StarM system.</td>
+                                    <td></td>
+                                    </tr><tr>
+                                    <td>JO-2405-809</td>
+                                    <td>Florindo, Eric</td>
+                                    <td>PPIC</td>
+                                    <td>Job Order (Network)</td>
+                                    <td>Request connection to euc of computer c-2402-5</td>
+                                    <td>Yoshiyuki John Daganta</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>May 24, 2024 00:00:00</td>
+                                    <td>2024-05-27 00:00:00 </td>
+                                    <td>8.00</td>
+                                    <td style='color:red;'>Late </td>
+                                    <td>2024-05-27 00:00:00</td>
+                                    <td>2</td>
+                                    <td style='color:red;'>Late</td>
+                                    <td>Requestor</td>
+                                    <td>ICT staff successfully put the EUC link on computer C2402-5.</td>
+                                    <td></td>
+                                    </tr><tr>
+                                    <td>JO-2405-821</td>
+                                    <td>Mojica, Jonar</td>
+                                    <td>Production 1</td>
+                                    <td>Job Order (Others)</td>
+                                    <td>Ng ups change battery</td>
+                                    <td>Yoshiyuki John Daganta</td>
+                                    <td>Normal</td>
+                                    <td>40.00</td>
+                                    <td>10</td>
+                                    <td>May 24, 2024 00:00:00</td>
+                                    <td>2024-05-24 00:00:00 </td>
+                                    <td>0.00</td>
+                                    <td style='color:green;'>On Time </td>
+                                    <td>2024-05-24 00:00:00</td>
+                                    <td>0</td>
+                                    <td style='color:green;'>On Time</td>
+                                    <td>Requestor</td>
+                                    <td>ICT staff replaced the old UPS battery with a new one and it is ready to use again.</td>
+                                    <td></td>
+                                    </tr><tr>
+                                    <td>JO-2405-828</td>
+                                    <td>Eunice Linde</td>
+                                    <td>Purchasing</td>
+                                    <td>Job Order (Others)</td>
+                                    <td>Jo request for the 18 members experiencing problem related to the language pack of the operating system.</td>
+                                    <td>Kevin Roy Marero</td>
+                                    <td>Normal</td>
+                                    <td>40.00</td>
+                                    <td>10</td>
+                                    <td>May 24, 2024 00:00:00</td>
+                                    <td>2024-06-11 13:23:16 </td>
+                                    <td>109.38</td>
+                                    <td style='color:red;'>Late </td>
+                                    <td>2024-07-01 10:18:35</td>
+                                    <td>29</td>
+                                    <td style='color:red;'>Late</td>
+                                    <td>Requestor</td>
+                                    <td>Reinstalled Langauge pack for Japanese to all the computers and Reinstall GSTAR-M. Done</td>
+                                    <td></td>
+                                    </tr><tr>
+                                    <td>JO-2405-833</td>
+                                    <td>Rolle, Ryan</td>
+                                    <td>Parts Production</td>
+                                    <td>Job Order (Others)</td>
+                                    <td>There is really someting wrong with the g-rpis, many times i filed and ecn and the latest is today with ecn no.s20987 but again, it is not successfully given a document number after saying by the system that it was successful, but it isnt really successful.</td>
+                                    <td>Christian John Lopez</td>
+                                    <td>Normal</td>
+                                    <td>40.00</td>
+                                    <td>10</td>
+                                    <td>May 25, 2024 00:00:00</td>
+                                    <td>2024-05-27 09:15:44 </td>
+                                    <td>9.25</td>
+                                    <td style='color:green;'>On Time </td>
+                                    <td>2024-05-28 00:00:00</td>
+                                    <td>1</td>
+                                    <td style='color:green;'>On Time</td>
+                                    <td>System</td>
+                                    <td>The problem regarding uploading excel and pdf document form in G-RPIS has been resolve as per feedback by Sir Ryan this morning.</td>
+                                    <td></td>
+                                    </tr><tr>
+                                    <td>JO-2405-830</td>
+                                    <td>Jayson Torres</td>
+                                    <td>Quality Assurance</td>
+                                    <td>Job Order (Others)</td>
+                                    <td>I would like to request to access this site : https://reports.dole.gov.ph/data_privacy_notice .this will be use for monthly submission of work accident/illnesses report (wair)  to dole.</td>
+                                    <td>Kevin Roy Marero</td>
+                                    <td>Normal</td>
+                                    <td>40.00</td>
+                                    <td>10</td>
+                                    <td>May 27, 2024 00:00:00</td>
+                                    <td>2024-06-10 15:43:42 </td>
+                                    <td>95.72</td>
+                                    <td style='color:red;'>Late </td>
+                                    <td>2024-06-10 15:43:42</td>
+                                    <td>12</td>
+                                    <td style='color:red;'>Late</td>
+                                    <td>System</td>
+                                    <td>Already provided access for the https://reports.dole.gov.ph</td>
+                                    <td></td>
+                                    </tr><tr>
+                                    <td>TS-2405-832</td>
+                                    <td>Castuli, Sheila</td>
+                                    <td>Purchasing</td>
+                                    <td>Technical Support (System Issues)</td>
+                                    <td>Unnecessary approver appear on record of review.</td>
+                                    <td>Christian John Lopez</td>
+                                    <td>High Priority</td>
+                                    <td>4.00</td>
+                                    <td>5</td>
+                                    <td>May 27, 2024 00:00:00</td>
+                                    <td>2024-05-27 13:29:37 </td>
+                                    <td>13.48</td>
+                                    <td style='color:red;'>Late </td>
+                                    <td>2024-05-27 00:00:00</td>
+                                    <td>0</td>
+                                    <td style='color:green;'>On Time</td>
+                                    <td></td>
+                                    <td>The error has been fixed in Purchasing Requestor account.</td>
+                                    <td></td>
+                                    </tr><tr>
+                                    <td>TS-2405-831</td>
+                                    <td>Rojas, Noemi</td>
+                                    <td>Production 2</td>
+                                    <td>Technical Support (Software Issues)</td>
+                                    <td>Computer hangs when she opens PDF </td>
+                                    <td>Yoshiyuki John Daganta</td>
+                                    <td>Medium Priority</td>
+                                    <td>8.00</td>
+                                    <td>5</td>
+                                    <td>May 27, 2024 00:00:00</td>
+                                    <td>2024-05-27 13:00:23 </td>
+                                    <td>13.00</td>
+                                    <td style='color:red;'>Late </td>
+                                    <td>2024-05-27 00:00:00</td>
+                                    <td>0</td>
+                                    <td style='color:green;'>On Time</td>
+                                    <td>Requestor</td>
+                                    <td>The ICT staff attempted to resolve the issue by uninstalling the current PDF application (Adobe Acrobat) and replacing it with another (Adobe Reader).</td>
+                                    <td></td>
+                                    </tr><tr>
+                                    <td>TS-2405-834</td>
+                                    <td>Ma. Jesusa Garcia</td>
+                                    <td>Purchasing</td>
+                                    <td>Technical Support (Hardware Issues)</td>
+                                    <td>NO POWER OF SYSTEM UNIT</td>
+                                    <td>Mark Ely Aragon</td>
+                                    <td>Medium Priority</td>
+                                    <td>8.00</td>
+                                    <td>5</td>
+                                    <td>May 28, 2024 08:05:03</td>
+                                    <td>2024-05-28 08:05:03 </td>
+                                    <td>0.00</td>
+                                    <td style='color:green;'>On the spot </td>
+                                    <td>2024-05-28 08:05:03</td>
+                                    <td>0</td>
+                                    <td style='color:green;'>On the spot</td>
+                                    <td>System</td>
+                                    <td>Change Power Supply</td>
+                                    <td>Already Replace the power Supply</td>
+                                    </tr><tr>
+                                    <td>TS-2405-847</td>
+                                    <td>Due, Raymond</td>
+                                    <td>PPIC</td>
+                                    <td>Technical Support (Hardware Issues)</td>
+                                    <td>On May 10, 2024, Mr. Due expressed concern about his computer entering BIOS setup.</td>
+                                    <td>Yoshiyuki John Daganta</td>
+                                    <td>Medium Priority</td>
+                                    <td>8.00</td>
+                                    <td>5</td>
+                                    <td>May 29, 2024 08:23:05</td>
+                                    <td>2024-05-29 08:23:05 </td>
+                                    <td>0.00</td>
+                                    <td style='color:green;'>On the spot </td>
+                                    <td>2024-05-29 08:23:05</td>
+                                    <td>0</td>
+                                    <td style='color:green;'>On the spot</td>
+                                    <td>System</td>
+                                    <td>Upon investigation, Mr. Yuki, an ICT staff member, checked the system unit and found that the SSD was damaged. The ICT personnel pulled the computer and installed a new SSD, yet were unsuccessful in retrieving the previous files.</td>
+                                    <td></td>
+                                    </tr><tr>
+                                    <td>TS-2405-860</td>
+                                    <td>Desacula, Genny</td>
+                                    <td>Purchasing</td>
+                                    <td>Technical Support (Others)</td>
+                                    <td>Request to design a programme layout and invitation for Business Conference 2024</td>
+                                    <td>Cedrick James M. Orozo</td>
+                                    <td>Normal</td>
+                                    <td>40.00</td>
+                                    <td>10</td>
+                                    <td>May 30, 2024 15:30:00</td>
+                                    <td>2024-05-30 15:30:00 </td>
+                                    <td>0.00</td>
+                                    <td style='color:green;'>On the spot </td>
+                                    <td>2024-05-30 15:30:00</td>
+                                    <td>0</td>
+                                    <td style='color:green;'>On the spot</td>
+                                    <td>System</td>
+                                    <td>Design a programme layout with 3 columns and back-to-back format, location guide and google map qr code. </td>
+                                    <td></td>
+                                    </tr><tr>
+                                    <td>TS-2405-859</td>
+                                    <td>Gonzales, Digna</td>
+                                    <td>Production Support</td>
+                                    <td>Technical Support (System Issues)</td>
+                                    <td>System Name: RPIS
+Details: Error in viewing document. </td>
+                                    <td>Christian John Lopez</td>
+                                    <td>High Priority</td>
+                                    <td>4.00</td>
+                                    <td>5</td>
+                                    <td>May 30, 2024 09:15:00</td>
+                                    <td>2024-05-30 09:15:43 </td>
+                                    <td>0.00</td>
+                                    <td style='color:green;'>On Time </td>
+                                    <td>2024-05-30 00:00:00</td>
+                                    <td>0</td>
+                                    <td style='color:green;'>On Time</td>
+                                    <td>System</td>
+                                    <td>Since the faulty is the viewer account doesnt have the right credentials to view or get the specific document in the index search and table. After the code is fix the process can work again.</td>
+                                    <td></td>
+                                    </tr><tr>
+                                    <td>TS-2405-866</td>
+                                    <td>Michelle Lamera</td>
+                                    <td>Purchasing</td>
+                                    <td>Technical Support (Hardware Issues)</td>
+                                    <td>Digicam of production technology not working properly </td>
+                                    <td>Mark Ely Aragon</td>
+                                    <td>Medium Priority</td>
+                                    <td>8.00</td>
+                                    <td>5</td>
+                                    <td>May 31, 2024 10:01:00</td>
+                                    <td>2024-05-31 10:20:18 </td>
+                                    <td>0.32</td>
+                                    <td style='color:green;'>On Time </td>
+                                    <td>2024-05-31 12:24:07</td>
+                                    <td>0</td>
+                                    <td style='color:green;'>On Time</td>
+                                    <td>System</td>
+                                    <td>Digicam was reset and still not working properly. </td>
+                                    <td>we recommends to bring on service provider due to ICT is not capable to troubleshoot the unit. </td>
+                                    </tr><tr>
+                                    <td>TS-2405-861</td>
+                                    <td>Desacula, Genny</td>
+                                    <td>Purchasing</td>
+                                    <td>Technical Support (Others)</td>
+                                    <td>Design a programme layout, digital invitation and thank you card for upcoming 7th annual business conference. Add location or google map qr code at the programme layout and invitation. </td>
+                                    <td>Cedrick James M. Orozo</td>
+                                    <td>Normal</td>
+                                    <td>40.00</td>
+                                    <td>10</td>
+                                    <td>May 31, 2024 13:13:00</td>
+                                    <td>2024-05-31 13:43:01 </td>
+                                    <td>0.50</td>
+                                    <td style='color:green;'>On Time </td>
+                                    <td>2024-05-31 14:13:00</td>
+                                    <td>0</td>
+                                    <td style='color:green;'>On Time</td>
+                                    <td>System</td>
+                                    <td>Designed the programme and thank you card using canva and sent them to the requestors. Revised if there are some revisions as well. </td>
+                                    <td></td>
+                                    </tr></tbody></table> </div>
