@@ -52,6 +52,68 @@ if (isset($_POST['monthlyReport'])) {
 
 }
 
+if(isset($_POST['postReport'])){
+  $dateToday = date('Y-m-d H:i:s', time());
+  $month = $_POST['month'];
+  $year = $_POST['year'];
+$type = $_POST['request_type'];
+$adminpassword = $_POST['adminpassword'];
+
+
+
+$sql1 = "Select * FROM `user` WHERE `department`='ICT' and `level` = 'admin' and `admin` = 1 LIMIT 1";
+    $result = mysqli_query($con, $sql1);
+    while ($userRow = mysqli_fetch_assoc($result)) {
+      $userpass = $userRow['password'];
+    }
+
+
+    if($adminpassword == $userpass){
+
+      $sqlreport = "SELECT * FROM `postedreport` WHERE `month`='$month' and `year` = '$year' AND `type` = '$type'";
+    $resultReport = mysqli_query($con, $sqlreport);
+    $numrows = mysqli_num_rows($resultReport);
+
+    if($numrows >=1){
+      $sql2 = "UPDATE `postedreport` SET `date`='$dateToday' WHERE `month`='$month' and `year` = '$year' AND `type` = '$type' ";
+      $results2 = mysqli_query($con, $sql2);
+    if($results2){
+      echo "<script>alert('Your report is now posted.') </script>";
+    }
+    }
+    else{
+
+      $sql = "INSERT INTO `postedreport`(`type`, `date`, `month`, `year`) VALUES ('$type', '$dateToday','$month','$year')";
+      $results = mysqli_query($con, $sql);
+    if($results){
+      echo "<script>alert('Your report is now posted.') </script>";
+    }
+    }
+
+
+
+
+    }
+    else{
+      echo "<script>alert('Wrong Password. The report was not posted successfully') </script>";
+    }
+
+
+    $_SESSION['month'] = $_POST['month'];
+    $_SESSION['year'] = $_POST['year'];
+    $_SESSION['request_type'] = $_POST['request_type'];
+    
+  ?>
+    <script type="text/javascript">
+      window.open('../post_summary_report_xls.php?request_type=<?php echo  $_SESSION['request_type']; ?>&month=<?php echo $_SESSION['month']; ?>&year=<?php echo $_SESSION['year']; ?>', '_blank');
+    </script>
+  <?php
+
+
+
+
+}
+
 if (isset($_POST['registerUser'])) {
   $userEmployeeId = $_POST['userEmployeeId'];
   $userFullName = $_POST['userFullName'];
@@ -311,6 +373,12 @@ if (isset($_POST['excelReport'])) {
           <i class="fa-solid fa-user"></i> <span class="flex-1 ml-3 whitespace-nowrap">User</span>
         </a>
       </li>
+      <li>
+        <a href="Posted Report.php" id="sidereport" class="flex items-center p-4 text-base font-normal rounded-lg ">
+
+        <i class="fa-solid fa-file-alt"></i> <span class="flex-1 ml-3 whitespace-nowrap">Posted Reports</span>
+        </a>
+      </li>
       <!-- <li>
             <a href="pms.php" id="sidepms" class="flex items-center p-4 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
               
@@ -501,11 +569,46 @@ if (isset($_POST['excelReport'])) {
           <!-- <button type="submit" name="pdfReport" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                       Generate PDF
                     </button> -->
+                    <div>
 
-          <button type="submit" name="excelReport" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    <button type="submit" name="excelReport" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
             Generate Excel
           </button>
+          <button type="button" data-modal-target="popup-modal-approve" data-modal-toggle="popup-modal-approve" name="postReport" class="mt-2 w-full text-white bg-gradient-to-r from-pink-500 to-orange-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            Post Report
+          </button>
+                    </div>
 
+
+                    <div id="popup-modal-approve" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] md:h-full">
+                        <div class="relative w-full h-full max-w-md md:h-auto">
+                            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                <button type="button" data-modal-toggle="popup-modal-approve" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white">
+                                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                    </svg>
+                                    <span class="sr-only">Close modal</span>
+                                </button>
+                                <div class="p-6 text-center mt-4 ">
+                                    <svg aria-hidden="true" class="mx-auto mb-4 text-gray-400 w-14 h-14 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                    <h3 class="mb-5 mt-4 text-lg font-normal text-gray-500 dark:text-gray-400">Please enter administrator's password to post.</h3>
+
+                                    <div>
+            <label for="adminpassword" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+            <input type="password"  name="adminpassword" id="adminpassword" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" >
+          </div>
+
+
+                                    <button type="submit" name="postReport" class="mt-4 text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
+                                        Post
+                                    </button>
+                                    <button data-modal-toggle="popup-modal-approve" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">No, cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
         </form>
       </div>
