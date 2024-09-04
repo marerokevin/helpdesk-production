@@ -103,11 +103,44 @@ select[name="toRateTable_length"] {
     width: 73px;
 }
 
+.RAIBAQ {
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    background-image: linear-gradient(to bottom right, #1e3a8a, #14b8a6);
+}
+
+
 .rzHaWQ {
     border-bottom-left-radius: 4px;
     left: -8px;
 }
+.CCfw7w {
+    color: inherit;
+}
+._5Ob_nQ {
+    text-align: start;
+}
+.fFOiLQ b, .fFOiLQ strong, .fT3APQ, .rNuqRA b, .rNuqRA strong, .tYI0Vw {
+    font-weight: 600;
+}
 
+
+.GHIRjw {
+    display: block;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+
+
+.fFOiLQ, .tYI0Vw {
+    font-size: calc(var(--wQwVGw, .1rem)* 11);
+    line-height: calc(var(--wQwVGw, .1rem)* 22);
+}
 .rzHaWQ {
     background-color: white;
     bottom: -2px;
