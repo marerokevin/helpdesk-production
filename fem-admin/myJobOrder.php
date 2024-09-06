@@ -2838,7 +2838,10 @@ if (isset($_POST['cancelJO'])) {
         $("#sidehistory").removeClass("bg-gray-200");
         $("#sideMyRequest").removeClass("bg-gray-200");
         $("#sidepms").removeClass("bg-gray-200");
-        $("#sideMyJo").addClass("text-white bg-gradient-to-r from-blue-900 to-teal-500");
+        $("#sideMyJo").addClass("text-white bg-gradient-to-r  rounded-lg  from-blue-900 to-teal-500");
+        $("#sideMyJoText").removeClass("RAIBAQ");
+        $("#iconofthejo").removeClass("text-[#1E429F]");
+
     </script>
 
 </body>
