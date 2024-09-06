@@ -1108,6 +1108,7 @@ if (isset($_POST['updateJO'])) {
                                 <th data-priority="8">Level</th>
 
                                 <th data-priority="9">Deadline</th>
+                                <th data-priority="10">Assistant/s</th>
 
 
                                 <!-- <th>Days Late</th> -->
@@ -1452,6 +1453,9 @@ if (isset($_POST['updateJO'])) {
 
 
 
+              <td class="text-sm text-gray-900 font-light px-6 py-4 ">
+                                        <?php echo $row['assistanNames']; ?>
+                                    </td>
 
 
 
