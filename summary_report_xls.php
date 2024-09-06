@@ -69,11 +69,11 @@ $print = "SELECT req.id,  req.date_filled, req.status2, req.requestor,  req.depa
     OR (req.status2 = 'inprogress'  AND req.admin_approved_date <='$year-$monthNumber-$lastDateOfMonth' ) 
     OR ((req.status2 = 'done' OR req.status2 = 'rated') AND req.completed_date >='$lastMonthYear-$previousMonthNumber-28' AND req.admin_approved_date <='$year-$monthNumber-$lastDateOfMonth') )
     AND req.request_to = 'mis' ORDER BY req.admin_approved_date ASC";
-//     echo "SELECT req.id,  req.date_filled, req.status2, req.requestor,  req.department,  req.request_type,  req.ticket_category, req.request_category,  req.assignedPersonnelName, req.ict_approval_date, req.first_responded_date, req.completed_date, req.requestor_approval_date, req.ticket_close_date, req.action, req.action1,  req.recommendation, req.onthespot_ticket, req.request_details, req.rateDate, cat.level, cat.hours, cat.days, cat.req_type FROM `request` req LEFT JOIN `categories` cat ON cat.c_name = req.request_category 
-//     WHERE ((req.admin_approved_date  BETWEEN '$lastMonthYear-$previousMonthNumber-28' AND '$year-$monthNumber-$lastDateOfMonth' AND req.status2 != 'cancelled') 
-//     OR (req.status2 = 'inprogress'  AND req.admin_approved_date <='$year-$monthNumber-$lastDateOfMonth' ) 
-//     OR ((req.status2 = 'done' OR req.status2 = 'rated') AND req.completed_date >='$lastMonthYear-$previousMonthNumber-28' AND req.admin_approved_date <='$year-$monthNumber-$lastDateOfMonth') )
-//     AND req.request_to = 'mis' ORDER BY req.admin_approved_date ASC";
+    // echo "SELECT req.id,  req.date_filled, req.status2, req.requestor,  req.department,  req.request_type,  req.ticket_category, req.request_category,  req.assignedPersonnelName, req.ict_approval_date, req.first_responded_date, req.completed_date, req.requestor_approval_date, req.ticket_close_date, req.action, req.action1,  req.recommendation, req.onthespot_ticket, req.request_details, req.rateDate, cat.level, cat.hours, cat.days, cat.req_type FROM `request` req LEFT JOIN `categories` cat ON cat.c_name = req.request_category 
+    // WHERE ((req.admin_approved_date  BETWEEN '$lastMonthYear-$previousMonthNumber-28' AND '$year-$monthNumber-$lastDateOfMonth' AND req.status2 != 'cancelled') 
+    // OR (req.status2 = 'inprogress'  AND req.admin_approved_date <='$year-$monthNumber-$lastDateOfMonth' ) 
+    // OR ((req.status2 = 'done' OR req.status2 = 'rated') AND req.completed_date >='$lastMonthYear-$previousMonthNumber-28' AND req.admin_approved_date <='$year-$monthNumber-$lastDateOfMonth') )
+    // AND req.request_to = 'mis' ORDER BY req.admin_approved_date ASC";
 } else {
     $sql = mysqli_query($con, "SELECT req.id,  req.date_filled, req.status2, req.requestor,  req.department,  req.request_type,  req.ticket_category, req.request_category, req.assignedPersonnelName, req.ict_approval_date, req.first_responded_date, req.completed_date,req.requestor_approval_date, req.ticket_close_date, req.action, req.action1,  req.recommendation, req.onthespot_ticket, req.request_details,  req.rateDate, cat.level, cat.hours, cat.days, cat.req_type FROM `request` req LEFT JOIN `categories` cat ON cat.c_name = req.request_category WHERE ((req.admin_approved_date  BETWEEN '$lastMonthYear-$previousMonthNumber-28' AND '$year-$monthNumber-$lastDateOfMonth' AND req.status2 != 'cancelled') 
     OR (req.status2 = 'inprogress'  AND req.admin_approved_date <='$year-$monthNumber-$lastDateOfMonth' ) 
@@ -81,8 +81,10 @@ $print = "SELECT req.id,  req.date_filled, req.status2, req.requestor,  req.depa
 // echo "SELECT req.id,  req.date_filled, req.status2, req.requestor,  req.department,  req.request_type,  req.ticket_category, req.request_category, req.assignedPersonnelName, req.ict_approval_date, req.first_responded_date, req.completed_date,req.requestor_approval_date, req.ticket_close_date, req.action, req.action1,  req.recommendation, req.onthespot_ticket, req.request_details,  req.rateDate, cat.level, cat.hours, cat.days, cat.req_type FROM `request` req LEFT JOIN `categories` cat ON cat.c_name = req.request_category WHERE ((req.admin_approved_date  BETWEEN '$lastMonthYear-$previousMonthNumber-28' AND '$year-$monthNumber-$lastDateOfMonth' AND req.status2 != 'cancelled') 
 //     OR (req.status2 = 'inprogress'  AND req.admin_approved_date <='$year-$monthNumber-$lastDateOfMonth' ) 
 //     OR ((req.status2 = 'done' OR req.status2 = 'rated') AND req.completed_date >='$lastMonthYear-$previousMonthNumber-28' AND req.admin_approved_date <='$year-$monthNumber-$lastDateOfMonth') ) AND req.request_to = 'mis'  AND cat.req_type = '$reqtype' ORDER BY req.admin_approved_date ASC";
+
 }
 
+$sqlICT = mysqli_query($con, "SELECT * FROM `user` WHERE `department` = 'ICT' and `admin` = false");
 
 
 ?>
@@ -135,14 +137,35 @@ $print = "SELECT req.id,  req.date_filled, req.status2, req.requestor,  req.depa
                     <th>Hours</th>
                     <th>Days</th>
                 </tr>
-                <?php
-
-                ?>
 
             </thead>
             <tbody>
                 <?php
+                    $totalofOngoing = 0;
+                    $totalofFinished = 0;
+                    $totalofLate = 0;
+                    $totalofOnTheSpot = 0;
 
+
+
+                    $totalofOngoingMembers = 0;
+                    $totalofFinishedMembers = 0;
+                    $totalofLateMembers = 0;
+                    $totalofOnTheSpotMembers = 0;
+                    
+
+
+
+                    $arrayOfMembersStatusLate=[];
+                    $arrayOfMembersNoOfTask=[];
+                    $arrayOfMembersStatusOnGoing=[];
+                    $arrayOfMembersStatusOnTime=[];
+                    $arrayOfMembersOnTheSpot=[];
+
+
+
+
+                    $totalNumberOfTask = mysqli_num_rows($sql);
                 while ($row = mysqli_fetch_array($sql)) {
                     $action_taken = $row['action1'];
                     $final_action = $row['action'];
@@ -262,6 +285,7 @@ $print = "SELECT req.id,  req.date_filled, req.status2, req.requestor,  req.depa
                     } elseif (($response_rate <= $required_response_time) && ($time_responded == "" || $time_responded == null)) {
                         $response_rate = "";
                         $response_remarks = "On Going";
+                       
                         $class = "style='color:black;'";
                     } elseif (($response_rate > $required_response_time) && ($time_responded == "" || $time_responded == null)) {
                         $response_rate = "";
@@ -305,20 +329,100 @@ $print = "SELECT req.id,  req.date_filled, req.status2, req.requestor,  req.depa
                     if ($onthespot_ticket == 1) {
                         $accomplishment_remarks = "On the spot";
                         $class1 = "style='color:green;'";
+                        $totalofOnTheSpot++;
+
+                        if (!isset($arrayOfMembersOnTheSpot[$in_charge])) {
+                            // If the key does not exist, initialize it with 0
+                            $arrayOfMembersOnTheSpot[$in_charge] = 0;
+                        }
+                        $arrayOfMembersOnTheSpot[$in_charge]  += 1;
+
+                        if (!isset($arrayOfMembersNoOfTask[$in_charge])) {
+                            // If the key does not exist, initialize it with 0
+                            $arrayOfMembersNoOfTask[$in_charge] = 0;
+                        }
+                        $arrayOfMembersNoOfTask[$in_charge]  += 1;
+
+
                     } elseif (($accomplishment_rate <= $required_completion_days) && ($date_finished != "" || $date_finished != null)) {
                         $accomplishment_remarks = "On Time";
+                        $totalofFinished++;
                         $class1 = "style='color:green;'";
+
+                        if (!isset($arrayOfMembersStatusOnTime[$in_charge])) {
+                            // If the key does not exist, initialize it with 0
+                            $arrayOfMembersStatusOnTime[$in_charge] = 0;
+                        }
+                        $arrayOfMembersStatusOnTime[$in_charge]  += 1;
+
+                        if (!isset($arrayOfMembersNoOfTask[$in_charge])) {
+                            // If the key does not exist, initialize it with 0
+                            $arrayOfMembersNoOfTask[$in_charge] = 0;
+                        }
+                        $arrayOfMembersNoOfTask[$in_charge]  += 1;
+
+
+
                     } elseif (($accomplishment_rate > $required_completion_days) && ($date_finished != "" || $date_finished != null)) {
                         $accomplishment_remarks = "Late";
+                        $totalofLate++;
                         $class1 = "style='color:red;'";
+
+                        if (!isset($arrayOfMembersStatusLate[$in_charge])) {
+                            // If the key does not exist, initialize it with 0
+                            $arrayOfMembersStatusLate[$in_charge] = 0;
+                        }
+                        $arrayOfMembersStatusLate[$in_charge]  += 1;
+
+
+                        if (!isset($arrayOfMembersNoOfTask[$in_charge])) {
+                            // If the key does not exist, initialize it with 0
+                            $arrayOfMembersNoOfTask[$in_charge] = 0;
+                        }
+                        $arrayOfMembersNoOfTask[$in_charge]  += 1;
+
+
+                        // echo $in_charge;
                     } elseif (($accomplishment_rate <= $required_completion_days) && ($date_finished == "" || $date_finished == null)) {
                         $accomplishment_rate = "";
                         $accomplishment_remarks = "On Going";
                         $class1 = "style='color:black;'";
+                        $totalofOngoing++;
+
+                        if (!isset($arrayOfMembersStatusOnGoing[$in_charge])) {
+                            // If the key does not exist, initialize it with 0
+                            $arrayOfMembersStatusOnGoing[$in_charge] = 0;
+                        }
+                        $arrayOfMembersStatusOnGoing[$in_charge]  += 1;
+
+
+        if (!isset($arrayOfMembersNoOfTask[$in_charge])) {
+                            // If the key does not exist, initialize it with 0
+                            $arrayOfMembersNoOfTask[$in_charge] = 0;
+                        }
+                        $arrayOfMembersNoOfTask[$in_charge]  += 1;
+
+
                     } elseif (($accomplishment_rate > $required_completion_days) && ($date_finished == "" || $date_finished == null)) {
                         $accomplishment_rate = "";
                         $accomplishment_remarks = "Late";
+                        $totalofLate++;
                         $class1 = "style='color:red;'";
+                        if (!isset($arrayOfMembersStatusLate[$in_charge])) {
+                            // If the key does not exist, initialize it with 0
+                            $arrayOfMembersStatusLate[$in_charge] = 0;
+                        }
+                        
+                        $arrayOfMembersStatusLate[$in_charge]  += 1;
+
+                        if (!isset($arrayOfMembersNoOfTask[$in_charge])) {
+                            // If the key does not exist, initialize it with 0
+                            $arrayOfMembersNoOfTask[$in_charge] = 0;
+                        }
+                        $arrayOfMembersNoOfTask[$in_charge]  += 1;
+
+
+                        // echo $in_charge;
                     }
 
                     if (($time_responded != "" || $time_responded != null) && ($date_finished == "" || $date_finished == null)) {
@@ -326,6 +430,9 @@ $print = "SELECT req.id,  req.date_filled, req.status2, req.requestor,  req.depa
                     } else {
                         $action = $final_action;
                     }
+
+
+             
 
                     echo "<tr>    
                                     <td>$request_no</td>
@@ -353,6 +460,190 @@ $print = "SELECT req.id,  req.date_filled, req.status2, req.requestor,  req.depa
                 ?>
             </tbody>
         </table>
+<div>
+
+<table>
+<thead>
+                <tr>
+   
+                    
+
+
+
+
+
+
+                </tr>
+
+            </thead>
+</table>
+<table style="margin-top: 40px; width: 50%"  border="1" align="left">
+    <thead>
+                <tr>
+   
+                    <th>Members</th>
+                    <th>Number of Task</th>
+                    <th>No of Ongoing</th>
+                    <th>No of Finished</th>
+                    <th>No of On The Spot</th>
+                    <th>No. of Late</th>
+                    
+
+
+
+
+
+
+                </tr>
+
+            </thead>
+            <tbody>
+                <?php
+                   
+      
+                while ($row = mysqli_fetch_array($sqlICT)) {
+                   $member= $row['name'];
+        ?>
+        <tr>
+           <td><?php echo $member;?> </td>
+           <td><?php 
+            $value1 = 0;
+               foreach ($arrayOfMembersNoOfTask as $key => $value) {
+                // echo $key . ' => ' . $value . PHP_EOL;
+                $numberOfTask = $value;
+                $name = $key;
+                if($member == $name){
+                    $value1 = $value;
+                }
+            }
+            echo $value1;
+       ;?> </td>
+
+<td><?php
+$value1 = 0;
+               foreach ($arrayOfMembersStatusOnGoing as $key => $value) {
+                // echo $key . ' => ' . $value . PHP_EOL;
+                $numberOfTask = $value;
+                $name = $key;
+                if($member == $name){
+                    $value1 = $value;
+                }
+            }
+            echo $value1;
+       ;?> </td>
+
+
+
+
+<td><?php
+$value1 = 0;
+               foreach ($arrayOfMembersStatusOnTime as $key => $value) {
+                // echo $key . ' => ' . $value . PHP_EOL;
+                $numberOfTask = $value;
+                $name = $key;
+                if($member == $name){
+                    $value1 = $value;
+                }
+            }
+            echo $value1;
+       ;?> </td>
+
+       
+<td><?php
+$value1 = 0;
+               foreach ($arrayOfMembersOnTheSpot as $key => $value) {
+                // echo $key . ' => ' . $value . PHP_EOL;
+                $numberOfTask = $value;
+                $name = $key;
+                if($member == $name){
+                    $value1 = $value;
+                }
+            }
+            echo $value1;
+       ;?> </td>
+
+
+
+<td><?php
+$value1 = 0;
+               foreach ($arrayOfMembersStatusLate as $key => $value) {
+                // echo $key . ' => ' . $value . PHP_EOL;
+                $numberOfTask = $value;
+                $name = $key;
+                if($member == $name){
+                    $value1 = $value;
+                }
+            }
+            echo $value1;
+       ;?> </td>
+
+
+
+        </tr>
+         <?php
+                       
+                }
+                ?>
+                </tbody>
+    </table>
+
+    <?php
+    // foreach ($arrayOfMembersStatusLate as $key => $value) {
+    //     echo $key . ' => ' . $value . PHP_EOL;
+    // }
+    // echo "<br>";
+    // foreach ($arrayOfMembersNoOfTask as $key => $value) {
+    //     echo $key . ' => ' . $value . PHP_EOL;
+    // }
+    // echo "<br>";
+    // foreach ($arrayOfMembersStatusOnGoing as $key => $value) {
+    //     echo $key . ' => ' . $value . PHP_EOL;
+    // }
+    // echo "<br>";
+    // foreach ($arrayOfMembersStatusOnTime as $key => $value) {
+    //     echo $key . ' => ' . $value . PHP_EOL;
+    // }
+
+
+
+    ?>
+<table style="margin-top: 40px; width: 30%"  border="1" align="left">
+<tbody>
+    <tr>
+        <th>Total of Ongoing Task</th>
+        <th><?php echo $totalofOngoing; ?></th>
+
+    </tr>
+    <tr>
+        <th>Total of Finished Task</th>
+        <th><?php echo $totalofFinished; ?></th>
+
+    </tr>
+    <tr>
+        <th>Total of On the spot task</th>
+        <th><?php echo $totalofOnTheSpot; ?></th>
+
+    </tr>
+    <tr>
+        <th>Total of Late Task</th>
+        <th><?php echo $totalofLate; ?></th>
+
+    </tr>
+    <tr style="font-weight: bold;">
+        <th>Total Number of Task</th>
+        <th><?php echo $totalNumberOfTask; ?></th>
+
+    </tr>
+</tbody>
+</table>
+<!-- <h3>Total of On Going: <?php echo $totalofOngoing; ?></h3>
+        <h3>Total of On On Time: <?php echo $totalofFinished; ?></h3>
+        <h3>Total of On Late: <?php echo $totalofLate; ?></h3>
+        <h3>Total: <?php echo $totalNumberOfTask; ?></h3>
+
+</div> -->
+
+        
     </div>
 </body>
 
