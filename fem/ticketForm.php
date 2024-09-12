@@ -294,7 +294,116 @@ if (isset($_POST['submitTicket'])) {
                     // Attach PDF to the email
                     $mail->addStringAttachment($pdfContent, 'Helpdesk Report.pdf', 'base64', 'application/pdf');
                     $mail->Subject = $subject;
-                    $mail->Body    = 'Hi ' . $requestor . ',<br> <br>   Your ticket request has been created. Please find the details below: <br><br> Ticket No.: ' . $ticketNumber . '<br> Requestor: ' . $requestor . '<br> Requestor Email: ' . $requestorEmail . '<br> Requestor Department: ' . $requestorDepartment . '<br> Request Details: ' . $detailsOfRequest . '<br> Assigned Personnel: ' . $r_personnelsName . '<br>  Ticket Category: ' . $_SESSION['categories'] . '<br> Ticket Filer: ' . $user_name . '<br><br> You can check the status of your ticket by signing in into our Helpdesk <br> Click this ' . $link . ' to sign in. <br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
+                    $mail->Body    = '
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      color: #333333;
+      line-height: 1.6;
+    }
+    .container {
+      padding: 20px;
+      
+      border: 1px solid #dddddd;
+      border-radius: 5px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .header {
+      background-color:  #00969b;
+      color: white;
+      padding: 10px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .details {
+      width: 100%;
+    }
+    .details th, .details td {
+      padding: 8px;
+      text-align: left;
+      border: 1px solid #dddddd; 
+    }
+    .details th {
+      width: 150px;
+      background-color: #f2f2f2;
+    }
+    .details td {
+      background-color: #ffffff;
+    }
+    .highlight {
+      color: #d9534f;
+      font-weight: bold;
+      font-size: 16px;
+    }
+    .highlight2 {
+      color: #00969b;
+      font-weight: bold;
+      font-size: 16px;
+    }
+    .footer {
+      margin-top: 30px;
+      font-size: 12px;
+      color: #666666;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header"><br><p>Helpdesk Ticket Request Created</p><br></div>
+    <p>Hi ' . $requestor . ',</p>
+    <p>Your request has been filed as a ticket.</p>
+
+    <p class="highlight">Please wait for the FEM Administrator&#39s approval.</p>
+    <p>You can find the details of your request below:</p>
+    <table class="details">
+      <tr>
+        <th>Ticket No.:</th>
+        <td>' . $ticketNumber . '</td>
+      </tr>
+      <tr>
+        <th>Request Details:</th>
+        <td class="highlight2">' . $detailsOfRequest . '</td>
+      </tr>
+      <tr>
+        <th>Requestor:</th>
+        <td>' . $requestor . '</td>
+      </tr>
+      <tr>
+        <th>Requestor Email:</th>
+        <td>' . $requestorEmail . '</td>
+      </tr>
+      <tr>
+        <th>Requestor Department:</th>
+        <td>' . $requestorDepartment . '</td>
+      </tr>
+      <tr>
+        <th>Assigned Personnel:</th>
+        <td>' . $r_personnelsName . '</td>
+      </tr>
+      <tr>
+        <th>Ticket Category:</th>
+        <td>' . $_SESSION['categories'] . '</td>
+      </tr>
+      <tr>
+        <th>Ticket Filer:</th>
+        <td>' . $user_name . '</td>
+      </tr>
+    </table>
+    <p>You can check the status of your ticket by signing in to our Helpdesk:</p>
+    <p><a href="' . $link . '" style="color: #0044cc; text-decoration: none;">Click here to sign in</a></p>
+    <div class="footer">
+      <p>This is a generated email. Please do not reply.</p>
+      <p>Helpdesk Team</p>
+    </div>
+  </div>
+</body>
+</html>';
 
                     $mail->send();
 
