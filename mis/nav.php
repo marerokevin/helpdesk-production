@@ -317,6 +317,7 @@
             <i class="fa-solid fa-file"></i> <span class="flex-1 ml-3 whitespace-nowrap">Documents</span>
           </a>
         </li>
+       
       </ul>
     </div>
   </div>
@@ -420,6 +421,12 @@
           <a href="documents.php" id="sidedocs" class="flex items-center p-4 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
 
             <i class="fa-solid fa-file"></i> <span class="flex-1 ml-3 whitespace-nowrap">Documents</span>
+          </a>
+        </li>
+        <li>
+          <a href="charts.php" id="sidecharts" class="flex items-center p-4 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+
+            <i class="fa-solid fa-chart-line"></i> <span class="flex-1 ml-3 whitespace-nowrap">Charts</span>
           </a>
         </li>
       </ul>

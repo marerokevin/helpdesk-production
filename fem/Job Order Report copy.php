@@ -32,8 +32,8 @@ $quality = $_SESSION['quality'];
 $totalRating = $_SESSION['totalRating'];
 $ratingRemarks = $_SESSION['ratingRemarks'];
 $ratedDate = $_SESSION['ratedDate'];
-$approved_reco = $_SESSION['approved_reco'];
-$icthead_reco_remarks = $_SESSION['icthead_reco_remarks'];
+// $approved_reco = $_SESSION['approved_reco'];
+// $icthead_reco_remarks = $_SESSION['icthead_reco_remarks'];
 $request_type = $_SESSION['requestType'];
 $ticket_category =  $_SESSION['ticket_category'];
 $headsDate =  $_SESSION['headsDate'];
@@ -304,7 +304,7 @@ $status = $_SESSION['status'];
 
     <hr>
     <?php
-    if ($recommendation != "" && ($icthead_reco_remarks != ""  || $icthead_reco_remarks != NULL) && $approved_reco == 1) { ?>
+    if ($recommendation != "" ) { ?>
         <table>
             <tr>
                 <td colspan="2" class="category"><span class="label">RECOMMENDATION</span></td>
@@ -313,13 +313,10 @@ $status = $_SESSION['status'];
                 <td class="first"><span class="label">Assigned Personnel Recommendation:</span></td>
                 <td colspan="4"> <span class="child"><?php echo $recommendation; ?></span></td>
             </tr>
-            <tr>
-                <td class="first"><span class="label">FEM Admin&apos;s Remarks:</span></td>
-                <td colspan="4"> <span class="child"><?php echo $icthead_reco_remarks; ?></span></td>
-            </tr>
+
         </table>
         <hr>
-    <?php   } elseif ($recommendation != "" && ($icthead_reco_remarks == "" || $icthead_reco_remarks == NULL) && $approved_reco == 1) { ?>
+    <?php   } elseif ($recommendation != "") { ?>
         <table>
             <tr>
                 <td colspan="2" class="category"><span class="label">RECOMMENDATION</span></td>
