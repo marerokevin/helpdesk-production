@@ -61,7 +61,7 @@ if (isset($_POST['excelReport'])) {
 ?>
 
 
-<nav class="drop-shadow-md  bg-white px-2 sm:px-4 py-2 dark:bg-gray-900 fixed w-full z-20 top-0  left-0 border-b border-gray-200 dark:border-gray-600">
+<nav class="drop-shadow-md  bg-white px-2 sm:px-4 py-2 dark:bg-gray-800 fixed w-full z-20 top-0  left-0 border-b border-gray-200 dark:border-gray-900">
 
   <div class="flex items-center">
 
@@ -186,7 +186,7 @@ if (isset($_POST['excelReport'])) {
 </nav>
 
 <!-- side bar drawer component -->
-<div id="sidebar" class="mt-2 fixed top-16 left-0 z-40 h-screen p-4 pr-0 overflow-y-auto transition-transform bg-white w-80 dark:bg-gray-800 transform-none" tabindex="-1" aria-labelledby="sidebar-label" aria-modal="true" role="dialog">
+<div id="sidebar" class="hidden lg:block mt-2 fixed top-16 left-0 z-40 h-screen p-4 pr-0 overflow-y-auto transition-transform bg-white w-80 dark:bg-gray-700 transform-none" tabindex="-1" aria-labelledby="sidebar-label" aria-modal="true" role="dialog">
 
   <div class="px-4">
     <div class="overflow-hidden flex bg-white overflow-visible relative max-w-sm mx-auto bg-white shadow-lg ring-1 ring-black/5 rounded-xl flex items-center gap-6 dark:bg-slate-800 dark:highlight-white/5">
