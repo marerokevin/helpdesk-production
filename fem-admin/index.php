@@ -108,8 +108,11 @@ if (isset($_POST['changeSchedJo'])) {
     $joidtransfer =  $_POST['joidtransfer'];
     // $targetDate = $_POST['changeScheddate']; 
     $targetDate = $_POST['expectedfinishdate'];
+    $pexpectedFinishDate = $_POST['pexpectedFinishDate'];
 
-    $sql = "UPDATE `request` SET `expectedFinishDate`='$targetDate' WHERE `id` = '$joidtransfer';";
+    
+
+    $sql = "UPDATE `request` SET `expectedFinishDate`='$targetDate',`dateBeforeRescheduling`='$pexpectedFinishDate' WHERE `id` = '$joidtransfer';";
     $results = mysqli_query($con, $sql);
     if ($results) {
         echo "<script>alert('Successfuly changed target finish date.' )</script>";
@@ -1276,55 +1279,7 @@ function addWeekdays2($startDate, $daysToAdd, $holidays)
                                     </td>
                                     <td>
                                         <!-- <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Select</a> -->
-                                        <?php if (($row['recommendation'] != "" || $row['recommendation'] != NULL) && $row['approved_reco'] == 0) {
-
-                                            echo "<button id='viewdetails' onclick='modalShow(this)'  data-reqtype='" . $reqtype . "' 
-                        data-reco='1' 
-                        data-recommendation='" . $row['recommendation'] . "' 
-                        data-approved_reco='" . $row['approved_reco'] . "' 
-                        data-icthead_reco_remarks='" . $row['icthead_reco_remarks'] . "' 
-                        data-requestorremarks='" . $row['requestor_remarks'] . "' 
-                        data-quality='" . $row['rating_quality'] . "' 
-                        data-delivery='" . $row['rating_delivery'] . "' 
-                        data-ratedby='" . $row['ratedBy'] . "' 
-                        data-daterate='" . $row['rateDate'] . "' 
-                        data-action1date='" . $row['action1Date'] . "' 
-                        data-action2date='" . $row['action2Date'] . "' 
-                        data-action3date='" . $row['action3Date'] . "' 
-                        data-headremarks='" . $row['head_remarks'] . "' 
-                        data-adminremarks='" . $row['admin_remarks'] . "' 
-                        data-headdate='" . $row['head_approval_date'] . "' 
-                        data-admindate='" . $row['admin_approved_date'] . "' 
-                        data-department='" . $row['department'] . "'  
-                        data-status='" . $row['status2'] . "'   
-                        data-action1='" . $row['action1'] . "'   
-                        data-action2='" . $row['action2'] . "' 
-                        data-action3='" . $row['action3'] . "'   
-                        data-ratings = '" . $row['rating_final'] . "' 
-                        data-actualdatefinished='' 
-                        data-assignedpersonnel='" . $row['assignedPersonnelName'] . "'
-                             data-assistant='".$row['assistantsId'] ."'
-                    data-assistantName='".$row['assistanNames'] ."'
-                        data-requestor='" . $row['requestor'] . "' 
-                        data-personnel='" . $row['assignedPersonnel'] . "' 
-                        data-action='" . $dataAction = str_replace('"', '', $row['action']) . "' 
-                        data-requestoremail='" . $row['email'] . "'    
-                        data-joid='" . $row['id'] . "' 
-                        data-category='" . $row['request_category'] . "' 
-                        data-telephone='" . $row['telephone'] . "'
-                        data-attachment='" . $row['attachment'] . "'  
-                        data-comname='" . $row['computerName'] . "' 
-                        data-start='" . $row['reqstart_date'] . "'
-                        data-end='" . $row['reqfinish_date'] . "'
-                        data-details='" . $row['request_details'] . "' 
-                        data-joidprint='" . $joid . "' 
-                        data-section= '" . $section_ . "' 
-                        data-datefiled='" . $row['date_filled'] . "'
-                        data-expectedfinishdate='" . $row['expectedFinishDate'] . "'>
-
-                        <span class= 'inline-block px-6 py-2.5 bg-gradient-to-r from-purple-400 to-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-800 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out' 
-                        >VIEW RECO</span></button>";
-                                        } else {
+                                        <?php  
                                             echo "<span id='viewdetails' onclick='modalShow(this)' data-reqtype='" . $reqtype . "'
                     data-reco='0' 
                     data-recommendation='" . $row['recommendation'] . "' 
@@ -1371,7 +1326,7 @@ function addWeekdays2($startDate, $daysToAdd, $holidays)
                     data-expectedfinishdate='" . $row['expectedFinishDate'] . "'>
                         
                         <span class='inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out'>VIEW MORE</span></span>";
-                                        }
+                                        
                                         ?>
                                     </td>
 
@@ -1445,6 +1400,8 @@ function addWeekdays2($startDate, $daysToAdd, $holidays)
                     <input type="text" id="pdepartment" name="pdepartment" class="hidden">
                     <input type="text" id="pdateFiled" name="pdateFiled" class="hidden">
                     <input type="text" id="prequestedSchedule" name="prequestedSchedule" class="hidden">
+                    <input type="text" id="pexpectedFinishDate" name="pexpectedFinishDate" class="hidden">
+
                     <input type="text" id="ptype" name="ptype" class="hidden">
                     <input type="text" id="ppcNumber" name="ppcNumber" class="hidden">
                     <input type="text" id="pdetails" name="pdetails" class="hidden">
@@ -1611,6 +1568,7 @@ function addWeekdays2($startDate, $daysToAdd, $holidays)
                                     <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
 
                                     </div>
+                                    
                                     <input id="expectedfinishdate" name="expectedfinishdate" type="date" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                 </div>
 
@@ -1737,9 +1695,9 @@ function addWeekdays2($startDate, $daysToAdd, $holidays)
                     </div>
 
 
-                    <div id="buttonApproveRecoDiv" class="hidden items-center px-4 rounded-b dark:border-gray-600">
+                    <!-- <div id="buttonApproveRecoDiv" class="hidden items-center px-4 rounded-b dark:border-gray-600">
                         <button type="button" data-modal-target="popup-modal-approvereco" data-modal-toggle="popup-modal-approvereco" class="shadow-lg shadow-teal-500/50 dark:shadow-lg dark:shadow-teal-800/80  w-full text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Approve Recommendation</button>
-                    </div>
+                    </div> -->
 
 
                     <div id="popup-modal-cancel" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] md:h-full">
@@ -2033,21 +1991,21 @@ $('#assistants').change(function() {
             $approved_reco = element.getAttribute("data-approved_reco");
             $recommendation = element.getAttribute("data-recommendation");
 
-            if (element.getAttribute("data-reco") == 1) {
-                $("#buttonPrintDiv").addClass("hidden");
-            }
+            // if (element.getAttribute("data-reco") == 1) {
+            //     $("#buttonPrintDiv").addClass("hidden");
+            // }
             // else {
             //     $("#buttonPrintDiv").removeClass("hidden");
             // }
 
-            if ($recommendation != "" && $approved_reco == 0) {
-                // $("#buttonPrintDiv").addClass("hidden");
-                $("#buttonApproveRecoDiv").removeClass("hidden");
-                $("#ictheadRecoRemarksDiv").removeClass("hidden");
-            } else {
-                // $("#buttonPrintDiv").removeClass("hidden");
-                $("#buttonApproveRecoDiv").addClass("hidden");
-            }
+            // if ($recommendation != "" && $approved_reco == 0) {
+            //     // $("#buttonPrintDiv").addClass("hidden");
+            //     $("#buttonApproveRecoDiv").removeClass("hidden");
+            //     $("#ictheadRecoRemarksDiv").removeClass("hidden");
+            // } else {
+            //     // $("#buttonPrintDiv").removeClass("hidden");
+            //     $("#buttonApproveRecoDiv").addClass("hidden");
+            // }
 
             if ($headRemarksVar == "") {
                 $("#headRemarksDiv").addClass("hidden");
@@ -2100,6 +2058,8 @@ $('#assistants').change(function() {
 
             document.getElementById("datefiled").innerHTML = element.getAttribute("data-datefiled");
             document.getElementById("expectedfinishdate").value = element.getAttribute("data-expectedfinishdate");
+          
+
             document.getElementById("sectionmodal").innerHTML = element.getAttribute("data-section");
             document.getElementById("category").innerHTML = element.getAttribute("data-category");
             document.getElementById("computername").value = element.getAttribute("data-comname");
@@ -2109,9 +2069,6 @@ $('#assistants').change(function() {
             document.getElementById("finalRatings").innerHTML = element.getAttribute("data-ratings");
             document.getElementById("finalRatingsdel").innerHTML = element.getAttribute("data-delivery");
             document.getElementById("finalRatingsqual").innerHTML = element.getAttribute("data-quality");
-
-
-
 
 
             document.getElementById("action1").innerHTML = element.getAttribute("data-action1");
@@ -2168,7 +2125,12 @@ $('#assistants').change(function() {
             document.getElementById("pratedDate").value = element.getAttribute("data-daterate");
             document.getElementById("papproved_reco").value = element.getAttribute("data-approved_reco");
             document.getElementById("picthead_reco_remarks").value = element.getAttribute("data-icthead_reco_remarks");
+            console.log(element.getAttribute("data-expectedfinishdate"));
+            // document.getElementById("pexpectedfinishdate").value = "2024-09-09";
+            document.getElementById("pexpectedFinishDate").value = element.getAttribute("data-expectedfinishdate");
 
+            // $("#pexpectedFinishDate").val(element.getAttribute("data-expectedfinishdate"));
+            
             var action1 = element.getAttribute("data-action1");
             var action2 = element.getAttribute("data-action2");
             var action3 = element.getAttribute("data-action3");
@@ -2187,6 +2149,34 @@ $('#assistants').change(function() {
                 $("#recommendationDiv").removeClass("hidden");
 
             }
+            
+            if(element.getAttribute("data-status") == 'admin') {
+                console.log(element.getAttribute("data-status"));
+                // console.log("Admin")
+                if(element.getAttribute("data-requestype") != "Job Order"){
+            document.getElementById("expectedfinishdate").disabled = true;
+                
+            }
+            else{
+            document.getElementById("expectedfinishdate").disabled = false;
+
+            }
+
+            }
+            
+            else if(element.getAttribute("data-status") == "inprogress"){
+                console.log(element.getAttribute("data-status"));
+
+                document.getElementById("expectedfinishdate").disabled = false;
+
+            }
+            else{
+                document.getElementById("expectedfinishdate").disabled = true;
+            }
+        
+           
+
+
             $("#action1div").addClass("hidden");
             $("#action1div").removeClass("hidden");
 
@@ -2636,6 +2626,7 @@ console.log(transformedArrayAssist)
 
             const currentTransform = myElement.style.transform = 'translateX(270px) translateY(2px) rotate(135deg)';
 
+            document.getElementById("expectedfinishdate").disabled = false;
 
 
         }

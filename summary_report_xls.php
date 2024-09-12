@@ -84,7 +84,7 @@ $print = "SELECT req.id,  req.date_filled, req.status2, req.requestor,  req.depa
 
 }
 
-$sqlICT = mysqli_query($con, "SELECT * FROM `user` WHERE `department` = 'ICT' and `admin` = false");
+$sqlICT = mysqli_query($con, "SELECT * FROM `user` WHERE `department` = 'ICT'");
 
 
 ?>
@@ -636,6 +636,9 @@ $value1 = 0;
     </tr>
 </tbody>
 </table>
+<?php
+
+?>
 <!-- <h3>Total of On Going: <?php echo $totalofOngoing; ?></h3>
         <h3>Total of On On Time: <?php echo $totalofFinished; ?></h3>
         <h3>Total of On Late: <?php echo $totalofLate; ?></h3>
