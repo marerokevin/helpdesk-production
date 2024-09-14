@@ -43,7 +43,7 @@ if (isset($_POST['monthlyReport'])) {
 
 ?>
   <script type="text/javascript">
-    window.open('../Monthly Report.php', '_blank');
+    window.open('../Monthly Report FEM.php', '_blank');
   </script>
 <?php
 
