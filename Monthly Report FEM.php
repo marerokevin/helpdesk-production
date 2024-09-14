@@ -54,7 +54,7 @@ $firstdate = date('d', strtotime("first day of $year-$month"));
 $lastDateOfMonth = date('d', strtotime("last day of $year-$month"));
 
 $monthNumber = date('m', strtotime("$month"));
-$sql = "SELECT ROUND (((SELECT COUNT('id') FROM request WHERE request_to = '$section' AND (status2 = 'Done' OR status2 = 'rated' )AND late != true AND actual_finish_date BETWEEN '$year-$monthNumber-01' AND '$year-$monthNumber-$lastDateOfMonth')) / ((SELECT ((SELECT COUNT('id') FROM request WHERE request_to = '$section' AND (status2 = 'Done' OR status2 = 'rated') AND actual_finish_date BETWEEN '$year-$monthNumber-01' AND '$year-$monthNumber-$lastDateOfMonth')) + (SELECT COUNT('id') FROM request WHERE request_to = '$section' AND status2 = 'inprogress' AND actual_finish_date  BETWEEN '$year-$monthNumber-01' AND '$year-$monthNumber-$lastDateOfMonth'  ))) * 100, 2) AS percentage;";
+$sql = "SELECT ROUND (((SELECT COUNT('id') FROM request WHERE request_to = '$section' AND (status2 = 'Done' OR status2 = 'rated' )AND late != true AND actual_finish_date BETWEEN '$year-$monthNumber-01' AND '$year-$monthNumber-$lastDateOfMonth')) / ((SELECT ((SELECT COUNT('id') FROM request WHERE request_to = '$section' AND (status2 = 'Done' OR status2 = 'rated') AND actual_finish_date BETWEEN '$year-$monthNumber-01' AND '$year-$monthNumber-$lastDateOfMonth')) + (SELECT COUNT('id') FROM request WHERE request_to = '$section' AND status2 = 'inprogress' AND admin_approved_date  BETWEEN '$year-$monthNumber-01' AND '$year-$monthNumber-$lastDateOfMonth'  ))) * 100, 2) AS percentage;";
 // $sql="SELECT ROUND (((SELECT COUNT('id') FROM request WHERE request_to = '$section' AND (status2 = 'Done' OR status2 = 'rated') AND admin_approved_date BETWEEN '$year-$monthNumber-$firstdate' AND '$year-$monthNumber-$lastDateOfMonth')) / ((SELECT ((SELECT COUNT('id') FROM request WHERE request_to = '$section' AND (status2 = 'Done' OR status2 = 'rated') AND admin_approved_date BETWEEN '$year-$monthNumber-$firstdate' AND '$year-$monthNumber-$lastDateOfMonth')) + (SELECT COUNT('id') FROM request WHERE request_to = '$section' AND status2 = 'inprogress' AND admin_approved_date BETWEEN '$year-$monthNumber-$firstdate' AND '$year-$monthNumber-$lastDateOfMonth' AND reqfinish_date BETWEEN '$year-$monthNumber-$firstdate' AND '$year-$monthNumber-$lastDateOfMonth'))) * 100, 2) AS percentage;";
 $result = mysqli_query($con, $sql);
 // $sql = "SELECT ROUND (((SELECT COUNT('id') FROM request WHERE request_to = '$section' AND (status2 = 'Done' OR status2 = 'rated') AND admin_approved_date BETWEEN '$year-$monthNumber-$firstdate' AND '$year-$monthNumber-$lastDateOfMonth')) / ((SELECT ((SELECT COUNT('id') FROM request WHERE request_to = '$section' AND (status2 = 'Done' OR status2 = 'rated') AND admin_approved_date BETWEEN '$year-$monthNumber-$firstdate' AND '$year-$monthNumber-$lastDateOfMonth')) + (SELECT COUNT('id') FROM request WHERE request_to = '$section' AND status2 = 'inprogress' AND admin_approved_date BETWEEN '$year-$monthNumber-$firstdate' AND '$year-$monthNumber-$lastDateOfMonth' AND reqfinish_date BETWEEN '$year-$monthNumber-$firstdate' AND '$year-$monthNumber-$lastDateOfMonth'))) * 100, 2) AS percentage;";
@@ -195,6 +195,7 @@ $html .= '<tr>
         <td>Requestor</td>
         <td>Details</td>
         <td>Personnel</td>
+        <td>Assistant/s</td>
         <td>Approved Date</td>
         <td>Due Date</td>
         <td>Date Finish</td>
@@ -233,6 +234,8 @@ while ($row = mysqli_fetch_assoc($result)) {
            <td>' . $row['requestor'] . '</td>
            <td>' . $row['request_details'] . '</td>
            <td>' . $row['assignedPersonnelName'] . '</td>
+           <td>' . $row['assistanNames'] . '</td>
+
            <td>' . $dateApproved . '</td>
            <td>' . $expected . '</td>
            <td>' . $dateFinished . '</td>
@@ -328,9 +331,9 @@ $html .= ' </table>
             ';
 $a = 1;
 
-$sql = "select * from `request` WHERE `request_to` = '$section' and `status2` = 'inprogress'AND actual_finish_date  BETWEEN '$year-$monthNumber-01' AND '$year-$monthNumber-$lastDateOfMonth'  order by id asc  ";
+$sql = "select * from `request` WHERE `request_to` = '$section' and `status2` = 'inprogress' AND admin_approved_date  BETWEEN '$year-$monthNumber-01' AND '$year-$monthNumber-$lastDateOfMonth'  order by id asc  ";
 $result = mysqli_query($con, $sql);
-
+// $html.='<p>'.$sql.' </p>';
 while ($row = mysqli_fetch_assoc($result)) {
 
     $date = new DateTime($row['date_filled']);
