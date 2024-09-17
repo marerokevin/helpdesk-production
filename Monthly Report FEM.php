@@ -205,7 +205,7 @@ $html .= '<tr>
             ';
 $a = 1;
 
-$sql = "select * from `request` WHERE `request_to` = '$section' and (`status2` = 'Done' or `status2` = 'rated') AND late != true AND `actual_finish_date` BETWEEN '$year-$monthNumber-01' AND '$year-$monthNumber-$lastDateOfMonth' order by assignedPersonnelName asc  ";
+$sql = "select * from `request` WHERE `request_to` = '$section' and (`status2` = 'Done' or `status2` = 'rated') AND late != true AND `actual_finish_date` BETWEEN '$year-$monthNumber-01' AND '$year-$monthNumber-$lastDateOfMonth' order by id asc, request_type asc  ";
 $result = mysqli_query($con, $sql);
 
 while ($row = mysqli_fetch_assoc($result)) {
@@ -374,8 +374,8 @@ $html .= '
        <table style="bottom: 75px; position: absolute;">
        <tr>
        <td class="first" style="text-align: center"><span class="label">Prepared by: </span></td>
-       <td class="second"> <span class="child"></span></td>
-       <td class="third" style="text-align: center"><span class="label">Checked by: </span></td>
+       <td class="second" style="text-align: center"> <span class="label">Checked by: </span></td>
+       <td class="third" style="text-align: center"><span class="label">Approved by: </span></td>
        
        </tr>
        <tr style="margin-bottom: 50px">
@@ -393,8 +393,8 @@ $html .= '
        
        <tr>
        <td class="first" style="text-align: center"><span class="label">' . $_SESSION['name'] . '</span></td>
-       <td class="second"> <span class="child"></span></td>
-       <td class="third" style="text-align: center"><span class="label">' . $headname . '</span></td>
+       <td class="second" style="text-align: center"> <span class="label">' . $headname . '</span></td>
+       <td class="third" style="text-align: center"><span class="label">Gemma Calalo</span></td>
        
        
        </tr>

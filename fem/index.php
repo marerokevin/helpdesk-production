@@ -516,6 +516,15 @@ if (isset($_POST['updateJO'])) {
     $results = mysqli_query($con, $sql);
 }
 
+if(isset($_POST['updateSeen'])){
+    
+    $datetime = date('Y-m-d H:i:s', time());
+    $sql = "UPDATE `request` SET `hourAndTimeSeen` = '$datetime', `seen` = 1 WHERE `seen` = 0 AND `assignedPersonnel` = '$femusername'";
+    $results = mysqli_query($con, $sql);
+
+}
+
+
 // $uploadDir = '../src/Photo/';
 // $uploadFile = $uploadDir . $username . '.png';
 
@@ -674,6 +683,113 @@ if (isset($_POST['updateJO'])) {
 
 
     <div id="mainContent" class=" ml-72 flex mt-10 sm:mt-16  left-10 right-5  flex-col  px-0 sm:px-8  pt-6 pb-14 z-50 ">
+
+                <!-- Main modal -->
+                <div id="Notification" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative p-4 w-full max-w-2xl max-h-full">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+
+        <form action="" method="POST" >
+            <!-- Modal header -->
+            <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                    You have new Ticket / JO
+                </h3>
+                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+            </div>
+            <!-- Modal body -->
+            <div class="p-4 md:p-5 space-y-4">
+                
+
+<div class="relative overflow-x-auto">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+            <tr>
+                                <th >Request Number</th>
+                                <th >Requestor</th>
+                                <th >Request</th>
+     
+                            </tr>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+                            $sqlUnseen = "SELECT  * FROM `request` WHERE `seen` = 0 AND `assignedPersonnel` = '$femusername'";
+                            $resultUnseen = mysqli_query($con, $sqlUnseen);
+
+                            while ($row = mysqli_fetch_assoc($resultUnseen)) {
+
+                                if ($row['request_type'] == "Technical Support") {
+                                    $reqtype = "Ticket Request";
+                                } else {
+                                    $reqtype = "Job Order";
+                                }
+
+                                $date = new DateTime($row['date_filled']);
+                                $date = $date->format('ym');
+                                if ($row['ticket_category'] != NULL) {
+                                    $joid = 'TS-' . $date . '-' . $row['id'];
+                                } else {
+                                    $joid =  'JO-' . $date . '-' . $row['id'];
+                                }
+
+                                ?>
+                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                    <td class=""><?php echo $joid; ?></td>
+                                    <th scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+                    <!-- <img class="w-10 h-10 rounded-full" src="../src/Photo/<?php echo $row['requestorUsername']; ?>.png" > -->
+                    <?php
+
+$first_two_letters = substr($row['requestorUsername'], 0, 2);
+if ($first_two_letters != "GP") {
+?> <div class="w-10 h-10 rounded-full  ">
+    <div class="rounded-full h-full w-full" style="background-color: #00969b; background-size: cover; background-image: url('../src/Photo/default.png')"></div>
+
+  </div>
+<?php
+} else {
+?>
+  <div class="w-10 h-10 rounded-full  " style="background-color: #00969b;padding-top: 5px;
+padding-right: 10px;">
+    <div class="rounded-full h-full w-full mr-5" style="background-color: #00969b;width: 125%; background-size: cover; background-image: url('../src/Photo/<?php echo $row['requestorUsername']; ?>.png')"></div>
+
+  </div>
+<?php
+}
+?>
+                    <div class="ps-3">
+                        <div class="text-base font-semibold"><?php echo $row['requestor']; ?></div>
+                        <div class="font-normal text-gray-500"><?php echo $row['email']; ?></div>
+                    </div>  
+                </th>
+                                    <td><?php echo $row['request_details']; ?></td>
+                               
+
+                                </tr>
+                                <?php
+                            }
+                            ?>
+
+        </tbody>
+    </table>
+</div>
+
+            </div>
+            <!-- Modal footer -->
+            <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+                <button type="submit" name="updateSeen" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">OK</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
         <div class="justify-center animated-gradient text-center flex items-start h-auto bg-gradient-to-r from-blue-900 to-teal-500 rounded-xl ">
             <div class="text-center py-2 m-auto lg:text-center w-full">
 
@@ -1103,6 +1219,7 @@ if (isset($_POST['updateJO'])) {
                                 <th data-priority="1">Details</th>
                                 <th data-priority="2">Requestor</th>
                                 <th data-priority="5">Date Approved</th>
+                                <th data-priority="5">Time Seen</th>
                                 <th data-priority="6">Time Remaining</th>
                                 <th data-priority="7">Category</th>
                                 <th data-priority="8">Level</th>
@@ -1301,7 +1418,22 @@ if (isset($_POST['updateJO'])) {
                                         ?>
 
                                     </td>
+                                    <td <?php if ($count >= $days) {
+                                            echo "style='color: white'";
+                                        } ?> class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        <?php
+                                        if ($row['hourAndTimeSeen'] == NULL) {
+                                            $date = new DateTime($row['admin_approved_date']);
+                                            $date = $date->format('F d, Y');
+                                            echo $date;
+                                        } else {
+                                            $date = new DateTime($row['hourAndTimeSeen']);
+                                            $date = $date->format('F d, Y h:i');
+                                            echo $date;
+                                        }
+                                        ?>
 
+                                    </td>
                                     <td <?php
                                         // TIME REMAINIIIIIIIIIIINNNNNNNNNNGGGGGGGGGGGG
                                         // echo "asdasd", $row['ict_approval_date'];
@@ -1422,7 +1554,7 @@ if (isset($_POST['updateJO'])) {
                                         } ?> class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                         <?php
                                         if ($row['hours'] != NULL) {
-                                            echo $row['level'], "(", $row['hours'], " hours)";
+                                            echo $row['level'], "(", $row['hours'], " hour/s)";
                                         }
                                         ?>
                                     </td>
@@ -1943,6 +2075,7 @@ if (isset($_POST['updateJO'])) {
                     </table>
 
                 </section>
+                
             </div>
         </div>
 
@@ -2283,10 +2416,27 @@ if (isset($_POST['updateJO'])) {
                     </div>
                 </form>
 
+
+
+
+
+
             </div>
         </div>
 
     </div>
+
+
+
+
+    
+
+<!-- Modal toggle -->
+
+
+
+
+
 
     <script src="../node_modules/flowbite/dist/flowbite.js"></script>
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
@@ -2298,6 +2448,46 @@ if (isset($_POST['updateJO'])) {
     <script type="text/javascript" src="index.js"></script>
 
     <script>
+
+
+const $targetNotifModal = document.getElementById('Notification');
+
+// options with default values
+const notificationModal = {
+    placement: 'center-center',
+    backdrop: 'static',
+    backdropClasses: 'bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40',
+    closable: true,
+    onHide: () => {
+        console.log('modal is hidden');
+    },
+    onShow: () => {
+        console.log('modal is shown');
+
+        //   console.log(section);
+    },
+    onToggle: () => {
+        console.log('modal has been toggled');
+
+    }
+};
+const modalNotification = new Modal($targetNotifModal, notificationModal);
+<?php
+ $sqlSeen = "SELECT  * FROM `request` WHERE `seen` = 0 AND `assignedPersonnel` = '$femusername'";
+ $resultSeen = mysqli_query($con, $sqlSeen);
+ 
+ $numberOfUnSeen = mysqli_num_rows($resultSeen);
+
+if($numberOfUnSeen >=1){
+    ?>
+modalNotification.toggle();
+
+    <?php
+
+}
+?>
+
+
         var phpVariable = "<?php echo $_SESSION['username']; ?>";
         console.log(phpVariable);
         const $targetUpdateEmail = document.getElementById('updateEmail');
