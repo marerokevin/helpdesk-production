@@ -7,6 +7,184 @@ $month = $_GET['month'];
 $year = $_GET['year'];
 $reqtype = $_GET['request_type'];
 
+
+$ictApprovalDate1 = new DateTime('2024-08-02 10:40:55');
+$dateResponded2 = new DateTime('2024-08-05 12:19:19');
+$ictApprovalDate1->setTime($ictApprovalDate1->format('H'), 0, 0);
+$dateResponded2->setTime($dateResponded2->format('H'), 0, 0);
+ 
+$ictApprovalDate3 =new DateTime('2024-08-02 10:40:55');
+$dateResponded4 = new DateTime('2024-08-05 12:19:19');
+
+$ictApprovalDate5 =new DateTime('2024-08-02 10:40:55');
+$dateResponded6 = new DateTime('2024-08-05 12:19:19');
+
+
+ $ictApprovalDate5->setTime(0, 0, 0);
+ $dateResponded6->setTime(0, 0, 0);
+
+
+ $interval6 = $ictApprovalDate5->diff($dateResponded6);
+ // $interval2 = $setZero1 ->diff($setZero2);
+
+ $daysDifference = $interval6->days;
+
+// echo "The difference is $daysDifference days. <br>";
+
+// if($daysDifference>=1){
+//     $ictApprovalDate1->setTime(0, 0, 0);
+//  $dateResponded2->setTime(0, 0, 0);
+// }
+
+
+
+    // Define holidays array
+    $sqlHoli = "SELECT holidaysDate FROM holidays";
+    $resultHoli = mysqli_query($con, $sqlHoli);
+$holidays = array();
+while ($row1 = mysqli_fetch_assoc($resultHoli)) {
+    $holidays[] = $row1['holidaysDate'];
+}
+$ictApprovalDate3->setTime($ictApprovalDate3->format('H'), $ictApprovalDate3->format('i'), 0);
+$dateResponded4->setTime($dateResponded4->format('H'), $dateResponded4->format('i'), 0);
+
+    $interval = $ictApprovalDate3->diff($dateResponded4);
+    // $interval2 = $setZero1 ->diff($setZero2);
+
+
+    $hours = $interval->days * 8 + $interval->h;
+    // echo "$interval->days * 8 + $interval->h, <br>";
+    // echo $hours , "<br>";
+    $start = clone $ictApprovalDate1;
+    $end = clone $dateResponded2;
+    $interval_days = new DateInterval('P1D');
+    // echo "<br>" , $end->format('Y-m-d');
+    $period = new DatePeriod($start, $interval_days, $end);
+    // echo $hours, " ";
+    foreach ($period as $day) {
+        // echo "<br>" , $day->format('Y-m-d');
+        if ($day->format('N') >= 6 || in_array($day->format('Y-m-d'), $holidays)) {
+            // echo "subtract";
+            $hours -= 8; // Subtract 24 hours for each weekend day or holiday
+            // echo $hours, " ";
+        }
+    }
+    //    echo "<br>" , $hours , "<br>";
+    $hours1 = $end->format('H');
+    // echo "$interval->days * 8 + $interval->h , $hours;";
+    // echo $interval->days ;
+
+
+    
+// // Set the time for 11 AM and 12 PM for each date
+// $interval1 = new DateInterval('P1D'); // 1 day interval1
+// $period1 = new DatePeriod($ictApprovalDate3, $interval, $dateResponded4);
+
+// // Check if there is a 11 AM to 12 PM window in the date range
+// $found = false;
+
+// foreach ($period1 as $date) {
+//     $elevenAM = clone $date;
+//     $elevenAM->setTime(11, 0, 0);
+    
+//     $twelvePM = clone $date;
+//     $twelvePM->setTime(11, 59, 0);
+    
+//     // Check if this window is within the range
+//     if (($elevenAM >= $ictApprovalDate3 && $elevenAM <= $dateResponded4) || 
+//         ($twelvePM >= $ictApprovalDate3 && $twelvePM <= $dateResponded4)) {
+//         $found = true;
+//         break;
+//     }
+// }
+
+// if ($found) {
+//     $hours-=1;
+    // echo "asldhasjdh";
+
+// }
+
+
+
+
+
+//  echo $hours, "<br>";
+
+    $start = clone $ictApprovalDate1;
+    $end = clone $dateResponded2;
+    $interval_days = new DateInterval('P1D');
+    $period = new DatePeriod($start, $interval_days, $end);
+    // echo $hours, " ";
+    // foreach ($period as $day) {
+    //     if ($day->format('N') >= 6 || in_array($day->format('Y-m-d'), $holidays)) {
+           
+    //         $hours -= 8; // Subtract 24 hours for each weekend day or holiday
+            // echo $hours, " ";
+    //     }
+    // }
+    $hours1 = $end->format('H');
+    $hoursstart = $start->format('H');
+
+//  echo $hours1;
+    if($daysDifference >=1 && $hoursstart >11 && $hours1 <=11 ){
+    
+        // echo "<br> $hours - 15;";
+    $finalHours = $hours - 15;
+    // echo $hours;
+ 
+   
+    }
+    else if($daysDifference >=1 && $hoursstart <=11 && $hours1 <=11 ){
+    
+        $finalHours = $hours;
+ 
+   
+    }
+    else if($daysDifference ==0 && $hoursstart <=11 && $hours1 <=11 ){
+        $finalHours = $hours;
+    }
+    else if($daysDifference >1 && $hours1 ==12 ){
+        // echo "haha: $hours";
+    $finalHours = $hours ;
+ 
+    // echo $hours;
+    }
+    else if($daysDifference ==1 && $hours1 ==12 ){
+        // echo "hahaha: $hours";
+    $finalHours = $hours ;
+ 
+    // echo $hours;
+    }
+    else if($daysDifference ==0 && $hours1 ==12 ){
+        // echo "hahaha: $hours";
+    $finalHours = $hours ;
+ 
+    // echo $hours;
+    }
+
+    else if($hours1 >12 ){
+    $finalHours = $hours;
+    $minutes1 = $ictApprovalDate3->format('i');
+    $minutes1_decimal = $minutes1 / 60;
+ 
+    $minutes2 = $dateResponded4->format('i');
+    $minutes2_decimal = $minutes2/ 60;
+ 
+ 
+    // echo $finalHours;
+ 
+    // echo $minutes1_decimal;
+ 
+    // echo $minutes2_decimal;
+ 
+    // echo "($finalHours -$minutes1_decimal)+$minutes2_decimal , <br>";
+ 
+    $finalHours = ($finalHours -$minutes1_decimal)+$minutes2_decimal;
+    }
+ 
+ 
+    // echo "<br> $finalHours ASD";
+    
 header("Content-Type:   application/vnd.ms-excel; charset=utf-8");
 header("Content-Disposition: attachment; filename=Summary Report for the Month of " . $month . ".xls");  //File name extension was wrong
 header("Expires: 0");
@@ -18,7 +196,7 @@ header("Cache-Control: private", false);
 // readfile($filepath);
 
 // if (copy($filepath, $copyDestination)) {
-//     echo "File copied successfully.";
+    // echo "File copied successfully.";
 // } else {
 //     echo "Failed to copy file.";
 // }
@@ -226,6 +404,29 @@ $sqlICT = mysqli_query($con, "SELECT * FROM `user` WHERE `department` = 'ICT'");
                     $ictApprovalDate3 = new DateTime($row['ict_approval_date']);
                     $dateResponded4 = new DateTime($row['first_responded_date']);
 
+
+                                            
+                        $ictApprovalDate5 =new DateTime($row['ict_approval_date']);
+                        $dateResponded6 = new DateTime($row['first_responded_date']);
+
+
+                        $ictApprovalDate5->setTime(0, 0, 0);
+                        $dateResponded6->setTime(0, 0, 0);
+
+
+                        $interval6 = $ictApprovalDate5->diff($dateResponded6);
+                        // $interval2 = $setZero1 ->diff($setZero2);
+
+                        $daysDifference = $interval6->days;
+
+                        // echo "The difference is $daysDifference days.";
+                        // if($daysDifference>=1){
+                        //     $ictApprovalDate1->setTime(0, 0, 0);
+                        // $dateResponded2->setTime(0, 0, 0);
+                        // }
+
+
+
                     // Define holidays array
                     $sqlHoli = "SELECT holidaysDate FROM holidays";
                     $resultHoli = mysqli_query($con, $sqlHoli);
@@ -233,8 +434,13 @@ $sqlICT = mysqli_query($con, "SELECT * FROM `user` WHERE `department` = 'ICT'");
                     while ($row1 = mysqli_fetch_assoc($resultHoli)) {
                         $holidays[] = $row1['holidaysDate'];
                     }
-                    $interval = $ictApprovalDate1->diff($dateResponded2);
+                    $ictApprovalDate3->setTime($ictApprovalDate3->format('H'), $ictApprovalDate3->format('i'), 0);
+                    $dateResponded4->setTime($dateResponded4->format('H'), $dateResponded4->format('i'), 0);
+
+
+                    $interval = $ictApprovalDate3->diff($dateResponded4);
                     $hours = $interval->days * 8 + $interval->h;
+                   
                     $start = clone $ictApprovalDate1;
                     $end = clone $dateResponded2;
                     $interval_days = new DateInterval('P1D');
@@ -248,9 +454,96 @@ $sqlICT = mysqli_query($con, "SELECT * FROM `user` WHERE `department` = 'ICT'");
                         }
                     }
                     $hours1 = $end->format('H');
-
-
+                    $hoursstart = $start->format('H');
+                    if($daysDifference >=1 && $hoursstart >11 && $hours1 <=11 ){
+    
+                        // echo "<br> $hours - 15;";
+                        
+                    $finalHours = $hours - 15;
+                    // echo $hours;
+                   
+                    }
+                    else if($daysDifference >=1 && $hoursstart <=11 && $hours1 <=11 ){
+    
+                        $finalHours = $hours-15;
+                 
+                   
+                    }
+                    else if($daysDifference ==0 && $hoursstart <=11 && $hours1 <=11 ){
+                        $finalHours = $hours;
+                    }
+                    else if($daysDifference >1 && $hours1 ==12 ){
                     $finalHours = $hours;
+                 
+                   
+                    // echo $hours;
+                    }
+                    else if($daysDifference ==1 && $hours1 ==12 ){
+                        
+                    $finalHours = $hours ;
+                 
+                    // echo $hours;
+                    }
+                    else if($daysDifference ==0 && $hours1 ==12 ){
+                   
+                    $finalHours = $hours ;
+                
+                    // echo $hours;
+                    }
+                    else if($hours1 >12 ){
+                    $finalHours = $hours;
+                    $minutes1 = $ictApprovalDate3->format('i');
+                    $minutes1_decimal = $minutes1 / 60;
+                 
+                    $minutes2 = $dateResponded4->format('i');
+                    $minutes2_decimal = $minutes2/ 60;
+                 
+                 
+                    // echo $finalHours;
+                 
+                    // echo $minutes1_decimal;
+                 
+                    // echo $minutes2_decimal;
+                 
+                    // echo "($finalHours -$minutes1_decimal)+$minutes2_decimal , <br>";
+                 
+                    $finalHours = ($finalHours -$minutes1_decimal)+$minutes2_decimal;
+                    }
+ 
+                    
+                    // echo "$interval->days * 8 + $interval->h, $hours<br>";
+
+                    
+    
+// // Set the time for 11 AM and 12 PM for each date
+// $interval1 = new DateInterval('P1D'); // 1 day interval1
+// $period1 = new DatePeriod($ictApprovalDate1, $interval, $dateResponded2);
+
+// // Check if there is a 11 AM to 12 PM window in the date range
+// $found = false;
+
+// foreach ($period1 as $date) {
+//     $elevenAM = clone $date;
+//     $elevenAM->setTime(11, 0, 0);
+    
+//     $twelvePM = clone $date;
+//     $twelvePM->setTime(11, 59, 0);
+    
+//     // Check if this window is within the range
+//     if (($elevenAM >= $ictApprovalDate1 && $elevenAM <= $dateResponded2) || 
+//         ($twelvePM >= $ictApprovalDate1 && $twelvePM <= $dateResponded2)) {
+//         $found = true;
+//         break;
+//     }
+// }
+
+// if ($found) {
+//     $hours-=1;
+//     // echo "asldhasjdh";
+
+// }
+
+                    // $finalHours = $hours;
                     $minutes1 = $ictApprovalDate3->format('i');
                     $minutes1_decimal = $minutes1 / 60;
 
@@ -270,8 +563,24 @@ $sqlICT = mysqli_query($con, "SELECT * FROM `user` WHERE `department` = 'ICT'");
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
                     $finalHours = ($finalHours - $minutes1_decimal) + $minutes2_decimal;
                     $response_rate = number_format($finalHours, 2, '.', ',');
+                    if ($response_rate <0){
+                        $response_rate = $response_rate * -1;
+                    }
+                    $finalHoursString = "($finalHours - $minutes1_decimal) + $minutes2_decimal";
 
                     if ($onthespot_ticket == 1) {
                         $response_remarks = "On the spot";

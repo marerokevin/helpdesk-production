@@ -21,6 +21,64 @@ if (isset($_COOKIE[$s_name])) {
 
 session_start();
 
+
+$style = '<head>
+                      <style>
+                        body {
+                          font-family: Arial, sans-serif;
+                          color: #333333;
+                          line-height: 1.6;
+                        }
+                        .container {
+                          padding: 20px;
+                          
+                          border: 1px solid #dddddd;
+                          border-radius: 5px;
+                          max-width: 600px;
+                          margin: 0 auto;
+                        }
+                        .header {
+                          background-color:  #00969b;
+                          color: white;
+                          padding: 10px;
+                          text-align: center;
+                          font-size: 18px;
+                          font-weight: bold;
+                        }
+                        .details {
+                          width: 100%;
+                        }
+                        .details th, .details td {
+                          padding: 8px;
+                          text-align: left;
+                          border: 1px solid #dddddd; 
+                        }
+                        .details th {
+                          width: 150px;
+                          background-color: #f2f2f2;
+                        }
+                        .details td {
+                          background-color: #ffffff;
+                        }
+                        .highlight {
+                          color: #d9534f;
+                          font-weight: bold;
+                          font-size: 16px;
+                        }
+                        .highlight2 {
+                          color: #00969b;
+                          font-weight: bold;
+                          font-size: 16px;
+                        }
+                        .footer {
+                          margin-top: 30px;
+                          font-size: 12px;
+                          color: #666666;
+                          text-align: center;
+                        }
+                      </style>
+                    </head>';
+
 function convertToSentenceCase($string)
 {
     $sentences = preg_split('/(?<=[.?!])\s+/', $string, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
@@ -240,62 +298,7 @@ if (isset($_POST['submitTicket'])) {
                     $mail->Body    =  '
                     <!DOCTYPE html>
                     <html>
-                    <head>
-                      <style>
-                        body {
-                          font-family: Arial, sans-serif;
-                          color: #333333;
-                          line-height: 1.6;
-                        }
-                        .container {
-                          padding: 20px;
-                          
-                          border: 1px solid #dddddd;
-                          border-radius: 5px;
-                          max-width: 600px;
-                          margin: 0 auto;
-                        }
-                        .header {
-                          background-color:  #00969b;
-                          color: white;
-                          padding: 10px;
-                          text-align: center;
-                          font-size: 18px;
-                          font-weight: bold;
-                        }
-                        .details {
-                          width: 100%;
-                        }
-                        .details th, .details td {
-                          padding: 8px;
-                          text-align: left;
-                          border: 1px solid #dddddd; 
-                        }
-                        .details th {
-                          width: 150px;
-                          background-color: #f2f2f2;
-                        }
-                        .details td {
-                          background-color: #ffffff;
-                        }
-                        .highlight {
-                          color: #d9534f;
-                          font-weight: bold;
-                          font-size: 16px;
-                        }
-                        .highlight2 {
-                          color: #00969b;
-                          font-weight: bold;
-                          font-size: 16px;
-                        }
-                        .footer {
-                          margin-top: 30px;
-                          font-size: 12px;
-                          color: #666666;
-                          text-align: center;
-                        }
-                      </style>
-                    </head>
+                    '.$style.'
                     <body>
                       <div class="container">
                         <div class="header"><br><p>Helpdesk Ticket Request Created</p><br></div>
@@ -418,62 +421,7 @@ if (isset($_POST['submitTicket'])) {
                     $mail->Body    =  '
                     <!DOCTYPE html>
                     <html>
-                    <head>
-                      <style>
-                        body {
-                          font-family: Arial, sans-serif;
-                          color: #333333;
-                          line-height: 1.6;
-                        }
-                        .container {
-                          padding: 20px;
-                          
-                          border: 1px solid #dddddd;
-                          border-radius: 5px;
-                          max-width: 600px;
-                          margin: 0 auto;
-                        }
-                        .header {
-                          background-color:  #00969b;
-                          color: white;
-                          padding: 10px;
-                          text-align: center;
-                          font-size: 18px;
-                          font-weight: bold;
-                        }
-                        .details {
-                          width: 100%;
-                        }
-                        .details th, .details td {
-                          padding: 8px;
-                          text-align: left;
-                          border: 1px solid #dddddd; 
-                        }
-                        .details th {
-                          width: 150px;
-                          background-color: #f2f2f2;
-                        }
-                        .details td {
-                          background-color: #ffffff;
-                        }
-                        .highlight {
-                          color: #d9534f;
-                          font-weight: bold;
-                          font-size: 16px;
-                        }
-                        .highlight2 {
-                          color: #00969b;
-                          font-weight: bold;
-                          font-size: 16px;
-                        }
-                        .footer {
-                          margin-top: 30px;
-                          font-size: 12px;
-                          color: #666666;
-                          text-align: center;
-                        }
-                      </style>
-                    </head>
+                    '.$style.'
                     <body>
                       <div class="container">
                         <div class="header"><br><p>Helpdesk Ticket Request Created</p><br></div>
