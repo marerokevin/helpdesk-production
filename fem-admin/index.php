@@ -2157,11 +2157,11 @@ $('#assistants').change(function() {
                 console.log(element.getAttribute("data-status"));
                 // console.log("Admin")
                 if(element.getAttribute("data-requestype") != "Job Order"){
-            document.getElementById("expectedfinishdate").disabled = true;
+            document.getElementById("expectedfinishdate").readOnly  = true;
                 
             }
             else{
-            document.getElementById("expectedfinishdate").disabled = false;
+            document.getElementById("expectedfinishdate").readOnly  = false;
 
             }
 
@@ -2170,11 +2170,11 @@ $('#assistants').change(function() {
             else if(element.getAttribute("data-status") == "inprogress"){
                 console.log(element.getAttribute("data-status"));
 
-                document.getElementById("expectedfinishdate").disabled = false;
+                document.getElementById("expectedfinishdate").readOnly  = false;
 
             }
             else{
-                document.getElementById("expectedfinishdate").disabled = true;
+                document.getElementById("expectedfinishdate").readOnly  = true;
             }
         
            
