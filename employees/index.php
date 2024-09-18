@@ -47,7 +47,7 @@ if (isset($_SESSION['connected'])) {
     $level = $_SESSION['level'];
     $leaderof = $_SESSION['leaderof'];
     if ($level == 'mis') {
-        header("location:../mis");
+        header("location:../ict");
     } else if ($level == 'fem') {
         header("location:../fem");
     } else if ($level == 'head') {

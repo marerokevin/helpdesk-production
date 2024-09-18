@@ -91,11 +91,36 @@ if (isset($_POST['excelReport'])) {
 
         $first_two_letters = substr($username, 0, 2);
         if ($first_two_letters != "GP") {
-        ?> <div class="w-10 h-10 rounded-full  ">
-            <div class="rounded-full h-full w-full" style="background-color: #C5957F; background-size: cover; background-image: url('../src/Photo/default.png')"></div>
+          $imageFileName = '../src/Photo/' . $username . '.png';
 
-          </div>
-        <?php
+          if (file_exists($imageFileName)) {
+            $imageUrl = "url('$imageFileName')";
+?> <div class="w-10 h-10 rounded-full  ">
+<div class="rounded-full h-full w-full" style="background-color: #C5957F; background-size: cover; background-image: <?php echo $imageUrl; ?>"></div>
+
+</div>
+<?php
+          }
+          else{
+            ?> <div class="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+            <span class="font-medium text-gray-600 dark:text-gray-300"><?php
+          $name = $_SESSION['name'];
+          $words = explode(' ', $name);
+    
+    // Get the first and last words
+    $first_word = reset($words); // first word
+    $last_word = end($words);    // last word
+    
+    // Get initials
+    $first_initial = substr($first_word, 0, 1);
+    $last_initial = substr($last_word, 0, 1);
+    
+    echo  $first_initial . $last_initial;
+          ?></span>
+        </div>
+            <?php
+          }
+ 
         } else {
         ?>
           <div class="w-10 h-10 rounded-full  " style="background-color: #C5957F;padding-top: 5px;
@@ -195,11 +220,47 @@ if (isset($_POST['excelReport'])) {
 
       $first_two_letters = substr($username, 0, 2);
       if ($first_two_letters != "GP") {
-      ?> <div class=" absolute -left-6 w-24 h-24 rounded-full shadow-lg">
+        
+        $imageFileName = '../src/Photo/' . $username . '.png';
 
-          <div class="rounded-full h-full w-full  mr-10" id="picture" style="background-color: #C5957F; background-size: cover; background-image: url('../src/Photo/default.png')"></div>
-        </div>
+        // Check if the file exists
+        if (file_exists($imageFileName)) {
+          $imageUrl = "url('$imageFileName')";
+          ?>
+    <div class="profile_pic absolute -left-6 w-24 h-24 rounded-full shadow-lg">
+            <div class=" picture-container rounded-full h-full w-full  mr-10" id="picture" style="background-color: #C5957F; background-size: cover; background-image: <?php echo $imageUrl; ?>"></div>
+            <label for="fileInput" style="cursor: pointer;">
+              <i class="picbg fa-solid fa-camera"></i>
+            </label>
+            <input type="file" id="fileInput" style="display: none;" onchange="handleFileUpload(this)">
+          </div>
       <?php
+        } else {
+          // Use default image if the file doesn't exist
+          ?> <div  class="profile_pic absolute -left-6 w-24 h-24 rounded-full shadow-lg  inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+          <span class="picture-container font-medium text-gray-600 dark:text-gray-300 text-5xl"><?php
+          $name = $_SESSION['name'];
+          $words = explode(' ', $name);
+    
+    // Get the first and last words
+    $first_word = reset($words); // first word
+    $last_word = end($words);    // last word
+    
+    // Get initials
+    $first_initial = substr($first_word, 0, 1);
+    $last_initial = substr($last_word, 0, 1);
+    
+    echo  $first_initial . $last_initial;
+          ?></span>
+                  <label for="fileInput" style="cursor: pointer;">
+                  <i class="picbg fa-solid fa-camera"></i>
+                </label>
+                <input type="file" id="fileInput" style="display: none;" onchange="handleFileUpload(this)">
+      </div>
+          <?php
+        }
+        
+    
       } else {
       ?>
         <div class=" absolute -left-6 w-24 h-24 rounded-full shadow-lg" style="padding-top: 10px;
@@ -345,6 +406,41 @@ if (isset($_POST['excelReport'])) {
 </div>
 <script src="../node_modules/jquery/dist/jquery.min.js"></script>
 <script>
+
+var username = "<?php echo $_SESSION['username']; ?>";
+
+function handleFileUpload(input) {
+  // const fileInput = document.getElementById('fileInput');
+  //   const file = fileInput.files[0];
+  const file = input.files[0];
+  if (file) {
+    console.log(file);
+
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('username', username);
+    fetch('uploadprofile.php', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          // Change the background image of the container
+          document.getElementById('picture').style.backgroundImage = ''
+          document.getElementById('picture').style.backgroundImage = `url('../src/Photo/<?php echo $username; ?>.png')`;
+          console.log(data)
+          // location.reload();
+        } else {
+          console.error('File upload failed');
+        }
+      })
+      .catch(error => console.error('Error:', error));
+  }
+}
+
+
+
   function clickButton() {
     var button = document.getElementById("sidebarButton"); // replace "myButton" with the ID of your button
     button.click();
