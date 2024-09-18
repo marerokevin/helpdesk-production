@@ -356,19 +356,41 @@ echo  $first_initial . $last_initial;
           // Check if the file exists
           if (file_exists($imageFileName)) {
             $imageUrl = "url('$imageFileName')";
+            ?>
+      <div class="profile_pic absolute -left-6 w-24 h-24 rounded-full shadow-lg">
+              <div class=" picture-container rounded-full h-full w-full  mr-10" id="picture" style="background-color: #C5957F; background-size: cover; background-image: <?php echo $imageUrl; ?>"></div>
+              <label for="fileInput" style="cursor: pointer;">
+                <i class="picbg fa-solid fa-camera"></i>
+              </label>
+              <input type="file" id="fileInput" style="display: none;" onchange="handleFileUpload(this)">
+            </div>
+        <?php
           } else {
             // Use default image if the file doesn't exist
-            $imageUrl = "url('../src/Photo/default.png')";
+                     // Use default image if the file doesn't exist
+          ?> <div  class="profile_pic absolute -left-6 w-24 h-24 rounded-full shadow-lg  inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+          <span class="picture-container font-medium text-gray-600 dark:text-gray-300 text-5xl"><?php
+          $name = $_SESSION['name'];
+          $words = explode(' ', $name);
+    
+    // Get the first and last words
+    $first_word = reset($words); // first word
+    $last_word = end($words);    // last word
+    
+    // Get initials
+    $first_initial = substr($first_word, 0, 1);
+    $last_initial = substr($last_word, 0, 1);
+    
+    echo  $first_initial . $last_initial;
+          ?></span>
+                  <label for="fileInput" style="cursor: pointer;">
+                  <i class="picbg fa-solid fa-camera"></i>
+                </label>
+                <input type="file" id="fileInput" style="display: none;" onchange="handleFileUpload(this)">
+      </div>
+          <?php
           }
-        ?>
-          <div class="profile_pic absolute -left-6 w-24 h-24 rounded-full shadow-lg">
-            <div class=" picture-container rounded-full h-full w-full  mr-10" id="picture" style="background-color: #C5957F; background-size: cover; background-image: <?php echo $imageUrl; ?>"></div>
-            <label for="fileInput" style="cursor: pointer;">
-              <i class="picbg fa-solid fa-camera"></i>
-            </label>
-            <input type="file" id="fileInput" style="display: none;" onchange="handleFileUpload(this)">
-          </div>
-        <?php
+       
         } else {
         ?>
           <div class="profile_pic absolute -left-6 w-24 h-24 rounded-full shadow-lg" style="
