@@ -2629,7 +2629,7 @@ console.log(transformedArrayAssist)
 
             const currentTransform = myElement.style.transform = 'translateX(270px) translateY(2px) rotate(135deg)';
 
-            document.getElementById("expectedfinishdate").disabled = false;
+            document.getElementById("expectedfinishdate").readOnly = false;
 
 
         }
