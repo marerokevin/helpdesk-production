@@ -101,34 +101,55 @@
           <span class="sr-only">Open user menu</span>
           <!-- <img class="w-8 h-8 rounded-full" src="../src/Photo/<?php echo $username; ?>.png" alt="user photo"> -->
 
-          <?php
-          $username = $_SESSION['username'];
-          $first_two_letters = substr($username, 0, 2);
-          // echo $username;
-          if ($first_two_letters != "GP") {
-            $imageFileName = '../src/Photo/' . $username . '.png';
-            if (file_exists($imageFileName)) {
-              $imageUrl = "url('$imageFileName')";
-            } else {
-              // Use default image if the file doesn't exist
-              $imageUrl = "url('../src/Photo/default.png')";
-            }
-          ?> <div class="w-10 h-10 rounded-full  ">
-              <div class="rounded-full h-full w-full" style="background-color: #C5957F; background-size: cover; background-image: <?php echo $imageUrl; ?>"></div>
+         
+        <?php
 
-            </div>
-          <?php
-          } else {
-          ?>
-            <div class="w-10 h-10 rounded-full  " style="
-      padding-right: 10px;">
-              <div class="rounded-full h-full w-full mr-5" style="background-color: #C5957F;width: 125%; background-size: cover; background-image: url('../src/Photo/<?php echo $username; ?>.png')"></div>
+$first_two_letters = substr($username, 0, 2);
+if ($first_two_letters != "GP") {
+  $imageFileName = '../src/Photo/' . $username . '.png';
 
-            </div>
-          <?php
-          }
+  if (file_exists($imageFileName)) {
+    $imageUrl = "url('$imageFileName')";
+?> <div class="w-10 h-10 rounded-full  ">
+<div class="rounded-full h-full w-full" style="background-color: #C5957F; background-size: cover; background-image: <?php echo $imageUrl; ?>"></div>
 
-          ?>
+</div>
+<?php
+  }
+  else{
+    ?> <div class="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+    <span class="font-medium text-gray-600 dark:text-gray-300"><?php
+  $name = $_SESSION['name'];
+  $words = explode(' ', $name);
+
+// Get the first and last words
+$first_word = reset($words); // first word
+$last_word = end($words);    // last word
+
+// Get initials
+$first_initial = substr($first_word, 0, 1);
+$last_initial = substr($last_word, 0, 1);
+
+echo  $first_initial . $last_initial;
+  ?></span>
+</div>
+    <?php
+  }
+
+} else {
+  $imageFileName = '../src/Photo/' . $username . '.png';
+
+  $imageUrl = "url('$imageFileName')";
+?>
+<div class="w-10 h-10 rounded-full  ">
+<div class="rounded-full h-full w-full" style="background-color: #C5957F; background-size: cover; background-image: <?php echo $imageUrl; ?>"></div>
+
+</div>
+<?php
+}
+
+?>
+
 
 
 

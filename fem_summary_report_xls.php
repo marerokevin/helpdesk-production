@@ -222,11 +222,11 @@ $previousMonthName = date('F', mktime(0, 0, 0, $previousMonthNumber, 1));
 $previousMonthNumber = str_pad($previousMonthNumber, 2, '0', STR_PAD_LEFT);
 $lastDateOfMonth = date('d', strtotime("last day of $year-$month"));
 
-// header("Content-Type:   application/vnd.ms-excel; charset=utf-8");
-// header("Content-Disposition: attachment; filename=Summary Report for the Month of " . $month . ".xls");  //File name extension was wrong
-// header("Expires: 0");
-// header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-// header("Cache-Control: private", false);
+header("Content-Type:   application/vnd.ms-excel; charset=utf-8");
+header("Content-Disposition: attachment; filename=Summary Report for the Month of " . $month . ".xls");  //File name extension was wrong
+header("Expires: 0");
+header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+header("Cache-Control: private", false);
 
 
 $con->next_result();
