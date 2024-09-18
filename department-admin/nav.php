@@ -53,6 +53,14 @@ if (isset($_POST['monthlyReport'])) {
 }
 
 if(isset($_POST['postReport'])){
+
+  
+  $_SESSION['month'] = $_POST['month'];
+  $_SESSION['year'] = $_POST['year'];
+  $_SESSION['request_type'] = $_POST['request_type'];
+
+
+
   $dateToday = date('Y-m-d H:i:s', time());
   $month = $_POST['month'];
   $year = $_POST['year'];
@@ -60,6 +68,7 @@ $type = $_POST['request_type'];
 $adminpassword = $_POST['adminpassword'];
 
 
+include("../getTotals.php");
 
 $sql1 = "Select * FROM `user` WHERE `department`='ICT' and `level` = 'admin' and `admin` = 1 LIMIT 1";
     $result = mysqli_query($con, $sql1);
@@ -75,7 +84,7 @@ $sql1 = "Select * FROM `user` WHERE `department`='ICT' and `level` = 'admin' and
     $numrows = mysqli_num_rows($resultReport);
 
     if($numrows >=1){
-      $sql2 = "UPDATE `postedreport` SET `date`='$dateToday' WHERE `month`='$month' and `year` = '$year' AND `type` = '$type' ";
+      $sql2 = "UPDATE `postedreport` SET `date`='$dateToday', `ongoing`='$totalofOngoing',`finished`='$totalofFinished',`onTheSpot`='$totalofOnTheSpot',`late`='$totalofLate',`numberOfTask`='$totalNumberOfTask' WHERE `month`='$month' and `year` = '$year' AND `type` = '$type' ";
       $results2 = mysqli_query($con, $sql2);
     if($results2){
       echo "<script>alert('Your report is now posted.') </script>";
@@ -83,7 +92,7 @@ $sql1 = "Select * FROM `user` WHERE `department`='ICT' and `level` = 'admin' and
     }
     else{
 
-      $sql = "INSERT INTO `postedreport`(`type`, `date`, `month`, `year`) VALUES ('$type', '$dateToday','$month','$year')";
+      $sql = "INSERT INTO `postedreport`(`type`, `date`, `month`, `year`, `ongoing`, `finished`, `onTheSpot`, `late`, `numberOfTask`) VALUES ('$type', '$dateToday','$month','$year','$totalofOngoing','$totalofFinished','$totalofOnTheSpot','$totalofLate','$totalNumberOfTask')";
       $results = mysqli_query($con, $sql);
     if($results){
       echo "<script>alert('Your report is now posted.') </script>";
@@ -99,9 +108,6 @@ $sql1 = "Select * FROM `user` WHERE `department`='ICT' and `level` = 'admin' and
     }
 
 
-    $_SESSION['month'] = $_POST['month'];
-    $_SESSION['year'] = $_POST['year'];
-    $_SESSION['request_type'] = $_POST['request_type'];
     
   ?>
     <script type="text/javascript">
