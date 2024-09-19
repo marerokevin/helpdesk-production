@@ -22,7 +22,7 @@ $username=$_SESSION['username'];
                 <th>User</th>
                 <th>Ip Address</th>
                 <th>Department</th>
-                <th>Statoos</th>
+                <th>Status</th>
                 <th>EDR</th>
                 <th>History</th>
                 <th data-priority="2">Ip Config</th>
