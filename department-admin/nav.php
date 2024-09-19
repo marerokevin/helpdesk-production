@@ -387,6 +387,12 @@ if (isset($_POST['excelReport'])) {
         <i class="fa-solid fa-file-alt"></i> <span class="flex-1 ml-3 whitespace-nowrap">Posted Reports</span>
         </a>
       </li>
+      <li>
+          <a href="charts.php" id="sidecharts" class="flex items-center p-4 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+
+            <i class="fa-solid fa-chart-line"></i> <span class="flex-1 ml-3 whitespace-nowrap">Charts</span>
+          </a>
+        </li>
       <!-- <li>
             <a href="pms.php" id="sidepms" class="flex items-center p-4 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
               
