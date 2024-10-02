@@ -1520,6 +1520,8 @@ Copy
                     <table id="forRatingTable" class="display" style="width:100%">
                         <thead>
                             <tr>
+                            <th>No.</th>
+
                                 <th>Request Number</th>
                                 <th>Action</th>
                                 <th>Details</th>
@@ -1529,6 +1531,8 @@ Copy
                                 <th>Comments</th>
                                 <th>Assigned to</th>
                                 <th>Assigned Section</th>
+                                <th>Closed By</th>
+
 
                             </tr>
                         </thead>
@@ -1541,13 +1545,13 @@ Copy
 
                             if ($_SESSION['leaderof'] == "fem") {
 
-                                $sql = "select * from `request` WHERE  `request_to`='fem' AND ( `status2` = 'Done'  OR `status2` = 'rated'  AND `month`='$dateMonth' AND `year`='$dateYear' ) order by id asc ";
+                                $sql = "select * from `request` WHERE  `request_to`='fem' AND ( `status2` = 'Done'  OR `status2` = 'rated'  AND `month`='$dateMonth' AND `year`='$dateYear' ) order by id desc ";
                                 $result = mysqli_query($con, $sql);
                             } else if ($_SESSION['leaderof'] == "mis") {
-                                $sql = "select * from `request` WHERE  `request_to`='mis' AND ( `status2` = 'Done'  OR `status2` = 'rated'  AND `month`='$dateMonth' AND `year`='$dateYear' )order by id asc ";
+                                $sql = "select * from `request` WHERE  `request_to`='mis' AND ( `status2` = 'Done'  OR `status2` = 'rated'  AND `month`='$dateMonth' AND `year`='$dateYear' )order by id desc ";
                                 $result = mysqli_query($con, $sql);
                             } else {
-                                $sql = "select * from `request` WHERE  ( `status2` = 'Done'  OR `status2` = 'rated'  AND `month`='$dateMonth' AND `year`='$dateYear' )order by id asc ";
+                                $sql = "select * from `request` WHERE  ( `status2` = 'Done'  OR `status2` = 'rated'  AND `month`='$dateMonth' AND `year`='$dateYear' )order by id desc ";
                                 $result = mysqli_query($con, $sql);
                             }
 
@@ -1580,6 +1584,9 @@ Copy
 
                             ?>
                                 <tr class="">
+                                <td class="">
+                                        <?php echo $a; ?>
+                                    </td>
                                     <td class="">
                                         <?php echo $joid; ?>
                                     </td>
@@ -1713,10 +1720,20 @@ Copy
                                         }
                                         ?>
                                     </td>
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+
+                                    <?php if ($row['requestor_approval_date'] != '') {
+                                        echo "Requestor";
+                                    } else if ($row['ticket_close_date'] != '') {
+                                        echo "System";
+                                    }
+                                    ?>
+                                    </td>
                                 </tr>
                             <?php
-
+      $a++;
                             }
+                      
                             ?>
                         </tbody>
                     </table>
@@ -1920,6 +1937,7 @@ Copy
                                         }
                                         ?>
                                     </td>
+                                    
                                 </tr>
                             <?php
 
@@ -3254,7 +3272,7 @@ console.log(transformedArrayAssist)
         $(document).ready(function() {
             $('#forRatingTable').DataTable({
                 "order": [
-                    [1, "desc"]
+                    [0, "asc"]
                 ],
                 responsive: true,
                 destroy: true,
