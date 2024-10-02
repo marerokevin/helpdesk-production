@@ -808,7 +808,7 @@ if (isset($_POST['updateJO'])) {
 
                                                     </div>
                                                 </div>
-                                                <p class="_5NHXTA _2xcaIA ZSdr0w CCfw7w GHIRjw">Filled Ticket</p>
+                                                <p class="_5NHXTA _2xcaIA ZSdr0w CCfw7w GHIRjw">Filed Ticket</p>
                                             </button>
                                         </div>
                                     </li>
@@ -987,7 +987,7 @@ if (isset($_POST['updateJO'])) {
                                 <th data-priority="4">Action</th>
                                 <th data-priority="1">Details</th>
                                 <th data-priority="2">Requestor</th>
-                                <th data-priority="5">Date Filled</th>
+                                <th data-priority="5">Date Filed</th>
                                 <th data-priority="6">Category</th>
                                 <th data-priority="7">Assigned to</th>
                                 <th data-priority="8">Assistant/s</th>
