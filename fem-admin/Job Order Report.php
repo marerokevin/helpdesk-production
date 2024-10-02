@@ -38,8 +38,7 @@ $ratingRemarks = $_SESSION['ratingRemarks'];
 $ratedDate = $_SESSION['ratedDate'];
 $approved_reco = $_SESSION['approved_reco'];
 $icthead_reco_remarks = $_SESSION['icthead_reco_remarks'];
-
-
+$prequestType =  $_SESSION['prequestType'];
 $headsDate =  $_SESSION['headsDate'];
 $adminsDate =  $_SESSION['adminsDate'];
 
@@ -149,7 +148,7 @@ padding-top: 5px;
         <hr>
         <table>
             <tr>
-                <td colspan="2" class="category"><span class="label">JOB ORDER&apos;S DETAILS</span></td>
+                <td colspan="2" class="category"><span class="label">'.$prequestType.'&apos;s details</span></td>
 
             </tr>
             <tr>
