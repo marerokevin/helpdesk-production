@@ -54,7 +54,7 @@ if (isset($_POST['monthlyReport'])) {
 
 if(isset($_POST['postReport'])){
 
-  
+
   $_SESSION['month'] = $_POST['month'];
   $_SESSION['year'] = $_POST['year'];
   $_SESSION['request_type'] = $_POST['request_type'];
@@ -84,6 +84,7 @@ $sql1 = "Select * FROM `user` WHERE `department`='ICT' and `level` = 'admin' and
     $numrows = mysqli_num_rows($resultReport);
 
     if($numrows >=1){
+      
       $sql2 = "UPDATE `postedreport` SET `date`='$dateToday', `ongoing`='$totalofOngoing',`finished`='$totalofFinished',`onTheSpot`='$totalofOnTheSpot',`late`='$totalofLate',`numberOfTask`='$totalNumberOfTask' WHERE `month`='$month' and `year` = '$year' AND `type` = '$type' ";
       $results2 = mysqli_query($con, $sql2);
     if($results2){
@@ -91,10 +92,13 @@ $sql1 = "Select * FROM `user` WHERE `department`='ICT' and `level` = 'admin' and
     }
     }
     else{
-
+      // echo "asdasd";
       $sql = "INSERT INTO `postedreport`(`type`, `date`, `month`, `year`, `ongoing`, `finished`, `onTheSpot`, `late`, `numberOfTask`) VALUES ('$type', '$dateToday','$month','$year','$totalofOngoing','$totalofFinished','$totalofOnTheSpot','$totalofLate','$totalNumberOfTask')";
+      // echo $sql;
       $results = mysqli_query($con, $sql);
+     
     if($results){
+     
       echo "<script>alert('Your report is now posted.') </script>";
     }
     }
@@ -104,6 +108,7 @@ $sql1 = "Select * FROM `user` WHERE `department`='ICT' and `level` = 'admin' and
 
     }
     else{
+      
       echo "<script>alert('Wrong Password. The report was not posted successfully') </script>";
     }
 
