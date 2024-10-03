@@ -66,8 +66,7 @@ $sqlICT = mysqli_query($con, "SELECT * FROM `user` WHERE `department` = 'ICT' an
 
 $month = $_GET['month'];
 $filename = "$reqtype Summary Report for the Month of " . $month . ".xls";
-$filepath = "./department-admin/postedReports/" . $filename; // Path where the file will be saved
-
+$filepath = "department-admin/postedReports/" . $filename;
 
 ob_start();
 
@@ -628,8 +627,14 @@ ob_end_clean();
 
 
 file_put_contents($filepath, $content);
-
-
+// echo $filepath;
+// if($stat){
+//     echo $filepath;
+//     }
+//     else{
+//     echo "error";
+    
+//     }
 // $copyDestination = "./department-admin/postedReports/" . $filename; // Path to copy the file
 
 
@@ -643,7 +648,7 @@ header("Expires: 0");
 header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 header("Cache-Control: private", false);
 
-// echo $content;
+
 
 // readfile($filepath);
 
