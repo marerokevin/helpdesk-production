@@ -42,7 +42,7 @@ if (isset($_POST['monthlyReport'])) {
   $_SESSION['adminsection'] = 'fem';
 ?>
   <script type="text/javascript">
-    window.open('../Monthly Report.php', '_blank');
+    window.open('../Monthly Report FEM.php', '_blank');
   </script>
 <?php
 
