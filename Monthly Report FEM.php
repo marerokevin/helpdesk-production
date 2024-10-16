@@ -213,7 +213,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     $date = new DateTime($row['date_filled']);
     $date = $date->format('ym');
 
-    $dateApproved = new DateTime($row['admin_approved_date']);
+    $dateApproved = new DateTime($row['ict_approval_date']);
     $dateApproved = $dateApproved->format('F d, Y');
 
     $dateFinished = new DateTime($row['actual_finish_date']);
@@ -279,7 +279,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     $date = new DateTime($row['date_filled']);
     $date = $date->format('ym');
 
-    $dateApproved = new DateTime($row['admin_approved_date']);
+    $dateApproved = new DateTime($row['ict_approval_date']);
     $dateApproved = $dateApproved->format('F d, Y');
 
     $dateFinished = new DateTime($row['actual_finish_date']);
@@ -339,7 +339,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     $date = new DateTime($row['date_filled']);
     $date = $date->format('ym');
 
-    $dateApproved = new DateTime($row['admin_approved_date']);
+    $dateApproved = new DateTime($row['ict_approval_date']);
     $dateApproved = $dateApproved->format('F d, Y');
 
     $expectedDate = new DateTime($row['expectedFinishDate']);
