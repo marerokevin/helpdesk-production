@@ -1100,7 +1100,7 @@ Copy
                                 <tr class="">
                                     <td class="">
                                         <?php
-                                        $date = new DateTime($row['head_approval_date']);
+                                        $date = new DateTime($row['date_filled']);
                                         $date = $date->format('ym');
                                         if ($row['ticket_category'] != NULL) {
                                             echo 'TS-' . $date . '-' . $row['id'];
