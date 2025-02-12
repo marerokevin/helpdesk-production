@@ -201,8 +201,8 @@ if (isset($_POST['submitTicket'])) {
             $sql = mysqli_query($con, "INSERT INTO request (date_filled, status2, requestor, requestorUsername, email, department, request_type, request_to, request_category, request_details, assignedPersonnel, assignedPersonnelName, action, recommendation, onthespot_ticket, ticket_category,  ticket_filer, actual_finish_date, admin_approved_date, ict_approval_date, first_responded_date, completed_date)
         VALUES ('$datenow', '$status', '$requestor','$requestorIdnumber', '$requestorEmail', '$requestorDepartment', 'Technical Support', 'fem', '$ticket_category','$detailsOfRequest', '$r_personnels', '$r_personnelsName', '$action', '$recommendation', '$onthespot_ticket', '$ticket_category',  '$user_name', '$datenow', '$datenow', '$datetime', '$datetime', '$datetime')");
         } else {
-            $status = "inprogress";
-            $_SESSION['status'] = 'In Progress';
+            $status = "admin";
+            $_SESSION['status'] = 'For Approval';
             $sql = mysqli_query($con, "INSERT INTO request (date_filled, status2, requestor, requestorUsername, email, department, request_type, request_to, request_category, request_details, assignedPersonnel, assignedPersonnelName, ticket_category, ticket_filer, admin_approved_date, expectedFinishDate, ict_approval_date)
         VALUES ('$datenow', '$status', '$requestor','$requestorIdnumber', '$requestorEmail', '$requestorDepartment', 'Technical Support', 'fem', '$ticket_category','$detailsOfRequest', '$r_personnels', '$r_personnelsName', '$ticket_category', '$user_name', '$date', '$newDate', '$dateToday')");
         }
@@ -354,7 +354,7 @@ if (isset($_POST['submitTicket'])) {
                     // Attach PDF to the email (FEM and Requestor)
                     $mail->addStringAttachment($pdfContent, 'Helpdesk Report.pdf', 'base64', 'application/pdf');
                     $mail->Subject = $subject;
-                    $mail->Body    = 'Hi ' . $requestor . ',<br> <br>   Your ticket request has been approved by FEM Administrator. It is now in progress. Details are below: <br><br> Ticket No.: ' . $ticketNumber . '<br> Requestor: ' . $requestor . '<br> Requestor Email: ' . $requestorEmail . '<br> Requestor Department: ' . $requestorDepartment . '<br> Request Details: ' . $detailsOfRequest . '<br> Assigned Personnel: ' . $r_personnelsName . '<br>  Ticket Category: ' . $_SESSION['categories'] . '<br> Ticket Filer: ' . $user_name . '<br><br> You can check the status of your ticket by signing in into our Helpdesk <br> Click this ' . $link . ' to sign in. <br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
+                    $mail->Body    = 'Hi ' . $requestor . ',<br> <br>   Your request has been filed as a ticket. Please wait for the FEM Administrator&#39s approval. Details are below: <br><br> Ticket No.: ' . $ticketNumber . '<br> Requestor: ' . $requestor . '<br> Requestor Email: ' . $requestorEmail . '<br> Requestor Department: ' . $requestorDepartment . '<br> Request Details: ' . $detailsOfRequest . '<br> Assigned Personnel: ' . $r_personnelsName . '<br>  Ticket Category: ' . $_SESSION['categories'] . '<br> Ticket Filer: ' . $user_name . '<br><br> You can check the status of your ticket by signing in into our Helpdesk <br> Click this ' . $link . ' to sign in. <br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
 
                     $mail->send();
 
