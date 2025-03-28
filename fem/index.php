@@ -721,7 +721,7 @@ if(isset($_POST['updateSeen'])){
         </thead>
         <tbody>
             <?php
-                            $sqlUnseen = "SELECT  * FROM `request` WHERE `seen` = 0 AND `assignedPersonnel` = '$femusername'";
+                            $sqlUnseen = "SELECT  * FROM `request` WHERE `seen` = 0 AND `assignedPersonnel` = '$femusername' AND `status2` = 'inprogress'";
                             $resultUnseen = mysqli_query($con, $sqlUnseen);
 
                             while ($row = mysqli_fetch_assoc($resultUnseen)) {
@@ -2473,7 +2473,7 @@ const notificationModal = {
 };
 const modalNotification = new Modal($targetNotifModal, notificationModal);
 <?php
- $sqlSeen = "SELECT  * FROM `request` WHERE `seen` = 0 AND `assignedPersonnel` = '$femusername'";
+ $sqlSeen = "SELECT  * FROM `request` WHERE `seen` = 0 AND `assignedPersonnel` = '$femusername' AND `status2` = 'inprogress'";
  $resultSeen = mysqli_query($con, $sqlSeen);
  
  $numberOfUnSeen = mysqli_num_rows($resultSeen);
