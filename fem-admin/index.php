@@ -120,6 +120,26 @@ if (isset($_POST['changeSchedJo'])) {
     }
 }
 
+
+if (isset($_POST['unlate'])) {
+    $joidtransfer =  $_POST['joidtransfer'];
+    // $targetDate = $_POST['changeScheddate']; 
+    $targetDate = $_POST['expectedfinishdate'];
+    $pexpectedFinishDate = $_POST['pexpectedFinishDate'];
+
+    
+
+    $sql = "UPDATE `request` SET `late`=0,`expectedFinishDate`='$targetDate' WHERE `id` = '$joidtransfer';";
+    $results = mysqli_query($con, $sql);
+    if ($results) {
+        echo "<script>alert('Successfuly changed the late status.' )</script>";
+        echo "<script> location.href='index.php'; </script>";
+    }
+}
+
+
+
+
 if (isset($_POST['print'])) {
     $_SESSION['jobOrderNo'] = $_POST['pjobOrderNo'];
     $_SESSION['status'] = $_POST['pstatus'];
@@ -166,7 +186,7 @@ if (isset($_POST['print'])) {
             $personnelName = $list["name"];
         }
         $_SESSION['assignedPersonnel'] =  $personnelName;
-    } else {
+    } else { 
 
         $sql1 = "Select * FROM `user` WHERE `username` = '$assigned'";
         $result = mysqli_query($con, $sql1);
@@ -840,6 +860,54 @@ function addWeekdays2($startDate, $daysToAdd, $holidays)
                                             </button>
                                         </div>
                                     </li>
+
+
+                                    <li role="presentation">
+                                        <div class="p__uwg" style="width: 96px; margin-left: 16px; margin-right: 0px;">
+                                            <button id="lateTab" onclick="goToLate()" class="_1QoxDw o4TrkA CA2Rbg cwOZMg zQlusQ uRvRjQ POMxOg" tabindex="-1" type="button" role="tab" aria-controls="forLateTab" aria-selected="false">
+                                                <div class="_1cZINw">
+                                                    <div style="overflow:inherit" class="_qiHHw Ut_ecQ kHy45A">
+                                                        <span class=" sr-only">Notifications</span>
+                                                        <?php
+
+
+
+                                                        $section = $_SESSION['leaderof'];
+                                                        $date1 = new DateTime();
+                                                        $dateMonth = $date1->format('M');
+                                                        $dateYear = $date1->format('Y');
+
+                                                        $sql1 = "SELECT COUNT(id) as 'pending' FROM request WHERE   (`status2` = 'Done' OR `status2`='late')  and  `request_to` = 'fem' ";
+                                                        $result = mysqli_query($con, $sql1);
+                                                        while ($count = mysqli_fetch_assoc($result)) {
+
+                                                            if ($count["pending"] > 0) {
+                                                        ?>
+                                                                <div class=" absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-border-white"> <?php
+                                                                         
+                                                // $sql = "select * from `request` WHERE `request_to` = '$section' and (`status2` = 'Done' or `status2` = 'rated') AND late != false AND `actual_finish_date` BETWEEN '$year-$monthNumber-01' AND '$year-$monthNumber-$lastDateOfMonth' order by id asc  ";
+                                                                                                                        
+                                                $sql1 = "SELECT COUNT(id) as 'late' FROM request WHERE `request_to` = 'fem' and (`status2` = 'Done' or `status2` = 'rated') AND late != false ";
+                                                                                                                                                                                                                                                            $result = mysqli_query($con, $sql1);
+                                                                                                                                                                                                                                                            while ($count = mysqli_fetch_assoc($result)) {
+                                                                                                                                                                                                                                                                echo $count["late"];
+                                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                            ?></div><?php
+                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                                    ?>
+                                                        <img src="../resources/img/late.png" class="h-full w-full text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+
+                                                        <!-- <img src="../resources/img/star.png" class="h-full w-full text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"> -->
+
+                                                    </div>
+                                                </div>
+                                                <p class="_5NHXTA _2xcaIA ZSdr0w CCfw7w GHIRjw">Late</p>
+                                            </button>
+                                        </div>
+                                    </li>
+
+
                                 </ul>
                             </div>
                             <div class="rzHaWQ theme light" id="diamond" style="transform: translateX(160px) translateY(2px) rotate(135deg);"></div>
@@ -954,6 +1022,171 @@ function addWeekdays2($startDate, $daysToAdd, $holidays)
                 </section>
             </div>
 
+            <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="forLate" role="tabpanel" aria-labelledby="profile-tab">
+                <section class="mt-10">
+                    <table id="lateTable" class="display" style="width:100%">
+                        <thead>
+                        <tr>
+                                <th>Request Number</th>
+                                <th>Action</th>
+                                <th>Details</th>
+                                <th>Requestor</th>
+
+                                <th>Date Filed</th>
+                                <th>Comments</th>
+                                <th>Assigned to</th>
+                                <th>Assigned Section</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $a = 1;
+                            $date1 = new DateTime();
+                            $dateMonth = $date1->format('M');
+                            $dateYear = $date1->format('Y');
+
+                            if ($_SESSION['leaderof'] == "fem") {
+                                $sql = "select * from `request` WHERE `request_to` = 'fem' and (`status2` = 'Done' or `status2` = 'rated') AND late != false order by id asc ";
+                                $result = mysqli_query($con, $sql);
+                            } else if ($_SESSION['leaderof'] == "mis") {
+                                $sql = "select * from `request` WHERE  `request_to`='mis' AND ( `status2` = 'Done'  OR `status2` = 'rated' OR `status2` = 'late'  AND `month`='$dateMonth' AND `year`='$dateYear' )order by id asc ";
+                                $result = mysqli_query($con, $sql);
+                            } else {
+                                $sql = "select * from `request` WHERE  ( `status2` = 'Done'  OR `status2` = 'rated' OR `status2` = 'late'  AND `month`='$dateMonth' AND `year`='$dateYear' )order by id asc ";
+                                $result = mysqli_query($con, $sql);
+                            }
+
+
+
+
+
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                if ($row['request_type'] == "Technical Support") {
+                                    $reqtype = "Ticket Request";
+                                } else {
+                                    $reqtype = "Job Order";
+                                }
+
+
+                                $date = new DateTime($row['date_filled']);
+                                $date = $date->format('ym');
+
+                                if ($row['ticket_category'] != NULL) {
+                                    $joid = 'TS-' . $date . '-' . $row['id'];
+                                } else {
+                                    $joid =  'JO-' . $date . '-' . $row['id'];
+                                }
+
+                                if ($row['request_to'] === "fem") {
+                                    $section_ = "FEM";
+                                } else if ($row['request_to'] === "mis") {
+                                    $section_ = "ICT";
+                                }
+
+                            ?>
+                                <tr class="">
+                                    <td class="">
+                                        <?php echo $joid; ?>
+                                    </td>
+                                    <td>
+                                        <!-- <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Select</a> -->
+                                        <?php  
+                                            echo "<span id='viewdetails' onclick='modalShow(this)' data-reqtype='" . $reqtype . "'
+                    data-reco='0' 
+                    data-recommendation='" . $row['recommendation'] . "' 
+                    data-approved_reco='" . $row['approved_reco'] . "' 
+                    data-icthead_reco_remarks='" . $row['icthead_reco_remarks'] . "' 
+                    data-requestorremarks='" . $row['requestor_remarks'] . "' 
+                    data-quality='" . $row['rating_quality'] . "' 
+                    data-delivery='" . $row['rating_delivery'] . "' 
+                    data-ratedby='" . $row['ratedBy'] . "' 
+                    data-daterate='" . $row['rateDate'] . "' 
+                    data-action1date='" . $row['action1Date'] . "' 
+                    data-action2date='" . $row['action2Date'] . "' 
+                    data-action3date='" . $row['action3Date'] . "' 
+                    data-headremarks='" . $row['head_remarks'] . "' 
+                    data-adminremarks='" . $row['admin_remarks'] . "' 
+                    data-headdate='" . $row['head_approval_date'] . "' 
+                    data-admindate='" . $row['admin_approved_date'] . "' 
+                    data-department='" . $row['department'] . "'  
+                    data-status='late'   
+                    data-action1='" . $row['action1'] . "'   
+                    data-action2='" . $row['action2'] . "' 
+                    data-action3='" . $row['action3'] . "'   
+                    data-ratings = '" . $row['rating_final'] . "' 
+                    data-actualdatefinished='' 
+                    data-assignedpersonnel='" . $row['assignedPersonnelName'] . "'
+                         data-assistant='".$row['assistantsId'] ."'
+                    data-assistantName='".$row['assistanNames'] ."'
+                    data-requestor='" . $row['requestor'] . "' 
+                    data-personnel='" . $row['assignedPersonnel'] . "' 
+                    data-action='" . $dataAction = str_replace('"', '', $row['action']) . "' 
+                    data-requestoremail='" . $row['email'] . "'    
+                    data-joid='" . $row['id'] . "' 
+                    data-category='" . $row['request_category'] . "' 
+                    data-telephone='" . $row['telephone'] . "'
+                    data-attachment='" . $row['attachment'] . "'  
+                    data-comname='" . $row['computerName'] . "' 
+                    data-start='" . $row['reqstart_date'] . "'
+                    data-end='" . $row['reqfinish_date'] . "'
+                    data-details='" . $row['request_details'] . "' 
+                    data-joidprint='" . $joid . "' 
+                    data-section= '" . $section_ . "' 
+                    data-datefiled='" . $row['date_filled'] . "'
+                    data-requestype='".$reqtype."'
+                    data-expectedfinishdate='" . $row['expectedFinishDate'] . "'>
+                        
+                        <span class='inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out'>VIEW MORE</span></span>";
+                                        
+                                        ?>
+                                    </td>
+
+                                    <td class="text-sm text-red-700 font-light px-6 py-4 whitespace-nowrap truncate max-w-xs">
+                                        <?php echo $row['request_details']; ?>
+                                    </td>
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap truncate " style="max-width: 40px;">
+                                        <?php echo $row['requestor']; ?>
+                                    </td>
+
+                                    <!-- to view pdf -->
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        <?php
+                                        $date = new DateTime($row['date_filled']);
+                                        $date = $date->format('F d, Y');
+                                        echo $date; ?>
+
+                                    </td>
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap truncate " style="max-width: 40px;">
+                                        <?php echo $row['requestor_remarks']; ?>
+                                    </td>
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap truncate" style="max-width: 10px;">
+
+                                        <?php echo $row['assignedPersonnelName'];
+                                        ?>
+                                    </td>
+
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+
+                                        <?php if ($row['request_to'] == "fem") {
+                                            echo "FEM";
+                                        } else if ($row['request_to'] == "mis") {
+                                            echo "ICT";
+                                        }
+                                        ?>
+                                    </td>
+                                </tr>
+                            <?php
+
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+
+                </section>
+            </div>
+
+
             <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="headApproval" role="tabpanel" aria-labelledby="profile-tab">
                 <section class="mt-10">
                 <!-- <select id="mySelect" multiple>
@@ -1028,18 +1261,8 @@ function addWeekdays2($startDate, $daysToAdd, $holidays)
                                     <td>
                                         <!-- <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Select</a> -->
 
-                                        <button type="button" id="viewdetails" onclick="modalShow(this)" data-reqtype="<?php echo $reqtype; ?>" data-requestype="<?php echo $row['request_type']; ?>" data-recommendation="<?php echo $row['recommendation'] ?>" data-requestorremarks="<?php echo $row['requestor_remarks'] ?>" data-quality="<?php echo $row['rating_quality'] ?>" data-delivery="<?php echo $row['rating_delivery'] ?>" data-ratedby="<?php echo $row['ratedBy'] ?>" data-daterate="<?php echo $row['rateDate'] ?>" data-action1date="<?php echo $row['action1Date'] ?>" data-action2date="<?php echo $row['action2Date'] ?>" data-action3date="<?php echo $row['action3Date'] ?>" data-headremarks="<?php echo $row['head_remarks']; ?>" data-adminremarks="<?php echo $row['admin_remarks']; ?>" data-headdate="<?php echo $row['head_approval_date']; ?>" data-admindate="<?php echo $row['admin_approved_date']; ?>" data-department="<?php echo $row['department'] ?>" data-status="<?php echo $row['status2'] ?>" data-action1="<?php echo $row['action1'] ?>" data-action2="<?php echo $row['action2'] ?>" data-action3="<?php echo $row['action3'] ?>" data-ratings="<?php echo $row['rating_final']; ?>" data-actualdatefinished="" data-assignedpersonnel="<?php echo $row['assignedPersonnelName'] ?> " data-requestor="<?php echo $row['requestor'] ?>" data-personnel="<?php echo $row['assignedPersonnel'] ?>" data-assistant="<?php echo $row['assistantsId'] ?>" data-assistantName="<?php echo $row['assistanNames'] ?>" data-action="<?php echo $dataAction = str_replace('"', '', $row['action']); ?>" data-telephone="<?php echo $row['telephone']; ?>" data-attachment="<?php echo $row['attachment']; ?>" data-joidprint="<?php echo $joid; ?>" data-headremarks="<?php echo $row['head_remarks']; ?>" data-adminremarks="<?php echo $row['admin_remarks']; ?>" data-joid="<?php echo $row['id']; ?>" data-requestoremail="<?php echo $row['email']; ?>" data-requestor="<?php echo $row['requestor']; ?>" data-datefiled="<?php $date = new DateTime($row['date_filled']);
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        $date = $date->format('F d, Y');
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        echo $date; ?>" data-expectedfinishdate="<?php echo $targetFinishDate ?>"
-
-
-                                            data-section="<?php if ($row['request_to'] == "fem") {
-                                                                echo "FEM";
-                                                            } else if ($row['request_to'] == "mis") {
-                                                                echo "ICT";
-                                                            } ?>" data-category="<?php echo $row['request_category']; ?>" data-comname="<?php echo $row['computerName']; ?>" data-start="<?php echo $row['reqstart_date']; ?>" data-end="<?php echo $row['reqfinish_date']; ?>" data-details="<?php echo $row['request_details']; ?>" class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
-                                            View more
-                                        </button>
+                                        <button type="button" id="viewdetails" onclick="modalShow(this)" data-reqtype="<?php echo $reqtype; ?>" data-requestype="<?php echo $row['request_type']; ?>" data-recommendation="<?php echo $row['recommendation'] ?>" data-requestorremarks="<?php echo $row['requestor_remarks'] ?>" data-quality="<?php echo $row['rating_quality'] ?>" data-delivery="<?php echo $row['rating_delivery'] ?>" data-ratedby="<?php echo $row['ratedBy'] ?>" data-daterate="<?php echo $row['rateDate'] ?>" data-action1date="<?php echo $row['action1Date'] ?>" data-action2date="<?php echo $row['action2Date'] ?>" data-action3date="<?php echo $row['action3Date'] ?>" data-headremarks="<?php echo $row['head_remarks']; ?>" data-adminremarks="<?php echo $row['admin_remarks']; ?>" data-headdate="<?php echo $row['head_approval_date']; ?>" data-admindate="<?php echo $row['admin_approved_date']; ?>" data-department="<?php echo $row['department'] ?>" data-status="<?php echo $row['status2'] ?>" data-action1="<?php echo $row['action1'] ?>" data-action2="<?php echo $row['action2'] ?>" data-action3="<?php echo $row['action3'] ?>" data-ratings="<?php echo $row['rating_final']; ?>" data-actualdatefinished="" data-assignedpersonnel="<?php echo $row['assignedPersonnelName'] ?> " data-requestor="<?php echo $row['requestor'] ?>" data-personnel="<?php echo $row['assignedPersonnel'] ?>" data-assistant="<?php echo $row['assistantsId'] ?>" data-assistantName="<?php echo $row['assistanNames'] ?>" data-action="<?php echo $dataAction = str_replace('"', '', $row['action']); ?>" data-telephone="<?php echo $row['telephone']; ?>" data-attachment="<?php echo $row['attachment']; ?>" data-joidprint="<?php echo $joid; ?>" data-headremarks="<?php echo $row['head_remarks']; ?>" data-adminremarks="<?php echo $row['admin_remarks']; ?>" data-joid="<?php echo $row['id']; ?>" data-requestoremail="<?php echo $row['email']; ?>" data-requestor="<?php echo $row['requestor']; ?>" data-datefiled="<?php $date = new DateTime($row['date_filled']); $date = $date->format('F d, Y'); echo $date; ?>" data-expectedfinishdate="<?php echo $targetFinishDate; ?>" data-section="<?php if ($row['request_to'] == "fem") {echo "FEM";} else if ($row['request_to'] == "mis") {echo "ICT";} ?>" data-category="<?php echo $row['request_category']; ?>" data-comname="<?php echo $row['computerName']; ?>" data-start="<?php echo $row['reqstart_date']; ?>" data-end="<?php echo $row['reqfinish_date']; ?>" data-details="<?php echo $row['request_details']; ?>" class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">View more 
+                                    </button>
                                     </td>
 
                                     <td class="text-sm text-red-700 font-light px-6 py-4 whitespace-nowrap truncate max-w-xs">
@@ -1376,6 +1599,9 @@ function addWeekdays2($startDate, $daysToAdd, $holidays)
 
                 </section>
             </div>
+
+
+
         </div>
 
 
@@ -1695,6 +1921,10 @@ function addWeekdays2($startDate, $daysToAdd, $holidays)
                     </div>
                     <div id="buttonPrintDiv" class="items-center px-4 rounded-b dark:border-gray-600">
                         <button type="submit" name="print" class="shadow-lg shadow-blue-500/30 dark:shadow-lg dark:shadow-teal-800/80  w-full text-white bg-gradient-to-br from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Print</button>
+                    </div>
+
+                    <div id="buttonUnlateDiv" class="items-center px-4 rounded-b dark:border-gray-600">
+                        <button type="submit" name="unlate" class="shadow-lg shadow-blue-500/30 dark:shadow-lg dark:shadow-teal-800/80  w-full text-white bg-gradient-to-br from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Change Late Status</button>
                     </div>
 
 
@@ -2176,6 +2406,10 @@ $('#assistants').change(function() {
                 document.getElementById("expectedfinishdate").readOnly  = false;
 
             }
+            else if(element.getAttribute("data-status") == "late"){
+                document.getElementById("expectedfinishdate").readOnly  = false;
+
+            }
             else{
                 document.getElementById("expectedfinishdate").readOnly  = true;
             }
@@ -2529,6 +2763,11 @@ console.log(transformedArrayAssist)
                 id: 'forRating',
                 triggerEl: document.querySelector('#toRateTab'),
                 targetEl: document.querySelector('#forRating')
+            },
+            {
+                id: 'forLate',
+                triggerEl: document.querySelector('#lateTab'),
+                targetEl: document.querySelector('#forLate')
             }
         ];
 
@@ -2593,9 +2832,11 @@ console.log(transformedArrayAssist)
             $("#assignedPersonnelDiv").addClass("hidden");
             $("#chooseAssignedDiv").removeClass("hidden");
             $("#buttonPrintDiv").removeClass("hidden");
+            $("#buttonPrintDiv").removeClass("hidden");
+
             $("#actionDetailsDiv").addClass("hidden");
             $("#ratingstar").addClass("hidden");
-            const currentTransform = myElement.style.transform = 'translateX(160px) translateY(2px) rotate(135deg)';
+            const currentTransform = myElement.style.transform = 'translateX(170px) translateY(2px) rotate(135deg)';
             document.getElementById("reasonCancel").required = false;
             document.getElementById("telephone").disabled = true;
             document.getElementById("assigned").required = true;
@@ -2630,7 +2871,7 @@ console.log(transformedArrayAssist)
             document.getElementById("datefinish").disabled = true;
             // const currentTransform = myElement.style.transform = 'translateX(385px) translateY(2px) rotate(135deg)';
 
-            const currentTransform = myElement.style.transform = 'translateX(270px) translateY(2px) rotate(135deg)';
+            const currentTransform = myElement.style.transform = 'translateX(280px) translateY(2px) rotate(135deg)';
 
             document.getElementById("expectedfinishdate").readOnly = false;
 
@@ -2647,7 +2888,7 @@ console.log(transformedArrayAssist)
             $("#actionDetailsDiv").removeClass("hidden");
             $("#buttonPrintDiv").removeClass("hidden");
             $("#changeSchedButton").addClass("hidden");
-            const currentTransform = myElement.style.transform = 'translateX(380px) translateY(2px) rotate(135deg)';
+            const currentTransform = myElement.style.transform = 'translateX(390px) translateY(2px) rotate(135deg)';
             $("#recommendationDiv").removeClass("hidden");
 
             document.getElementById("reasonCancel").required = false;
@@ -2660,6 +2901,34 @@ console.log(transformedArrayAssist)
 
         }
 
+        function goToLate() {
+            const myElement = document.querySelector('#diamond');
+            $("#adminremarksDiv").removeClass("hidden");
+            $("#remarksDiv").addClass("hidden");
+            $("#assignedPersonnelDiv").removeClass("hidden");
+            $("#chooseAssignedDiv").addClass("hidden");
+            $("#buttonDiv").addClass("hidden");
+            $("#actionDetailsDiv").removeClass("hidden");
+            $("#buttonPrintDiv").addClass("hidden");
+            $("#buttonUnlateDiv").removeClass("hidden");
+
+            
+            $("#changeSchedButton").removeClass("hidden");
+            const currentTransform = myElement.style.transform = 'translateX(500px) translateY(2px) rotate(135deg)';
+            $("#recommendationDiv").removeClass("hidden");
+
+            document.getElementById("reasonCancel").required = false;
+            document.getElementById("assigned").required = false;
+            document.getElementById("datestart").disabled = true;
+            document.getElementById("datefinish").disabled = true;
+            document.getElementById("changeSchedButton").disabled = false;
+
+            document.getElementById("expectedfinishdate").readOnly = false;
+
+            $("#transferButton").addClass("hidden");
+
+
+        }
 
 
         var setdate2;
