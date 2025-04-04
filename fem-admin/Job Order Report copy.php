@@ -1,5 +1,5 @@
 <?php
-// session_start();
+session_start();
 $date = new DateTime();
 $date = $date->format('F d, Y');
 

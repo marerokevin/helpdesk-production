@@ -45,7 +45,10 @@ $adminsDate =  $_SESSION['adminsDate'];
 if ($_SESSION['status'] == "admin") {
     $status = "In Progress";
 } else if ($_SESSION['status'] == "inprogress") {
-    $status = "Done";
+    $status = "inprogress";
+}
+else if ($_SESSION['status'] == "late") {
+    $status = "Late";
 } else if ($_SESSION['status'] == "rated") {
     $status = "Done";
 } else if ($_SESSION['status'] == "Done") {

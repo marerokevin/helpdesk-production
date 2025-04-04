@@ -239,7 +239,7 @@ $con->next_result();
 //     AND req.request_to = 'fem' ORDER BY req.admin_approved_date ASC");
 // } else {
 
-$query = "SELECT req.id,  req.date_filled, req.status2, req.requestor,  req.department,  req.request_type,  req.ticket_category, req.request_category, req.assignedPersonnelName,req.assistanNames, req.hourAndTimeSeen, req.ict_approval_date, req.hourAndTimeSeen, req.first_responded_date, req.completed_date,req.requestor_approval_date, req.ticket_close_date, req.action, req.action1,  req.recommendation, req.onthespot_ticket, req.request_details,  req.rateDate, cat.level, cat.hours, cat.days, cat.req_type 
+$query = "SELECT req.id,  req.date_filled, req.status2, req.requestor,  req.department,  req.request_type,  req.ticket_category, req.request_category, req.assignedPersonnelName,req.assistanNames, req.expectedFinishDate, req.ict_approval_date, req.hourAndTimeSeen, req.first_responded_date, req.completed_date,req.requestor_approval_date, req.ticket_close_date, req.action, req.action1,  req.recommendation, req.onthespot_ticket, req.request_details,  req.rateDate, cat.level, cat.hours, cat.days, cat.req_type 
 FROM `request` req 
 LEFT JOIN `femcategories` cat ON cat.c_name = req.request_category 
 WHERE (req.expectedFinishDate  BETWEEN '$lastMonthYear-$previousMonthNumber-28' AND '$year-$monthNumber-$lastDateOfMonth' AND req.status2 != 'cancelled') 
@@ -264,6 +264,7 @@ $sql = mysqli_query($con, $query);
         </b>
         <br>
         <b>FEM Helpdesk </b>
+        <!-- <b><?php// echo $query;?></b> -->
         <br>
         <!-- <b>Date: </b>
     <br> -->
@@ -289,6 +290,7 @@ $sql = mysqli_query($con, $query);
                         <th colspan="3">Requirements</th>
                         <th rowspan="2">FEM Date Approval</th>
                         <th rowspan="2">Job Seen</th>
+                        <th rowspan="2">Expected Finished Date</th>
                         <th rowspan="2">Date Responded</th>
                         <th rowspan="2">Response Rate (Hours)</th>
                         <th rowspan="2">Remarks</th>
@@ -349,6 +351,9 @@ $sql = mysqli_query($con, $query);
                         $details = $row['request_details'];
                         $rateDate = $row['rateDate'];
                         $jobSeen  = $row['hourAndTimeSeen'];
+                        $expectedFinishDate  = $row['expectedFinishDate'];
+
+
 
 
                         if ($ticket_close_date != NULL && $date_finished != NULL) {
@@ -359,8 +364,8 @@ $sql = mysqli_query($con, $query);
                             $closedBy = '';
                         }
 
-                        $ict_approval_date = $row['hourAndTimeSeen'];
-                    $approvalDate = new DateTime($row['hourAndTimeSeen']);
+                        $ict_approval_date = $row['ict_approval_date'];
+                    $approvalDate = new DateTime($row['ict_approval_date']);
                     $approvalDate = $approvalDate->format('F d, Y H:i:s');
                     $time_responded = $row['first_responded_date'];
 
@@ -596,6 +601,8 @@ $sql = mysqli_query($con, $query);
                                     <td>$required_completion_days</td>
                                     <td>$approvalDate</td>
                                     <td>$jobSeen</td>
+                                    <td>$expectedFinishDate</td>
+
                                     <td>$time_responded </td>
                                     <td>$response_rate</td>
                                     <td $class>$response_remarks </td>
