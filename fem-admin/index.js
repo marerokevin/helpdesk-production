@@ -33,6 +33,14 @@ $(document).ready(function () {
     responsive: true,
 
   });
+  $('#lateTable').DataTable({
+    "columnDefs": [
+      { "width": "1%", "targets": 0 },
+      { "className": "dt-center", "targets": "_all" }
+    ],
+    responsive: true,
+
+  });
   $('#overAllFinished').DataTable({
     "columnDefs": [
       { "width": "1%", "targets": 0 },
