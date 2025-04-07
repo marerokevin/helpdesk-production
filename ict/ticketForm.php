@@ -273,7 +273,7 @@ if (isset($_POST['submitTicket'])) {
                 $mail->Port = 465;
 
                 //Send Email
-                $mail->setFrom('mis.dev@glory.com.ph', 'Helpdesk');
+                $mail->setFrom('helpdesk@glorylocal.com.ph', 'Helpdesk');
 
 
                 if ($onthespot_ticket == '1') {
@@ -377,7 +377,7 @@ if (isset($_POST['submitTicket'])) {
                     $mail2->Port = 465;
 
                     //Send Email
-                    $mail2->setFrom('mis.dev@glory.com.ph', 'Helpdesk');
+                    $mail2->setFrom('helpdesk@glorylocal.com.ph', 'Helpdesk');
                     $mail2->clearAddresses();
                     $mail2->clearCCs();
                     // $mail2->addCC($immediateHeadEmail);  // dept head          
