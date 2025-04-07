@@ -43,24 +43,24 @@ include("includes/connect.php");
 $con->next_result();
 if ($reqtype == "ALL") {
     $sql = mysqli_query($con, "SELECT req.id,  req.date_filled, req.status2, req.requestor,  req.department,  req.request_type,  req.ticket_category, req.request_category,  req.assignedPersonnelName, req.ict_approval_date, req.first_responded_date, req.completed_date, req.requestor_approval_date, req.ticket_close_date, req.action, req.action1,  req.recommendation, req.onthespot_ticket, req.request_details, req.rateDate, cat.level, cat.hours, cat.days, cat.req_type FROM `request` req LEFT JOIN `categories` cat ON cat.c_name = req.request_category 
-    WHERE ((req.admin_approved_date  BETWEEN '2024-09-28' AND '2025-03-31' AND req.status2 != 'cancelled') 
-    OR (req.status2 = 'inprogress'  AND req.admin_approved_date <='2025-03-31' ) 
-    OR ((req.status2 = 'done' OR req.status2 = 'rated') AND req.completed_date >='2024-09-28' AND req.admin_approved_date <='2025-03-31') )
-    AND req.request_to = 'mis' ORDER BY req.admin_approved_date ASC");
+    WHERE ((req.expectedFinishDate  BETWEEN '2024-09-28' AND '2025-03-31' AND req.status2 != 'cancelled') 
+    OR (req.status2 = 'inprogress'  AND req.expectedFinishDate <='2025-03-31' ) 
+    OR ((req.status2 = 'done' OR req.status2 = 'rated') AND req.completed_date >='2024-09-28' AND req.expectedFinishDate <='2025-03-31') )
+    AND req.request_to = 'mis' ORDER BY req.expectedFinishDate ASC");
 
 
 //     echo "SELECT req.id,  req.date_filled, req.status2, req.requestor,  req.department,  req.request_type,  req.ticket_category, req.request_category,  req.assignedPersonnelName, req.ict_approval_date, req.first_responded_date, req.completed_date, req.requestor_approval_date, req.ticket_close_date, req.action, req.action1,  req.recommendation, req.onthespot_ticket, req.request_details, req.rateDate, cat.level, cat.hours, cat.days, cat.req_type FROM `request` req LEFT JOIN `categories` cat ON cat.c_name = req.request_category 
-//     WHERE ((req.admin_approved_date  BETWEEN '$lastMonthYear-$previousMonthNumber-28' AND '$year-$monthNumber-$lastDateOfMonth' AND req.status2 != 'cancelled') 
-//     OR (req.status2 = 'inprogress'  AND req.admin_approved_date <='$year-$monthNumber-$lastDateOfMonth' ) 
-//     OR ((req.status2 = 'done' OR req.status2 = 'rated') AND req.completed_date >='$lastMonthYear-$previousMonthNumber-28' AND req.admin_approved_date <='$year-$monthNumber-$lastDateOfMonth') )
-//     AND req.request_to = 'mis' ORDER BY req.admin_approved_date ASC";
+//     WHERE ((req.expectedFinishDate  BETWEEN '$lastMonthYear-$previousMonthNumber-28' AND '$year-$monthNumber-$lastDateOfMonth' AND req.status2 != 'cancelled') 
+//     OR (req.status2 = 'inprogress'  AND req.expectedFinishDate <='$year-$monthNumber-$lastDateOfMonth' ) 
+//     OR ((req.status2 = 'done' OR req.status2 = 'rated') AND req.completed_date >='$lastMonthYear-$previousMonthNumber-28' AND req.expectedFinishDate <='$year-$monthNumber-$lastDateOfMonth') )
+//     AND req.request_to = 'mis' ORDER BY req.expectedFinishDate ASC";
 } else {
-    $sql = mysqli_query($con, "SELECT req.id,  req.date_filled, req.status2, req.requestor,  req.department,  req.request_type,  req.ticket_category, req.request_category, req.assignedPersonnelName, req.ict_approval_date, req.first_responded_date, req.completed_date,req.requestor_approval_date, req.ticket_close_date, req.action, req.action1,  req.recommendation, req.onthespot_ticket, req.request_details,  req.rateDate, cat.level, cat.hours, cat.days, cat.req_type FROM `request` req LEFT JOIN `categories` cat ON cat.c_name = req.request_category WHERE ((req.admin_approved_date  BETWEEN '$lastMonthYear-$previousMonthNumber-28' AND '$year-$monthNumber-$lastDateOfMonth' AND req.status2 != 'cancelled') 
-    OR (req.status2 = 'inprogress'  AND req.admin_approved_date <='$year-$monthNumber-$lastDateOfMonth' ) 
-    OR ((req.status2 = 'done' OR req.status2 = 'rated') AND req.completed_date >='$lastMonthYear-$previousMonthNumber-28' AND req.admin_approved_date <='$year-$monthNumber-$lastDateOfMonth') ) AND req.request_to = 'mis'  AND cat.req_type = '$reqtype' ORDER BY req.admin_approved_date ASC");
-// echo "SELECT req.id,  req.date_filled, req.status2, req.requestor,  req.department,  req.request_type,  req.ticket_category, req.request_category, req.assignedPersonnelName, req.ict_approval_date, req.first_responded_date, req.completed_date,req.requestor_approval_date, req.ticket_close_date, req.action, req.action1,  req.recommendation, req.onthespot_ticket, req.request_details,  req.rateDate, cat.level, cat.hours, cat.days, cat.req_type FROM `request` req LEFT JOIN `categories` cat ON cat.c_name = req.request_category WHERE ((req.admin_approved_date  BETWEEN '$lastMonthYear-$previousMonthNumber-28' AND '$year-$monthNumber-$lastDateOfMonth' AND req.status2 != 'cancelled') 
-//     OR (req.status2 = 'inprogress'  AND req.admin_approved_date <='$year-$monthNumber-$lastDateOfMonth' ) 
-//     OR ((req.status2 = 'done' OR req.status2 = 'rated') AND req.completed_date >='$lastMonthYear-$previousMonthNumber-28' AND req.admin_approved_date <='$year-$monthNumber-$lastDateOfMonth') ) AND req.request_to = 'mis'  AND cat.req_type = '$reqtype' ORDER BY req.admin_approved_date ASC";
+    $sql = mysqli_query($con, "SELECT req.id,  req.date_filled, req.status2, req.requestor,  req.department,  req.request_type,  req.ticket_category, req.request_category, req.assignedPersonnelName, req.ict_approval_date, req.first_responded_date, req.completed_date,req.requestor_approval_date, req.ticket_close_date, req.action, req.action1,  req.recommendation, req.onthespot_ticket, req.request_details,  req.rateDate, cat.level, cat.hours, cat.days, cat.req_type FROM `request` req LEFT JOIN `categories` cat ON cat.c_name = req.request_category WHERE ((req.expectedFinishDate  BETWEEN '$lastMonthYear-$previousMonthNumber-28' AND '$year-$monthNumber-$lastDateOfMonth' AND req.status2 != 'cancelled') 
+    OR (req.status2 = 'inprogress'  AND req.expectedFinishDate <='$year-$monthNumber-$lastDateOfMonth' ) 
+    OR ((req.status2 = 'done' OR req.status2 = 'rated') AND req.completed_date >='$lastMonthYear-$previousMonthNumber-28' AND req.expectedFinishDate <='$year-$monthNumber-$lastDateOfMonth') ) AND req.request_to = 'mis'  AND cat.req_type = '$reqtype' ORDER BY req.expectedFinishDate ASC");
+// echo "SELECT req.id,  req.date_filled, req.status2, req.requestor,  req.department,  req.request_type,  req.ticket_category, req.request_category, req.assignedPersonnelName, req.ict_approval_date, req.first_responded_date, req.completed_date,req.requestor_approval_date, req.ticket_close_date, req.action, req.action1,  req.recommendation, req.onthespot_ticket, req.request_details,  req.rateDate, cat.level, cat.hours, cat.days, cat.req_type FROM `request` req LEFT JOIN `categories` cat ON cat.c_name = req.request_category WHERE ((req.expectedFinishDate  BETWEEN '$lastMonthYear-$previousMonthNumber-28' AND '$year-$monthNumber-$lastDateOfMonth' AND req.status2 != 'cancelled') 
+//     OR (req.status2 = 'inprogress'  AND req.expectedFinishDate <='$year-$monthNumber-$lastDateOfMonth' ) 
+//     OR ((req.status2 = 'done' OR req.status2 = 'rated') AND req.completed_date >='$lastMonthYear-$previousMonthNumber-28' AND req.expectedFinishDate <='$year-$monthNumber-$lastDateOfMonth') ) AND req.request_to = 'mis'  AND cat.req_type = '$reqtype' ORDER BY req.expectedFinishDate ASC";
 }
 
 
@@ -700,28 +700,28 @@ $lastDateOfMonth = date('d', strtotime("last day of $year-$month"));
 
 if ($reqtype == "ALL") {
     $sql = mysqli_query($con, "SELECT req.id,  req.date_filled, req.status2, req.requestor,  req.department,  req.request_type,  req.ticket_category, req.request_category,  req.assignedPersonnelName, req.ict_approval_date, req.first_responded_date, req.completed_date, req.requestor_approval_date, req.ticket_close_date, req.action, req.action1,  req.recommendation, req.onthespot_ticket, req.request_details, req.rateDate, cat.level, cat.hours, cat.days, cat.req_type FROM `request` req LEFT JOIN `categories` cat ON cat.c_name = req.request_category 
-    WHERE ((req.admin_approved_date  BETWEEN '2024-09-28' AND '2025-03-31' AND req.status2 != 'cancelled') 
-    OR (req.status2 = 'inprogress'  AND req.admin_approved_date <='2025-03-31' ) 
-    OR ((req.status2 = 'done' OR req.status2 = 'rated') AND req.completed_date >='2024-09-28' AND '2025-03-31' AND req.admin_approved_date <='2025-03-31') )
-    AND req.request_to = 'mis' ORDER BY req.admin_approved_date ASC");
+    WHERE ((req.expectedFinishDate  BETWEEN '2024-09-28' AND '2025-03-31' AND req.status2 != 'cancelled') 
+    OR (req.status2 = 'inprogress'  AND req.expectedFinishDate <='2025-03-31' ) 
+    OR ((req.status2 = 'done' OR req.status2 = 'rated') AND req.completed_date >='2024-09-28' AND '2025-03-31' AND req.expectedFinishDate <='2025-03-31') )
+    AND req.request_to = 'mis' ORDER BY req.expectedFinishDate ASC");
 
 $print = "SELECT req.id,  req.date_filled, req.status2, req.requestor,  req.department,  req.request_type,  req.ticket_category, req.request_category,  req.assignedPersonnelName, req.ict_approval_date, req.first_responded_date, req.completed_date, req.requestor_approval_date, req.ticket_close_date, req.action, req.action1,  req.recommendation, req.onthespot_ticket, req.request_details, req.rateDate, cat.level, cat.hours, cat.days, cat.req_type FROM `request` req LEFT JOIN `categories` cat ON cat.c_name = req.request_category 
-    WHERE ((req.admin_approved_date  BETWEEN '2024-09-28' AND '2025-03-31' AND req.status2 != 'cancelled') 
-    OR (req.status2 = 'inprogress'  AND req.admin_approved_date <='2025-03-31' ) 
-    OR ((req.status2 = 'done' OR req.status2 = 'rated') AND req.completed_date >='2024-09-28' AND '2025-03-31' AND req.admin_approved_date <='2025-03-31') )
-    AND req.request_to = 'mis' ORDER BY req.admin_approved_date ASC";
+    WHERE ((req.expectedFinishDate  BETWEEN '2024-09-28' AND '2025-03-31' AND req.status2 != 'cancelled') 
+    OR (req.status2 = 'inprogress'  AND req.expectedFinishDate <='2025-03-31' ) 
+    OR ((req.status2 = 'done' OR req.status2 = 'rated') AND req.completed_date >='2024-09-28' AND '2025-03-31' AND req.expectedFinishDate <='2025-03-31') )
+    AND req.request_to = 'mis' ORDER BY req.expectedFinishDate ASC";
 //     echo "SELECT req.id,  req.date_filled, req.status2, req.requestor,  req.department,  req.request_type,  req.ticket_category, req.request_category,  req.assignedPersonnelName, req.ict_approval_date, req.first_responded_date, req.completed_date, req.requestor_approval_date, req.ticket_close_date, req.action, req.action1,  req.recommendation, req.onthespot_ticket, req.request_details, req.rateDate, cat.level, cat.hours, cat.days, cat.req_type FROM `request` req LEFT JOIN `categories` cat ON cat.c_name = req.request_category 
-//     WHERE ((req.admin_approved_date  BETWEEN '$lastMonthYear-$previousMonthNumber-28' AND '$year-$monthNumber-$lastDateOfMonth' AND req.status2 != 'cancelled') 
-//     OR (req.status2 = 'inprogress'  AND req.admin_approved_date <='$year-$monthNumber-$lastDateOfMonth' ) 
-//     OR ((req.status2 = 'done' OR req.status2 = 'rated') AND req.completed_date >='$lastMonthYear-$previousMonthNumber-28' AND req.admin_approved_date <='$year-$monthNumber-$lastDateOfMonth') )
-//     AND req.request_to = 'mis' ORDER BY req.admin_approved_date ASC";
+//     WHERE ((req.expectedFinishDate  BETWEEN '$lastMonthYear-$previousMonthNumber-28' AND '$year-$monthNumber-$lastDateOfMonth' AND req.status2 != 'cancelled') 
+//     OR (req.status2 = 'inprogress'  AND req.expectedFinishDate <='$year-$monthNumber-$lastDateOfMonth' ) 
+//     OR ((req.status2 = 'done' OR req.status2 = 'rated') AND req.completed_date >='$lastMonthYear-$previousMonthNumber-28' AND req.expectedFinishDate <='$year-$monthNumber-$lastDateOfMonth') )
+//     AND req.request_to = 'mis' ORDER BY req.expectedFinishDate ASC";
 } else {
-    $sql = mysqli_query($con, "SELECT req.id,  req.date_filled, req.status2, req.requestor,  req.department,  req.request_type,  req.ticket_category, req.request_category, req.assignedPersonnelName, req.ict_approval_date, req.first_responded_date, req.completed_date,req.requestor_approval_date, req.ticket_close_date, req.action, req.action1,  req.recommendation, req.onthespot_ticket, req.request_details,  req.rateDate, cat.level, cat.hours, cat.days, cat.req_type FROM `request` req LEFT JOIN `categories` cat ON cat.c_name = req.request_category WHERE ((req.admin_approved_date  BETWEEN '$lastMonthYear-$previousMonthNumber-28' AND '$year-$monthNumber-$lastDateOfMonth' AND req.status2 != 'cancelled') 
-    OR (req.status2 = 'inprogress'  AND req.admin_approved_date <='$year-$monthNumber-$lastDateOfMonth' ) 
-    OR ((req.status2 = 'done' OR req.status2 = 'rated') AND req.completed_date >='$lastMonthYear-$previousMonthNumber-28' AND req.admin_approved_date <='$year-$monthNumber-$lastDateOfMonth') ) AND req.request_to = 'mis'  AND cat.req_type = '$reqtype' ORDER BY req.admin_approved_date ASC");
-// echo "SELECT req.id,  req.date_filled, req.status2, req.requestor,  req.department,  req.request_type,  req.ticket_category, req.request_category, req.assignedPersonnelName, req.ict_approval_date, req.first_responded_date, req.completed_date,req.requestor_approval_date, req.ticket_close_date, req.action, req.action1,  req.recommendation, req.onthespot_ticket, req.request_details,  req.rateDate, cat.level, cat.hours, cat.days, cat.req_type FROM `request` req LEFT JOIN `categories` cat ON cat.c_name = req.request_category WHERE ((req.admin_approved_date  BETWEEN '$lastMonthYear-$previousMonthNumber-28' AND '$year-$monthNumber-$lastDateOfMonth' AND req.status2 != 'cancelled') 
-//     OR (req.status2 = 'inprogress'  AND req.admin_approved_date <='$year-$monthNumber-$lastDateOfMonth' ) 
-//     OR ((req.status2 = 'done' OR req.status2 = 'rated') AND req.completed_date >='$lastMonthYear-$previousMonthNumber-28' AND req.admin_approved_date <='$year-$monthNumber-$lastDateOfMonth') ) AND req.request_to = 'mis'  AND cat.req_type = '$reqtype' ORDER BY req.admin_approved_date ASC";
+    $sql = mysqli_query($con, "SELECT req.id,  req.date_filled, req.status2, req.requestor,  req.department,  req.request_type,  req.ticket_category, req.request_category, req.assignedPersonnelName, req.ict_approval_date, req.first_responded_date, req.completed_date,req.requestor_approval_date, req.ticket_close_date, req.action, req.action1,  req.recommendation, req.onthespot_ticket, req.request_details,  req.rateDate, cat.level, cat.hours, cat.days, cat.req_type FROM `request` req LEFT JOIN `categories` cat ON cat.c_name = req.request_category WHERE ((req.expectedFinishDate  BETWEEN '$lastMonthYear-$previousMonthNumber-28' AND '$year-$monthNumber-$lastDateOfMonth' AND req.status2 != 'cancelled') 
+    OR (req.status2 = 'inprogress'  AND req.expectedFinishDate <='$year-$monthNumber-$lastDateOfMonth' ) 
+    OR ((req.status2 = 'done' OR req.status2 = 'rated') AND req.completed_date >='$lastMonthYear-$previousMonthNumber-28' AND req.expectedFinishDate <='$year-$monthNumber-$lastDateOfMonth') ) AND req.request_to = 'mis'  AND cat.req_type = '$reqtype' ORDER BY req.expectedFinishDate ASC");
+// echo "SELECT req.id,  req.date_filled, req.status2, req.requestor,  req.department,  req.request_type,  req.ticket_category, req.request_category, req.assignedPersonnelName, req.ict_approval_date, req.first_responded_date, req.completed_date,req.requestor_approval_date, req.ticket_close_date, req.action, req.action1,  req.recommendation, req.onthespot_ticket, req.request_details,  req.rateDate, cat.level, cat.hours, cat.days, cat.req_type FROM `request` req LEFT JOIN `categories` cat ON cat.c_name = req.request_category WHERE ((req.expectedFinishDate  BETWEEN '$lastMonthYear-$previousMonthNumber-28' AND '$year-$monthNumber-$lastDateOfMonth' AND req.status2 != 'cancelled') 
+//     OR (req.status2 = 'inprogress'  AND req.expectedFinishDate <='$year-$monthNumber-$lastDateOfMonth' ) 
+//     OR ((req.status2 = 'done' OR req.status2 = 'rated') AND req.completed_date >='$lastMonthYear-$previousMonthNumber-28' AND req.expectedFinishDate <='$year-$monthNumber-$lastDateOfMonth') ) AND req.request_to = 'mis'  AND cat.req_type = '$reqtype' ORDER BY req.expectedFinishDate ASC";
 }
 
 
