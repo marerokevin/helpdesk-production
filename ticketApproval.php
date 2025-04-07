@@ -59,7 +59,53 @@ if (isset($_GET['id']) && isset($_GET['head'])) {
 
 
 
+    $query = mysqli_query($con, "Select * FROM `categories` WHERE `c_name` = '$ticket_category'");
+    while ($cat = mysqli_fetch_assoc($query)) {
+        $completion_days = $cat['days'];
+    }
 
+
+       // Function to add weekdays, excluding weekends and holidays
+       $sqlHoli = "SELECT holidaysDate FROM holidays";
+       $resultHoli = mysqli_query($con, $sqlHoli);
+       $holidays = array();
+       while ($row = mysqli_fetch_assoc($resultHoli)) {
+           $holidays[] = $row['holidaysDate'];
+       }
+
+       function addWeekdays2($startDate, $daysToAdd, $holidays)
+       {
+        $date = date("Y-m-d");
+           $currentDate = strtotime($date); // ict approval date
+           $weekdaysAdded = 0;
+   
+           while ($weekdaysAdded < $daysToAdd) {
+               $currentDayOfWeek = date('N', $currentDate);
+   
+               // Exclude weekends (Saturday and Sunday)
+               if ($currentDayOfWeek < 6) {
+                   $isHoliday = in_array(date('Y-m-d', $currentDate), $holidays);
+   
+                   // Exclude holidays
+                   if (!$isHoliday) {
+                       $weekdaysAdded++;
+                   }
+               }
+   
+               // Move to the next day
+               $currentDate = strtotime('+1 day', $currentDate);
+           }
+   
+           return date('Y-m-d', $currentDate);
+       }
+       $dateToday = date('Y-m-d H:i:s', time());
+       // Your existing code to set the start date and add 7 weekdays
+       $date = date("Y-m-d");
+       $startDate = $date;
+
+
+    $daysToAdd = $completion_days;
+    $newDate = addWeekdays2($startDate, $daysToAdd, $holidays);
 
     $sql1 = "Select * FROM `user` WHERE `username` = '$assigned'";
     $result = mysqli_query($con, $sql1);
@@ -74,7 +120,7 @@ if (isset($_GET['id']) && isset($_GET['head'])) {
     } else {
         $datenow = date("Y-m-d");
         $dateToday = date('Y-m-d H:i:s', time());
-        $sql = "UPDATE `request` SET `status2` = 'inprogress', `admin_approved_date`='$datenow', `ict_approval_date`='$dateToday' WHERE `id` = '$id';";
+        $sql = "UPDATE `request` SET `status2` = 'inprogress', `admin_approved_date`='$datenow',`expectedFinishDate` = '$newDate', `ict_approval_date`='$dateToday' WHERE `id` = '$id';";
         $results = mysqli_query($con, $sql);
         if ($results) {
             $sql2 = "Select * FROM `sender`";
