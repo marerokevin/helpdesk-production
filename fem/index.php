@@ -1438,24 +1438,26 @@ padding-right: 10px;">
 
                                     </td>
                                     <td <?php
-                                        // TIME REMAINIIIIIIIIIIINNNNNNNNNNGGGGGGGGGGGG
+                                        // TIME REMAINING
                                         // echo "asdasd", $row['ict_approval_date'];
+                                               
 
+                                               
 
-                                        $ict_approval_date = $row['ict_approval_date'];
+                                        $ict_approval_date = $row['hourAndTimeSeen'];
                                         // $time_responded = $row['first_responded_date'];
                                         $time_responded = new DateTime();
                                         $time_responded->format("Y-m-d H:i:s");
                                         // echo  $time_responded;
 
-                                        $ictApprovalDate1 = new DateTime($row['ict_approval_date']);
+                                        $ictApprovalDate1 = new DateTime($row['hourAndTimeSeen']);
                                         // $dateResponded2 = new DateTime($row['first_responded_date']);
                                         $dateResponded2 = new DateTime();
                                         $dateResponded2->format("Y-m-d H:i:s");
                                         $ictApprovalDate1->setTime($ictApprovalDate1->format('H'), 0, 0);
                                         $dateResponded2->setTime($dateResponded2->format('H'), 0, 0);
 
-                                        $ictApprovalDate3 = new DateTime($row['ict_approval_date']);
+                                        $ictApprovalDate3 = new DateTime($row['hourAndTimeSeen']);
                                         $dateResponded4 = new DateTime($row['first_responded_date']);
 
                                         // Define holidays array
@@ -1534,8 +1536,11 @@ padding-right: 10px;">
                                         if ($count >= $days) {
                                             echo "style='color: white'";
                                         } ?> class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                        <?php
 
+                                        <?php
+                                              if($row['first_responded_date'] !=""){
+                                                echo "Responded";
+                                            }else{   
                                         $remainingTime =  $row['hours'] - $remainingTime;
 
                                         $hours = floor($remainingTime); // Get the integer part (hours)
@@ -1544,7 +1549,7 @@ padding-right: 10px;">
 
                                         // Output the result
                                         echo $hours . " hours, " . $minutes . " minutes";
-
+                                            }
                                         ?>
                                     </td>
                                     <td <?php if ($count >= $days) {

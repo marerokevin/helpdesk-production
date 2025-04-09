@@ -282,7 +282,7 @@ $sqlICT = mysqli_query($con, "SELECT * FROM `user` WHERE `department` = 'ICT'");
         <b>ICT Helpdesk </b>
         <br>
         <h3> <b> Summary Report for the Month of <?php echo $month ?></b></h3>
-<h4><?php echo $print; ?></h4>
+<!-- <h4><?php echo $print; ?></h4> -->
         <br>
     </center>
     <br>
