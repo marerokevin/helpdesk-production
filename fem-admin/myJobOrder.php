@@ -277,7 +277,7 @@ if (isset($_POST['approveRequest'])) {
     $username = $_SESSION['name'];
 
     $sql = "UPDATE `request` SET `status2`='Done', `late`='$late',`actual_finish_date`='$date',`action`='$action', `first_responded_date` = 
-            CASE WHEN `first_responded_date` IS NULL THEN '$datetime' ELSE `first_responded_date` END, `completed_date` = '$datetime', `recommendation`='$recommendation' WHERE `id` = '$requestID'";
+            CASE WHEN `first_responded_date` IS NULL THEN '$datetime' ELSE `first_responded_date` END, `completed_date` = '$datetime', `recommendation`='$recommendation',`approved_reco` = '1' WHERE `id` = '$requestID'";
 
     $results = mysqli_query($con, $sql);
 
