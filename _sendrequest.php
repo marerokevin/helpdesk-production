@@ -110,7 +110,7 @@ if(isset($_POST['send'])){
     try {
         //Server settings
         $mail->isSMTP();                                      // Set mailer to use SMTP
-        $mail->Host = 'mail.glorylocal.com.ph';                       // Specify main and backup SMTP servers
+        $mail->Host = 'smtp.office365.com';                       // Specify main and backup SMTP servers
         $mail->SMTPAuth = true;                               // Enable SMTP authentication
         $mail->Username = 'j.nemedez@glory.com.ph';     // Your Email/ Server Email
         $mail->Password = 'C0nn3ctm387';                     // Your Password
@@ -122,7 +122,7 @@ if(isset($_POST['send'])){
             )
         );                         
         $mail->SMTPSecure = 'ssl';                           
-        $mail->Port = 465;                                   
+        $mail->Port = 587;                                   
 
         //Send Email
         $mail->setFrom('Job_Order@glory.com.ph'); //eto ang mag front  notificationsys01@gmail.com

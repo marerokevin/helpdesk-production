@@ -1966,7 +1966,7 @@ diff helpdesk/form.php helpdeskts2/form.php
 <         try {
 <             //Server settings
 <             $mail->isSMTP();                                      // Set mailer to use SMTP
-<             $mail->Host = 'mail.glorylocal.com.ph';                       // Specify main and backup SMTP servers
+<             $mail->Host = 'smtp.office365.com';                       // Specify main and backup SMTP servers
 <             $mail->SMTPAuth = true;                               // Enable SMTP authentication
 <             $mail->Username = $account;     // Your Email/ Server Email
 <             $mail->Password = $accountpass;                     // Your Password
@@ -1978,7 +1978,7 @@ diff helpdesk/form.php helpdeskts2/form.php
 <                 )
 <             );                         
 <             $mail->SMTPSecure = 'ssl';                           
-<             $mail->Port = 465;                                   
+<             $mail->Port = 587;                                   
 <     
 <             //Send Email
 <            
@@ -2017,7 +2017,7 @@ diff helpdesk/form.php helpdeskts2/form.php
 >   try {
 >     //Server settings
 >     $mail->isSMTP();                                      // Set mailer to use SMTP
->     $mail->Host = 'mail.glorylocal.com.ph';                       // Specify main and backup SMTP servers
+>     $mail->Host = 'smtp.office365.com';                       // Specify main and backup SMTP servers
 >     $mail->SMTPAuth = true;                               // Enable SMTP authentication
 >     $mail->Username = $account;     // Your Email/ Server Email
 >     $mail->Password = $accountpass;                     // Your Password
@@ -2029,7 +2029,7 @@ diff helpdesk/form.php helpdeskts2/form.php
 >       )
 >     );
 >     $mail->SMTPSecure = 'ssl';
->     $mail->Port = 465;
+>     $mail->Port = 587;
 155a126
 >     //Send Email
 158,162c129,154
@@ -3076,12 +3076,12 @@ diff helpdesk/head_approval.php helpdeskts2/head_approval.php
 <         )
 <     );                         
 <     $mail->SMTPSecure = 'ssl';                           
-<     $mail->Port = 465;                                   
+<     $mail->Port = 587;                                   
 ---
 >       )
 >     );
 >     $mail->SMTPSecure = 'ssl';
->     $mail->Port = 465;
+>     $mail->Port = 587;
 114c107
 <     
 ---
@@ -3189,12 +3189,12 @@ diff helpdesk/head_approval.php helpdeskts2/head_approval.php
 <         )
 <     );                         
 <     $mail->SMTPSecure = 'ssl';                           
-<     $mail->Port = 465;                                   
+<     $mail->Port = 587;                                   
 ---
 >       )
 >     );
 >     $mail->SMTPSecure = 'ssl';
->     $mail->Port = 465;
+>     $mail->Port = 587;
 205c195
 <     
 ---

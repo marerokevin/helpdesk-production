@@ -102,7 +102,7 @@ if (isset($_POST['rateJo'])) {
         try {
             //Server settings
             $mail->isSMTP();                                      // Set mailer to use SMTP
-            $mail->Host = 'mail.glorylocal.com.ph';                       // Specify main and backup SMTP servers
+            $mail->Host = 'smtp.office365.com';                       // Specify main and backup SMTP servers
             $mail->SMTPAuth = true;                               // Enable SMTP authentication
             $mail->Username = $account;     // Your Email/ Server Email
             $mail->Password = $accountpass;                     // Your Password
@@ -113,14 +113,14 @@ if (isset($_POST['rateJo'])) {
                     'allow_self_signed' => true
                 )
             );
-            $mail->SMTPSecure = 'none';
-            $mail->Port = 465;
+            $mail->SMTPSecure = 'tls';
+            $mail->Port = 587;
 
             //Send Email
             // $mail->setFrom('Helpdesk'); //eto ang mag front  notificationsys01@gmail.com
 
             //Recipients
-            $mail->setFrom('helpdesk@glorylocal.com.ph', 'Helpdesk');
+            $mail->setFrom('system.notification@glory.com.ph', 'Helpdesk');
             $mail->addAddress($personnelEmail);
             $mail->isHTML(true);
             $mail->Subject = $subject;
@@ -283,7 +283,7 @@ if (isset($_POST['approveRequest'])) {
                 $message4 = 'Hi ' . $leaderName . ',<br> <br>   Mr/Ms. ' . $requestor . ' filed a job order with JO number ' . $completejoid . ' . Please check the details below or by signing in into our Helpdesk.  <br> Click this ' . $link . ' to sign in. <br><br>Request Type: ' . $request_type . '<br> Request Category: ' . $request_category . '<br>Request Details: ' . $detailsOfRequest . '<br><br><br> This is a generated email. Please do not reply. <br><br> Helpdesk';
 
                 $mail->isSMTP();                                      // Set mailer to use SMTP
-                $mail->Host = 'mail.glorylocal.com.ph';                       // Specify main and backup SMTP servers
+                $mail->Host = 'smtp.office365.com';                       // Specify main and backup SMTP servers
                 $mail->SMTPAuth = true;                               // Enable SMTP authentication
                 $mail->Username = $account;     // Your Email/ Server Email
                 $mail->Password = $accountpass;                     // Your Password
@@ -294,14 +294,14 @@ if (isset($_POST['approveRequest'])) {
                         'allow_self_signed' => true
                     )
                 );
-                $mail->SMTPSecure = 'none';
-                $mail->Port = 465;
+                $mail->SMTPSecure = 'tls';
+                $mail->Port = 587;
 
                 //Send Email
                 // $mail->setFrom('Helpdesk'); //eto ang mag front  notificationsys01@gmail.com
 
                 //Recipients
-                $mail->setFrom('helpdesk@glorylocal.com.ph', 'Helpdesk');
+                $mail->setFrom('system.notification@glory.com.ph', 'Helpdesk');
                 $mail->addAddress($leaderEmail);
                 $mail->isHTML(true);
                 // Generate PDF content using Dompdf
@@ -326,7 +326,7 @@ if (isset($_POST['approveRequest'])) {
 
             //Server settings
             $mail2->isSMTP();                                      // Set mailer to use SMTP
-            $mail2->Host = 'mail.glorylocal.com.ph';                       // Specify main and backup SMTP servers
+            $mail2->Host = 'smtp.office365.com';                       // Specify main and backup SMTP servers
             $mail2->SMTPAuth = true;                               // Enable SMTP authentication
             $mail2->Username = $account;     // Your Email/ Server Email
             $mail2->Password = $accountpass;                     // Your Password
@@ -344,7 +344,7 @@ if (isset($_POST['approveRequest'])) {
             // $mail->setFrom('Helpdesk'); //eto ang mag front  notificationsys01@gmail.com
 
             //Recipients
-            $mail2->setFrom('helpdesk@glorylocal.com.ph', 'Helpdesk');
+            $mail2->setFrom('system.notification@glory.com.ph', 'Helpdesk');
             $mail2->addAddress($requestorEmail);
             $mail2->isHTML(true);
             // Generate PDF content using Dompdf
@@ -413,7 +413,7 @@ if (isset($_POST['cancelJO'])) {
 
             //Server settings
             $mail->isSMTP();                                      // Set mailer to use SMTP
-            $mail->Host = 'mail.glorylocal.com.ph';                       // Specify main and backup SMTP servers
+            $mail->Host = 'smtp.office365.com';                       // Specify main and backup SMTP servers
             $mail->SMTPAuth = true;                               // Enable SMTP authentication
             $mail->Username = $account;     // Your Email/ Server Email
             $mail->Password = $accountpass;                     // Your Password
@@ -424,14 +424,14 @@ if (isset($_POST['cancelJO'])) {
                     'allow_self_signed' => true
                 )
             );
-            $mail->SMTPSecure = 'none';
-            $mail->Port = 465;
+            $mail->SMTPSecure = 'tls';
+            $mail->Port = 587;
 
             //Send Email
             // $mail->setFrom('Helpdesk'); //eto ang mag front  notificationsys01@gmail.com
 
             //Recipients
-            $mail->setFrom('helpdesk@glorylocal.com.ph', 'Helpdesk');
+            $mail->setFrom('system.notification@glory.com.ph', 'Helpdesk');
             $mail->addAddress($requestorEmail);
             $mail->isHTML(true);
             $mail->Subject = $subject2;
