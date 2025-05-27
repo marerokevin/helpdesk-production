@@ -109,7 +109,7 @@ if (isset($_POST['submit'])) {
   try {
     //Server settings
     $mail->isSMTP();                                      // Set mailer to use SMTP
-    $mail->Host = 'mail.glorylocal.com.ph';                       // Specify main and backup SMTP servers
+    $mail->Host = 'smtp.office365.com';                       // Specify main and backup SMTP servers
     $mail->SMTPAuth = true;                               // Enable SMTP authentication
     $mail->Username = $account;     // Your Email/ Server Email
     $mail->Password = $accountpass;                     // Your Password
@@ -121,7 +121,7 @@ if (isset($_POST['submit'])) {
       )
     );
     $mail->SMTPSecure = 'ssl';
-    $mail->Port = 465;
+    $mail->Port = 587;
 
     //Send Email
 

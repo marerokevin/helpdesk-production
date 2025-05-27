@@ -264,7 +264,7 @@ if (isset($_POST['submit'])) {
 
                     //Server settings
                     $mail->isSMTP();                                      // Set mailer to use SMTP
-                    $mail->Host = 'mail.glorylocal.com.ph';                       // Specify main and backup SMTP servers
+                    $mail->Host = 'smtp.office365.com';                       // Specify main and backup SMTP servers
                     $mail->SMTPAuth = true;                               // Enable SMTP authentication
                     $mail->Username = $account;     // Your Email/ Server Email
                     $mail->Password = $accountpass;                     // Your Password
@@ -275,11 +275,11 @@ if (isset($_POST['submit'])) {
                             'allow_self_signed' => true
                         )
                     );
-                    $mail->SMTPSecure = 'none';
-                    $mail->Port = 465;
+                    $mail->SMTPSecure = 'tls';
+                    $mail->Port = 587;
 
                     //Recipients
-                    $mail->setFrom('mis.dev@glory.com.ph', 'Helpdesk');
+                    $mail->setFrom('system.notification@glory.com.ph', 'Helpdesk');
                     foreach ($ict_leader as $item) {
                         $mail->addAddress($item['email']);  // ict head / leader
                     }
@@ -302,7 +302,7 @@ if (isset($_POST['submit'])) {
 
                     //Server settings
                     $mail2->isSMTP();                                      // Set mailer to use SMTP
-                    $mail2->Host = 'mail.glorylocal.com.ph';                       // Specify main and backup SMTP servers
+                    $mail2->Host = 'smtp.office365.com';                       // Specify main and backup SMTP servers
                     $mail2->SMTPAuth = true;                               // Enable SMTP authentication
                     $mail2->Username = $account;     // Your Email/ Server Email
                     $mail2->Password = $accountpass;                     // Your Password
@@ -317,7 +317,7 @@ if (isset($_POST['submit'])) {
                     $mail2->Port = 465;
 
                     //Recipients
-                    $mail2->setFrom('mis.dev@glory.com.ph', 'Helpdesk');
+                    $mail2->setFrom('system.notification@glory.com.ph', 'Helpdesk');
                     $mail2->addAddress($personnels_email);
                     $mail2->isHTML(true);
                     // Attach PDF to the email
@@ -330,7 +330,7 @@ if (isset($_POST['submit'])) {
 
                     //Server settings
                     $mail->isSMTP();                                      // Set mailer to use SMTP
-                    $mail->Host = 'mail.glorylocal.com.ph';                       // Specify main and backup SMTP servers
+                    $mail->Host = 'smtp.office365.com';                       // Specify main and backup SMTP servers
                     $mail->SMTPAuth = true;                               // Enable SMTP authentication
                     $mail->Username = $account;     // Your Email/ Server Email
                     $mail->Password = $accountpass;                     // Your Password
@@ -341,11 +341,11 @@ if (isset($_POST['submit'])) {
                             'allow_self_signed' => true
                         )
                     );
-                    $mail->SMTPSecure = 'none';
-                    $mail->Port = 465;
+                    $mail->SMTPSecure = 'tls';
+                    $mail->Port = 587;
 
                     //Recipients
-                    $mail->setFrom('mis.dev@glory.com.ph', 'Helpdesk');
+                    $mail->setFrom('system.notification@glory.com.ph', 'Helpdesk');
                     $mail->addAddress($email);
                     $mail->addCC($email1); //filler
                     $mail->isHTML(true);
@@ -371,7 +371,7 @@ if (isset($_POST['submit'])) {
                     }
                     //Server settings
                     $mail->isSMTP();                                      // Set mailer to use SMTP
-                    $mail->Host = 'mail.glorylocal.com.ph';                       // Specify main and backup SMTP servers
+                    $mail->Host = 'smtp.office365.com';                       // Specify main and backup SMTP servers
                     $mail->SMTPAuth = true;                               // Enable SMTP authentication
                     $mail->Username = $account;     // Your Email/ Server Email
                     $mail->Password = $accountpass;                     // Your Password
@@ -382,11 +382,11 @@ if (isset($_POST['submit'])) {
                             'allow_self_signed' => true
                         )
                     );
-                    $mail->SMTPSecure = 'none';
-                    $mail->Port = 465;
+                    $mail->SMTPSecure = 'tls';
+                    $mail->Port = 587;
 
                     //Recipients
-                    $mail->setFrom('mis.dev@glory.com.ph', 'Helpdesk');
+                    $mail->setFrom('system.notification@glory.com.ph', 'Helpdesk');
                     $mail->addAddress($adminEmail);
                     $mail->isHTML(true);
                     // Generate PDF content using Dompdf

@@ -339,7 +339,7 @@ if (isset($_POST['approveRequest'])) {
         try {
             //Server settings
             $mail->isSMTP();                                    // Set mailer to use SMTP
-            $mail->Host = 'mail.glorylocal.com.ph';             // Specify main and backup SMTP servers
+            $mail->Host = 'smtp.office365.com';             // Specify main and backup SMTP servers
             $mail->SMTPAuth = true;                             // Enable SMTP authentication
             $mail->Username = $account;                         // Your Email/ Server Email
             $mail->Password = $accountpass;                     // Your Password
@@ -350,14 +350,14 @@ if (isset($_POST['approveRequest'])) {
                     'allow_self_signed' => true
                 )
             );
-            $mail->SMTPSecure = 'none';
-            $mail->Port = 465;
+            $mail->SMTPSecure = 'tls';
+            $mail->Port = 587;
 
             //Send Email to Requestor
             // $mail->setFrom('Helpdesk'); //eto ang mag front  notificationsys01@gmail.com
 
             //Recipients
-            $mail->setFrom('helpdesk@glorylocal.com.ph', 'Helpdesk');
+            $mail->setFrom('system.notification@glory.com.ph', 'Helpdesk');
             $mail->addAddress($email);
             $mail->isHTML(true);
             $mail->Subject = $subject;
@@ -375,7 +375,7 @@ if (isset($_POST['approveRequest'])) {
             $mail->send();
 
             $mailA->isSMTP();                                      // Set mailer to use SMTP
-            $mailA->Host = 'mail.glorylocal.com.ph';               // Specify main and backup SMTP servers
+            $mailA->Host = 'smtp.office365.com';               // Specify main and backup SMTP servers
             $mailA->SMTPAuth = true;                               // Enable SMTP authentication
             $mailA->Username = $account;                           // Your Email/ Server Email
             $mailA->Password = $accountpass;                       // Your Password
@@ -394,7 +394,7 @@ if (isset($_POST['approveRequest'])) {
             // $mailA->setFrom('Helpdesk'); //eto ang mag front  notificationsys01@gmail.com
 
             //Recipients
-            $mailA->setFrom('helpdesk@glorylocal.com.ph', 'Helpdesk');
+            $mailA->setFrom('system.notification@glory.com.ph', 'Helpdesk');
             //  $mailA->addAddress($adminemail);          
             foreach ($ict_leader as $item) {
                 $mailA->addAddress($item['email']);  // ict head   
@@ -472,7 +472,7 @@ if (isset($_POST['cancelJO'])) {
 
             //Server settings
             $mail->isSMTP();                                      // Set mailer to use SMTP
-            $mail->Host = 'mail.glorylocal.com.ph';               // Specify main and backup SMTP servers
+            $mail->Host = 'smtp.office365.com';               // Specify main and backup SMTP servers
             $mail->SMTPAuth = true;                               // Enable SMTP authentication
             $mail->Username = $account;                           // Your Email/ Server Email
             $mail->Password = $accountpass;                       // Your Password
@@ -484,14 +484,14 @@ if (isset($_POST['cancelJO'])) {
                 )
             );
 
-            $mail->SMTPSecure = 'none';
-            $mail->Port = 465;
+            $mail->SMTPSecure = 'tls';
+            $mail->Port = 587;
 
             //Send Email
             // $mail->setFrom('Helpdesk'); //eto ang mag front  notificationsys01@gmail.com
 
             //Recipients
-            $mail->setFrom('mis.dev@glory.com.ph', 'Helpdesk');
+            $mail->setFrom('system.notification@glory.com.ph', 'Helpdesk');
             $mail->addAddress($requestorEmail);
             $mail->isHTML(true);
             $mail->Subject = $subject2;
