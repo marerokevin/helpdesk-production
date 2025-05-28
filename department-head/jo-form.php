@@ -175,7 +175,7 @@ if (isset($_POST['submit'])) {
             try {
                 //Server settings
                 $mail->isSMTP();                                      // Set mailer to use SMTP
-                $mail->Host = 'mail.glorylocal.com.ph';                       // Specify main and backup SMTP servers
+                $mail->Host = 'smtp.office365.com';                       // Specify main and backup SMTP servers
                 $mail->SMTPAuth = true;                               // Enable SMTP authentication
                 $mail->Username = $account;     // Your Email/ Server Email
                 $mail->Password = $accountpass;                     // Your Password
@@ -186,14 +186,14 @@ if (isset($_POST['submit'])) {
                         'allow_self_signed' => true
                     )
                 );
-                $mail->SMTPSecure = 'none';
-                $mail->Port = 465;
+                $mail->SMTPSecure = 'tls';
+                $mail->Port = 587;
 
                 //Send Email
                 // $mail->setFrom('Helpdesk'); //eto ang mag front  notificationsys01@gmail.com
 
                 //Recipients
-                $mail->setFrom('mis.dev@glory.com.ph', 'Helpdesk');
+                $mail->setFrom('system.notification@glory.com.ph', 'Helpdesk');
                 $mail->addAddress($adminemail);
                 $mail->isHTML(true);
                 $mail->Subject = $subject;

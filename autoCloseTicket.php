@@ -77,7 +77,7 @@ while ($row = $query->fetch_assoc()) {
             try {
                 //Server settings
                 $mail->isSMTP();
-                $mail->Host = 'mail.glorylocal.com.ph';
+                $mail->Host = 'smtp.office365.com';
                 $mail->SMTPAuth = true;
                 $mail->Username = $account;
                 $mail->Password = $accountpass;
@@ -88,9 +88,9 @@ while ($row = $query->fetch_assoc()) {
                         'allow_self_signed' => true
                     )
                 );
-                $mail->SMTPSecure = 'none';
-                $mail->Port = 465;
-                $mail->setFrom('helpdesk@glorylocal.com.ph', 'Helpdesk');
+                $mail->SMTPSecure = 'tls';
+                $mail->Port = 587;
+                $mail->setFrom('system.notification@glory.com.ph', 'Helpdesk');
                 $mail->addAddress($email);
                 $mail->isHTML(true);
                 $mail->Subject = "Ticket Closed";
